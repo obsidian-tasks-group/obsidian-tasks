@@ -1,10 +1,19 @@
 import type { LinkCache } from 'obsidian';
-import type { TasksFile } from '../Scripting/TasksFile';
-import type { Task } from './Task';
-import type { TaskLocation } from './TaskLocation';
-import { TaskRegularExpressions } from './TaskRegularExpressions';
-import { Link } from './Link';
+import type { TasksFile } from 'Scripting/TasksFile';
+import type { Task } from 'Task/Task';
+import type { TaskLocation } from 'Task/TaskLocation';
+import { TaskRegularExpressions } from 'Task/TaskRegularExpressions';
+import { Link } from 'Task/Link';
 
+/**
+ * Represents a single list item line.
+ *
+ * List items look like this:
+ * ```
+ * - This is a list item
+ * ```
+ * This is the base class of {@link Task}. Properties which are present in both tasks and list items are defined here.
+ */
 export class ListItem {
     // The original line read from file.
     public readonly originalMarkdown: string;
@@ -14,6 +23,7 @@ export class ListItem {
     public readonly indentation: string;
     public readonly listMarker: string;
     public readonly description: string;
+    public readonly markdownHardBreak: string;
     public readonly statusCharacter: string | null;
 
     public readonly taskLocation: TaskLocation;
@@ -39,6 +49,13 @@ export class ListItem {
         this.listMarker = listMarker;
         this.statusCharacter = statusCharacter;
         this.description = description;
+
+        // If there are 2 or more spaces at the end of the line, we retain them so that when
+        // the ListItem or Task is updated and written out, we keep the original formatting.
+        // There is intentionally no way to update this value once the task line has been read
+        // in from Markdown.
+        this.markdownHardBreak = this.getMarkdownHardBreak(originalMarkdown);
+
         this.originalMarkdown = originalMarkdown;
 
         this.parent = parent;
@@ -121,10 +138,7 @@ export class ListItem {
         let closestParentTask = this.parent;
 
         while (closestParentTask !== null) {
-            // Lazy load the Task class to avoid circular dependencies
-            // eslint-disable-next-line @typescript-eslint/no-require-imports -- "needed to avoid circular dependencies"
-            const { Task } = require('./Task');
-            if (closestParentTask instanceof Task) {
+            if (closestParentTask.isTask) {
                 return closestParentTask as Task;
             }
             closestParentTask = closestParentTask.parent;
@@ -266,6 +280,25 @@ export class ListItem {
 
     public toFileLineString(): string {
         const statusCharacterToString = this.statusCharacter ? `[${this.statusCharacter}] ` : '';
-        return `${this.indentation}${this.listMarker} ${statusCharacterToString}${this.description}`;
+        return `${this.indentation}${this.listMarker} ${statusCharacterToString}${this.description}${this.markdownHardBreak}`;
+    }
+
+    /**
+     * Processes the given Markdown string to determine the appropriate hard break representation.
+     *
+     * @param originalMarkdown - The input Markdown string to analyse for trailing spaces.
+     * @return A string containing the trailing spaces if two or more are present; otherwise, an empty string.
+     */
+    private getMarkdownHardBreak(originalMarkdown: string): string {
+        if (!originalMarkdown.endsWith('  ')) {
+            return '';
+        }
+
+        let markdownHardBreak = '  ';
+        while (originalMarkdown.endsWith(markdownHardBreak + ' ')) {
+            markdownHardBreak += ' ';
+        }
+
+        return markdownHardBreak;
     }
 }

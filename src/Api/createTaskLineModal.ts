@@ -1,6 +1,6 @@
 import type { App } from 'obsidian';
-import type { Task } from '../Task/Task';
-import { editTaskLineModal } from './editTaskLineModal';
+import type { Task } from 'Task/Task';
+import { editTaskLineModal } from 'Api/editTaskLineModal';
 
 /**
  * Opens the Tasks UI and returns the Markdown string for the task entered.

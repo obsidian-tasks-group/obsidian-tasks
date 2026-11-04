@@ -1,7 +1,7 @@
-import { expandPlaceholders } from '../../src/Scripting/ExpandPlaceholders';
-import { makeQueryContext } from '../../src/Scripting/QueryContext';
-import { Query } from '../../src/Query/Query';
-import { EnableJsInTasksQueries } from '../../src/Config/EnableJsInTasksQueries';
+import { expandPlaceholders } from 'Scripting/ExpandPlaceholders';
+import { makeQueryContext } from 'Scripting/QueryContext';
+import { Query } from 'Query/Query';
+import { EnableJsInTasksQueries } from 'Config/EnableJsInTasksQueries';
 import { getTasksFileFromMockData } from '../TestingTools/MockDataHelpers';
 import { createTestTasksFile } from '../TestingTools/TasksFileHelpers';
 import { expectQueryErrorToMentionDisabledJavaScript } from './ScriptingTestHelpers';

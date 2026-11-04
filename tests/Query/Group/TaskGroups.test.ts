@@ -1,22 +1,19 @@
-/**
- * @jest-environment jsdom
- */
 import moment from 'moment';
-import { FilenameField } from '../../../src/Query/Filter/FilenameField';
-import { Grouper, type GrouperFunction } from '../../../src/Query/Group/Grouper';
-import type { Task } from '../../../src/Task/Task';
-import { PathField } from '../../../src/Query/Filter/PathField';
-import { TagsField } from '../../../src/Query/Filter/TagsField';
-import { FolderField } from '../../../src/Query/Filter/FolderField';
-import { TaskGroups } from '../../../src/Query/Group/TaskGroups';
-import { StatusTypeField } from '../../../src/Query/Filter/StatusTypeField';
-import { HappensDateField } from '../../../src/Query/Filter/HappensDateField';
-import { DueDateField } from '../../../src/Query/Filter/DueDateField';
-import { SearchInfo } from '../../../src/Query/SearchInfo';
+import { FilenameField } from 'Query/Filter/FilenameField';
+import { Grouper, type GrouperFunction } from 'Query/Group/Grouper';
+import type { Task } from 'Task/Task';
+import { PathField } from 'Query/Filter/PathField';
+import { TagsField } from 'Query/Filter/TagsField';
+import { FolderField } from 'Query/Filter/FolderField';
+import { TaskGroups } from 'Query/Group/TaskGroups';
+import { StatusTypeField } from 'Query/Filter/StatusTypeField';
+import { HappensDateField } from 'Query/Filter/HappensDateField';
+import { DueDateField } from 'Query/Filter/DueDateField';
+import { SearchInfo } from 'Query/SearchInfo';
+import { FunctionField } from 'Query/Filter/FunctionField';
+import type { TaskGroup } from 'Query/Group/TaskGroup';
 import { fromLine, fromLines } from '../../TestingTools/TestHelpers';
 import { TaskBuilder } from '../../TestingTools/TaskBuilder';
-import { FunctionField } from '../../../src/Query/Filter/FunctionField';
-import type { TaskGroup } from '../../../src/Query/Group/TaskGroup';
 import { createTestTasksFile } from '../../TestingTools/TasksFileHelpers';
 
 window.moment = moment;
@@ -28,7 +25,7 @@ function makeTasksGroups(grouping: Grouper[], inputs: Task[]): TaskGroups {
 beforeEach(() => {});
 
 afterEach(() => {
-    jest.useRealTimers();
+    vi.useRealTimers();
 });
 describe('Grouping tasks', () => {
     it('groups correctly by path', () => {
@@ -199,8 +196,8 @@ describe('Grouping tasks', () => {
     });
 
     it('sorts raw urgency value groups correctly', () => {
-        jest.useFakeTimers();
-        jest.setSystemTime(new Date('2025-03-07'));
+        vi.useFakeTimers();
+        vi.setSystemTime(new Date('2025-03-07'));
 
         const lines = [
             '- [ ] 0 📅 2025-02-28 🔺           ', // urgency: 21

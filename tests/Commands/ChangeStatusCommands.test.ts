@@ -1,32 +1,28 @@
-/**
- * @jest-environment jsdom
- */
-
 import moment from 'moment';
 import { Notice } from 'obsidian';
 import {
     createSetStatusCommands,
     createSetStatusLineTransformer,
     setStatusOnLine,
-} from '../../src/Commands/ChangeStatusCommands';
-import { Status } from '../../src/Statuses/Status';
-import { StatusRegistry } from '../../src/Statuses/StatusRegistry';
-import { StatusConfiguration, StatusType } from '../../src/Statuses/StatusConfiguration';
-import { resetSettings, updateSettings } from '../../src/Config/Settings';
+} from 'Commands/ChangeStatusCommands';
+import { Status } from 'Statuses/Status';
+import { StatusRegistry } from 'Statuses/StatusRegistry';
+import { StatusConfiguration, StatusType } from 'Statuses/StatusConfiguration';
+import { resetSettings, updateSettings } from 'Config/Settings';
 
-jest.mock('obsidian', () => ({
-    Notice: jest.fn(),
+vi.mock('obsidian', () => ({
+    Notice: vi.fn(),
 }));
 
 window.moment = moment;
 
 beforeEach(() => {
-    jest.useFakeTimers();
-    jest.setSystemTime(new Date('2026-02-27'));
+    vi.useFakeTimers();
+    vi.setSystemTime(new Date('2026-02-27'));
 });
 
 afterEach(() => {
-    jest.useRealTimers();
+    vi.useRealTimers();
     resetSettings();
 });
 
@@ -77,7 +73,7 @@ describe('setStatusOnLine', () => {
 });
 
 describe('createSetStatusLineTransformer', () => {
-    const MockedNotice = jest.mocked(Notice);
+    const MockedNotice = vi.mocked(Notice);
 
     beforeEach(() => {
         MockedNotice.mockClear();

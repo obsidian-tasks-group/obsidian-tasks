@@ -1,8 +1,8 @@
+import { searchForCandidateTasksForDependency } from 'ui/DependencyHelpers';
+import { StatusRegistry } from 'Statuses/StatusRegistry';
+import { StatusConfiguration, StatusType } from 'Statuses/StatusConfiguration';
+import type { Task } from 'Task/Task';
 import { createTasksFromMarkdown } from '../TestingTools/TestHelpers';
-import { searchForCandidateTasksForDependency } from '../../src/ui/DependencyHelpers';
-import { StatusRegistry } from '../../src/Statuses/StatusRegistry';
-import { StatusConfiguration, StatusType } from '../../src/Statuses/StatusConfiguration';
-import type { Task } from '../../src/Task/Task';
 
 function offersTheseCandidatesForTasks(
     taskBeingEdited: Task,

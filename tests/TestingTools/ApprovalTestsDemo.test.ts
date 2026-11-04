@@ -1,4 +1,4 @@
-import { verify, verifyAsJson } from 'approvals/lib/Providers/Jest/JestApprovals';
+import { verify, verifyAsJson } from '@approval-tests/approvals/lib/Providers/Vitest/VitestApprovals';
 
 describe('ApprovalTests', () => {
     // begin-snippet: approval-test-as-text

@@ -1,4 +1,4 @@
-import type { QueryContext } from './QueryContext';
+import type { QueryContext } from 'Scripting/QueryContext';
 
 export type KnownPlaceholderResolution =
     | {

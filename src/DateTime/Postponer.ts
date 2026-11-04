@@ -1,8 +1,9 @@
-import { capitalizeFirstLetter } from '../lib/StringHelpers';
-import { Task } from '../Task/Task';
-import { DateFallback } from './DateFallback';
-import { TasksDate } from './TasksDate';
-import type { AllTaskDateFields, HappensDate } from './DateFieldTypes';
+import { getSettings } from 'Config/Settings';
+import { capitalizeFirstLetter } from 'lib/StringHelpers';
+import { Task } from 'Task/Task';
+import { DateFallback } from 'DateTime/DateFallback';
+import { TasksDate } from 'DateTime/TasksDate';
+import type { AllTaskDateFields, HappensDate } from 'DateTime/DateFieldTypes';
 
 export function shouldShowPostponeButton(task: Task) {
     // don't postpone if any invalid dates
@@ -13,32 +14,29 @@ export function shouldShowPostponeButton(task: Task) {
         }
     }
 
-    // require a valid happens date to postpone
-    const hasAValidHappensDate = task.happensDates.some((date) => {
-        return !!date?.isValid();
-    });
+    // require a valid date to postpone
+    const dateFieldToPostpone = getDateFieldToPostpone(task);
+    const hasAValidDateToPostpone = dateFieldToPostpone !== null && !!task[dateFieldToPostpone]?.isValid();
 
     // only postpone not done tasks
-    return !task.isDone && hasAValidHappensDate;
+    return !task.isDone && hasAValidDateToPostpone;
 }
 
 /**
- * Gets a {@link HappensDate} field from a {@link Task} with the following priority: due > scheduled > start.
- * If the task has no happens field {@link HappensDate}, null is returned.
+ * Gets a {@link HappensDate} field from a {@link Task} according to the configured
+ * `postpone.dateField` setting (default: due > scheduled > start).
+ * If none of the configured date fields are present on the task, null is returned.
  *
  * @param task
  */
 export function getDateFieldToPostpone(task: Task): HappensDate | null {
-    if (task.dueDate) {
-        return 'dueDate';
-    }
-
-    if (task.scheduledDate) {
-        return 'scheduledDate';
-    }
-
-    if (task.startDate) {
-        return 'startDate';
+    const candidateFields = getSettings()
+        .postpone.dateField.split('-')
+        .map((value) => value + 'Date') as HappensDate[];
+    for (const field of candidateFields) {
+        if (task[field]) {
+            return field;
+        }
     }
 
     return null;

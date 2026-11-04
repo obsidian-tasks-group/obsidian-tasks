@@ -1,9 +1,5 @@
-/**
- * @jest-environment jsdom
- */
-
 import moment from 'moment';
-import type { Task } from '../../../../src/Task/Task';
+import type { Task } from 'Task/Task';
 import { fromLine, fromLines } from '../../../TestingTools/TestHelpers';
 import { SampleTasks } from '../../../TestingTools/SampleTasks';
 import type { CustomPropertyDocsTestData, QueryInstructionLineAndDescription } from '../VerifyFunctionFieldSamples';
@@ -15,12 +11,12 @@ import {
 window.moment = moment;
 
 beforeEach(() => {
-    jest.useFakeTimers();
-    jest.setSystemTime(new Date('2023-06-10 20:00'));
+    vi.useFakeTimers();
+    vi.setSystemTime(new Date('2023-06-10 20:00'));
 });
 
 afterEach(() => {
-    jest.useRealTimers();
+    vi.useRealTimers();
 });
 
 // NEW_QUERY_INSTRUCTION_EDIT_REQUIRED

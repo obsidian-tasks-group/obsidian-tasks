@@ -67,15 +67,15 @@ The following query elements exist:
 
 | Element           | Default | Description                     | Details                                             |
 | ----------------- | ------- | ------------------------------- | --------------------------------------------------- |
-| toolbar           | Shown   | Copy and filter results         | [[#Toolbar]]                                        |
+| `toolbar`         | Shown   | Copy and filter results         | [[#Toolbar]]                                        |
 | `tree`            | Hidden  | Task parent/child relationships | [[#Hide and Show Tree\|Tree]]                       |
 | `edit button`     | Shown   | Edit task button                | [[Create or edit Task]]                             |
 | `postpone button` | Shown   | Postpone button on dates        | [[Postponing]]                                      |
 | `backlink`        | Shown   | Task backlink for tasks         | [[Backlinks]]                                       |
 | `nested backlink` | Shown   | Backlink on nested tasks        | [[#Hide and Show Nested Backlink\|Nested Backlink]] |
 | `urgency`         | Hidden  | Task urgency score              | [[Urgency]]                                         |
-| `task count`      | Shown   | Total number of tasks           |                                                     |
-| `group count`     | Hidden  | Number of tasks in leaf groups  |                                                     |
+| `task count`      | Shown   | Total number of tasks           | [[#Task count location]]                            |
+| `group count`     | Hidden  | Number of tasks in leaf groups  | [[Grouping#Showing the number of tasks in a group\|Number of tasks in a group]] |
 
 > [!released]
 >
@@ -83,7 +83,7 @@ The following query elements exist:
 > - `tree` was introduced in Tasks 7.12.0.
 > - `toolbar` was introduced in Tasks 7.23.0.
 > - `nested backlink` was introduced in Tasks 8.3.0.
-> - `group count` was introduced in Tasks X.Y.Z.
+> - `group count` was introduced in Tasks 8.4.0.
 
 All of these query elements except `group count`, `urgency` and `tree` are shown by default, so you will use the command `hide`
 if you do not want to show any of them, or the command `show` to show the group count, urgency score or tree view.
@@ -308,3 +308,19 @@ full mode
 For more information, see [[Query File Defaults]].
 
 And for even more power, see [[Make a query user interface]].
+
+## Support
+
+Before creating a new bug report or feature request about Layout, please check existing items to avoid duplicates.
+
+You do not need to search manually: the links below are already filtered to the label `"scope: show/hide"`.
+
+- Check both Open and Closed items.
+- If you find an existing item, support it there instead of adding a `+1` comment. See [[About Support and Help#How to support an existing request|How to support an existing request]].
+
+| Type | Open | Closed | Notes |
+| --- | --- | --- | --- |
+| Issues | [Open](https://github.com/obsidian-tasks-group/obsidian-tasks/issues?q=is%3Aopen%20label%3A%22scope%3A+show/hide%22%20is%3Aissue%20) | [Closed](https://github.com/obsidian-tasks-group/obsidian-tasks/issues?q=is%3Aclosed%20label%3A%22scope%3A+show/hide%22%20is%3Aissue%20) | bug reports and feature requests |
+| Discussions | [Open](https://github.com/obsidian-tasks-group/obsidian-tasks/discussions/categories/ideas-any-new-feature-requests-go-in-issues-please?discussions_q=is%3Aopen+label%3A%22scope%3A+show/hide%22+category%3A%22Ideas%3A+Any+New+Feature+Requests+go+in+Issues+please%22+sort%3Atop) | [Closed](https://github.com/obsidian-tasks-group/obsidian-tasks/discussions/categories/ideas-any-new-feature-requests-go-in-issues-please?discussions_q=is%3Aclosed+label%3A%22scope%3A+show/hide%22+category%3A%22Ideas%3A+Any+New+Feature+Requests+go+in+Issues+please%22+sort%3Atop) | older feature discussions from before late 2022 |
+
+If you do not find an existing item in Issues or Discussions, see [[About Support and Help]] for how to report a bug or request a feature.

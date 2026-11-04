@@ -16,7 +16,10 @@
     let pickedDate = '';
 
     $: {
-        date = doAutocomplete(date);
+        const autocompletedDate = doAutocomplete(date);
+        if (autocompletedDate !== date) {
+            date = autocompletedDate;
+        }
         parsedDate = parseTypedDateForDisplayUsingFutureDate(id, date, forwardOnly);
         isDateValid = !parsedDate.includes('invalid');
         if (isDateValid) {

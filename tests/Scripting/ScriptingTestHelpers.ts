@@ -1,10 +1,10 @@
 import moment from 'moment';
-import { TasksDate } from '../../src/DateTime/TasksDate';
-import { TaskRegularExpressions } from '../../src/Task/TaskRegularExpressions';
-import { Task } from '../../src/Task/Task';
-import { Link } from '../../src/Task/Link';
-import type { Query } from '../../src/Query/Query';
-import { JsInTasksQueriesDisabledError } from '../../src/Scripting/JsInTasksQueriesDisabledError';
+import { TasksDate } from 'DateTime/TasksDate';
+import { TaskRegularExpressions } from 'Task/TaskRegularExpressions';
+import { Task } from 'Task/Task';
+import { Link } from 'Task/Link';
+import type { Query } from 'Query/Query';
+import { JsInTasksQueriesDisabledError } from 'Scripting/JsInTasksQueriesDisabledError';
 
 export function expectQueryErrorToMentionDisabledJavaScript(query: Query, instruction: string): void {
     expect(query.error).toContain(JsInTasksQueriesDisabledError.helpMessage);

@@ -1,21 +1,17 @@
-/**
- * @jest-environment jsdom
- */
-
 import moment from 'moment';
-import { getSettings, resetSettings, updateSettings } from '../../../src/Config/Settings';
-import { Query } from '../../../src/Query/Query';
-import type { Statement } from '../../../src/Query/Statement';
-import { type PresetsMap, defaultPresets } from '../../../src/Query/Presets/Presets';
-import { EnableJsInTasksQueries } from '../../../src/Config/EnableJsInTasksQueries';
+import { getSettings, resetSettings, updateSettings } from 'Config/Settings';
+import { Query } from 'Query/Query';
+import type { Statement } from 'Query/Statement';
+import { type PresetsMap, defaultPresets } from 'Query/Presets/Presets';
+import { EnableJsInTasksQueries } from 'Config/EnableJsInTasksQueries';
 import { expectQueryErrorToMentionDisabledJavaScript } from '../../Scripting/ScriptingTestHelpers';
 import { createTestTasksFile } from '../../TestingTools/TasksFileHelpers';
 
 window.moment = moment;
 
 beforeEach(() => {
-    jest.useFakeTimers();
-    jest.setSystemTime(new Date('2025-04-28'));
+    vi.useFakeTimers();
+    vi.setSystemTime(new Date('2025-04-28'));
 });
 
 afterEach(() => {
@@ -63,7 +59,8 @@ describe('include tests', () => {
             expectFiltersToBe(query, ['not done']);
             expect(query.explainQuery()).toMatchInlineSnapshot(`
                 "{{preset.not_done}} =>
-                not done
+                not done =>
+                  status type is TODO or IN_PROGRESS or ON_HOLD
                 "
             `);
         });
@@ -74,7 +71,8 @@ describe('include tests', () => {
             expectFiltersToBe(query, ['not done']);
             expect(query.explainQuery()).toMatchInlineSnapshot(`
                 "preset not_done =>
-                not done
+                not done =>
+                  status type is TODO or IN_PROGRESS or ON_HOLD
                 "
             `);
         });
@@ -88,7 +86,8 @@ describe('include tests', () => {
                 not_done
                  =>
                 preset not_done =>
-                not done
+                not done =>
+                  status type is TODO or IN_PROGRESS or ON_HOLD
                 "
             `);
         });
@@ -297,7 +296,8 @@ return "Hello World";`;
                 "( {{preset.filter1}} ) AND ( {{preset.filter2}} ) =>
                 ( not done ) AND ( due 2025-05-01 ) =>
                   AND (All of):
-                    not done
+                    not done =>
+                      status type is TODO or IN_PROGRESS or ON_HOLD
                     due 2025-05-01 =>
                       due date is on 2025-05-01 (Thursday 1st May 2025)
                 "
@@ -357,7 +357,8 @@ describe('include - explain output', () => {
                       start date is before 2025-04-28 (Monday 28th April 2025) OR no start date
 
                 {{preset.out}}: statement 2 after expansion of placeholder =>
-                not done
+                not done =>
+                  status type is TODO or IN_PROGRESS or ON_HOLD
                 "
             `);
         });
@@ -378,7 +379,8 @@ describe('include - explain output', () => {
                       start date is before 2025-04-28 (Monday 28th April 2025) OR no start date
 
                 preset out =>
-                not done
+                not done =>
+                  status type is TODO or IN_PROGRESS or ON_HOLD
                 "
             `);
         });

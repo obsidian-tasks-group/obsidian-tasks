@@ -1,22 +1,22 @@
 import type { Editor, EditorPosition } from 'obsidian';
 
-import type { Settings } from '../Config/Settings';
-import { DateParser } from '../DateTime/DateParser';
-import { doAutocomplete } from '../DateTime/DateAbbreviations';
-import { Occurrence } from '../Task/Occurrence';
-import { Recurrence } from '../Task/Recurrence';
+import type { Settings } from 'Config/Settings';
+import { DateParser } from 'DateTime/DateParser';
+import { doAutocomplete } from 'DateTime/DateAbbreviations';
+import { Occurrence } from 'Task/Occurrence';
+import { Recurrence } from 'Task/Recurrence';
 import {
     type DefaultTaskSerializerSymbols,
     allTaskPluginEmojis,
     taskIdRegex,
-} from '../TaskSerializer/DefaultTaskSerializer';
-import { Task } from '../Task/Task';
-import { generateUniqueId } from '../Task/TaskDependency';
-import { GlobalFilter } from '../Config/GlobalFilter';
-import { TaskRegularExpressions } from '../Task/TaskRegularExpressions';
-import { searchForCandidateTasksForDependency } from '../ui/DependencyHelpers';
-import { escapeRegExp } from '../lib/RegExpTools';
-import { StatusType } from '../Statuses/StatusConfiguration';
+} from 'TaskSerializer/DefaultTaskSerializer';
+import { Task } from 'Task/Task';
+import { generateUniqueId } from 'Task/TaskDependency';
+import { GlobalFilter } from 'Config/GlobalFilter';
+import { TaskRegularExpressions } from 'Task/TaskRegularExpressions';
+import { searchForCandidateTasksForDependency } from 'ui/DependencyHelpers';
+import { escapeRegExp } from 'lib/RegExpTools';
+import { StatusType } from 'Statuses/StatusConfiguration';
 import type { SuggestInfo, SuggestionBuilder } from '.';
 
 /**
@@ -25,17 +25,8 @@ import type { SuggestInfo, SuggestionBuilder } from '.';
  */
 export const DEFAULT_MAX_GENERIC_SUGGESTIONS = 5;
 
-declare global {
-    // eslint-disable-next-line no-var -- required to declare a globalThis property in TypeScript
-    var SHOW_DEPENDENCY_SUGGESTIONS: boolean;
-}
-
-// Set default value for production to off, temporarily. It will be turned on in tests.
-export const showDependencySuggestionsDefault = true;
-globalThis.SHOW_DEPENDENCY_SUGGESTIONS = showDependencySuggestionsDefault;
-
 function includeDependencySuggestions(canSaveEdits: boolean) {
-    return globalThis.SHOW_DEPENDENCY_SUGGESTIONS && canSaveEdits;
+    return canSaveEdits;
 }
 
 export interface SuggestorParameters {
@@ -174,7 +165,9 @@ function addTaskPropertySuggestions(
 }
 
 function addField(genericSuggestions: SuggestInfo[], line: string, dateSymbol: string, fieldName: string) {
-    if (!line.includes(dateSymbol))
+    // Strip tags to prevent emojis inside tags from hiding the field suggestions
+    const lineWithoutTags = line.replace(TaskRegularExpressions.hashTags, '');
+    if (!lineWithoutTags.includes(dateSymbol))
         genericSuggestions.push({
             displayText: `${dateSymbol} ${fieldName}`,
             appendText: `${dateSymbol} `,
@@ -258,7 +251,7 @@ function filterGeneralSuggestionsForWordAtCursor(genericSuggestions: SuggestInfo
     return matchingSuggestions;
 }
 
-function defaultExtractor(symbol: string, suggestionText: any) {
+function defaultExtractor(symbol: string, suggestionText: string) {
     const displayText = `${suggestionText}`;
     const appendText = `${symbol} ${suggestionText}`;
     return { displayText, appendText };

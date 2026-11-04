@@ -24,9 +24,11 @@
 
 import { spawnSync } from 'node:child_process';
 import { createRequire } from 'node:module';
+import { dirname, resolve } from 'node:path';
 
 const require = createRequire(import.meta.url);
-const madgeCliPath = require.resolve('madge/bin/cli.js');
+const madgePackagePath = require.resolve('madge-ts6/package.json');
+const madgeCliPath = resolve(dirname(madgePackagePath), require(madgePackagePath).bin.madge);
 
 const result = spawnSync(
     process.execPath,

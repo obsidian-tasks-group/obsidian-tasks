@@ -1,5 +1,5 @@
-import type { ListItem } from '../Task/ListItem';
-import type { Logger } from './logging';
+import type { ListItem } from 'Task/ListItem';
+import type { Logger } from 'lib/logging';
 
 /**
  * Debug logging helper, for the start of Task-editing (or file-editing) operations

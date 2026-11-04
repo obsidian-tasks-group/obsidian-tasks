@@ -1,10 +1,12 @@
-/**
- * @jest-environment jsdom
- */
 import moment from 'moment';
+import { verify } from '@approval-tests/approvals/lib/Providers/Vitest/VitestApprovals';
+import { Priority } from 'Task/Priority';
+import {
+    allViewInstructionsSupportingEditing,
+    createEditingInstructionForGroup,
+} from 'ui/EditInstructions/CreateEditingInstructionForGroup';
+import { Query } from 'Query/Query';
 import { TaskBuilder } from '../../TestingTools/TaskBuilder';
-import { Priority } from '../../../src/Task/Priority';
-import { createEditingInstructionForGroup } from '../../../src/ui/EditInstructions/CreateEditingInstructionForGroup';
 
 window.moment = moment;
 
@@ -23,5 +25,32 @@ describe('CreateEditingInstructionForGroup', () => {
 
         expect(instruction).not.toBeNull();
         expect(instruction?.instructionDisplayName()).toBe('Set Date: Fri Mar 14 2025');
+    });
+});
+
+describe('docs', () => {
+    const allInstructions = allViewInstructionsSupportingEditing()
+        .split('\n')
+        .filter((line) => line.length > 0);
+    const taskWithAllFields = TaskBuilder.createFullyPopulatedTask();
+
+    it('all view groups that support editing', () => {
+        verify(allViewInstructionsSupportingEditing().trim());
+    });
+
+    it.each(allInstructions)('can parse instruction: "%s"', (viewInstruction: string) => {
+        const query = new Query(viewInstruction);
+        expect(query.error).toBeUndefined();
+    });
+
+    it.each(allInstructions)('can create editing instruction: "%s"', (viewInstruction: string) => {
+        const query = new Query(viewInstruction);
+
+        const grouper = query.viewLayoutOptions.grouper;
+        expect(grouper).not.toBeNull();
+        expect(grouper?.property).toBeDefined();
+
+        const instruction = createEditingInstructionForGroup(grouper!.property, taskWithAllFields);
+        expect(instruction).not.toBeNull();
     });
 });

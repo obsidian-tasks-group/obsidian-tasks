@@ -1,20 +1,20 @@
 import { type App, Component, MarkdownRenderer } from 'obsidian';
-import { GlobalFilter } from '../Config/GlobalFilter';
-import { TASK_FORMATS, getSettings } from '../Config/Settings';
-import type { AllTaskDateFields } from '../DateTime/DateFieldTypes';
-import { splitDateText } from '../DateTime/Postponer';
-import type { QueryLayoutOptions } from '../Layout/QueryLayoutOptions';
-import { TaskLayoutComponent, type TaskLayoutOptions } from '../Layout/TaskLayoutOptions';
-import { replaceTaskWithTasks } from '../Obsidian/File';
-import { StatusRegistry } from '../Statuses/StatusRegistry';
-import type { ListItem } from '../Task/ListItem';
-import { Task } from '../Task/Task';
-import { TaskRegularExpressions } from '../Task/TaskRegularExpressions';
-import { DateMenu } from '../ui/Menus/DateMenu';
-import { promptForDate } from '../ui/Menus/DatePicker';
-import { StatusMenu } from '../ui/Menus/StatusMenu';
-import { defaultTaskSaver, showMenu } from '../ui/Menus/TaskEditingMenu';
-import { TaskFieldRenderer } from './TaskFieldRenderer';
+import { GlobalFilter } from 'Config/GlobalFilter';
+import { TASK_FORMATS, getSettings } from 'Config/Settings';
+import type { AllTaskDateFields } from 'DateTime/DateFieldTypes';
+import { splitDateText } from 'DateTime/Postponer';
+import type { QueryLayoutOptions } from 'Layout/QueryLayoutOptions';
+import { TaskLayoutComponent, type TaskLayoutOptions } from 'Layout/TaskLayoutOptions';
+import { replaceTaskWithTasks } from 'Obsidian/File';
+import { StatusRegistry } from 'Statuses/StatusRegistry';
+import type { ListItem } from 'Task/ListItem';
+import { Task } from 'Task/Task';
+import { TaskRegularExpressions } from 'Task/TaskRegularExpressions';
+import { DateMenu } from 'ui/Menus/DateMenu';
+import { promptForDate } from 'ui/Menus/DatePicker';
+import { StatusMenu } from 'ui/Menus/StatusMenu';
+import { defaultTaskSaver, showMenu } from 'ui/Menus/TaskEditingMenu';
+import { TaskFieldRenderer } from 'Renderer/TaskFieldRenderer';
 
 /**
  * The function used to render a Markdown task line into an existing HTML element.
@@ -26,33 +26,6 @@ export type TextRenderer = (
     path: string,
     obsidianComponent: Component | null, // null is allowed here only for tests
 ) => Promise<void>;
-
-/**
- * Create an HTML element, and append it to a parent element.
- *
- * Unlike the equivalent Obsidian convenience function li.createEl(),
- * this can be called from our automated tests.
- *
- * @param tagName - the type of element to be created, for example 'ul', 'div', 'span', 'li'.
- * @param parentElement - the parent element, to which the created element will be appended.
- *
- * @example <caption>Example call:</caption>
- * const li = createAndAppendElement('li', parentElement);
- */
-export function createAndAppendElement<K extends keyof HTMLElementTagNameMap>(
-    tagName: K,
-    parentElement: HTMLElement,
-): HTMLElementTagNameMap[K] {
-    // Maintenance note:
-    //  We don't use the Obsidian convenience function li.createEl() here, because we don't have it available
-    //  when running tests, and we want the tests to be able to create the full div and span structure,
-    //  so had to convert all of these to the equivalent but more elaborate document.createElement() and
-    //  appendChild() calls.
-
-    const el: HTMLElementTagNameMap[K] = document.createElement(tagName);
-    parentElement.appendChild(el);
-    return el;
-}
 
 /**
  * Replace the original list item that Obsidian rendered in Reading View with the one
@@ -176,13 +149,13 @@ export class TaskLineRenderer {
     }): Promise<void> {
         li.classList.add('task-list-item', 'plugin-tasks-list-item');
 
-        const textSpan = createAndAppendElement('span', li);
+        const textSpan = li.createSpan();
         textSpan.classList.add('tasks-list-text');
         await this.taskToHtml(task, textSpan, li, isTaskInQueryFile);
 
         // NOTE: this area is mentioned in `CONTRIBUTING.md` under "How does Tasks handle status changes". When
         // moving the code, remember to update that reference too.
-        const checkbox = createAndAppendElement('input', li);
+        const checkbox = li.createEl('input');
         checkbox.classList.add('task-list-item-checkbox');
         checkbox.type = 'checkbox';
         if (task.status.symbol !== ' ') {
@@ -247,13 +220,13 @@ export class TaskLineRenderer {
             );
             if (componentString) {
                 // Create the text span that will hold the rendered component
-                const span = createAndAppendElement('span', parentElement);
+                const span = parentElement.createSpan();
 
                 // Inside that text span, we are creating another internal span, that will hold the text itself.
                 // This may seem redundant, and by default it indeed does nothing, but we do it to allow the CSS
                 // to differentiate between the container of the text and the text itself, so it will be possible
                 // to do things like surrounding only the text (rather than its whole placeholder) with a highlight
-                const internalSpan = createAndAppendElement('span', span);
+                const internalSpan = span.createSpan();
                 await this.renderComponentText(internalSpan, componentString, component, task, isTaskInQueryFile);
                 this.addInternalClasses(component, internalSpan);
 
@@ -486,7 +459,7 @@ export class TaskLineRenderer {
     public async renderListItem(li: HTMLLIElement, listItem: ListItem, listItemIndex: number): Promise<HTMLLIElement> {
         if (listItem.statusCharacter) {
             // special case: handle toggling of task lines without the global query, in Tasks search results
-            const checkbox = createAndAppendElement('input', li);
+            const checkbox = li.createEl('input');
             checkbox.classList.add('task-list-item-checkbox');
             checkbox.type = 'checkbox';
 
@@ -516,7 +489,7 @@ export class TaskLineRenderer {
             li.setAttribute('data-line', listItemIndex.toString());
         }
 
-        const span = createAndAppendElement('span', li);
+        const span = li.createSpan();
         await this.textRenderer(
             this.obsidianApp,
             listItem.description,

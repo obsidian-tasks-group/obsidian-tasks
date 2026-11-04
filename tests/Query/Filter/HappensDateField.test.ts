@@ -1,8 +1,5 @@
-/**
- * @jest-environment jsdom
- */
 import moment from 'moment';
-import { HappensDateField } from '../../../src/Query/Filter/HappensDateField';
+import { HappensDateField } from 'Query/Filter/HappensDateField';
 import { TaskBuilder } from '../../TestingTools/TaskBuilder';
 import { testFilter } from '../../TestingTools/FilterTestHelpers';
 import * as CustomMatchersForSorting from '../../CustomMatchers/CustomMatchersForSorting';
@@ -91,12 +88,12 @@ describe('accessing earliest happens date', () => {
 
 describe('explain happens date queries', () => {
     beforeAll(() => {
-        jest.useFakeTimers();
-        jest.setSystemTime(new Date('2022-01-15'));
+        vi.useFakeTimers();
+        vi.setSystemTime(new Date('2022-01-15'));
     });
 
     afterAll(() => {
-        jest.useRealTimers();
+        vi.useRealTimers();
     });
 
     it('should explain date before', () => {

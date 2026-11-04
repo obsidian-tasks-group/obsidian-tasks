@@ -1,10 +1,10 @@
 import type { Pos } from 'obsidian';
 
-import { verify, verifyAsJson } from 'approvals/lib/Providers/Jest/JestApprovals';
+import { verify, verifyAsJson } from '@approval-tests/approvals/lib/Providers/Vitest/VitestApprovals';
+import { QueryFileDefaults } from 'Query/QueryFileDefaults';
 import { getTasksFileFromMockData } from '../../TestingTools/MockDataHelpers';
 import { verifyWithFileExtension } from '../../TestingTools/ApprovalTestHelpers';
 import { verifyMarkdown, verifyMarkdownForDocs } from '../../TestingTools/VerifyMarkdown';
-import { QueryFileDefaults } from '../../../src/Query/QueryFileDefaults';
 import { MockDataLoader } from '../../TestingTools/MockDataLoader';
 import type { MockDataName } from '../../Obsidian/AllCacheSampleData';
 

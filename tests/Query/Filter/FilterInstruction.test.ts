@@ -1,6 +1,6 @@
-import { FilterInstruction } from '../../../src/Query/Filter/FilterInstruction';
-import type { FilterFunction } from '../../../src/Query/Filter/Filter';
-import type { Task } from '../../../src/Task/Task';
+import { FilterInstruction } from 'Query/Filter/FilterInstruction';
+import type { FilterFunction } from 'Query/Filter/Filter';
+import type { Task } from 'Task/Task';
 
 describe('FilterInstruction', () => {
     const filter: FilterFunction = (_task: Task) => true;
@@ -21,5 +21,14 @@ describe('FilterInstruction', () => {
         const line = 'FIND ME';
         const filterOrErrorMessage = filterInstruction.createFilterOrErrorMessage(line);
         expect(filterOrErrorMessage).toHaveExplanation(line);
+    });
+
+    it('explanation can be made more specific', () => {
+        const line = 'do something';
+        const explanation = 'please do something';
+        const filterInstruction = new FilterInstruction(line, filter, explanation);
+
+        const filterOrErrorMessage = filterInstruction.createFilterOrErrorMessage(line);
+        expect(filterOrErrorMessage).toHaveExplanation(explanation);
     });
 });

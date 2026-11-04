@@ -1,18 +1,18 @@
-import type { Task } from '../../Task/Task';
-import type { GrouperFunction } from '../Group/Grouper';
-import { Grouper } from '../Group/Grouper';
-import { Explanation } from '../Explain/Explanation';
-import { TaskExpression, parseAndEvaluateExpression } from '../../Scripting/TaskExpression';
-import type { QueryContext } from '../../Scripting/QueryContext';
-import type { SearchInfo } from '../SearchInfo';
-import { Sorter } from '../Sort/Sorter';
-import { compareByDate } from '../../DateTime/DateTools';
-import { getValueType } from '../../lib/TypeDetection';
-import { EnableJsInTasksQueries } from '../../Config/EnableJsInTasksQueries';
-import { JsInTasksQueriesDisabledError } from '../../Scripting/JsInTasksQueriesDisabledError';
-import { Field } from './Field';
-import { Filter, type FilterFunction } from './Filter';
-import { FilterOrErrorMessage } from './FilterOrErrorMessage';
+import type { Task } from 'Task/Task';
+import type { GrouperFunction } from 'Query/Group/Grouper';
+import { Grouper } from 'Query/Group/Grouper';
+import { Explanation } from 'Query/Explain/Explanation';
+import { TaskExpression, parseAndEvaluateExpression } from 'Scripting/TaskExpression';
+import type { QueryContext } from 'Scripting/QueryContext';
+import type { SearchInfo } from 'Query/SearchInfo';
+import { Sorter } from 'Query/Sort/Sorter';
+import { compareByDate } from 'DateTime/DateTools';
+import { getValueType } from 'lib/TypeDetection';
+import { EnableJsInTasksQueries } from 'Config/EnableJsInTasksQueries';
+import { JsInTasksQueriesDisabledError } from 'Scripting/JsInTasksQueriesDisabledError';
+import { Field } from 'Query/Filter/Field';
+import { Filter, type FilterFunction } from 'Query/Filter/Filter';
+import { FilterOrErrorMessage } from 'Query/Filter/FilterOrErrorMessage';
 
 /**
  * A {@link Field} implement that accepts a JavaScript expression to filter or group tasks.
@@ -99,7 +99,7 @@ export class FunctionField extends Field {
         return new Sorter(line, this.fieldNameSingular(), comparator, reverse);
     }
 
-    public validateTaskSortKey(sortKey: any) {
+    public validateTaskSortKey(sortKey: unknown) {
         function throwSortKeyTypeError(sortKeyType: string) {
             throw new Error(`"${sortKeyType}" is not a valid sort key`);
         }
@@ -128,7 +128,7 @@ export class FunctionField extends Field {
      * @param valueA - a value that satisfies {@link validateTaskSortKey}.
      * @param valueB - a value that satisfies {@link validateTaskSortKey}.
      */
-    public compareTaskSortKeys(valueA: any, valueB: any) {
+    public compareTaskSortKeys(valueA: unknown, valueB: unknown) {
         // Precondition: Both parameter values have satisfied constraints in validateTaskSortKey().
 
         const valueAType = getValueType(valueA);
@@ -188,7 +188,7 @@ export class FunctionField extends Field {
         return undefined;
     }
 
-    private compareTaskSortKeysIfEitherIsNull(valueA: any, valueB: any) {
+    private compareTaskSortKeysIfEitherIsNull(valueA: unknown, valueB: unknown) {
         if (valueA === null && valueB === null) {
             return 0;
         }

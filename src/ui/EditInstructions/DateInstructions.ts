@@ -1,9 +1,9 @@
-import type { AllTaskDateFields } from '../../DateTime/DateFieldTypes';
-import { Task } from '../../Task/Task';
-import { postponeMenuItemTitleFromDate, removeDateMenuItemTitleForField } from '../../DateTime/Postponer';
-import { TasksDate } from '../../DateTime/TasksDate';
-import type { TaskEditingInstruction } from './TaskEditingInstruction';
-import { MenuDividerInstruction } from './MenuDividerInstruction';
+import type { AllTaskDateFields } from 'DateTime/DateFieldTypes';
+import { Task } from 'Task/Task';
+import { postponeMenuItemTitleFromDate, removeDateMenuItemTitleForField } from 'DateTime/Postponer';
+import { TasksDate } from 'DateTime/TasksDate';
+import type { TaskEditingInstruction } from 'ui/EditInstructions/TaskEditingInstruction';
+import { MenuDividerInstruction } from 'ui/EditInstructions/MenuDividerInstruction';
 
 /**
  * An instruction to set a date field to an absolute date.

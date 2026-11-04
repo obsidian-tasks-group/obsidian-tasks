@@ -1,5 +1,5 @@
 import { type RenderResult, render } from '@testing-library/svelte';
-import ModalOptionsEditor from '../../src/ui/ModalOptionsEditor.svelte';
+import ModalOptionsEditor from 'ui/ModalOptionsEditor.svelte';
 import { verifyWithFileExtension } from '../TestingTools/ApprovalTestHelpers';
 import { prettifyHTML } from '../TestingTools/HTMLHelpers';
 
@@ -29,9 +29,9 @@ export function renderAndCheckModal(onSave: () => void = () => {}) {
     return { result, container };
 }
 
-export function verifyModalHTML() {
+export async function verifyModalHTML() {
     const { container } = renderAndCheckModal();
 
-    const prettyHTML = prettifyHTML(container.innerHTML);
+    const prettyHTML = await prettifyHTML(container.innerHTML);
     verifyWithFileExtension(prettyHTML, 'html');
 }

@@ -1,20 +1,16 @@
-/**
- * @jest-environment jsdom
- */
-
 import moment from 'moment';
 
-import { ScheduledDateField } from '../../../src/Query/Filter/ScheduledDateField';
+import { ScheduledDateField } from 'Query/Filter/ScheduledDateField';
 
 window.moment = moment;
 
 beforeEach(() => {
-    jest.useFakeTimers();
-    jest.setSystemTime(new Date('2023-06-11 20:00'));
+    vi.useFakeTimers();
+    vi.setSystemTime(new Date('2023-06-11 20:00'));
 });
 
 afterEach(() => {
-    jest.useRealTimers();
+    vi.useRealTimers();
 });
 
 describe('DateField', () => {

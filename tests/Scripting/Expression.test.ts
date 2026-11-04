@@ -1,16 +1,13 @@
-/**
- * @jest-environment jsdom
- */
 import moment from 'moment';
 
-import { evaluateExpression, evaluateExpressionOrCatch, parseExpression } from '../../src/Scripting/Expression';
-import { TaskBuilder } from '../TestingTools/TaskBuilder';
+import { evaluateExpression, evaluateExpressionOrCatch, parseExpression } from 'Scripting/Expression';
+import { continueLinesFlattened } from 'Query/Scanner';
+import { constructArguments, parseAndEvaluateExpression } from 'Scripting/TaskExpression';
+import { makeQueryContext } from 'Scripting/QueryContext';
+import { EnableJsInTasksQueries } from 'Config/EnableJsInTasksQueries';
+import { JsInTasksQueriesDisabledError } from 'Scripting/JsInTasksQueriesDisabledError';
 import { verifyMarkdownForDocs } from '../TestingTools/VerifyMarkdown';
-import { continueLinesFlattened } from '../../src/Query/Scanner';
-import { constructArguments, parseAndEvaluateExpression } from '../../src/Scripting/TaskExpression';
-import { makeQueryContext } from '../../src/Scripting/QueryContext';
-import { EnableJsInTasksQueries } from '../../src/Config/EnableJsInTasksQueries';
-import { JsInTasksQueriesDisabledError } from '../../src/Scripting/JsInTasksQueriesDisabledError';
+import { TaskBuilder } from '../TestingTools/TaskBuilder';
 import { createTestTasksFile } from '../TestingTools/TasksFileHelpers';
 import { formatToRepresentType } from './ScriptingTestHelpers';
 

@@ -1,0 +1,90 @@
+{
+  "cachedMetadata": {
+    "listItems": [
+      {
+        "parent": -2,
+        "position": {
+          "end": {
+            "col": 27,
+            "line": 3,
+            "offset": 96
+          },
+          "start": {
+            "col": 0,
+            "line": 2,
+            "offset": 45
+          }
+        }
+      },
+      {
+        "parent": -2,
+        "position": {
+          "end": {
+            "col": 23,
+            "line": 2,
+            "offset": 68
+          },
+          "start": {
+            "col": 2,
+            "line": 2,
+            "offset": 47
+          }
+        },
+        "task": " "
+      },
+      {
+        "parent": 2,
+        "position": {
+          "end": {
+            "col": 27,
+            "line": 3,
+            "offset": 96
+          },
+          "start": {
+            "col": 4,
+            "line": 3,
+            "offset": 73
+          }
+        },
+        "task": " "
+      }
+    ],
+    "sections": [
+      {
+        "position": {
+          "end": {
+            "col": 43,
+            "line": 0,
+            "offset": 43
+          },
+          "start": {
+            "col": 0,
+            "line": 0,
+            "offset": 0
+          }
+        },
+        "type": "paragraph"
+      },
+      {
+        "position": {
+          "end": {
+            "col": 27,
+            "line": 3,
+            "offset": 96
+          },
+          "start": {
+            "col": 0,
+            "line": 2,
+            "offset": 45
+          }
+        },
+        "type": "list"
+      }
+    ]
+  },
+  "fileContents": "Using non-Obsidian-like nested indentation:\n\n* * [ ] A - 4081 task 1\n    * [ ] B - 4081 task 1.1\n",
+  "filePath": "Test Data/list_items_nested_issue_4081_unnumbered.md",
+  "getAllTags": [],
+  "parseFrontMatterTags": null,
+  "resolveLinkToPath": {}
+}

@@ -1,21 +1,18 @@
-/**
- * @jest-environment jsdom
- */
 import moment from 'moment';
 
 window.moment = moment;
 
-import { verify } from 'approvals/lib/Providers/Jest/JestApprovals';
-import type { Comparator } from '../../../src/Query/Sort/Sorter';
-import { Sorter } from '../../../src/Query/Sort/Sorter';
-import { Task } from '../../../src/Task/Task';
-import { StatusField } from '../../../src/Query/Filter/StatusField';
-import { DueDateField } from '../../../src/Query/Filter/DueDateField';
-import { PathField } from '../../../src/Query/Filter/PathField';
-import { SearchInfo } from '../../../src/Query/SearchInfo';
-import { Sort } from '../../../src/Query/Sort/Sort';
-import { StatusRegistry } from '../../../src/Statuses/StatusRegistry';
-import { StatusConfiguration, StatusType } from '../../../src/Statuses/StatusConfiguration';
+import { verify } from '@approval-tests/approvals/lib/Providers/Vitest/VitestApprovals';
+import type { Comparator } from 'Query/Sort/Sorter';
+import { Sorter } from 'Query/Sort/Sorter';
+import type { Task } from 'Task/Task';
+import { StatusField } from 'Query/Filter/StatusField';
+import { DueDateField } from 'Query/Filter/DueDateField';
+import { PathField } from 'Query/Filter/PathField';
+import { SearchInfo } from 'Query/SearchInfo';
+import { Sort } from 'Query/Sort/Sort';
+import { StatusRegistry } from 'Statuses/StatusRegistry';
+import { StatusConfiguration, StatusType } from 'Statuses/StatusConfiguration';
 import { fromLine, fromLines, toLines } from '../../TestingTools/TestHelpers';
 import { SampleTasks } from '../../TestingTools/SampleTasks';
 import { TaskBuilder } from '../../TestingTools/TaskBuilder';
@@ -30,12 +27,12 @@ const farFuture = '2022-01-31';
 const invalid = '2022-13-33';
 
 beforeAll(() => {
-    jest.useFakeTimers();
-    jest.setSystemTime(new Date(today));
+    vi.useFakeTimers();
+    vi.setSystemTime(new Date(today));
 });
 
 afterAll(() => {
-    jest.useRealTimers();
+    vi.useRealTimers();
 });
 
 afterEach(() => {
@@ -191,13 +188,21 @@ describe('Sort', () => {
                     const description = `Start: ${pad(start[0]!)} Scheduled: ${pad(scheduled[0]!)} Due: ${pad(
                         due[0]!,
                     )}`;
-                    let line = `- [ ] ${description}`;
-                    line += addDateIfSet('🛫', start[1]);
-                    line += addDateIfSet('⏳', scheduled[1]);
-                    line += addDateIfSet('📅', due[1]);
-                    const task = fromLine({ line });
-                    const description2 = `${description} urgency = ${task.urgency.toFixed(5)}`;
-                    const task2 = new Task({ ...task, description: description2 });
+
+                    let dateFields = '';
+                    dateFields += addDateIfSet('🛫', start[1]);
+                    dateFields += addDateIfSet('⏳', scheduled[1]);
+                    dateFields += addDateIfSet('📅', due[1]);
+
+                    const line = `- [ ] ${description}`;
+                    const task = fromLine({ line: line + dateFields });
+
+                    // Re-read the updated line from Markdown instead of using spread-with-override.
+                    // This avoids preserving trailing spaces from `task` when creating `task2`.
+                    // It matters for the test case where `start`, `scheduled`, and `due` are all null.
+                    const urgencyDescription = ` urgency = ${task.urgency.toFixed(5)}`;
+                    const task2 = fromLine({ line: line + urgencyDescription + dateFields });
+
                     tasks.push(task2);
                 }
             }

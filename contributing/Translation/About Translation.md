@@ -17,7 +17,8 @@ Since Tasks X.Y.Z, we are gradually migration most user-visible text in to a tra
 
 ## For translators
 
-- [[Contribute translations]]
+- [[Contribute translations]], including updating an existing translation.
+- [[Support a new language]]
 
 ## For developers
 
@@ -25,4 +26,3 @@ Since Tasks X.Y.Z, we are gradually migration most user-visible text in to a tra
 - [[Set up WebStorm for translation work]]
 - [[Set up Visual Studio Code for translation work]]
 - [[Translate a new string]]
-- [[Support a new language]]

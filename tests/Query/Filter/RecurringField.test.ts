@@ -1,9 +1,6 @@
-/**
- * @jest-environment jsdom
- */
 import moment from 'moment';
-import { RecurringField } from '../../../src/Query/Filter/RecurringField';
-import type { FilterOrErrorMessage } from '../../../src/Query/Filter/FilterOrErrorMessage';
+import { RecurringField } from 'Query/Filter/RecurringField';
+import type { FilterOrErrorMessage } from 'Query/Filter/FilterOrErrorMessage';
 import { testTaskFilter } from '../../TestingTools/FilterTestHelpers';
 import { fromLine } from '../../TestingTools/TestHelpers';
 import { SampleTasks } from '../../TestingTools/SampleTasks';

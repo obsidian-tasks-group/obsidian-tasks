@@ -75,8 +75,8 @@ then
     git add -A .
     git commit -m"Update to version ${NEW_VERSION}"
     git tag "${NEW_VERSION}"
-    git push
-    LEFTHOOK=0 git push --tags
+    git push origin main
+    LEFTHOOK=0 git push origin "${NEW_VERSION}"
 
     echo "Remember to publish the documentation via Obsidian Publish!"
   fi

@@ -1,12 +1,12 @@
-import type { Task } from '../Task/Task';
+import type { Task } from 'Task/Task';
+import type { QueryContext } from 'Scripting/QueryContext';
 import {
     type ExpressionParameter,
     FunctionOrError,
     evaluateExpression,
     evaluateExpressionOrCatch,
     parseExpression,
-} from './Expression';
-import type { QueryContext } from './QueryContext';
+} from 'Scripting/Expression';
 
 /**
  *  From: https://www.educative.io/answers/parameter-vs-argument
@@ -34,7 +34,7 @@ export function constructArguments(task: Task | null, queryContext: QueryContext
  *
  * See also {@link FunctionField} which exposes this facility to users.
  */
-export function parseAndEvaluateExpression(task: Task, arg: string, queryContext?: QueryContext) {
+export function parseAndEvaluateExpression(task: Task, arg: string, queryContext?: QueryContext): unknown {
     const paramsArgs = constructArguments(task, queryContext || null);
 
     const functionOrError = parseExpression(paramsArgs, arg);
@@ -72,7 +72,7 @@ export class TaskExpression {
      *
      * @see evaluateOrCatch
      */
-    public evaluate(task: Task, queryContext?: QueryContext) {
+    public evaluate(task: Task, queryContext?: QueryContext): unknown {
         if (!this.isValid()) {
             throw new Error(
                 `Error: Cannot evaluate an expression which is not valid: "${this.line}" gave error: "${this.parseError}"`,
@@ -88,7 +88,7 @@ export class TaskExpression {
      *
      * @see evaluate
      */
-    public evaluateOrCatch(task: Task, queryContext: QueryContext) {
+    public evaluateOrCatch(task: Task, queryContext: QueryContext): unknown {
         if (!this.isValid()) {
             return `Error: Cannot evaluate an expression which is not valid: "${this.line}" gave error: "${this.parseError}"`;
         }

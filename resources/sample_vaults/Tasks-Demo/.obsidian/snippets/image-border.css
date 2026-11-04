@@ -1,0 +1,10 @@
+/* Put a soft border and black line around images, to make them stand out from the background */
+@media screen {
+    img {
+        margin-bottom: 1.5rem !important;
+        border-radius: 4px !important;
+        box-shadow: 0 5px 20px rgba(1, 0, 0, 0.5), 0 3px 10px rgba(0, 1, 0, 0.7) !important;
+        border: 2px solid black;
+        border-radius:4px
+    }
+}

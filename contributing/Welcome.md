@@ -7,6 +7,16 @@ Every contribution that follows the project [[Updating code|guidelines]] is much
 > [!Important] Important - updated February 2026
 > Please read [[Updating code]] thoroughly before starting work a Pull Request, to save your time and ours. Thank you.
 
+> [!warning] **vitest** test framework - adopted October 2026<!-- include: vitest-migration-snippet.md -->
+> This project changed test frameworks from jest to vitest on 2026-10-01.  
+> Useful links:
+>
+> - [[Vitest Test Framework]]
+> - [[Vitest and the WebStorm IDE]]
+> - The main [pull request](https://github.com/obsidian-tasks-group/obsidian-tasks/pull/4056/changes), which shows the kinds of edits required if updating any pre-existing branches.
+>
+> There's no need to update any open pull requests: the Tasks team will take care of this when the tests are merged.<!-- endInclude -->
+
 ## How to read this documentation
 
 Getting the most from this documentation:
@@ -23,6 +33,7 @@ Getting the most from this documentation:
 - See [[About Testing]] to learn about automated and manual testing of the plugin
 - See [[About Debugging]] for tips to debug the plugin
 - See [[About Code]] for descriptions of the project's source code
+- See [[About Linting]] for notes about the code-quality tools used in this project
 - See [[About Architecture Decisions]] for Architecture Decision Records
 - See [[About Documentation]] if you would like to improve and test the user docs
 - See [[About Translation]] if you are adding new text the plugin, and to help translate it

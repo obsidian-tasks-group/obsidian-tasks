@@ -19,11 +19,11 @@ All good IDEs will allow you to:
 - Execute the tests inside a [debugger](https://code.visualstudio.com/docs/editor/debugging), which is really valuable to understand failing tests.
 - Jump straight to the location of the test failure
 
-Users of JetBrains WebStorm should review [[Jest and the WebStorm IDE]].
+Users of JetBrains WebStorm should review [[Vitest and the WebStorm IDE]].
 
 ## Running tests in a terminal window
 
-You can also run all the tests, to confirm your environment is set up correctly:
+You can also run all the unit tests once with Vitest, to confirm your environment is set up correctly:
 
 ```bash
 yarn test
@@ -43,43 +43,40 @@ When a test fails, we get lots of useful information in the output.
 
 In the example below, we see:
 
-- It points us the the line of the failing test (132 below):
+- It points us to the line of the failing test (132 below):
 - Which tells us that the task's status was supposed to be `TODO`
 - Looking up:
-  - the lines beginning with  a hyphen (`-`) show what the status *should* have been,
-  - the lines beginning with a plus sign (`+`) who what the status actually was, in this test run.
+  - the lines beginning with a hyphen (`-`) show what the status *should* have been,
+  - the lines beginning with a plus sign (`+`) show what the status actually was, in this test run.
 
 ```text
-  ● parsing › allows signifier emojis as part of the description
+ FAIL  tests/Task/Task.test.ts > parsing > allows signifier emojis as part of the description
+AssertionError: expected Status{ …(1) } to strictly equal Status{ …(1) }
 
-    expect(received).toStrictEqual(expected) // deep equality
+- Expected
++ Received
 
-    - Expected  - 4
-    + Received  + 4
+  Status {
+    "configuration": StatusConfiguration {
+      "availableAsCommand": true,
+-     "name": "Todo",
+-     "nextStatusSymbol": "x",
+-     "symbol": " ",
+-     "type": "TODO",
++     "name": "Done",
++     "nextStatusSymbol": " ",
++     "symbol": "x",
++     "type": "DONE",
+    },
+  }
 
-      Status {
-        "configuration": StatusConfiguration {
-          "availableAsCommand": true,
-    -     "name": "Todo",
-    -     "nextStatusSymbol": "x",
-    -     "symbol": " ",
-    -     "type": "TODO",
-    +     "name": "Done",
-    +     "nextStatusSymbol": " ",
-    +     "symbol": "x",
-    +     "type": "DONE",
-        },
-      }
-
-      130 |         expect(task).not.toBeNull();
-      131 |         expect(task!.description).toEqual('this is a ✅ done task');
-    > 132 |         expect(task!.status).toStrictEqual(Status.TODO);
-          |                              ^
-      133 |         expect(task!.dueDate).not.toBeNull();
-      134 |         expect(task!.dueDate!.isSame(moment('2021-09-12', 'YYYY-MM-DD'))).toStrictEqual(true);
-      135 |         expect(task!.doneDate).not.toBeNull();
-
-      at Object.<anonymous> (tests/Task.test.ts:132:30)
+ ❯ tests/Task/Task.test.ts:132:30
+    130|         expect(task).not.toBeNull();
+    131|         expect(task!.description).toEqual('this is a ✅ done task');
+    132|         expect(task!.status).toStrictEqual(Status.TODO);
+       |                              ^
+    133|         expect(task!.dueDate).not.toBeNull();
+    134|         expect(task!.dueDate!.isSame(moment('2021-09-12', 'YYYY-MM-DD'))).toStrictEqual(true);
 ```
 
 ## Next: Writing Tests

@@ -1,6 +1,6 @@
-import { verify } from 'approvals/lib/Providers/Jest/JestApprovals';
-import { DescriptionField } from '../../../src/Query/Filter/DescriptionField';
-import { Query } from '../../../src/Query/Query';
+import { verify } from '@approval-tests/approvals/lib/Providers/Vitest/VitestApprovals';
+import { DescriptionField } from 'Query/Filter/DescriptionField';
+import { Query } from 'Query/Query';
 
 describe('should report regular expression errors to user ', () => {
     it('should report mismatched parenthesis', () => {

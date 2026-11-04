@@ -184,6 +184,22 @@ These attributes can be used to style tasks according to their status, with the 
 - Styles **cannot access any automatic scheduled date** that is created if the [[Use Filename as Default Date]]  option is enabled.
   - We are tracking this in [issue #1947](https://github.com/obsidian-tasks-group/obsidian-tasks/issues/1947).
 
+## Support
+
+Before creating a new bug report or feature request about Styling, please check existing items to avoid duplicates.
+
+You do not need to search manually: the links below are already filtered to the label `"scope: css styling"`.
+
+- Check both Open and Closed items.
+- If you find an existing item, support it there instead of adding a `+1` comment. See [[About Support and Help#How to support an existing request|How to support an existing request]].
+
+| Type | Open | Closed | Notes |
+| --- | --- | --- | --- |
+| Issues | [Open](https://github.com/obsidian-tasks-group/obsidian-tasks/issues?q=is%3Aopen%20label%3A%22scope%3A+css+styling%22%20is%3Aissue%20) | [Closed](https://github.com/obsidian-tasks-group/obsidian-tasks/issues?q=is%3Aclosed%20label%3A%22scope%3A+css+styling%22%20is%3Aissue%20) | bug reports and feature requests |
+| Discussions | [Open](https://github.com/obsidian-tasks-group/obsidian-tasks/discussions/categories/ideas-any-new-feature-requests-go-in-issues-please?discussions_q=is%3Aopen+label%3A%22scope%3A+css+styling%22+category%3A%22Ideas%3A+Any+New+Feature+Requests+go+in+Issues+please%22+sort%3Atop) | [Closed](https://github.com/obsidian-tasks-group/obsidian-tasks/discussions/categories/ideas-any-new-feature-requests-go-in-issues-please?discussions_q=is%3Aclosed+label%3A%22scope%3A+css+styling%22+category%3A%22Ideas%3A+Any+New+Feature+Requests+go+in+Issues+please%22+sort%3Atop) | older feature discussions from before late 2022 |
+
+If you do not find an existing item in Issues or Discussions, see [[About Support and Help]] for how to report a bug or request a feature.
+
 ## More Classes
 
 The following additional components have the following classes:
@@ -204,7 +220,7 @@ The following additional components have the following classes:
 > - `plugin-tasks-query-explanation` was introduced in Tasks 1.19.0.
 > - `tasks-postpone` was added in Tasks 5.3.0.
 > - Styling of the Edit and Postpone buttons was changed in Tasks 6.0.0: see [[How to style buttons]].
-> - `tasks-group-count` was added in Tasks X.Y.Z.
+> - `tasks-group-count` was added in Tasks 8.4.0.
 
 ## CSS Examples
 
@@ -251,7 +267,9 @@ For example:
 
 ![Example of tasks-plugin-tags-links-recurrence-gray.css snippet](../../images/tasks-plugin-tags-links-recurrence-gray-snippet.png)
 
-### Priority as a Checkbox Color
+### Styling Tasks with Priorities
+
+#### Priority as a Checkbox Color
 
 The following rules remove the Tasks priority emoticon and render the tasks' checkboxes in purple, red, orange, blue, cyan and green according to the tasks' priority:
 
@@ -297,6 +315,56 @@ span.task-priority {
 For example:
 
 ![Example of tasks-plugin-priority-as-checkbox-color.css snippet](../../images/tasks-plugin-priority-as-checkbox-color-snippet.png)
+
+#### Priority as a Background Color, for active tasks
+
+The following rules remove the Tasks priority emoticon and render the tasks' backgrounds in purple, red, orange, blue, cyan and green according to the tasks' priority. It only colours tasks with status types TODO and IN_PROGRESS, as these are the tasks that are actionable.
+
+<!-- snippet: resources/sample_vaults/Tasks-Demo/.obsidian/snippets/tasks-plugin-priority-as-background-color.css -->
+```css
+.task-list-item {
+    /* Make stand out in colour, if they still need work */
+    &[data-task-status-type="TODO"],
+    &[data-task-status-type="IN_PROGRESS"] {
+        background: rgb(from var(--priority-color) r g b / 0.2);
+        border: 1px rgb(from var(--priority-color) r g b / 0.3) solid;
+
+        &[data-task-priority="highest"] {
+            --priority-color: var(--color-purple);
+        }
+
+        &[data-task-priority="high"] {
+            --priority-color: var(--color-red);
+        }
+
+        &[data-task-priority="medium"] {
+            --priority-color: var(--color-orange);
+        }
+
+        &[data-task-priority="normal"] {
+            --priority-color: var(--color-blue);
+        }
+
+        &[data-task-priority="low"] {
+            --priority-color: var(--color-cyan);
+        }
+
+        &[data-task-priority="lowest"] {
+            --priority-color: var(--color-green);
+        }
+
+        /* This part removes the regular priority emoticon, only for the tasks that we are styling */
+        span.task-priority {
+            display: none;
+        }
+    }
+}
+```
+<!-- endSnippet -->
+
+For example:
+
+![Example of tasks-plugin-priority-as-background-color.css snippet](../../images/tasks-plugin-priority-as-background-color-snippet.png)
 
 ### Styling Tasks with Custom Statuses
 
@@ -430,8 +498,16 @@ The following organizes the task structure into a 3-line grid, on which:
 
 <!-- snippet: resources/sample_vaults/Tasks-Demo/.obsidian/snippets/tasks-plugin-grid-layout.css -->
 ```css
+/*
+ * The following defines a 2-level grid for displaying tasks.
+ * The top-level grid reserves column 1 for the task checkbox, then puts the "task text" next to it.
+ * The task text is made of its own internal grid that aligns the various components that are part of
+ * the task text: task-recurring, task-due, task-done, etc.
+ */
 ul > li.plugin-tasks-list-item {
-    grid-template-columns: 25px auto;
+    /* The first column is for the checkbox, but it is to the left of the grid, so we reserve
+     * a column of width 0 to it. */
+    grid-template-columns: 0px auto;
     display: grid;
     align-items: top;
 }
@@ -478,10 +554,11 @@ span.task-extras {
     font-size: small;
 }
 
-/* Make sure nested bullets in Reading mode get the whole width of the grid */
+/* Make sure nested bullets get the whole width of the grid */
+li.task-list-item ul.contains-task-list,
 li.task-list-item ul.has-list-bullet {
- grid-row: 3;
- grid-column: 1/10;
+    grid-row: 3;
+    grid-column: 1/10;
 }
 ```
 <!-- endSnippet -->
@@ -584,10 +661,16 @@ ul > li.plugin-tasks-list-item .task-list-item-checkbox {
     border-radius: 50%;
 }
 
-/* The following section organizes the task components in a grid, so the description will be on the first row
- * of each item and most components will be in the 2nd row. */
+/*
+ * The following defines a 2-level grid for displaying tasks.
+ * The top-level grid reserves column 1 for the task checkbox, then puts the "task text" next to it.
+ * The task text is made of its own internal grid that aligns the various components that are part of
+ * the task text: task-recurring, task-due, task-done, etc.
+ */
 ul > li.plugin-tasks-list-item {
-    grid-template-columns: 25px auto;
+    /* The first column is for the checkbox, but it is to the left of the grid, so we reserve
+     * a column of width 0 to it. */
+    grid-template-columns: 0px auto;
     display: grid;
     align-items: top;
 }
@@ -634,10 +717,11 @@ span.task-extras {
     font-size: small;
 }
 
-/* Make sure nested bullets in Reading mode get the whole width of the grid */
+/* Make sure nested bullets get the whole width of the grid */
+li.task-list-item ul.contains-task-list,
 li.task-list-item ul.has-list-bullet {
- grid-row: 3;
- grid-column: 1/10;
+    grid-row: 3;
+    grid-column: 1/10;
 }
 ```
 <!-- endSnippet -->

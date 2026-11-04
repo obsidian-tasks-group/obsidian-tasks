@@ -1,13 +1,10 @@
-/**
- * @jest-environment jsdom
- */
 import moment from 'moment';
 import type { Task } from 'Task/Task';
-import { GlobalQuery } from '../../src/Config/GlobalQuery';
-import { resetSettings, updateSettings } from '../../src/Config/Settings';
-import { State } from '../../src/Obsidian/Cache';
-import { QueryResultsRenderer } from '../../src/Renderer/QueryResultsRenderer';
-import type { TasksFile } from '../../src/Scripting/TasksFile';
+import { GlobalQuery } from 'Config/GlobalQuery';
+import { resetSettings, updateSettings } from 'Config/Settings';
+import { State } from 'Obsidian/Cache';
+import { QueryResultsRenderer } from 'Renderer/QueryResultsRenderer';
+import type { TasksFile } from 'Scripting/TasksFile';
 import { mockApp } from '../__mocks__/obsidian';
 import { verifyWithFileExtension } from '../TestingTools/ApprovalTestHelpers';
 import { TaskBuilder } from '../TestingTools/TaskBuilder';
@@ -22,12 +19,12 @@ import {
 window.moment = moment;
 
 beforeEach(() => {
-    jest.useFakeTimers();
-    jest.setSystemTime(new Date('2025-12-01'));
+    vi.useFakeTimers();
+    vi.setSystemTime(new Date('2025-12-01'));
 });
 
 afterEach(() => {
-    jest.useRealTimers();
+    vi.useRealTimers();
     resetSettings();
     GlobalQuery.getInstance().reset();
 });
@@ -97,8 +94,8 @@ describe('QueryResultsRenderer - accessing results', () => {
 
 describe('QueryResultsRenderer - rendering queries', () => {
     beforeEach(() => {
-        jest.useFakeTimers();
-        jest.setSystemTime(new Date('2023-07-05'));
+        vi.useFakeTimers();
+        vi.setSystemTime(new Date('2023-07-05'));
     });
 
     it('should render the toolbar', async () => {
@@ -251,11 +248,11 @@ class RendererStoryboard {
         return this.addFrame(description, container);
     }
 
-    public addFrame(description: string, container: HTMLDivElement) {
+    public async addFrame(description: string, container: HTMLDivElement) {
         this.output += `<h2>${description}:</h2>\n\n`;
         this.output += `<p>Results filter: '${this.renderer.filterString}'</p>\n`;
 
-        const { tasksAsMarkdown, prettyHTML } = tasksMarkdownAndPrettifiedHtml(container, this.allTasks);
+        const { tasksAsMarkdown, prettyHTML } = await tasksMarkdownAndPrettifiedHtml(container, this.allTasks);
         this.output += tasksAsMarkdown + prettyHTML;
 
         return { prettyHTML, container };
@@ -321,7 +318,7 @@ describe('QueryResultsRenderer - sequences', () => {
         const { container } = await storyboard.renderAndAddFrame('Initial results - expect 2 tasks');
 
         await storyboard.renderer.applySearchBoxFilterAndRerender('parent', container);
-        storyboard.addFrame('Filtered results (parent) - expect 1 task', container);
+        await storyboard.addFrame('Filtered results (parent) - expect 1 task', container);
 
         GlobalQuery.getInstance().set('sort by function reverse task.description.length');
         storyboard.renderer.rereadQueryFromFile();

@@ -4,9 +4,12 @@ on:
     branches: ['*']
   pull_request:
     branches: [main]
+  schedule:
+    - cron: '27 0 * * *'  # <https://crontab.guru/#27_0_*_*_*> - "At 00:27."
   workflow_dispatch:
 jobs:
   validate:
+    if: github.repository == 'obsidian-tasks-group/obsidian-tasks'
     runs-on: ubuntu-latest
     steps:
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
@@ -24,7 +27,7 @@ jobs:
       - name: Run Markdown Lint
         run: yarn run lint:markdown
 
-      - name: Run Jest
+      - name: Run tests
         run: yarn run test
 
       - name: Archive verified build

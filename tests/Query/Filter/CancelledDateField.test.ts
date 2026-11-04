@@ -1,9 +1,6 @@
-/**
- * @jest-environment jsdom
- */
 import moment from 'moment';
-import { CancelledDateField } from '../../../src/Query/Filter/CancelledDateField';
-import type { FilterOrErrorMessage } from '../../../src/Query/Filter/FilterOrErrorMessage';
+import { CancelledDateField } from 'Query/Filter/CancelledDateField';
+import type { FilterOrErrorMessage } from 'Query/Filter/FilterOrErrorMessage';
 import { TaskBuilder } from '../../TestingTools/TaskBuilder';
 import { testFilter } from '../../TestingTools/FilterTestHelpers';
 import { expectTaskComparesAfter, expectTaskComparesBefore } from '../../CustomMatchers/CustomMatchersForSorting';
@@ -42,12 +39,12 @@ describe('cancelled date', () => {
 
 describe('explain cancelled date queries', () => {
     beforeAll(() => {
-        jest.useFakeTimers();
-        jest.setSystemTime(new Date('2022-01-15'));
+        vi.useFakeTimers();
+        vi.setSystemTime(new Date('2022-01-15'));
     });
 
     afterAll(() => {
-        jest.useRealTimers();
+        vi.useRealTimers();
     });
 
     it('should explain date before', () => {

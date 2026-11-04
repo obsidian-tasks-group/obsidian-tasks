@@ -54,6 +54,10 @@ export type MockDataName =
     | 'link_in_yaml'
     | 'link_is_broken'
     | 'links_everywhere'
+    | 'list_items_nested_issue_4081_numbered'
+    | 'list_items_nested_issue_4081_numbered_standard'
+    | 'list_items_nested_issue_4081_unnumbered'
+    | 'list_items_nested_issue_4081_unnumbered_standard'
     | 'list_statuses'
     | 'list_styles'
     | 'mixed_list_markers'
@@ -169,6 +173,10 @@ export const AllMockDataNames: MockDataName[] = [
     'link_in_yaml',
     'link_is_broken',
     'links_everywhere',
+    'list_items_nested_issue_4081_numbered',
+    'list_items_nested_issue_4081_numbered_standard',
+    'list_items_nested_issue_4081_unnumbered',
+    'list_items_nested_issue_4081_unnumbered_standard',
     'list_statuses',
     'list_styles',
     'mixed_list_markers',

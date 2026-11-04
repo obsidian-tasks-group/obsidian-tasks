@@ -1,12 +1,12 @@
 import moment from 'moment/moment';
-import { GlobalFilter } from '../../src/Config/GlobalFilter';
-import { GlobalQuery } from '../../src/Config/GlobalQuery';
-import { resetSettings, updateSettings } from '../../src/Config/Settings';
-import { State } from '../../src/Obsidian/Cache';
-import { getQueryForQueryRenderer } from '../../src/Query/QueryRendererHelper';
-import { HtmlQueryResultsRenderer } from '../../src/Renderer/HtmlQueryResultsRenderer';
-import type { TasksFile } from '../../src/Scripting/TasksFile';
-import type { Task } from '../../src/Task/Task';
+import { GlobalFilter } from 'Config/GlobalFilter';
+import { GlobalQuery } from 'Config/GlobalQuery';
+import { resetSettings, updateSettings } from 'Config/Settings';
+import { State } from 'Obsidian/Cache';
+import { getQueryForQueryRenderer } from 'Query/QueryRendererHelper';
+import { HtmlQueryResultsRenderer } from 'Renderer/HtmlQueryResultsRenderer';
+import type { TasksFile } from 'Scripting/TasksFile';
+import type { Task } from 'Task/Task';
 import { mockApp } from '../__mocks__/obsidian';
 import { readTasksFromSimulatedFile } from '../Obsidian/SimulatedFile';
 import { TaskBuilder } from '../TestingTools/TaskBuilder';
@@ -79,12 +79,12 @@ function expectRenderedTaskBacklinks(container: HTMLElement, expected: RenderedT
 }
 
 beforeEach(() => {
-    jest.useFakeTimers();
-    jest.setSystemTime(new Date('2023-07-05'));
+    vi.useFakeTimers();
+    vi.setSystemTime(new Date('2023-07-05'));
 });
 
 afterEach(() => {
-    jest.useRealTimers();
+    vi.useRealTimers();
     GlobalFilter.getInstance().reset();
     GlobalQuery.getInstance().reset();
     resetSettings();
@@ -397,10 +397,10 @@ describe('Reusing HtmlQueryResultsRenderer', () => {
         const { renderer, query } = makeHtmlRenderer(source, tasksFile, allTasks);
 
         const container = await renderTasks(State.Warm, renderer, allTasks, query);
-        verifyRenderedTasks(container, allTasks);
+        await verifyRenderedTasks(container, allTasks);
 
         const rerenderedContainer = await renderTasks(State.Warm, renderer, allTasks, query);
-        verifyRenderedTasks(rerenderedContainer, allTasks);
+        await verifyRenderedTasks(rerenderedContainer, allTasks);
     });
 
     it('should render the same thing twice - flat', async () => {
@@ -411,10 +411,10 @@ describe('Reusing HtmlQueryResultsRenderer', () => {
         const { renderer, query } = makeHtmlRenderer(source, tasksFile, allTasks);
 
         const container = await renderTasks(State.Warm, renderer, allTasks, query);
-        verifyRenderedTasks(container, allTasks);
+        await verifyRenderedTasks(container, allTasks);
 
         const rerenderedContainer = await renderTasks(State.Warm, renderer, allTasks, query);
-        verifyRenderedTasks(rerenderedContainer, allTasks);
+        await verifyRenderedTasks(rerenderedContainer, allTasks);
     });
 });
 
@@ -464,13 +464,14 @@ describe('HtmlQueryResultsRenderer - internal heading links', () => {
     beforeAll(() => {
         const allTasks = readTasksFromSimulatedFile('internal_heading_links');
 
-        tasksByHeading = allTasks.reduce((acc, task) => {
-            const heading = task.taskLocation.precedingHeader ?? '';
+        tasksByHeading = allTasks.reduce(
+            (acc, task) => {
+                const heading = task.taskLocation.precedingHeader ?? '';
 
-            // For now, the test design only supports one task per heading, so make it an error
-            // if there are multiple tasks in this heading:
-            if (acc[heading]) {
-                throw new Error(`Multiple tasks found under the heading: "${heading}".
+                // For now, the test design only supports one task per heading, so make it an error
+                // if there are multiple tasks in this heading:
+                if (acc[heading]) {
+                    throw new Error(`Multiple tasks found under the heading: "${heading}".
 The test design only supports one task per heading currently, so this is an error.
 
 Edit "${task.path}" to move one of these lines to a separate heading:
@@ -481,11 +482,13 @@ And then rerun the command "Templater: Insert _meta/templates/convert_test_data_
 
 For more info: https://publish.obsidian.md/tasks-contributing/Testing/Using+Obsidian+API+in+tests
 `);
-            }
+                }
 
-            acc[heading] = task;
-            return acc;
-        }, {} as Record<string, Task>);
+                acc[heading] = task;
+                return acc;
+            },
+            {} as Record<string, Task>,
+        );
     });
 
     async function renderTask(task: Task, queryFilePath: string = 'query.md') {

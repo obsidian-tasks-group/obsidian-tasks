@@ -1,22 +1,22 @@
-import { getSettings, getUserSelectedTaskFormat } from '../Config/Settings';
-import { GlobalFilter } from '../Config/GlobalFilter';
-import { StatusRegistry } from '../Statuses/StatusRegistry';
-import type { Status } from '../Statuses/Status';
-import { compareByDate } from '../DateTime/DateTools';
-import { TasksDate } from '../DateTime/TasksDate';
-import { StatusType } from '../Statuses/StatusConfiguration';
-import { PriorityTools } from '../lib/PriorityTools';
-import { logging } from '../lib/logging';
-import { logEndOfTaskEdit, logStartOfTaskEdit } from '../lib/LogTasksHelper';
-import { DateFallback } from '../DateTime/DateFallback';
-import { ListItem } from './ListItem';
-import type { Occurrence } from './Occurrence';
-import { Urgency } from './Urgency';
-import type { Recurrence } from './Recurrence';
-import type { TaskLocation } from './TaskLocation';
-import type { Priority } from './Priority';
-import { TaskRegularExpressions } from './TaskRegularExpressions';
-import { OnCompletion, handleOnCompletion } from './OnCompletion';
+import { getSettings, getUserSelectedTaskFormat } from 'Config/Settings';
+import { GlobalFilter } from 'Config/GlobalFilter';
+import { StatusRegistry } from 'Statuses/StatusRegistry';
+import type { Status } from 'Statuses/Status';
+import { compareByDate } from 'DateTime/DateTools';
+import { TasksDate } from 'DateTime/TasksDate';
+import { StatusType } from 'Statuses/StatusConfiguration';
+import { PriorityTools } from 'lib/PriorityTools';
+import { logging } from 'lib/logging';
+import { logEndOfTaskEdit, logStartOfTaskEdit } from 'lib/LogTasksHelper';
+import { DateFallback } from 'DateTime/DateFallback';
+import { ListItem } from 'Task/ListItem';
+import type { Occurrence } from 'Task/Occurrence';
+import { Urgency } from 'Task/Urgency';
+import type { Recurrence } from 'Task/Recurrence';
+import type { TaskLocation } from 'Task/TaskLocation';
+import type { Priority } from 'Task/Priority';
+import { TaskRegularExpressions } from 'Task/TaskRegularExpressions';
+import { OnCompletion, handleOnCompletion } from 'Task/OnCompletion';
 
 /**
  * Storage for the task line, broken down in to sections.
@@ -34,6 +34,8 @@ interface TaskComponents {
  * Task encapsulates the properties of the MarkDown task along with
  * the extensions provided by this plugin. This is used to parse and
  * generate the markdown task for all updates and replacements.
+ *
+ * See also {@link ListItem}.
  *
  * @class Task
  */
@@ -323,7 +325,12 @@ export class Task extends ListItem {
      * @return {*}  {string}
      */
     public toFileLineString(): string {
-        return `${this.indentation}${this.listMarker} [${this.status.symbol}] ${this.toString()}`;
+        // Preserve Markdown hard-break spaces from the original line when a task
+        // edit is being written back. A single trailing space is formatting noise,
+        // but two or more trailing spaces are meaningful.
+        return `${this.indentation}${this.listMarker} [${this.status.symbol}] ${this.toString()}${
+            this.markdownHardBreak
+        }`;
     }
 
     /**

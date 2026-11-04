@@ -4,9 +4,9 @@
 
 This page shows a few examples of typical tests in the Tasks code, to give ideas on writing tests.
 
-## An example Jest  test
+## An example Vitest test
 
-Tasks tests are written with the Jest test framework.
+Tasks tests are written with the Vitest test framework.
 
 Here is an example test:
 
@@ -80,4 +80,4 @@ describe('search description for time stamps', () => {
 ```
 <!-- endSnippet -->
 
-Our Jest custom matchers are all in [tests/CustomMatchers/](https://github.com/obsidian-tasks-group/obsidian-tasks/tree/main/tests/CustomMatchers).
+Our Vitest custom matchers are all in [tests/CustomMatchers/](https://github.com/obsidian-tasks-group/obsidian-tasks/tree/main/tests/CustomMatchers).

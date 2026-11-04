@@ -3,7 +3,8 @@ Explanation of the Query File Defaults (from properties/frontmatter in the query
   folder includes {{query.file.folder}} =>
   folder includes Test Data/
 
-  not done
+  not done =>
+    status type is TODO or IN_PROGRESS or ON_HOLD
 
   short mode
 

@@ -1,8 +1,5 @@
-/**
- * @jest-environment jsdom
- */
-import { getSettings, isFeatureEnabled, resetSettings, toggleFeature, updateSettings } from '../../src/Config/Settings';
-import { defaultPresets } from '../../src/Query/Presets/Presets';
+import { type PostponeDateField, type Settings, getSettings, resetSettings, updateSettings } from 'Config/Settings';
+import { defaultPresets } from 'Query/Presets/Presets';
 
 beforeEach(() => {
     resetSettings();
@@ -13,25 +10,57 @@ afterEach(() => {
 });
 
 describe('settings-usage', () => {
-    it('load default settings and validate features', () => {
-        const currentSettings = getSettings();
+    it.each([
+        [
+            'should delete old default "features" setting value, as Features facility was unused and deleted',
+            { INTERNAL_TESTING_ENABLED_BY_DEFAULT: true },
+            undefined,
+        ],
+        [
+            'should retain non-standard "features" setting value, in case a fork of this plugin had used the Features facility',
+            { INTERNAL_TESTING_ENABLED_BY_DEFAULT: true, FICTIONAL_FEATURE: true },
+            { INTERNAL_TESTING_ENABLED_BY_DEFAULT: true, FICTIONAL_FEATURE: true },
+        ],
+    ])('%s', (_testName, initialFeaturesValue, remainingFeaturesValue) => {
+        updateSettings({
+            features: initialFeaturesValue,
+        } as Partial<Settings>);
 
-        expect(Object.entries(currentSettings.features).length).toBeGreaterThan(0);
-        expect(currentSettings.features['INTERNAL_TESTING_ENABLED_BY_DEFAULT']).toBe(true);
+        const settings = getSettings();
+
+        expect((settings as any).features).toEqual(remainingFeaturesValue);
     });
 
-    it('returns true if feature enabled', () => {
-        const currentSettings = isFeatureEnabled('INTERNAL_TESTING_ENABLED_BY_DEFAULT');
+    it.each([
+        [
+            // force line break
+            'should delete old default "generalSettings" setting value, as setting was unused and deleted',
+            {},
+            undefined,
+        ],
+        [
+            'should retain non-standard "generalSettings" setting value, in case a fork of this plugin had used the setting',
+            { newFeature: true },
+            { newFeature: true },
+        ],
+    ])('%s', (_testName, initialValue, remainingValue) => {
+        updateSettings({
+            generalSettings: initialValue,
+        } as Partial<Settings>);
 
-        expect(currentSettings).toBe(true);
+        const settings = getSettings();
+
+        expect((settings as any).generalSettings).toEqual(remainingValue);
     });
 
-    it('toggles a feature', () => {
-        const updatedFeatures = toggleFeature('INTERNAL_TESTING_ENABLED_BY_DEFAULT', false);
-        expect(updatedFeatures['INTERNAL_TESTING_ENABLED_BY_DEFAULT']).toBe(false);
+    it('should delete "headingOpened" setting value, regardless of setting value', () => {
+        updateSettings({
+            headingOpened: { 'Core Statuses': true, 'Custom Statuses': true },
+        } as Partial<Settings>);
 
-        const currentSettings = getSettings();
-        expect(currentSettings.features['INTERNAL_TESTING_ENABLED_BY_DEFAULT']).toBe(false);
+        const settings = getSettings();
+
+        expect((settings as any).headingOpened).toBeUndefined();
     });
 
     it('should add new logging options to settings', () => {
@@ -51,6 +80,18 @@ describe('settings-usage', () => {
 
         // Assert:
         expect(loggingOptions.loggingOptions.minLevels['tasks.Query']).toBeDefined();
+    });
+
+    it('should apply default Postpone date field option if the stored setting was invalid', () => {
+        updateSettings({
+            postpone: {
+                dateField: 'apple-sauce' as PostponeDateField,
+            },
+        } as Partial<Settings>);
+
+        const settings = getSettings();
+
+        expect((settings as any).postpone.dateField).toEqual('due-scheduled-start');
     });
 });
 
@@ -84,6 +125,22 @@ describe('resetSettings behaviour', () => {
     it('should have taskCountLocation default to bottom', () => {
         const currentSettings = getSettings();
         expect(currentSettings.searchResults.taskCountLocation).toBe('bottom');
+    });
+
+    it('should enable fuzzy Quick Search by default and retain a loaded value', () => {
+        expect(getSettings().quickSearch.fuzzyMatching).toBe(true);
+
+        updateSettings({ quickSearch: { fuzzyMatching: false } });
+
+        expect(getSettings().quickSearch.fuzzyMatching).toBe(false);
+    });
+
+    it('should default postpone.dateField to due-scheduled-start and retain a loaded value', () => {
+        expect(getSettings().postpone.dateField).toBe('due-scheduled-start');
+
+        updateSettings({ postpone: { dateField: 'scheduled' } });
+
+        expect(getSettings().postpone.dateField).toBe('scheduled');
     });
 
     it('should completely remove properties not in defaultSettings', () => {

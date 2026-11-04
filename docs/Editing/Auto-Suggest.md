@@ -140,6 +140,22 @@ There are some Auto-Suggest behaviours that might be improved in future releases
 - When Auto-Suggest is used in [[Kanban plugin]] cards (or any other plugins that use the [[Tasks Api#Auto-Suggest Integration|auto-suggest integration]]), the [[Task Dependencies|dependencies]] suggestions are not available, because there is not yet a mechanism for plugins to access all the tasks in the vault.
   - We are tracking this in [issue #3274](https://github.com/obsidian-tasks-group/obsidian-tasks/issues/3274).
 
+## Support
+
+Before creating a new bug report or feature request about Auto-Suggest, please check existing items to avoid duplicates.
+
+You do not need to search manually: the links below are already filtered to the label `"scope: auto-suggest"`.
+
+- Check both Open and Closed items.
+- If you find an existing item, support it there instead of adding a `+1` comment. See [[About Support and Help#How to support an existing request|How to support an existing request]].
+
+| Type | Open | Closed | Notes |
+| --- | --- | --- | --- |
+| Issues | [Open](https://github.com/obsidian-tasks-group/obsidian-tasks/issues?q=is%3Aopen%20label%3A%22scope%3A+auto-suggest%22%20is%3Aissue%20) | [Closed](https://github.com/obsidian-tasks-group/obsidian-tasks/issues?q=is%3Aclosed%20label%3A%22scope%3A+auto-suggest%22%20is%3Aissue%20) | bug reports and feature requests |
+| Discussions | [Open](https://github.com/obsidian-tasks-group/obsidian-tasks/discussions/categories/ideas-any-new-feature-requests-go-in-issues-please?discussions_q=is%3Aopen+label%3A%22scope%3A+auto-suggest%22+category%3A%22Ideas%3A+Any+New+Feature+Requests+go+in+Issues+please%22+sort%3Atop) | [Closed](https://github.com/obsidian-tasks-group/obsidian-tasks/discussions/categories/ideas-any-new-feature-requests-go-in-issues-please?discussions_q=is%3Aclosed+label%3A%22scope%3A+auto-suggest%22+category%3A%22Ideas%3A+Any+New+Feature+Requests+go+in+Issues+please%22+sort%3Atop) | older feature discussions from before late 2022 |
+
+If you do not find an existing item in Issues or Discussions, see [[About Support and Help]] for how to report a bug or request a feature.
+
 ## Managing Auto-Suggest Conflicts With Other Plugins
 
 When multiple Obsidian plugins offer auto-suggest features, they can interfere with each other, causing suggestions to not appear when expected or overwhelming you with too many options. This guide explains how to configure popular plugins to work together seamlessly.
@@ -309,7 +325,7 @@ Our second task looks like this. Note that the due date is shown in the Descript
 
 ### How do I see fewer or more suggestions?
 
-In the Tasks settings, change the [[#Maximum number of auto-suggestions to show]] slider to the value you want (and re-start Obsidian).
+In the Tasks settings, change the [[#Maximum number of auto-suggestions to show]] slider to the value you want.
 
 Now the auto-suggest menu will show at most the number of options that you have specified.
 
@@ -325,7 +341,7 @@ For more on filtering, and some examples, see [[#What keywords may I type to mak
 
 ### How do I make the menu pop up less?
 
-Increase the [[#Minimum match length for auto-suggest]] value in settings (and re-start Obsidian) so that the menu will only appear when you have typed a few characters from your chosen menu option.
+Increase the [[#Minimum match length for auto-suggest]] value in settings so that the menu will only appear when you have typed a few characters from your chosen menu option.
 
 For example, if you set the `Minimum match length for auto-suggest` to 3, you would need to type in your task "pri" or "hig" or "med" or "low" to get auto-suggest for the priority emoji(s).
 
@@ -419,12 +435,12 @@ Therefore it is the user's responsibility to manage conflicts between auto-sugge
 The Tasks auto-suggest will only appear on lines that start `- [ ]` and contain the global filter (if one is set).
 If you want to use auto-suggest features from another plugin on such lines, make sure that plugin's settings for auto-suggest
 appearance do not overlap with the keywords listed above,
-then increase the [[#Minimum match length for auto-suggest]] value in the Tasks settings to more characters than used to activate the other plugin's auto-suggest,
-and re-start Obsidian.
+then increase the [[#Minimum match length for auto-suggest]] value in the Tasks settings to more characters than used to activate the other plugin's auto-suggest.
 
 ## Settings
 
-Note that like all Tasks settings, after any changes, Obsidian needs to be restarted for the new settings to take effect.
+> [!released]
+> Changes to these settings take effect immediately since Tasks X.Y.Z.
 
 These are the settings currently available for this feature:
 

@@ -1,22 +1,15 @@
-/**
- * @jest-environment jsdom
- */
 import moment from 'moment';
 
-import { DebugSettings } from '../../src/Config/DebugSettings';
-import { GlobalFilter } from '../../src/Config/GlobalFilter';
-import { resetSettings, updateSettings } from '../../src/Config/Settings';
-import { QueryLayoutOptions } from '../../src/Layout/QueryLayoutOptions';
-import { TaskLayoutComponent, TaskLayoutOptions, taskLayoutComponents } from '../../src/Layout/TaskLayoutOptions';
-import { DateParser } from '../../src/DateTime/DateParser';
-import type { TextRenderer } from '../../src/Renderer/TaskLineRenderer';
-import {
-    TaskLineRenderer,
-    createAndAppendElement,
-    reconcileReplacementTask,
-} from '../../src/Renderer/TaskLineRenderer';
-import type { Task } from '../../src/Task/Task';
-import { TaskRegularExpressions } from '../../src/Task/TaskRegularExpressions';
+import { DebugSettings } from 'Config/DebugSettings';
+import { GlobalFilter } from 'Config/GlobalFilter';
+import { resetSettings, updateSettings } from 'Config/Settings';
+import { QueryLayoutOptions } from 'Layout/QueryLayoutOptions';
+import { TaskLayoutComponent, TaskLayoutOptions, taskLayoutComponents } from 'Layout/TaskLayoutOptions';
+import { DateParser } from 'DateTime/DateParser';
+import type { TextRenderer } from 'Renderer/TaskLineRenderer';
+import { TaskLineRenderer, reconcileReplacementTask } from 'Renderer/TaskLineRenderer';
+import type { Task } from 'Task/Task';
+import { TaskRegularExpressions } from 'Task/TaskRegularExpressions';
 import { verifyWithFileExtension } from '../TestingTools/ApprovalTestHelpers';
 import { prettifyHTML } from '../TestingTools/HTMLHelpers';
 import { TaskBuilder } from '../TestingTools/TaskBuilder';
@@ -24,7 +17,6 @@ import { fromLine } from '../TestingTools/TestHelpers';
 import { mockApp } from '../__mocks__/obsidian';
 import { mockHTMLRenderer, mockTextRenderer } from './RenderingTestHelpers';
 
-jest.mock('obsidian');
 window.moment = moment;
 
 /**
@@ -52,7 +44,7 @@ async function renderListItem(
         queryLayoutOptions: queryLayoutOptions ?? new QueryLayoutOptions(),
     });
     const divElement = document.createElement('div');
-    const li = createAndAppendElement('li', divElement);
+    const li = divElement.createEl('li');
     await taskLineRenderer.renderTaskLine({
         li: li,
         task: task,
@@ -509,12 +501,12 @@ describe('task line rendering - classes and data attributes', () => {
 
 describe('Visualise HTML', () => {
     beforeAll(() => {
-        jest.useFakeTimers();
-        jest.setSystemTime(new Date('2023-07-05'));
+        vi.useFakeTimers();
+        vi.setSystemTime(new Date('2023-07-05'));
     });
 
     afterAll(() => {
-        jest.useRealTimers();
+        vi.useRealTimers();
     });
 
     async function renderAndVerifyHTML(
@@ -532,7 +524,7 @@ describe('Visualise HTML', () => {
         const taskAsMarkdown = `<!--
 ${task.toFileLineString()}
 -->\n\n`;
-        const prettyHTML = prettifyHTML(listItem.outerHTML);
+        const prettyHTML = await prettifyHTML(listItem.outerHTML);
 
         verifyWithFileExtension(taskAsMarkdown + prettyHTML, 'html');
     }
@@ -584,7 +576,7 @@ describe('task line rendering - preserving classes and data attributes', () => {
      */
     const originalAndReplacement = () => {
         const list = document.createElement('ul');
-        const original = createAndAppendElement('li', list);
+        const original = list.createEl('li');
         const replacement = document.createElement('li');
         return { original, replacement };
     };
@@ -629,7 +621,7 @@ describe('task line rendering - preserving classes and data attributes', () => {
     const originalAndRenderedReplacement = async (taskLine: string) => {
         const replacement = await renderListItem(fromLine({ line: taskLine }));
         const list = document.createElement('ul');
-        const original = createAndAppendElement('li', list);
+        const original = list.createEl('li');
         return { original, replacement };
     };
 

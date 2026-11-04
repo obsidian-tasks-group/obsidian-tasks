@@ -96,11 +96,11 @@ pre {
 
 /* Make Warning callouts red rather than a rather ugly orange */
 .callout[data-callout="warning"] {
-    --callout-color: 255, 23, 68;
+    --callout-color: rgb(255, 23, 68);
 }
 
 .callout[data-callout="released"] {
-    --callout-color: 0, 200, 83;
+    --callout-color: rgb(0, 200, 83);
     --callout-icon: lucide-rocket;
 }
 

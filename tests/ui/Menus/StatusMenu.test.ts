@@ -1,16 +1,12 @@
-/**
- * @jest-environment jsdom
- */
-
 import moment from 'moment';
 
-import { StatusMenu } from '../../../src/ui/Menus/StatusMenu';
+import { StatusMenu } from 'ui/Menus/StatusMenu';
+import { StatusRegistry } from 'Statuses/StatusRegistry';
+import { StatusSettings } from 'Config/StatusSettings';
+import { resetSettings, updateSettings } from 'Config/Settings';
+import { StatusConfiguration, StatusType } from 'Statuses/StatusConfiguration';
+import { Status } from 'Statuses/Status';
 import { TaskBuilder } from '../../TestingTools/TaskBuilder';
-import { StatusRegistry } from '../../../src/Statuses/StatusRegistry';
-import { StatusSettings } from '../../../src/Config/StatusSettings';
-import { resetSettings, updateSettings } from '../../../src/Config/Settings';
-import { StatusConfiguration, StatusType } from '../../../src/Statuses/StatusConfiguration';
-import { Status } from '../../../src/Statuses/Status';
 import { TestableTaskSaver, menuToString } from './MenuTestingHelpers';
 
 window.moment = moment;

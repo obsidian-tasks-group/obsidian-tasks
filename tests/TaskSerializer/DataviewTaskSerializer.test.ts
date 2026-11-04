@@ -1,16 +1,12 @@
-/**
- * @jest-environment jsdom
- */
 import moment from 'moment';
-import { RecurrenceBuilder } from '../TestingTools/RecurrenceBuilder';
+import { DATAVIEW_SYMBOLS, DataviewTaskSerializer } from 'TaskSerializer/DataviewTaskSerializer';
+import type { Task } from 'Task/Task';
+import type { TaskDetails } from 'TaskSerializer';
+import { OnCompletion } from 'Task/OnCompletion';
+import { Priority } from 'Task/Priority';
 import { TaskBuilder } from '../TestingTools/TaskBuilder';
-import { DATAVIEW_SYMBOLS, DataviewTaskSerializer } from '../../src/TaskSerializer/DataviewTaskSerializer';
-import type { Task } from '../../src/Task/Task';
-import type { TaskDetails } from '../../src/TaskSerializer';
-import { OnCompletion } from '../../src/Task/OnCompletion';
-import { Priority } from '../../src/Task/Priority';
+import { RecurrenceBuilder } from '../TestingTools/RecurrenceBuilder';
 
-jest.mock('obsidian');
 window.moment = moment;
 
 // NEW_TASK_FIELD_EDIT_REQUIRED
@@ -223,8 +219,8 @@ describe('DataviewTaskSerializer', () => {
             });
         });
 
-        it('should parse tags', () => {
-            const description = ' #hello #world #task';
+        it('should parse a description containing only tags without adding whitespace', () => {
+            const description = '#hello #world #task';
             const taskDetails = deserialize(description);
             expect(taskDetails).toMatchTaskDetails({ tags: ['#hello', '#world', '#task'], description });
         });
@@ -280,7 +276,7 @@ describe('DataviewTaskSerializer', () => {
         // This is one major behavior difference between Dataview and Tasks
         // This task is marked as skipped until tasks has support for parsing fields arbitrarily
         // within a task line
-        it.failing('should recognize inline fields arbitrarily positioned in the string', () => {
+        it.fails('should recognize inline fields arbitrarily positioned in the string', () => {
             const taskDetails = deserialize('Some task that is [due::2021-08-02] and is [priority::high]');
             expect(taskDetails).toMatchTaskDetails({
                 description: 'Some task that is [due::2021-08-02] and is [priority::high]',

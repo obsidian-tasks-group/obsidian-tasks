@@ -1,4 +1,12 @@
 {
+  "common": {
+    "cancel": "Cancelar",
+    "edit": "Editar",
+    "moreInfo": "Más información",
+    "okay": "Aceptar",
+    "reload": "Recargar",
+    "save": "Guardar"
+  },
   "main": {
     "loadingPlugin": "Cargando el complemento: {{name}} v{{version}}",
     "unloadingPlugin": "Descargando el complemento: {{name}} v{{version}}"
@@ -25,7 +33,25 @@
         "description": "Controla cómo se comporta el estado en las búsquedas y al alternarlo.",
         "name": "Tipo de estado de la tarea"
       },
-      "fixErrorsBeforeSaving": "Corrige los errores antes de guardar."
+      "fixErrorsBeforeSaving": "Corrige los errores antes de guardar.",
+      "title": {
+        "editCoreStatus": "Editar estado principal",
+        "editCustomStatus": "Editar estado personalizado"
+      }
+    },
+    "editPresetModal": {
+      "name": {
+        "duplicate": "Ya existe un preajuste con este nombre",
+        "name": "Nombre",
+        "placeholder": "p. ej., tareas abiertas",
+        "required": "Obligatorio"
+      },
+      "query": {
+        "description": "Opcional. Puedes rellenarlo más tarde.",
+        "name": "Consulta",
+        "placeholder": "not done\npath includes Work"
+      },
+      "title": "Editar preajuste"
     }
   },
   "notices": {
@@ -102,7 +128,6 @@
   },
   "settings": {
     "autoSuggest": {
-      "heading": "Autosugerencia",
       "maxSuggestions": {
         "description": "Cuántas sugerencias se deben mostrar cuando aparece un menú de autosugerencia (incluyendo la opción \"⏎\").",
         "name": "Número máximo de autosugerencias a mostrar"
@@ -116,7 +141,6 @@
         "name": "Autosugerir contenido de la tarea"
       }
     },
-    "changeRequiresRestart": "REQUIERE REINICIO.",
     "dates": {
       "cancelledDate": {
         "description": "Al activar esta opción se añadirá una marca de tiempo ❌ AAAA-MM-DD al final cuando una tarea se marque como cancelada.",
@@ -137,8 +161,7 @@
       "scheduledDate": {
         "extraFormat": {
           "description": {
-            "line1": "Un formato de fecha adicional que el complemento Tasks reconocerá al usar el nombre del archivo como fecha Programada para tareas sin fecha.",
-            "line2": "Referencia de sintaxis"
+            "line1": "Un formato de fecha adicional que el complemento Tasks reconocerá al usar el nombre del archivo como fecha Programada para tareas sin fecha."
           },
           "name": "Formato adicional de fecha de nombre de archivo como fecha Programada para tareas sin fecha",
           "placeholder": "ejemplo: MMM DD YYYY"
@@ -162,8 +185,7 @@
       "accessKeys": {
         "description": "Si las teclas de acceso (atajos de teclado) de los distintos controles en los cuadros de diálogo entran en conflicto con atajos de teclado del sistema o con alguna función de tecnología de asistencia importante para ti, puede que quieras desactivarlas aquí.",
         "name": "Proporcionar teclas de acceso en los cuadros de diálogo"
-      },
-      "heading": "Cuadros de diálogo"
+      }
     },
     "format": {
       "description": {
@@ -184,10 +206,9 @@
           "line3": "Por ejemplo, si estableces el filtro global en <code>#task</code>, el complemento Tasks solo gestionará los elementos de lista de verificación etiquetados con <code>#task</code>.",
           "line4": "El resto de elementos de lista de verificación seguirán siendo elementos normales y no aparecerán en las consultas ni recibirán una fecha de finalización."
         },
-        "name": "Filtro global",
+        "name": "Filtro global de tareas",
         "placeholder": "p. ej. #task o TODO"
       },
-      "heading": "Filtro global de tareas",
       "removeFilter": {
         "description": "Al activar esta opción se elimina de la descripción de la tarea, al mostrarla, la cadena que hayas establecido como filtro global.",
         "name": "Eliminar el filtro global de la descripción"
@@ -197,12 +218,32 @@
       "heading": "Consulta global",
       "query": {
         "description": "Una consulta que se incluye automáticamente al principio de cada bloque de Tasks en la bóveda. Útil para añadir filtros predeterminados u opciones de diseño.",
-        "placeholder": "Por ejemplo...\npath does not include _templates/\nlimit 300\nshow urgency"
+        "placeholder": "Por ejemplo...\npath does not include _templates/\nlimit 300\nshow urgency",
+        "shortDescription": "Instrucciones incluidas automáticamente al principio de cada bloque de Tasks."
+      }
+    },
+    "postponeButton": {
+      "heading": "Botón de posponer",
+      "postponeDateField": {
+        "description": "Qué campo de fecha actualiza el botón de posponer (⏩). En las opciones con varias fechas, se establecerá la primera fecha de la secuencia que esté presente en la tarea.",
+        "name": "Campo de fecha del botón de posponer",
+        "options": {
+          "due": "Siempre $t(taskFields.due)",
+          "due-scheduled-start": "$t(taskFields.due) → $t(taskFields.scheduled) → $t(taskFields.start)",
+          "scheduled": "Siempre $t(taskFields.scheduled)",
+          "scheduled-due-start": "$t(taskFields.scheduled) → $t(taskFields.due) → $t(taskFields.start)",
+          "start": "Siempre $t(taskFields.start)",
+          "start-scheduled-due": "$t(taskFields.start) → $t(taskFields.scheduled) → $t(taskFields.due)"
+        }
       }
     },
     "presets": {
       "buttons": {
         "addNewPreset": "Añadir nuevo preajuste"
+      },
+      "emptyState": "Aún no hay preajustes.",
+      "filter": {
+        "placeholder": "Filtrar preajustes…"
       },
       "line1": "Aquí puedes definir instrucciones con nombre que puedes reutilizar en varias consultas. Un preajuste llamado '{{name}}' se puede usar en consultas de Tasks con '{{instruction1}}' o '{{instruction2}}'.",
       "line2": "Las consultas de Tasks que estén abiertas se recargan automáticamente al editar los preajustes.",
@@ -223,7 +264,6 @@
       }
     },
     "searchResults": {
-      "heading": "Resultados de la búsqueda",
       "taskCountLocation": {
         "description": "Elige si el recuento de tareas se muestra en la parte superior o inferior de los resultados de la consulta.",
         "name": "Ubicación del recuento de tareas",
@@ -235,6 +275,10 @@
     },
     "searches": {
       "enableCustomSearches": {
+        "confirm": {
+          "acknowledge": "Entiendo los riesgos",
+          "enable": "Activar"
+        },
         "description": {
           "line1": "Habilita '{{filterByFunction}}', '{{sortByFunction}}' y '{{groupByFunction}}', que ejecutan JavaScript en las consultas de Tasks.",
           "line2": "El código JavaScript malicioso en una consulta de Tasks o en un archivo Markdown podría ejecutarse dentro de Obsidian y acceder o modificar el contenido de tu bóveda, archivos locales u otros recursos del sistema.",
@@ -247,13 +291,20 @@
     },
     "seeTheDocumentation": "Consulta la documentación",
     "statuses": {
+      "buttons": {
+        "addStatus": "Añadir estado",
+        "importFromTheme": {
+          "description": "Añade los estados admitidos por un tema o fragmento CSS.",
+          "name": "Importar desde un tema"
+        }
+      },
       "collections": {
         "anuppuccinTheme": "Tema AnuPpuccin",
         "auraTheme": "Tema Aura",
         "borderTheme": "Tema Border",
         "buttons": {
-          "addCollection": {
-            "name": "{{themeName}}: Añadir {{numberOfStatuses}} estados admitidos"
+          "importCollection": {
+            "name": "{{themeName}} ({{numberOfStatuses}} estados)"
           }
         },
         "ebullientworksTheme": "Tema Ebullientworks",
@@ -278,12 +329,11 @@
       "customStatuses": {
         "buttons": {
           "addAllUnknown": {
+            "description": "Añade los símbolos de estado encontrados en tu bóveda pero que aún no están configurados aquí.",
             "name": "Añadir todos los tipos de estado desconocidos"
           },
-          "addNewStatus": {
-            "name": "Añadir nuevo estado de tarea"
-          },
           "resetCustomStatuses": {
+            "description": "Descarta todos los estados personalizados y restaura los valores predeterminados.",
             "name": "Restablecer los tipos de estado personalizados a los valores predeterminados"
           }
         },
@@ -293,9 +343,32 @@
           "line3": "<b>Nota:</b> cualquier estado con el mismo símbolo que un estado anterior se ignorará. Puedes confirmar los estados realmente cargados ejecutando el comando 'Crear o editar tarea' y consultando el menú desplegable de Estado.",
           "line4": "¡Consulta la documentación para empezar!"
         },
+        "emptyState": "Aún no hay estados personalizados.",
         "heading": "Estados personalizados"
       },
-      "heading": "Estados de la tarea"
+      "filter": {
+        "placeholder": "Filtrar estados…"
+      },
+      "heading": "Estados de la tarea",
+      "reloadRequired": "Los cambios surten efecto tras recargar.",
+      "types": {
+        "cancelled": "Cancelado",
+        "done": "Completado",
+        "empty": "Vacío",
+        "inProgress": "En curso",
+        "nonTask": "No es una tarea",
+        "onHold": "En espera",
+        "todo": "Por hacer"
+      },
+      "unnamed": "(sin nombre)"
+    },
+    "taskEntry": {
+      "heading": "Entrada de tareas"
     }
+  },
+  "taskFields": {
+    "due": "Vencimiento",
+    "scheduled": "Programada",
+    "start": "Inicio"
   }
 }

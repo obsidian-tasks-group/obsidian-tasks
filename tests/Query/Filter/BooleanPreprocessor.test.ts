@@ -1,5 +1,5 @@
-import { BooleanPreprocessor } from '../../../src/Query/Filter/BooleanPreprocessor';
-import { BooleanDelimiters } from '../../../src/Query/Filter/BooleanDelimiters';
+import { BooleanPreprocessor } from 'Query/Filter/BooleanPreprocessor';
+import { BooleanDelimiters } from 'Query/Filter/BooleanDelimiters';
 
 function preprocess(line: string) {
     return BooleanPreprocessor.preprocessExpression(line, BooleanDelimiters.fromInstructionLine(line));

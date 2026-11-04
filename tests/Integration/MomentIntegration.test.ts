@@ -1,8 +1,4 @@
 // begin-snippet: declare-moment-in-tests
-/**
- * @jest-environment jsdom
- */
-
 import moment from 'moment';
 // end-snippet
 

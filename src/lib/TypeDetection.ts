@@ -2,7 +2,7 @@
  * Return a string representation of the {@link value}'s type, for showing to users, such as in error messages.
  * @param value
  */
-export function getValueType(value: any): string {
+export function getValueType(value: unknown): string {
     if (value === null) {
         return 'null';
     }

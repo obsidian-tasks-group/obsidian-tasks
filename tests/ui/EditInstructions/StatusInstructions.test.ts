@@ -1,27 +1,23 @@
-/**
- * @jest-environment jsdom
- */
-
 import moment from 'moment/moment';
 
-import { Status } from '../../../src/Statuses/Status';
+import { Status } from 'Statuses/Status';
+import { SetStatus, allStatusInstructions } from 'ui/EditInstructions/StatusInstructions';
+import { StatusRegistry } from 'Statuses/StatusRegistry';
 import { TaskBuilder } from '../../TestingTools/TaskBuilder';
-import { SetStatus, allStatusInstructions } from '../../../src/ui/EditInstructions/StatusInstructions';
 import * as StatusExamples from '../../TestingTools/StatusExamples';
 import { constructStatuses } from '../../TestingTools/StatusesTestHelpers';
-import { StatusRegistry } from '../../../src/Statuses/StatusRegistry';
 
 window.moment = moment;
 
 const today = '2023-12-03';
 
 beforeEach(() => {
-    jest.useFakeTimers();
-    jest.setSystemTime(new Date(today));
+    vi.useFakeTimers();
+    vi.setSystemTime(new Date(today));
 });
 
 afterEach(() => {
-    jest.useRealTimers();
+    vi.useRealTimers();
 });
 
 describe('SetStatus', () => {

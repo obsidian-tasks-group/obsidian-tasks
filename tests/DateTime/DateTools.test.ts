@@ -1,6 +1,3 @@
-/**
- * @jest-environment jsdom
- */
 import moment from 'moment';
 
 // begin-snippet: fix-window.moment-calls-in-tests

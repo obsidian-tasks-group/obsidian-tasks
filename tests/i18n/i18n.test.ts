@@ -26,7 +26,7 @@ function getI18nextParserLocales(): Readonly<string[]> {
 
 let i18nResourceNames: ReadonlyArray<string>;
 beforeAll(async () => {
-    // initializeI18n is called in jest.setup.ts
+    // initializeI18n is called in vitest.setup.ts
     i18nResourceNames = Object.freeze(Object.keys(i18next.store.data));
 });
 

@@ -32,7 +32,7 @@ export interface LogEntry {
     module: string;
     location?: string;
     message: string;
-    objects: any;
+    objects: unknown;
 }
 
 /**
@@ -74,23 +74,48 @@ export class LogManager extends EventEmitter2 {
     private consoleLoggerRegistered: boolean = false;
 
     /**
+     * How many times the options have been changed by {@link configure} during this session,
+     * so that loggers know when to re-read their level.
+     */
+    private _optionsChangeCount: number = 0;
+
+    public get optionsChangeCount(): number {
+        return this._optionsChangeCount;
+    }
+
+    /**
      * Set the minimum log levels for the module name or global.
+     *
+     * Loggers that already exist use the new levels too.
      *
      * @param {LogOptions} options
      * @return {*}  {LogManager}
      */
     public configure(options: LogOptions): LogManager {
         this.options = Object.assign({}, this.options, options);
+        this._optionsChangeCount++;
         return this;
     }
 
     /**
      * Returns a logger instance for the given module name.
      *
+     * The logger keeps following later changes to the logging options,
+     * so it can be stored and reused.
+     *
      * @param {string} module
      * @return {*}  {Logger}
      */
     public getLogger(module: string): Logger {
+        return new Logger(this, module);
+    }
+
+    /**
+     * Returns the minimum log level for the given module name, from its longest matching prefix.
+     *
+     * @param {string} module
+     */
+    public minLevelFor(module: string): string {
         let minLevel = 'none';
         let match = '';
 
@@ -100,7 +125,7 @@ export class LogManager extends EventEmitter2 {
                 match = key;
             }
         }
-        return new Logger(this, module, minLevel);
+        return minLevel;
     }
 
     /**
@@ -165,15 +190,24 @@ export class LogManager extends EventEmitter2 {
 export const logging = new LogManager();
 
 /**
+ * The level of an unrecognised level name, such as 'none'.
+ * It is higher than every real level, so a logger with this minimum level logs nothing.
+ */
+const UNKNOWN_LEVEL = 99;
+
+/**
  * Main logging library, to view the logs a logger listener must be added. The
  * Console Logger is already implemented for this project.
  *
  * @class Logger
  */
 export class Logger {
-    private logManager: EventEmitter2;
-    private minLevel: number;
+    private logManager: LogManager;
     private module: string;
+    private cachedMinLevel: number = UNKNOWN_LEVEL;
+    // The LogManager's optionsChangeCount when cachedMinLevel was read,
+    // or undefined if it has not been read yet.
+    private cachedOptionsChangeCount: number | undefined = undefined;
     private readonly levels: { [key: string]: number } = {
         trace: 1,
         debug: 2,
@@ -184,14 +218,25 @@ export class Logger {
 
     /**
      * Creates an instance of Logger.
-     * @param {EventEmitter2} logManager
+     * @param {LogManager} logManager
      * @param {string} module
-     * @param {string} minLevel
      */
-    constructor(logManager: EventEmitter2, module: string, minLevel: string) {
+    constructor(logManager: LogManager, module: string) {
         this.logManager = logManager;
         this.module = module;
-        this.minLevel = this.levelToInt(minLevel);
+    }
+
+    /**
+     * The minimum level to log, re-read from the LogManager only when its options have changed,
+     * as this is called for every log message, including in tight loops.
+     */
+    private get minLevel(): number {
+        const optionsChangeCount = this.logManager.optionsChangeCount;
+        if (optionsChangeCount !== this.cachedOptionsChangeCount) {
+            this.cachedMinLevel = this.levelToInt(this.logManager.minLevelFor(this.module));
+            this.cachedOptionsChangeCount = optionsChangeCount;
+        }
+        return this.cachedMinLevel;
     }
 
     /**
@@ -201,7 +246,7 @@ export class Logger {
      */
     private levelToInt(minLevel: string): number {
         if (minLevel.toLowerCase() in this.levels) return this.levels[minLevel.toLowerCase()];
-        else return 99;
+        else return UNKNOWN_LEVEL;
     }
 
     /**
@@ -209,7 +254,7 @@ export class Logger {
      * @param logLevel
      * @param message
      */
-    public log(logLevel: string, message: string, objects?: any): void {
+    public log(logLevel: string, message: string, objects?: unknown): void {
         const level = this.levelToInt(logLevel);
         if (level < this.minLevel) return;
 
@@ -237,19 +282,19 @@ export class Logger {
         this.logManager.emit('log', logEntry);
     }
 
-    public trace(message: string, objects?: any): void {
+    public trace(message: string, objects?: unknown): void {
         this.log('trace', message, objects);
     }
-    public debug(message: string, objects?: any): void {
+    public debug(message: string, objects?: unknown): void {
         this.log('debug', message, objects);
     }
-    public info(message: string, objects?: any): void {
+    public info(message: string, objects?: unknown): void {
         this.log('info', message, objects);
     }
-    public warn(message: string, objects?: any): void {
+    public warn(message: string, objects?: unknown): void {
         this.log('warn', message, objects);
     }
-    public error(message: string, objects?: any): void {
+    public error(message: string, objects?: unknown): void {
         this.log('error', message, objects);
     }
 
@@ -258,7 +303,7 @@ export class Logger {
      * @param logLevel
      * @param message
      */
-    public logWithId(logLevel: string, traceId: string, message: string, objects?: any): void {
+    public logWithId(logLevel: string, traceId: string, message: string, objects?: unknown): void {
         const level = this.levelToInt(logLevel);
         if (level < this.minLevel) return;
 
@@ -273,19 +318,19 @@ export class Logger {
         this.logManager.emit('log', logEntry);
     }
 
-    public traceWithId(traceId: string, message: string, objects?: any): void {
+    public traceWithId(traceId: string, message: string, objects?: unknown): void {
         this.logWithId('trace', traceId, message, objects);
     }
-    public debugWithId(traceId: string, message: string, objects?: any): void {
+    public debugWithId(traceId: string, message: string, objects?: unknown): void {
         this.logWithId('debug', traceId, message, objects);
     }
-    public infoWithId(traceId: string, message: string, objects?: any): void {
+    public infoWithId(traceId: string, message: string, objects?: unknown): void {
         this.logWithId('info', traceId, message, objects);
     }
-    public warnWithId(traceId: string, message: string, objects?: any): void {
+    public warnWithId(traceId: string, message: string, objects?: unknown): void {
         this.logWithId('warn', traceId, message, objects);
     }
-    public errorWithId(traceId: string, message: string, objects?: any): void {
+    public errorWithId(traceId: string, message: string, objects?: unknown): void {
         this.logWithId('error', traceId, message, objects);
     }
 }
@@ -307,10 +352,10 @@ const timingMap: TimingMap = {};
  *
  * @return {*}
  */
-export const logCall = (target: Object, propertyKey: string, descriptor: PropertyDescriptor) => {
+export const logCall = (target: object, propertyKey: string, descriptor: PropertyDescriptor) => {
     const originalMethod = descriptor.value as (...args: unknown[]) => unknown;
     //const logger = logging.getLogger('taskssql.perf');
-    descriptor.value = function (...args: any[]) {
+    descriptor.value = function (...args: unknown[]) {
         const startTime = new Date(Date.now());
         const result = originalMethod.apply(this, args);
         const endTime = new Date(Date.now());
@@ -342,11 +387,11 @@ export const logCall = (target: Object, propertyKey: string, descriptor: Propert
 };
 
 export function logCallDetails() {
-    return function (target: any, propertyKey: string, descriptor: PropertyDescriptor) {
+    return function (target: unknown, propertyKey: string, descriptor: PropertyDescriptor) {
         const originalMethod = descriptor.value as (...args: unknown[]) => Promise<unknown>;
         const logger = logging.getLogger('tasks');
 
-        descriptor.value = async function (...args: any[]) {
+        descriptor.value = async function (...args: unknown[]) {
             const startTime = new Date(Date.now());
             const result = await originalMethod.apply(this, args);
             const endTime = new Date(Date.now());

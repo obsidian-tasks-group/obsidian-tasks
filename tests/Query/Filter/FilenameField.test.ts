@@ -1,5 +1,5 @@
+import { FilenameField } from 'Query/Filter/FilenameField';
 import { TaskBuilder } from '../../TestingTools/TaskBuilder';
-import { FilenameField } from '../../../src/Query/Filter/FilenameField';
 import * as CustomMatchersForSorting from '../../CustomMatchers/CustomMatchersForSorting';
 import { fromLine } from '../../TestingTools/TestHelpers';
 import { SampleTasks } from '../../TestingTools/SampleTasks';

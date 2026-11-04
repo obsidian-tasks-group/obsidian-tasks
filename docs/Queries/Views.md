@@ -7,7 +7,7 @@ publish: true
 <span class="related-pages">#feature/views</span>
 
 > [!released]
-> Introduced in Tasks X.Y.Z.
+> Introduced in Tasks 8.4.0.
 
 By default, the Tasks plugin displays search results as a list of matching tasks.
 
@@ -45,15 +45,30 @@ view columns by priority reverse
 
 ### Supported columns
 
-You can use any supported [[Grouping]] option with `view columns by`.
+Every one of the `group by` instructions can be adjusted to define a column view, by replacing `group by` with `view columns by`.
+
+For example, because this instruction works:
+
+```text
+group by root
+```
+
+this one also will:
+
+```text
+view columns by root
+```
+
+See the full list of `group by` instructions in [[Grouping]].
 
 ### Drag and drop between columns
 
-Some [[Grouping]] options support editing via drag-and-drop between columns.
+Some [[Grouping]] options also **support editing via drag-and-drop between columns**.
 
-The following `view columns by` instructions currently support editing:
+Currently, just the following `view columns by` instructions support editing:
 
-```text
+<!-- snippet: CreateEditingInstructionForGroup.test.docs_all_view_groups_that_support_editing.approved.txt -->
+```txt
 view columns by priority
 
 view columns by cancelled
@@ -61,8 +76,9 @@ view columns by created
 view columns by done
 view columns by due
 view columns by scheduled
-view columns by starts
+view columns by start
 ```
+<!-- endSnippet -->
 
 ![Some columns views, including priority, enable drag-and-drop to edit property values](../images/view-columns-by-priority-drag-and-drop.png)
 <span class="caption">Some columns views, including priority, enable drag-and-drop to edit property values</span>

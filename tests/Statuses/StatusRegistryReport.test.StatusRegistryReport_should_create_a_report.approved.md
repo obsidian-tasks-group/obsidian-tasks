@@ -1,4 +1,4 @@
-# Review and check your Statuses
+# Review and check your statuses
 
 ## About this file
 
@@ -7,7 +7,7 @@ This file was created by the Obsidian Tasks plugin (version x.y.z) to help visua
 If you change the Tasks status settings, you can get an updated report by:
 
 - Going to `Settings` -> `Tasks`.
-- Clicking on `Review and check your Statuses`.
+- Clicking on `Review and check your statuses`.
 
 You can delete this file any time.
 

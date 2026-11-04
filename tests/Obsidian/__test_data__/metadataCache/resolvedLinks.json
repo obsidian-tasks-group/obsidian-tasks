@@ -21,7 +21,9 @@
   },
   "How To/Access properties in frontmatter.md": {},
   "How To/Find properties not read by Obsidian 1.9.x/README.md": {},
-  "How To/Find tasks in notes with particular tag.md": {},
+  "How To/Find tasks in notes with particular tag.md": {
+    "Test Data/yaml_all_property_types_populated.md": 1
+  },
   "How To/Reuse instructions across the vault.md": {},
   "How To/Use formatting in custom group headings.md": {},
   "Important Project.md": {},
@@ -50,9 +52,11 @@
   "Manual Testing/Invalid Dates and Happens.md": {},
   "Manual Testing/Invalid Dates.md": {},
   "Manual Testing/Invalid dates with Sorting and Grouping.md": {},
+  "Manual Testing/Manually testing views.md": {},
   "Manual Testing/Markdown in group _non-italic filename_.md": {
     "Manual Testing/README - Manual Testing.md": 1
   },
+  "Manual Testing/Nested Backlinks.md": {},
   "Manual Testing/QuickAdd Tasks API Demo.md": {},
   "Manual Testing/README - Manual Testing.md": {},
   "Manual Testing/Recurrence handling invalid dates.md": {},
@@ -73,6 +77,12 @@
   "Manual Testing/Smoke Testing the Tasks Plugin.md": {
     "Manual Testing/Smoke Testing the Tasks Plugin.md": 1,
     "Manual Testing/Styling of Queries.md": 1
+  },
+  "Manual Testing/Smoke test JS setting - should fail when disabled.md": {
+    "Manual Testing/Smoke test JS setting - should work when disabled.md": 1
+  },
+  "Manual Testing/Smoke test JS setting - should work when disabled.md": {
+    "Manual Testing/Smoke test JS setting - should fail when disabled.md": 1
   },
   "Manual Testing/Smoke test Kanban Integration.md": {},
   "Manual Testing/Styling of Queries.md": {},
@@ -234,6 +244,10 @@
     "Test Data/link_in_heading.md": 1,
     "Test Data/link_in_task_wikilink.md": 1
   },
+  "Test Data/list_items_nested_issue_4081_numbered.md": {},
+  "Test Data/list_items_nested_issue_4081_numbered_standard.md": {},
+  "Test Data/list_items_nested_issue_4081_unnumbered.md": {},
+  "Test Data/list_items_nested_issue_4081_unnumbered_standard.md": {},
   "Test Data/list_statuses.md": {},
   "Test Data/list_styles.md": {},
   "Test Data/mixed_list_markers.md": {},

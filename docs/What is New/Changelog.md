@@ -12,11 +12,32 @@ _In recent [Tasks releases](https://github.com/obsidian-tasks-group/obsidian-tas
 
 ## 8.x releases
 
-- X.Y.Z:
-  - Add [[Views|columns view]], supporting drag-and-drop edit for a growing number of properties.
-  - Add [[Grouping#Showing the number of tasks in a group|show group count]] instruction. For now, this only shows numbers of tasks in the lowest-level groups.
-  - Add Spanish translation of [[Settings]], [[Editing a Status]] and [[Check your Statuses]].
+- 8.6.0:
+  - The minimum supported Obsidian version is now [1.13.1](https://obsidian.md/changelog/2026-06-09-desktop-v1.13.1/).
+  - Add setting to control [[Postponing#Which date field is edited?|which field Postpone edits]].
+  - **Development**
+    - Added [Obsidian Checks](https://publish.obsidian.md/tasks-contributing/Linting/Obsidian+Checks) workflow.
+- 8.5.0:
+  - Add [[Settings]] complete redesign, and now searchable, in Obsidian 1.13.0 and above.
+  - Filter bar added to [[Presets]] settings, in Obsidian 1.13.0 and above.
+  - [[Quick Search]] now uses Fuzzy search by default, for more matches and better sorting.
+    - It has an Options button to enable the original substring search, if preferred.
+  - **Documentation**
+    - Add [[How to read the user guide off-line]].
+  - **Development**
+    - Switched to the [Vitest Test Framework](https://publish.obsidian.md/tasks-contributing/Testing/Vitest+Test+Framework).
+- 8.4.0:
+  - Add [[Quick search]] command, to find an incomplete task recognised by Tasks anywhere in your vault.
+  - Add [[Views|columns view]], supporting **drag-and-drop edit** for a growing number of properties.
+  - Add [[Grouping#Showing the number of tasks in a group|show group count]] instruction. For now, this only shows numbers of tasks in the lowest-level groups, and is turned off by default.
+  - Add CSS example for [[Styling#Priority as a Background Color, for active tasks|colouring actionable tasks by their priority]].
   - The [[Presets#Default Presets|default preset]] `hide_query_elements` now hides the task count. (Pre-existing Tasks settings are not updated, though.)
+  - **Translations** of [[Settings]], [[Editing a Status]] and [[Check your Statuses]]:
+    - Add **Spanish** translation.
+    - Add **French** translation.
+  - **Documentation:**
+    - Add [[About Support and Help#How to support an existing request|How to support an existing request]] to the help on user support.
+    - Add **Support** sections to many documentation pages, to help find and up-vote related bugs and feature requests before reporting new ones. Example: [[Statuses#Support]]
 - 8.3.0:
   - Add [[Layout#Hide and Show Nested Backlink|'hide nested backlink']] instruction, for when '`show tree`' makes the output just too cluttered.
   - [[Notifications]] page updated to better match the current behaviour of the [Reminder](https://community.obsidian.md/plugins/obsidian-reminder-plugin) plugin.

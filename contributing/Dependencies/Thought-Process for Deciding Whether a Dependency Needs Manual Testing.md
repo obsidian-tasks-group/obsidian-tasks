@@ -29,6 +29,6 @@ However, if all the automatic checks pass, these packages can be merged right aw
 - `svelte-check` (but not other svelte things, which are used in the build system)
 - anything with `prettier`
 - `lefthook`
-- anything with `jest` in it (but see the note on [[Dependency Groups]] for details).
+- anything with `vitest` or `jest-sorted` in it (but see the note on [[Dependency Groups]] for details).
 - For anything else, where and how is it being used?
   - If it's only in tests, or only used by developers, no need to smoke test.

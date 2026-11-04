@@ -1,7 +1,7 @@
-import { verifyAsJson } from 'approvals/lib/Providers/Jest/JestApprovals';
+import { verifyAsJson } from '@approval-tests/approvals/lib/Providers/Vitest/VitestApprovals';
 import type { Reference } from 'obsidian';
+import { LinkResolver } from 'Task/LinkResolver';
 import { getTasksFileFromMockData, listPathAndData } from '../TestingTools/MockDataHelpers';
-import { LinkResolver } from '../../src/Task/LinkResolver';
 import type { MockDataName } from '../Obsidian/AllCacheSampleData';
 import { getAllTags, getFirstLinkpathDest, parseFrontMatterTags } from '../__mocks__/obsidian';
 import { MockDataLoader } from '../TestingTools/MockDataLoader';
@@ -351,7 +351,7 @@ describe('TasksFile - reading tags', () => {
         function loadMockDataAndResolveFirstLink(testDataName: MockDataName, expectedLinkSource: string) {
             const file = getTasksFileFromMockData(testDataName);
             const link = file.cachedMetadata.links![0];
-            expect(link.original).toMatchInlineSnapshot(expectedLinkSource);
+            expect(JSON.stringify(link.original)).toBe(expectedLinkSource);
             const markdownPath = MockDataLoader.markdownPath(testDataName);
             const firstLinkpathDest = getFirstLinkpathDest(link, markdownPath);
             return { link, markdownPath, firstLinkpathDest };

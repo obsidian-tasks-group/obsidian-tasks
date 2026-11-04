@@ -1,11 +1,7 @@
-/**
- * @jest-environment jsdom
- */
-
 import moment from 'moment';
-import type { Task } from '../../src/Task/Task';
-import { ListItem } from '../../src/Task/ListItem';
-import { TaskLocation } from '../../src/Task/TaskLocation';
+import type { Task } from 'Task/Task';
+import { ListItem } from 'Task/ListItem';
+import { TaskLocation } from 'Task/TaskLocation';
 import { TaskBuilder } from './TaskBuilder';
 import { MockDataLoader } from './MockDataLoader';
 import { createTestTasksFile } from './TasksFileHelpers';
@@ -19,6 +15,24 @@ describe('TaskBuilder', () => {
         const builder = new TaskBuilder().description('hello').tags(['#tag1', '#tag2']);
         const task = builder.build();
         expect(task.toFileLineString()).toStrictEqual('- [ ] hello #tag1 #tag2');
+    });
+
+    describe('trailing spaces (markdownHardBreak)', () => {
+        const taskBuilder = new TaskBuilder().description('hello');
+
+        it.each([
+            ['should handle  0 trailing spaces', '', ''],
+            ['should discard 1 trailing space ', ' ', ''], // if only 1 trailing space, it should be discarded
+            ['should retain  2 trailing spaces', '  ', '  '],
+            ['should retain  3 trailing spaces', '   ', '   '],
+            ['should retain  4 trailing spaces', '    ', '    '],
+        ])('%s', (_, inputSuffix: string, expectedMarkdownHardBreak: string) => {
+            const task = taskBuilder.markdownHardBreak(inputSuffix).build();
+
+            expect(task.markdownHardBreak).toStrictEqual(expectedMarkdownHardBreak);
+            expect(task.originalMarkdown).toStrictEqual('- [ ] hello' + inputSuffix);
+            expect(task.toFileLineString()).toStrictEqual('- [ ] hello' + expectedMarkdownHardBreak);
+        });
     });
 
     it('should populate originalMarkdown', () => {
@@ -81,7 +95,7 @@ describe('TaskBuilder', () => {
     it('createFullyPopulatedTask() should populate every field', () => {
         const task: Task = TaskBuilder.createFullyPopulatedTask();
 
-        expect(getNullOrUnsetFields(task)).toEqual(['children', 'parent']);
+        expect(getNullOrUnsetFields(task)).toEqual(['children', 'markdownHardBreak', 'parent']);
         expect(getNullOrUnsetFields(task.taskLocation)).toEqual([]);
 
         expect(task.originalMarkdown).toEqual(

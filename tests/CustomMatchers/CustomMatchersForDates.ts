@@ -1,16 +1,15 @@
 import type moment from 'moment';
 import { diff } from 'jest-diff';
+import type { SyncMatcherResult } from 'vitest';
 
-declare global {
-    namespace jest {
-        interface Matchers<R> {
-            toEqualMoment(expected: moment.Moment): CustomMatcherResult;
-        }
+declare module 'vitest' {
+    interface Matchers<R> {
+        toEqualMoment(expected: moment.Moment): R;
     }
 }
 
 // Based on https://stackoverflow.com/a/60229956/104370
-export function toEqualMoment(received: moment.Moment | null, expected: moment.Moment): jest.CustomMatcherResult {
+export function toEqualMoment(received: moment.Moment | null, expected: moment.Moment): SyncMatcherResult {
     const pass: boolean = expected.isSame(received);
     const expectedAsText = expected.toISOString();
     const receivedAsText = received ? received.toISOString() : 'null';

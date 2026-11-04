@@ -1,7 +1,3 @@
-/**
- * @jest-environment jsdom
- */
-
 import { readFileSync } from 'fs';
 import moment from 'moment';
 import { verifyQueryExplanation } from '../../../../TestingTools/ApprovalTestHelpers';
@@ -10,12 +6,12 @@ window.moment = moment;
 
 describe('explain', () => {
     beforeEach(() => {
-        jest.useFakeTimers();
-        jest.setSystemTime(new Date('2023-04-19'));
+        vi.useFakeTimers();
+        vi.setSystemTime(new Date('2023-04-19'));
     });
 
     afterEach(() => {
-        jest.useRealTimers();
+        vi.useRealTimers();
     });
 
     it.each([

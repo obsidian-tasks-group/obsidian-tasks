@@ -1,27 +1,11 @@
 import { diff } from 'jest-diff';
 
-declare global {
-    namespace jest {
-        interface Matchers<R> {
-            toHaveAmongDataAttributes(expectedDataAttributes: string): R;
-            toHaveDataAttributes(expectedDataAttributes: string): R;
-            toHaveAChildSpanWithClass(expectedClass: string): R;
-            toHaveAChildSpanWithClassAndDataAttributes(expectedClass: string, expectedDataAttributes: string): R;
-        }
-
-        interface Expect {
-            toHaveAmongDataAttributes(expectedDataAttributes: string): any;
-            toHaveDataAttributes(expectedDataAttributes: string): any;
-            toHaveAChildSpanWithClass(expectedClass: string): any;
-            toHaveAChildSpanWithClassAndDataAttributes(expectedClass: string, expectedDataAttributes: string): any;
-        }
-
-        interface InverseAsymmetricMatchers {
-            toHaveAmongDataAttributes(expectedDataAttributes: string): any;
-            toHaveDataAttributes(expectedDataAttributes: string): any;
-            toHaveAChildSpanWithClass(expectedClass: string): any;
-            toHaveAChildSpanWithClassAndDataAttributes(expectedClass: string, expectedDataAttributes: string): any;
-        }
+declare module 'vitest' {
+    interface Matchers<R> {
+        toHaveAmongDataAttributes(expectedDataAttributes: string): R;
+        toHaveDataAttributes(expectedDataAttributes: string): R;
+        toHaveAChildSpanWithClass(expectedClass: string): R;
+        toHaveAChildSpanWithClassAndDataAttributes(expectedClass: string, expectedDataAttributes: string): R;
     }
 }
 

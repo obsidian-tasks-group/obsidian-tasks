@@ -1,15 +1,15 @@
 // Builder
 import type { Moment } from 'moment';
-import { Status } from '../../src/Statuses/Status';
-import { OnCompletion } from '../../src/Task/OnCompletion';
-import { Occurrence } from '../../src/Task/Occurrence';
-import { Task } from '../../src/Task/Task';
-import { Recurrence } from '../../src/Task/Recurrence';
-import { DateParser } from '../../src/DateTime/DateParser';
-import { StatusConfiguration, StatusType } from '../../src/Statuses/StatusConfiguration';
-import { TaskLocation } from '../../src/Task/TaskLocation';
-import { Priority } from '../../src/Task/Priority';
-import type { ListItem } from '../../src/Task/ListItem';
+import { Status } from 'Statuses/Status';
+import { OnCompletion } from 'Task/OnCompletion';
+import { Occurrence } from 'Task/Occurrence';
+import { Task } from 'Task/Task';
+import { Recurrence } from 'Task/Recurrence';
+import { DateParser } from 'DateTime/DateParser';
+import { StatusConfiguration, StatusType } from 'Statuses/StatusConfiguration';
+import { TaskLocation } from 'Task/TaskLocation';
+import { Priority } from 'Task/Priority';
+import type { ListItem } from 'Task/ListItem';
 import type { SimulatedFile } from '../Obsidian/SimulatedFile';
 import type { MockDataName } from '../Obsidian/AllCacheSampleData';
 import { MockDataLoader } from './MockDataLoader';
@@ -33,6 +33,7 @@ export class TaskBuilder {
 
     private _status: Status = Status.TODO;
     private _description: string = 'my description';
+    private _markdownHardBreak: string = '';
     private _path: string = '';
     private _indentation: string = '';
     private _listMarker: string = '-';
@@ -109,7 +110,7 @@ export class TaskBuilder {
             originalMarkdown: '',
             scheduledDateIsInferred: this._scheduledDateIsInferred,
         });
-        const markdown = task.toFileLineString();
+        const markdown = task.toFileLineString() + this._markdownHardBreak;
         return new Task({
             ...task,
             originalMarkdown: markdown,
@@ -192,6 +193,16 @@ export class TaskBuilder {
      */
     public description(description: string): this {
         this._description = description;
+        return this;
+    }
+
+    /**
+     * Set the markdownHardBreak - empty by default, and can be 2 or more spaces at the end of the task line to force a line-break.
+     *
+     * @param markdownHardBreak - markdownHardBreak, for appending at the end of the task line
+     */
+    public markdownHardBreak(markdownHardBreak: string): this {
+        this._markdownHardBreak = markdownHardBreak;
         return this;
     }
 

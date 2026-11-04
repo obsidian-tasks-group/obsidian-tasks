@@ -1,3 +1,9 @@
+---
+publish: true
+aliases:
+- Dependencies/Overview of dependencies and `package.json`
+---
+
 # Overview of dependencies and `package.json`
 
 ## package.json
@@ -19,6 +25,37 @@ currently used by the project.
 If there are ever git merge conflicts in `yarn.lock`, best practice is to rename the conflicted file, ensure `package.json` is correct, and then run `yarn` to regenerate the `yarn.lock` file.
 
 The newly-generated file can then be committed to resolve the merge conflict.
+
+## Finding dependencies that should be listed
+
+Occasionally our code uses an "indirect" dependency that is not stated in the `package.json`.
+
+To check for this, use `knip`.
+
+For example:
+
+```bash
+npx knip --include unlisted
+```
+
+The output might be:
+
+```text
+Unlisted dependencies (7)
+jest-diff  tests/CustomMatchers/CustomMatchersForDates.ts:2:22
+jest-diff  tests/CustomMatchers/CustomMatchersForExpressions.ts:1:22
+jest-diff  tests/CustomMatchers/CustomMatchersForFilters.ts:1:22
+jest-diff  tests/CustomMatchers/CustomMatchersForGrouping.ts:1:22
+jest-diff  tests/CustomMatchers/CustomMatchersForRendering.ts:1:22
+jest-diff  tests/CustomMatchers/CustomMatchersForTasks.ts:1:22
+jest-diff  tests/CustomMatchers/CustomMatchersForTaskSerializer.ts:1:22
+```
+
+In this case, the next command would be:
+
+```bash
+yarn add --dev jest-diff
+```
 
 ## dependencies and devDependencies
 

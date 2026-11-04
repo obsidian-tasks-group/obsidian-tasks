@@ -1,13 +1,10 @@
 import type { App } from 'obsidian';
-import { State } from '../../src/Obsidian/Cache';
-import type { FilterOrErrorMessage } from '../../src/Query/Filter/FilterOrErrorMessage';
-import { Query } from '../../src/Query/Query';
-import type {
-    HTMLQueryRendererParameters,
-    HtmlQueryResultsRenderer,
-} from '../../src/Renderer/HtmlQueryResultsRenderer';
-import { MarkdownQueryResultsRenderer } from '../../src/Renderer/MarkdownQueryResultsRenderer';
-import type { Task } from '../../src/Task/Task';
+import { State } from 'Obsidian/Cache';
+import type { FilterOrErrorMessage } from 'Query/Filter/FilterOrErrorMessage';
+import { Query } from 'Query/Query';
+import type { HTMLQueryRendererParameters, HtmlQueryResultsRenderer } from 'Renderer/HtmlQueryResultsRenderer';
+import { MarkdownQueryResultsRenderer } from 'Renderer/MarkdownQueryResultsRenderer';
+import type { Task } from 'Task/Task';
 import { verifyWithFileExtension } from '../TestingTools/ApprovalTestHelpers';
 import { prettifyHTML } from '../TestingTools/HTMLHelpers';
 import { createTestTasksFile } from '../TestingTools/TasksFileHelpers';
@@ -64,12 +61,12 @@ export async function renderMarkdown(source: string, tasks: Task[]) {
     };
 }
 
-export function tasksMarkdownAndPrettifiedHtml(container: HTMLDivElement, allTasks: Task[]) {
+export async function tasksMarkdownAndPrettifiedHtml(container: HTMLDivElement, allTasks: Task[]) {
     const tasksAsMarkdown = `<!--
 ${toMarkdown(allTasks)}
 -->\n\n`;
 
-    const prettyHTML = prettifyHTML(container.outerHTML);
+    const prettyHTML = await prettifyHTML(container.outerHTML);
     return { tasksAsMarkdown, prettyHTML };
 }
 
@@ -83,12 +80,12 @@ export async function verifyHtmlFromRenderer(
     renderer.content = container;
     await renderer.renderQuery(state, query.applyQueryToTasks(allTasks));
 
-    verifyRenderedTasks(container, allTasks);
+    await verifyRenderedTasks(container, allTasks);
     return container;
 }
 
-export function verifyRenderedTasks(container: HTMLDivElement, allTasks: Task[]): string {
-    const { tasksAsMarkdown, prettyHTML } = tasksMarkdownAndPrettifiedHtml(container, allTasks);
+export async function verifyRenderedTasks(container: HTMLDivElement, allTasks: Task[]): Promise<string> {
+    const { tasksAsMarkdown, prettyHTML } = await tasksMarkdownAndPrettifiedHtml(container, allTasks);
     verifyWithFileExtension(tasksAsMarkdown + prettyHTML, 'html');
     return prettyHTML;
 }

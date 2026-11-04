@@ -1,12 +1,12 @@
 import type { App, MarkdownPostProcessorContext, Plugin } from 'obsidian';
 import { MarkdownRenderChild } from 'obsidian';
-import { GlobalFilter } from '../Config/GlobalFilter';
-import { TaskLayoutOptions } from '../Layout/TaskLayoutOptions';
-import { QueryLayoutOptions } from '../Layout/QueryLayoutOptions';
-import { TasksFile } from '../Scripting/TasksFile';
-import { Task } from '../Task/Task';
-import { TaskLineRenderer, createAndAppendElement, reconcileReplacementTask } from '../Renderer/TaskLineRenderer';
-import { TaskLocation } from '../Task/TaskLocation';
+import { GlobalFilter } from 'Config/GlobalFilter';
+import { TaskLayoutOptions } from 'Layout/TaskLayoutOptions';
+import { QueryLayoutOptions } from 'Layout/QueryLayoutOptions';
+import { TasksFile } from 'Scripting/TasksFile';
+import { Task } from 'Task/Task';
+import { TaskLineRenderer, reconcileReplacementTask } from 'Renderer/TaskLineRenderer';
+import { TaskLocation } from 'Task/TaskLocation';
 
 /**
  * An inline renderer for processing and rendering tasks in the Reading View of an Obsidian file.
@@ -134,7 +134,7 @@ export class InlineRenderer {
             }
             const dataLine: string = renderedElement.getAttr('data-line') ?? '0';
             const taskIndex: number = Number.parseInt(dataLine, 10);
-            const taskElement = createAndAppendElement('li', element);
+            const taskElement = element.createEl('li');
             await taskLineRenderer.renderTaskLine({
                 li: taskElement,
                 task,

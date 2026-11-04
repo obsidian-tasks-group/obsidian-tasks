@@ -1,4 +1,4 @@
-import { TemplatingPluginTools } from '../../src/lib/TemplatingPluginTools';
+import { TemplatingPluginTools } from 'lib/TemplatingPluginTools';
 import { verifyWithFileExtension } from '../TestingTools/ApprovalTestHelpers';
 
 describe('TemplatingPluginTools', () => {

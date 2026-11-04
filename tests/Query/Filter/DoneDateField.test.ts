@@ -1,9 +1,6 @@
-/**
- * @jest-environment jsdom
- */
 import moment from 'moment';
-import { DoneDateField } from '../../../src/Query/Filter/DoneDateField';
-import type { FilterOrErrorMessage } from '../../../src/Query/Filter/FilterOrErrorMessage';
+import { DoneDateField } from 'Query/Filter/DoneDateField';
+import type { FilterOrErrorMessage } from 'Query/Filter/FilterOrErrorMessage';
 import { TaskBuilder } from '../../TestingTools/TaskBuilder';
 import { testFilter } from '../../TestingTools/FilterTestHelpers';
 import { expectTaskComparesAfter, expectTaskComparesBefore } from '../../CustomMatchers/CustomMatchersForSorting';
@@ -38,12 +35,12 @@ describe('done date', () => {
 
 describe('explain done date queries', () => {
     beforeAll(() => {
-        jest.useFakeTimers();
-        jest.setSystemTime(new Date('2022-01-15'));
+        vi.useFakeTimers();
+        vi.setSystemTime(new Date('2022-01-15'));
     });
 
     afterAll(() => {
-        jest.useRealTimers();
+        vi.useRealTimers();
     });
 
     it('should explain date before', () => {

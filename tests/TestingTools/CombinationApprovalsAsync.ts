@@ -1,7 +1,8 @@
-import { verify } from 'approvals/lib/Providers/Jest/JestApprovals';
-import { EMPTY } from 'approvals/lib/Utilities/Printers';
+import { verify } from '@approval-tests/approvals/lib/Providers/Vitest/VitestApprovals';
 import { formatToRepresentType } from '../Scripting/ScriptingTestHelpers';
 import { runCombinations9 } from './RunCombinations';
+
+const EMPTY = [{}];
 
 /**
  * Add quotes around any string values.

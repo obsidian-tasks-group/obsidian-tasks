@@ -1,8 +1,8 @@
 // Builder
 import type { Moment } from 'moment';
-import { Occurrence } from '../../src/Task/Occurrence';
-import { Recurrence } from '../../src/Task/Recurrence';
-import { DateParser } from '../../src/DateTime/DateParser';
+import { Occurrence } from 'Task/Occurrence';
+import { Recurrence } from 'Task/Recurrence';
+import { DateParser } from 'DateTime/DateParser';
 
 /**
  * A fluent class for creating Recurrence objects for tests.

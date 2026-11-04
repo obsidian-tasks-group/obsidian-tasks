@@ -1,9 +1,7 @@
-/**
- * @jest-environment jsdom
- */
 import moment from 'moment';
+import { UrgencyField } from 'Query/Filter/UrgencyField';
+import { Priority } from 'Task/Priority';
 import { TaskBuilder } from '../../TestingTools/TaskBuilder';
-import { UrgencyField } from '../../../src/Query/Filter/UrgencyField';
 
 import {
     expectTaskComparesAfter,
@@ -11,7 +9,6 @@ import {
     expectTaskComparesEqual,
 } from '../../CustomMatchers/CustomMatchersForSorting';
 import { fromLine } from '../../TestingTools/TestHelpers';
-import { Priority } from '../../../src/Task/Priority';
 
 window.moment = moment;
 

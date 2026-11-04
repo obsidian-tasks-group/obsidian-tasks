@@ -1,9 +1,9 @@
-import type { TaskLayoutOptions } from './Layout/TaskLayoutOptions';
-import type { QueryLayoutOptions } from './Layout/QueryLayoutOptions';
-import type { Task } from './Task/Task';
-import type { Grouper } from './Query/Group/Grouper';
-import type { QueryResult } from './Query/QueryResult';
-import type { ViewLayoutOptions } from './Layout/ViewLayoutOptions';
+import type { TaskLayoutOptions } from 'Layout/TaskLayoutOptions';
+import type { QueryLayoutOptions } from 'Layout/QueryLayoutOptions';
+import type { Task } from 'Task/Task';
+import type { Grouper } from 'Query/Group/Grouper';
+import type { QueryResult } from 'Query/QueryResult';
+import type { ViewLayoutOptions } from 'Layout/ViewLayoutOptions';
 
 /**
  * Standard interface for the query engine used by Tasks, multiple
@@ -90,7 +90,7 @@ export interface IQuery {
      * @param message
      * @param objects
      */
-    debug(message: string, objects?: any): void;
+    debug(message: string, objects?: unknown): void;
 
     /**
      * Write a warn log message.
@@ -100,5 +100,5 @@ export interface IQuery {
      * @param message
      * @param objects
      */
-    warn(message: string, objects?: any): void;
+    warn(message: string, objects?: unknown): void;
 }

@@ -48,7 +48,10 @@ The ⏩ button provides two choices:
 
 ### Which date field is edited?
 
-The postpone option looks at the first of these Task fields, and will edit the first of:
+> [!released]
+> This setting was introduced in Tasks 8.6.0.
+
+By default (**Due → Scheduled → Start**), the postpone option looks at the first of these Task fields, and will edit the first of:
 
 1. **Due** date, if present.
 1. **Scheduled** date
@@ -56,9 +59,18 @@ The postpone option looks at the first of these Task fields, and will edit the f
 1. **Start** date
     - If no Due or Scheduled date is present.
 
+You can configure **Postpone button date field** in Tasks Settings (under **Postpone button**) to choose a different priority order or a single date field:
+
+- **Due → Scheduled → Start** (default)
+- **Scheduled → Due → Start**
+- **Start → Scheduled → Due**
+- **Always Due**
+- **Always Scheduled**
+- **Always Start**
+
 ### When is the postpone button shown?
 
-- Tasks with none of Due, Scheduled and Start currently don't show the Postpone button.
+- Tasks that do not have any of the date fields selected in **Postpone button date field** don't show the Postpone button.
 - Tasks with any invalid dates at all (including Created and Done dates) also don't show the Postpone button.
 - You can use the `hide postpone button` [[Layout]] instruction to hide the Postpone button from your Task query results.
 
@@ -82,10 +94,26 @@ This facility is currently only available in Tasks query search results.
 One of these reasons:
 
 - The task status type [[Status Types|status type]] is `DONE`, `CANCELLED` or `NON_TASK`.
-- The task does has no [[Dates#Due date|due]], [[Dates#Scheduled date|scheduled]] or [[Dates#Start date|start]] date.
+- The task has no [[Dates#Due date|due]], [[Dates#Scheduled date|scheduled]] or [[Dates#Start date|start]] date (or lacks the date field configured in [[#Which date field is edited?|Postpone button date field]]).
 - The task has at least one date field with an invalid date value.
 - The `hide postpone button` instruction was used.
 
 ### Can I use Postpone to add a date to an undated task?
 
-Currently, no.
+No, not currently. If you would like to support this request, please add a reaction to the first comment in [Issue #2651](https://github.com/obsidian-tasks-group/obsidian-tasks/issues/2651).
+
+## Support
+
+Before creating a new bug report or feature request about Postponing, please check existing items to avoid duplicates.
+
+You do not need to search manually: the links below are already filtered to the label `"scope: postpone"`.
+
+- Check both Open and Closed items.
+- If you find an existing item, support it there instead of adding a `+1` comment. See [[About Support and Help#How to support an existing request|How to support an existing request]].
+
+| Type | Open | Closed | Notes |
+| --- | --- | --- | --- |
+| Issues | [Open](https://github.com/obsidian-tasks-group/obsidian-tasks/issues?q=is%3Aopen%20label%3A%22scope%3A+postpone%22%20is%3Aissue%20) | [Closed](https://github.com/obsidian-tasks-group/obsidian-tasks/issues?q=is%3Aclosed%20label%3A%22scope%3A+postpone%22%20is%3Aissue%20) | bug reports and feature requests |
+| Discussions | [Open](https://github.com/obsidian-tasks-group/obsidian-tasks/discussions/categories/ideas-any-new-feature-requests-go-in-issues-please?discussions_q=is%3Aopen+label%3A%22scope%3A+postpone%22+category%3A%22Ideas%3A+Any+New+Feature+Requests+go+in+Issues+please%22+sort%3Atop) | [Closed](https://github.com/obsidian-tasks-group/obsidian-tasks/discussions/categories/ideas-any-new-feature-requests-go-in-issues-please?discussions_q=is%3Aclosed+label%3A%22scope%3A+postpone%22+category%3A%22Ideas%3A+Any+New+Feature+Requests+go+in+Issues+please%22+sort%3Atop) | older feature discussions from before late 2022 |
+
+If you do not find an existing item in Issues or Discussions, see [[About Support and Help]] for how to report a bug or request a feature.

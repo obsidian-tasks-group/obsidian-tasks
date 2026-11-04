@@ -14,11 +14,12 @@ See also [[Report a Bug]].
 - Is it already possible?
   - Check the relevant section of the Tasks documentation.
 - Is it already requested?
-  - Search for existing feature requests (FRs) for your proposed change:
+  - If the documentation page for the feature has a **Support** section, use its links first. They are the quickest way to find existing requests for that feature.
+  - Otherwise, search for existing feature requests (FRs) for your proposed change:
     - [Issues: open FRs](https://github.com/obsidian-tasks-group/obsidian-tasks/issues?q=is%3Aopen+is%3Aissue+label%3A%22type%3A+enhancement%22)
     - [Issues: closed FRs](https://github.com/obsidian-tasks-group/obsidian-tasks/issues?q=is%3Aissue+label%3A%22type%3A+enhancement%22+is%3Aclosed)
     - [Discussions: older requests](https://github.com/obsidian-tasks-group/obsidian-tasks/discussions/categories/ideas-any-new-feature-requests-go-in-issues-please?discussions_q=category%3A%22Ideas%3A+Any+New+Feature+Requests+go+in+Issues+please%22+sort%3Atop) pre-dating FRs going in Issues
-  - If it is, up-vote it with a 👍 (in Issues) or the up-arrow (in Discussions).
+  - If you find an existing request, please support it instead of adding a `+1` comment. See [[About Support and Help#How to support an existing request]].
 - Can it be achieved using another plugin?
 - Is it specific only to your personal workflow?
   - Some requests demand volunteer time for something very specific to one person's way of working.

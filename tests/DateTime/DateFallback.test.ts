@@ -1,16 +1,12 @@
-/**
- * @jest-environment jsdom
- */
 import type { Moment } from 'moment';
 import moment from 'moment';
-import { Task } from '../../src/Task/Task';
-import { resetSettings, updateSettings } from '../../src/Config/Settings';
-import { DateFallback } from '../../src/DateTime/DateFallback';
-import { TaskLocation } from '../../src/Task/TaskLocation';
+import { Task } from 'Task/Task';
+import { resetSettings, updateSettings } from 'Config/Settings';
+import { DateFallback } from 'DateTime/DateFallback';
+import { TaskLocation } from 'Task/TaskLocation';
 import { TaskBuilder } from '../TestingTools/TaskBuilder';
 import { createTestTasksFile } from '../TestingTools/TasksFileHelpers';
 
-jest.mock('obsidian');
 window.moment = moment;
 
 function date(value: string | null): Moment | null {

@@ -1,34 +1,30 @@
-/**
- * @jest-environment jsdom
- */
-import { verifyAll, verifyAsJson } from 'approvals/lib/Providers/Jest/JestApprovals';
 import moment from 'moment';
 import * as chrono from 'chrono-node';
 import type { Task } from 'Task/Task';
-import { getSettings, resetSettings } from '../../src/Config/Settings';
-import type { SuggestInfo, SuggestionBuilder } from '../../src/Suggestor';
+import { verifyAll, verifyAsJson } from '@approval-tests/approvals/lib/Providers/Vitest/VitestApprovals';
+import { getSettings, resetSettings } from 'Config/Settings';
+import type { SuggestInfo, SuggestionBuilder } from 'Suggestor';
 import {
     canSuggestForLine,
     lastOpenBracket,
     makeDefaultSuggestionBuilder,
     onlySuggestIfBracketOpen,
-    showDependencySuggestionsDefault,
-} from '../../src/Suggestor/Suggestor';
-import { DEFAULT_SYMBOLS } from '../../src/TaskSerializer/DefaultTaskSerializer';
-import { DATAVIEW_SYMBOLS } from '../../src/TaskSerializer/DataviewTaskSerializer';
-import { verifyMarkdown } from '../TestingTools/VerifyMarkdown';
-import { GlobalFilter } from '../../src/Config/GlobalFilter';
-import { MarkdownTable } from '../../src/lib/MarkdownTable';
+} from 'Suggestor/Suggestor';
+import { DEFAULT_SYMBOLS } from 'TaskSerializer/DefaultTaskSerializer';
+import { DATAVIEW_SYMBOLS } from 'TaskSerializer/DataviewTaskSerializer';
+import { GlobalFilter } from 'Config/GlobalFilter';
+import { MarkdownTable } from 'lib/MarkdownTable';
+import { StatusRegistry } from 'Statuses/StatusRegistry';
+import { StatusConfiguration, StatusType } from 'Statuses/StatusConfiguration';
 import { TaskBuilder } from '../TestingTools/TaskBuilder';
-import { StatusRegistry } from '../../src/Statuses/StatusRegistry';
-import { StatusConfiguration, StatusType } from '../../src/Statuses/StatusConfiguration';
+import { verifyMarkdown } from '../TestingTools/VerifyMarkdown';
 
 window.moment = moment;
 
 // Set predictable date for all tests in this file
 const mockDate = new Date(moment('2022-07-11 15:00').valueOf());
 
-const chronoSpy = jest
+const chronoSpy = vi
     .spyOn(chrono, 'parseDate')
     .mockImplementation((text, _, options) => chrono.en.casual.parseDate(text, mockDate, options)!);
 
@@ -93,15 +89,6 @@ describe.each([
         MAX_GENERIC_SUGGESTIONS_FOR_TESTS,
         name === 'dataview',
     );
-    beforeEach(() => {
-        // Note: Dependency suggestions are temporarily turned off in the released plugin,
-        //       but turned on in tests so that we continue to check the behaviour.
-        global.SHOW_DEPENDENCY_SUGGESTIONS = true;
-    });
-
-    afterEach(() => {
-        global.SHOW_DEPENDENCY_SUGGESTIONS = false;
-    });
 
     /** Build suggestions for the simple case where the cursor is at the very end of the line.
      */
@@ -315,6 +302,20 @@ ${JSON.stringify(suggestions[0], null, 4)}
         expect(suggestions[0].displayText).not.toContain('created today');
     });
 
+    it('should suggest scheduled date when task contains a tag with the same emoji (issue #4085)', () => {
+        const line = `- [ ] Test with a tag containing emojis #${scheduledDateSymbol} conflicts with scheduled dates.`;
+        // Place cursor at end of line to trigger suggestion popup
+        const cursorPos = line.length;
+
+        const originalSettings = getSettings();
+        const suggestions = buildSuggestions(line, cursorPos, originalSettings, [], CAN_SAVE_EDITS);
+
+        const scheduledDateSuggestion = suggestions.find(
+            (s) => s.displayText === `${scheduledDateSymbol} scheduled date`,
+        );
+        expect(scheduledDateSuggestion).toBeDefined();
+    });
+
     describe('suggestions for dependency field ID', () => {
         it('should offer "id" then "depends on" if user typed "id"', () => {
             const line = '- [ ] some task id';
@@ -473,11 +474,6 @@ ${JSON.stringify(suggestions[0], null, 4)}
     });
 
     it('show all suggested text', () => {
-        // Turn off dependency suggestions for now, as per default value,
-        // as the outputs of this test are embedded in the documentation,
-        // and I wish to hide ID and dependsOn there.
-        global.SHOW_DEPENDENCY_SUGGESTIONS = showDependencySuggestionsDefault;
-
         const originalSettings = getSettings();
         originalSettings.autoSuggestMaxItems = 200;
 
@@ -490,11 +486,9 @@ ${JSON.stringify(suggestions[0], null, 4)}
             `- [ ] some task ${scheduledDateSymbol} `,
             `- [ ] some task ${startDateSymbol} `,
             `- [ ] some task ${onCompletionSymbol} `,
+            `- [ ] some task ${idSymbol} `,
+            `- [ ] some task ${dependsOnSymbol} `,
         ];
-        if (global.SHOW_DEPENDENCY_SUGGESTIONS) {
-            lines.push(`- [ ] some task ${idSymbol} `);
-            lines.push(`- [ ] some task ${dependsOnSymbol} `);
-        }
         const markdownTable = new MarkdownTable(['Searchable Text', 'Text that is added']);
         for (const line of lines) {
             let suggestions = buildSuggestions(line, line.length - 1, originalSettings, [], CAN_SAVE_EDITS);

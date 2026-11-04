@@ -1,10 +1,6 @@
-/**
- * @jest-environment jsdom
- */
-
 import moment from 'moment';
 
-import type { Task } from '../../../../src/Task/Task';
+import type { Task } from 'Task/Task';
 import { readAllTasksFromAllSimulatedFiles } from '../../../Obsidian/SimulatedFile';
 import { SampleTasks } from '../../../TestingTools/SampleTasks';
 import {
@@ -17,12 +13,12 @@ import {
 window.moment = moment;
 
 beforeEach(() => {
-    jest.useFakeTimers();
-    jest.setSystemTime(new Date('2023-05-31 20:00'));
+    vi.useFakeTimers();
+    vi.setSystemTime(new Date('2023-05-31 20:00'));
 });
 
 afterEach(() => {
-    jest.useRealTimers();
+    vi.useRealTimers();
 });
 
 // NEW_QUERY_INSTRUCTION_EDIT_REQUIRED

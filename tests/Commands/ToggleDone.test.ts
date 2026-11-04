@@ -1,14 +1,10 @@
-/**
- * @jest-environment jsdom
- */
-
 import moment from 'moment';
 import type { EditorPosition } from 'obsidian';
-import { getNewCursorPosition, toggleLine } from '../../src/Commands/ToggleDone';
-import { GlobalFilter } from '../../src/Config/GlobalFilter';
-import { StatusRegistry } from '../../src/Statuses/StatusRegistry';
-import { Status } from '../../src/Statuses/Status';
-import { StatusConfiguration, StatusType } from '../../src/Statuses/StatusConfiguration';
+import { getNewCursorPosition, toggleLine } from 'Commands/ToggleDone';
+import { GlobalFilter } from 'Config/GlobalFilter';
+import { StatusRegistry } from 'Statuses/StatusRegistry';
+import { Status } from 'Statuses/Status';
+import { StatusConfiguration, StatusType } from 'Statuses/StatusConfiguration';
 
 window.moment = moment;
 
@@ -78,12 +74,12 @@ function testToggleLineForOutOfRangeCursorPositions(
 
 describe('ToggleDone', () => {
     beforeEach(() => {
-        jest.useFakeTimers();
-        jest.setSystemTime(new Date('2022-09-04'));
+        vi.useFakeTimers();
+        vi.setSystemTime(new Date('2022-09-04'));
     });
 
     afterEach(() => {
-        jest.useRealTimers();
+        vi.useRealTimers();
         GlobalFilter.getInstance().reset();
     });
 
@@ -130,11 +126,65 @@ describe('ToggleDone', () => {
         testToggleLine('1. [ ] |', '1. [x] |');
 
         // Done date is added if task does not match global filter
-        testToggleLine('- [ ] #task|', '- [x]  #tas|k ✅ 2022-09-04'); // Extra space added before #; cursor moves left
+        testToggleLine('- [ ] #task|', '- [x] #task| ✅ 2022-09-04');
         testToggleLine('* [ ] #task description|', '* [x] #task description| ✅ 2022-09-04');
 
         // Issue #449 - cursor jumped 13 characters to the right on completion
         testToggleLine('- [ ] I have a |proper description', '- [x] I have a |proper description');
+    });
+
+    describe('tag-only descriptions', () => {
+        it('should not add a space when completing a task without a global filter', () => {
+            testToggleLine('- [ ] #tag|', '- [x] #tag| ✅ 2022-09-04');
+        });
+
+        it('should not add a space when un-completing a task without a global filter', () => {
+            testToggleLine('- [x] #tag ✅ 2022-09-04|', '- [ ] #tag|');
+        });
+
+        it('should not add a space when completing a task that matches the global filter', () => {
+            GlobalFilter.getInstance().set('#task');
+            testToggleLine('- [ ] #task|', '- [x] #task| ✅ 2022-09-04');
+        });
+
+        it('should not add a space when un-completing a task that matches the global filter', () => {
+            GlobalFilter.getInstance().set('#task');
+            testToggleLine('- [x] #task ✅ 2022-09-04|', '- [ ] #task|');
+        });
+
+        it('should preserve spacing when a task does not match the global filter', () => {
+            GlobalFilter.getInstance().set('#task');
+            testToggleLine('- [ ] #other|', '- [x] #other|');
+            testToggleLine('- [x] #other|', '- [ ] #other|');
+        });
+    });
+
+    describe('trailing spaces', () => {
+        it('should discard single trailing space when toggling a task', () => {
+            const incomplete = '- [ ] foo';
+            const complete = '- [x] foo ✅ 2022-09-04';
+
+            expect(toggleLine(incomplete + ' ', 'x.md').text).toStrictEqual(complete);
+            expect(toggleLine(complete + ' ', 'x.md').text).toStrictEqual(incomplete);
+        });
+
+        it('should preserve Markdown hard-break of 2 spaces when toggling a task', () => {
+            const hardBreak = '  ';
+            const incomplete = `- [ ] foo${hardBreak}`;
+            const complete = `- [x] foo ✅ 2022-09-04${hardBreak}`;
+
+            expect(toggleLine(incomplete, 'x.md').text).toStrictEqual(complete);
+            expect(toggleLine(complete, 'x.md').text).toStrictEqual(incomplete);
+        });
+
+        it('should preserve Markdown hard-break of 3 spaces when toggling a task', () => {
+            const hardBreak = '   ';
+            const incomplete = `- [ ] foo${hardBreak}`;
+            const complete = `- [x] foo ✅ 2022-09-04${hardBreak}`;
+
+            expect(toggleLine(incomplete, 'x.md').text).toStrictEqual(complete);
+            expect(toggleLine(complete, 'x.md').text).toStrictEqual(incomplete);
+        });
     });
 
     it('should un-complete a completed task', () => {
@@ -151,7 +201,7 @@ describe('ToggleDone', () => {
         testToggleLine('+ [x]  ✅ 2022-09-04|', '+ [ ] ✅ 2022-09-04|');
 
         // Done date is added if task matches the global filter
-        testToggleLine('|- [x] #task ✅ 2022-09-04', '|- [ ]  #task'); // Extra space added before #
+        testToggleLine('|- [x] #task ✅ 2022-09-04', '|- [ ] #task');
         testToggleLine('1. [x] #task description ✅ 2022-09-04|', '1. [ ] #task description|');
 
         // Issue #449 - cursor jumped 13 characters to the left on un-completion
@@ -268,10 +318,10 @@ describe('ToggleDone', () => {
 
             // Assert
             const line2 = toggleLine(line1, 'x.md').text;
-            expect(line2).toStrictEqual('- [C] this is a task starting at Pro, not matching the global filter');
+            expect(line2).toStrictEqual('- [ ] this is a task starting at Pro, not matching the global filter');
 
             const line3 = toggleLine(line2, 'x.md').text;
-            expect(line3).toStrictEqual('- [P] this is a task starting at Pro, not matching the global filter');
+            expect(line3).toStrictEqual('- [x] this is a task starting at Pro, not matching the global filter');
         });
     });
 

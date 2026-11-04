@@ -1,9 +1,9 @@
 import type { App } from 'obsidian';
-import type { Task } from '../../src/Task/Task';
-import { editTaskLineModal } from '../../src/Api/editTaskLineModal';
-import { taskFromLine } from '../../src/Commands/CreateOrEditTaskParser';
+import type { Task } from 'Task/Task';
+import { editTaskLineModal } from 'Api/editTaskLineModal';
+import { taskFromLine } from 'Commands/CreateOrEditTaskParser';
+import type { TaskModalParams } from 'Obsidian/TaskModal';
 import { TaskModal } from '../__mocks__/TaskModal';
-import type { TaskModalParams } from '../../src/Obsidian/TaskModal';
 
 const app = {} as App;
 const noOpOnSaveSettings = async () => {};
@@ -12,9 +12,9 @@ const createNewTask = (line = ''): Task => {
     return taskFromLine({ line, path: '' });
 };
 
-jest.mock('../../src/Obsidian/TaskModal', () => {
+vi.mock('../../src/Obsidian/TaskModal', () => {
     return {
-        TaskModal: jest.fn(({ app, task, onSubmit, onCancel, allTasks }: TaskModalParams) => {
+        TaskModal: vi.fn(function ({ app, task, onSubmit, onCancel, allTasks }: TaskModalParams) {
             return new TaskModal({ app, task, onSubmit, onCancel, allTasks });
         }),
     };
@@ -22,7 +22,7 @@ jest.mock('../../src/Obsidian/TaskModal', () => {
 
 describe('APIv1 - editTaskLineModal', () => {
     beforeEach(() => {
-        jest.clearAllMocks();
+        vi.clearAllMocks();
     });
 
     it('TaskModal.open() should be called', () => {

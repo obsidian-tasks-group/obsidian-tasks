@@ -1,4 +1,4 @@
-import { htmlEncodeCharacter, htmlEncodeString } from '../../src/lib/HTMLCharacterEntities';
+import { htmlEncodeCharacter, htmlEncodeString } from 'lib/HTMLCharacterEntities';
 
 describe('HTMLEntities', () => {
     it('should encode single characters', () => {

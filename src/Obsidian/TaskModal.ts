@@ -1,11 +1,12 @@
 import { type App, setIcon } from 'obsidian';
 import { Modal } from 'obsidian';
+import { mount, unmount } from 'svelte';
 
-import EditTask from '../ui/EditTask.svelte';
-import type { Task } from '../Task/Task';
-import { StatusRegistry } from '../Statuses/StatusRegistry';
-import { Status } from '../Statuses/Status';
-import { OptionsModal } from './OptionsModal';
+import EditTask from 'ui/EditTask.svelte';
+import type { Task } from 'Task/Task';
+import { StatusRegistry } from 'Statuses/StatusRegistry';
+import { Status } from 'Statuses/Status';
+import { OptionsModal } from 'Obsidian/OptionsModal';
 
 export interface TaskModalParams {
     app: App;
@@ -21,6 +22,7 @@ export class TaskModal extends Modal {
     public readonly onSaveSettings: () => Promise<void>;
     public readonly onSubmit: (updatedTasks: Task[]) => void;
     public readonly allTasks: Task[];
+    private _editTaskComponent: ReturnType<typeof mount> | undefined;
 
     constructor({ app, task, onSaveSettings, onSubmit, onCancel, allTasks }: TaskModalParams) {
         super(app);
@@ -42,11 +44,16 @@ export class TaskModal extends Modal {
         this.titleEl.setText('Create or edit Task');
         this.modalEl.addClass('tasks-edit-modal-container');
 
-        const optionsButton = document.createElement('button');
-        // Add same classes as the default Obsidian modal close button.
-        optionsButton.addClasses(['modal-close-button', 'mod-raised', 'clickable-icon']);
-        // But overload the 'inset-inline-end' property for a correct position.
-        optionsButton.addClass('modal-option-button');
+        const optionsButton = this.modalEl.createEl('button', {
+            cls: [
+                // Add same classes as the default Obsidian modal close button:
+                'modal-close-button',
+                'mod-raised',
+                'clickable-icon',
+                // But overload the 'inset-inline-end' property for a correct position:
+                'modal-option-button',
+            ],
+        });
         setIcon(optionsButton, 'settings');
         optionsButton.onclick = () => {
             const optionsModal = new OptionsModal({
@@ -55,13 +62,12 @@ export class TaskModal extends Modal {
             });
             optionsModal.open();
         };
-        this.modalEl.appendChild(optionsButton);
 
         const { contentEl } = this;
 
         const statusOptions = this.getKnownStatusesAndCurrentTaskStatusIfNotKnown();
 
-        new EditTask({
+        this._editTaskComponent = mount(EditTask, {
             target: contentEl,
             props: {
                 task: this.task,
@@ -87,6 +93,10 @@ export class TaskModal extends Modal {
     }
 
     public onClose(): void {
+        if (this._editTaskComponent) {
+            void unmount(this._editTaskComponent);
+            this._editTaskComponent = undefined;
+        }
         const { contentEl } = this;
         contentEl.empty();
     }

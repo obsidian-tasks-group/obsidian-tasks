@@ -1,12 +1,9 @@
-/**
- * @jest-environment jsdom
- */
 import moment from 'moment';
-import { Options } from 'approvals/lib/Core/Options';
-import { GlobalFilter } from '../../../src/Config/GlobalFilter';
-import { GlobalQuery } from '../../../src/Config/GlobalQuery';
+import { Options } from '@approval-tests/approvals/lib/Core/Options';
+import { GlobalFilter } from 'Config/GlobalFilter';
+import { GlobalQuery } from 'Config/GlobalQuery';
+import { resetSettings } from 'Config/Settings';
 import { verifyQuery, verifyTaskBlockExplanation } from '../../TestingTools/ApprovalTestHelpers';
-import { resetSettings } from '../../../src/Config/Settings';
 import { verifyMarkdownForDocs } from '../../TestingTools/VerifyMarkdown';
 import { getTasksFileFromMockData } from '../../TestingTools/MockDataHelpers';
 import { MockDataLoader } from '../../TestingTools/MockDataLoader';
@@ -20,12 +17,12 @@ function checkExplainPresentAndVerify(blockQuery: string) {
 
 describe('explain', () => {
     beforeAll(() => {
-        jest.useFakeTimers();
-        jest.setSystemTime(new Date('2022-10-21'));
+        vi.useFakeTimers();
+        vi.setSystemTime(new Date('2022-10-21'));
     });
 
     afterAll(() => {
-        jest.useRealTimers();
+        vi.useRealTimers();
     });
 
     afterEach(resetSettings);

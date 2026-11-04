@@ -18,7 +18,7 @@ export const mockApp = {} as unknown as App;
  */
 export function createTFile(path: string): TFile {
     const name = path.split('/').pop() ?? path;
-    const extension = name.includes('.') ? name.split('.').pop() ?? '' : '';
+    const extension = name.includes('.') ? (name.split('.').pop() ?? '') : '';
     const basename = extension === '' ? name : name.slice(0, -(extension.length + 1));
 
     return {
@@ -99,6 +99,31 @@ export class Notice {
      * @public
      */
     hide(): void {}
+}
+
+export class PluginSettingTab {
+    public containerEl: HTMLElement;
+    public app: App;
+    public plugin: unknown;
+
+    constructor(app: App, plugin: unknown) {
+        this.app = app;
+        this.plugin = plugin;
+        this.containerEl = document.createElement('div');
+    }
+
+    public update(): void {}
+    public refreshDomState(): void {}
+}
+
+export function sanitizeHTMLToDom(html: string): DocumentFragment {
+    const template = document.createElement('template');
+    template.innerHTML = html;
+    return template.content.cloneNode(true) as DocumentFragment;
+}
+
+export function requireApiVersion(_version: string): boolean {
+    return true;
 }
 
 interface SearchResult {
@@ -241,6 +266,24 @@ export function prepareSimpleSearch(query: string): (text: string) => SearchResu
     };
 }
 
+/**
+ * Fake implementation of Obsidian's prepareFuzzySearch(),
+ * so we can write tests of code that calls that function.
+ *
+ * TODO Augment this to return an actual SearchResult, with the matching character positions.
+ *
+ * See https://docs.obsidian.md/Reference/TypeScript+API/prepareFuzzySearch
+ * @param query - the search term
+ */
+export function prepareFuzzySearch(query: string) {
+    return function (text: string) {
+        const normalizedQuery = query.toLowerCase();
+        const normalizedText = text.toLowerCase();
+        const matches = [...normalizedQuery].every((character) => normalizedText.includes(character));
+        return matches ? { score: normalizedQuery.length / normalizedText.length } : null;
+    };
+}
+
 type IconName = string;
 
 export function setIcon(element: HTMLElement, iconId: IconName): void {
@@ -268,17 +311,112 @@ export function getLanguage() {
     return 'en';
 }
 
-/**
- * A mock implementation of the Obsidian Modal class.
- * Without this testing the TaskModal throws an error attempting to extend Modal
- */
+// Records the last modal opened by a test so approval tests can inspect
+// modal title/body text triggered by declarative settings callbacks.
+export const lastModalState: {
+    title: string | null;
+    html: string | null;
+    opened: boolean;
+} = {
+    title: null,
+    html: null,
+    opened: false,
+};
+
+export function resetLastModalState(): void {
+    lastModalState.title = null;
+    lastModalState.html = null;
+    lastModalState.opened = false;
+}
+
+// Minimal Modal mock for tests that inspect modal text produced by UI callbacks.
 export class Modal {
-    public open(): void {
-        // Mocked interface, no-op
+    public contentEl: HTMLDivElement;
+    public modalEl: HTMLDivElement;
+    public titleEl: HTMLDivElement;
+
+    constructor(_app?: App) {
+        this.contentEl = document.createElement('div');
+        this.modalEl = document.createElement('div');
+        this.titleEl = document.createElement('div');
     }
+
+    public setTitle(title: string): this {
+        this.titleEl.textContent = title;
+        lastModalState.title = title;
+        return this;
+    }
+
+    public open(): void {
+        lastModalState.opened = true;
+        lastModalState.html = this.contentEl.innerHTML;
+    }
+
     public close(): void {
         // Mocked interface, no-op
     }
+
     public onOpen(): void {}
     public onClose(): void {}
+}
+
+export class Component {
+    public load(): void {}
+    public unload(): void {}
+}
+
+export class MarkdownRenderer {
+    public static render(_app: App, markdown: string, el: HTMLElement): Promise<void> {
+        el.textContent = markdown;
+        return Promise.resolve();
+    }
+}
+
+export abstract class SuggestModal<T> extends Modal {
+    constructor(public readonly app: App) {
+        super();
+    }
+
+    public setPlaceholder(_placeholder: string): void {}
+
+    public abstract getSuggestions(query: string): T[] | Promise<T[]>;
+    public abstract renderSuggestion(value: T, el: HTMLElement): void;
+    public abstract onChooseSuggestion(item: T, evt: MouseEvent | KeyboardEvent): void;
+}
+
+// Minimal EditorSuggest mock: just enough to construct EditorSuggestor.
+export abstract class EditorSuggest<_T> {
+    public context: unknown = null;
+
+    constructor(public readonly app: App) {}
+
+    public close(): void {}
+}
+
+export class MarkdownView {}
+
+export const editorInfoField = {};
+
+// Minimal ButtonComponent mock: only the methods currently needed by modal-building code.
+export class ButtonComponent {
+    public buttonEl: HTMLButtonElement;
+
+    constructor(containerEl: HTMLElement) {
+        this.buttonEl = document.createElement('button');
+        containerEl.appendChild(this.buttonEl);
+    }
+
+    public setButtonText(text: string): this {
+        this.buttonEl.textContent = text;
+        return this;
+    }
+
+    public setClass(className: string): this {
+        this.buttonEl.classList.add(className);
+        return this;
+    }
+
+    public onClick(_callback: () => void): this {
+        return this;
+    }
 }

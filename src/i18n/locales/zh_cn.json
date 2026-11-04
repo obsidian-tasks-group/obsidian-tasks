@@ -1,4 +1,12 @@
 {
+  "common": {
+    "cancel": "取消",
+    "edit": "编辑",
+    "moreInfo": "更多信息",
+    "okay": "确定",
+    "reload": "重新加载",
+    "save": "保存"
+  },
   "main": {
     "loadingPlugin": "加载插件: {{name}} v{{version}}",
     "unloadingPlugin": "卸载插件: {{name}} v{{version}}"
@@ -25,7 +33,25 @@
         "description": "控制搜索和切换状态的行为。",
         "name": "任务状态类型"
       },
-      "fixErrorsBeforeSaving": "在保存前修复错误。"
+      "fixErrorsBeforeSaving": "在保存前修复错误。",
+      "title": {
+        "editCoreStatus": "编辑核心状态",
+        "editCustomStatus": "编辑自定义状态"
+      }
+    },
+    "editPresetModal": {
+      "name": {
+        "duplicate": "已存在同名预设",
+        "name": "名称",
+        "placeholder": "例如：未完成任务",
+        "required": "必填"
+      },
+      "query": {
+        "description": "可选。您可以稍后填写。",
+        "name": "查询",
+        "placeholder": "not done\npath includes Work"
+      },
+      "title": "编辑预设"
     }
   },
   "notices": {
@@ -102,7 +128,6 @@
   },
   "settings": {
     "autoSuggest": {
-      "heading": "自动建议",
       "maxSuggestions": {
         "description": "当自动建议菜单弹出时，应显示多少条建议 (包含 \"⏎\" 选项)。",
         "name": "要显示的最大自动建议数"
@@ -116,7 +141,6 @@
         "name": "自动建议任务内容"
       }
     },
-    "changeRequiresRestart": "需要重启。",
     "dates": {
       "cancelledDate": {
         "description": "启用此功能将在任务设置为取消时，在其末尾添加时间戳 ❌ YYYY-MM-DD。",
@@ -137,8 +161,7 @@
       "scheduledDate": {
         "extraFormat": {
           "description": {
-            "line1": "任务插件在将文件名用作未注明日期任务的计划日期时，将识别的附加日期格式。",
-            "line2": "语法参考"
+            "line1": "任务插件在将文件名用作未注明日期任务的计划日期时，将识别的附加日期格式。"
           },
           "name": "为无日期任务添加文件名日期格式作为计划日期",
           "placeholder": "示例：MMM DD YYYY"
@@ -162,8 +185,7 @@
       "accessKeys": {
         "description": "如果对话框中各种控件的快捷键与系统快捷键发生冲突，您可以在这里停用它们。",
         "name": "在对话框中使用快捷键"
-      },
-      "heading": "对话框"
+      }
     },
     "format": {
       "description": {
@@ -184,10 +206,9 @@
           "line3": "例如，如果将全局筛选器设置为 <code>#task</code>，则 Tasks 插件将仅处理标记为 <code>#task</code> 的任务列表项。",
           "line4": "其他任务列表项将保持正常,不会出现在查询中或设置完成日期。"
         },
-        "name": "全局筛选器",
+        "name": "全局任务筛选器",
         "placeholder": "例如:#task 或 TODO"
       },
-      "heading": "全局任务筛选器",
       "removeFilter": {
         "description": "启用此选项将在显示任务时从任务描述中删除设置为全局筛选器的字符串.",
         "name": "从描述中删除全局筛选器"
@@ -197,12 +218,32 @@
       "heading": "全局查询",
       "query": {
         "description": "自动包含在库中每个 Tasks 块开头的查询语句.用于添加默认过滤器或布局选项。",
-        "placeholder": "例如...\npath does not include _templates/\nlimit 300\nshow urgency"
+        "placeholder": "例如...\npath does not include _templates/\nlimit 300\nshow urgency",
+        "shortDescription": "自动包含在每个 Tasks 块开头的指令。"
+      }
+    },
+    "postponeButton": {
+      "heading": "推迟按钮",
+      "postponeDateField": {
+        "description": "推迟按钮(⏩)更新的日期字段。对于包含多个日期的选项，将设置序列中第一个存在于任务上的日期。",
+        "name": "推迟按钮日期字段",
+        "options": {
+          "due": "始终使用$t(taskFields.due)",
+          "due-scheduled-start": "$t(taskFields.due) → $t(taskFields.scheduled) → $t(taskFields.start)",
+          "scheduled": "始终使用$t(taskFields.scheduled)",
+          "scheduled-due-start": "$t(taskFields.scheduled) → $t(taskFields.due) → $t(taskFields.start)",
+          "start": "始终使用$t(taskFields.start)",
+          "start-scheduled-due": "$t(taskFields.start) → $t(taskFields.scheduled) → $t(taskFields.due)"
+        }
       }
     },
     "presets": {
       "buttons": {
-        "addNewPreset": ""
+        "addNewPreset": "添加新预设"
+      },
+      "emptyState": "暂无预设。",
+      "filter": {
+        "placeholder": "筛选预设…"
       },
       "line1": "您可以在这里定义命名指令，可以在多个查询中重复使用。一个名为 '{{name}}' 的预设可以在任务查询中使用 '{{instruction1}}' 或 '{{instruction2}}'。",
       "line2": "任何打开的任务查询在预设被编辑时都会自动重新加载。",
@@ -223,37 +264,47 @@
       }
     },
     "searchResults": {
-      "heading": "",
       "taskCountLocation": {
-        "description": "",
-        "name": "",
+        "description": "选择任务数量显示在查询结果的顶部还是底部。",
+        "name": "任务数量位置",
         "options": {
-          "bottom": "",
-          "top": ""
+          "bottom": "底部",
+          "top": "顶部"
         }
       }
     },
     "searches": {
       "enableCustomSearches": {
-        "description": {
-          "line1": "",
-          "line2": "",
-          "line3": "",
-          "line4": ""
+        "confirm": {
+          "acknowledge": "我了解风险",
+          "enable": "启用"
         },
-        "name": ""
+        "description": {
+          "line1": "启用 '{{filterByFunction}}'、'{{sortByFunction}}' 和 '{{groupByFunction}}'，它们会在 Tasks 查询中执行 JavaScript。",
+          "line2": "Tasks 查询或 Markdown 文件中的恶意 JavaScript 可能在 Obsidian 内运行，并访问或修改您的仓库内容、本地文件或其他系统资源。",
+          "line3": "仅当您信任此仓库当前和未来的内容（包括您之后可能从他人处下载、复制或同步的文件）时才启用此选项。",
+          "line4": "此设置仅存储在当前设备上；请在每台使用此仓库的设备上分别启用。"
+        },
+        "name": "启用自定义搜索"
       },
-      "heading": ""
+      "heading": "搜索"
     },
     "seeTheDocumentation": "参阅文档",
     "statuses": {
+      "buttons": {
+        "addStatus": "添加状态",
+        "importFromTheme": {
+          "description": "添加主题或 CSS 代码段所支持的状态。",
+          "name": "从主题导入"
+        }
+      },
       "collections": {
         "anuppuccinTheme": "AnuPpuccin 主题",
         "auraTheme": "Aura 主题",
         "borderTheme": "Border 主题",
         "buttons": {
-          "addCollection": {
-            "name": "{{themeName}}: 添加 {{numberOfStatuses}} 种支持状态"
+          "importCollection": {
+            "name": "{{themeName}}（{{numberOfStatuses}} 种状态）"
           }
         },
         "ebullientworksTheme": "Ebullientworks 主题",
@@ -278,12 +329,11 @@
       "customStatuses": {
         "buttons": {
           "addAllUnknown": {
+            "description": "添加在您的仓库中发现但尚未在此配置的所有状态符号。",
             "name": "添加所有未知状态类型"
           },
-          "addNewStatus": {
-            "name": "添加新任务状态"
-          },
           "resetCustomStatuses": {
+            "description": "丢弃所有自定义状态并恢复默认值。",
             "name": "重置自定义状态类型为默认值"
           }
         },
@@ -293,9 +343,32 @@
           "line3": "<b>注意</b>任何与更早的状态具有相同符号的状态都将被忽略.您可以通过运行“Create or edit task”命令并查看“Status”下拉列表来确认实际加载的状态。",
           "line4": "参阅文档！"
         },
+        "emptyState": "暂无自定义状态。",
         "heading": "自定义状态"
       },
-      "heading": "任务状态"
+      "filter": {
+        "placeholder": "筛选状态…"
+      },
+      "heading": "任务状态",
+      "reloadRequired": "更改将在重新加载后生效。",
+      "types": {
+        "cancelled": "已取消",
+        "done": "已完成",
+        "empty": "空",
+        "inProgress": "进行中",
+        "nonTask": "非任务",
+        "onHold": "搁置",
+        "todo": "待办"
+      },
+      "unnamed": "（未命名）"
+    },
+    "taskEntry": {
+      "heading": "任务录入"
     }
+  },
+  "taskFields": {
+    "due": "截止日期",
+    "scheduled": "计划日期",
+    "start": "开始日期"
   }
 }

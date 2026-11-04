@@ -1,8 +1,8 @@
-import { Task } from '../../Task/Task';
-import type { AllTaskDateFields } from '../../DateTime/DateFieldTypes';
-import type { TaskEditingInstruction } from './TaskEditingInstruction';
-import { createEditingInstructionForPriorityGroups } from './PriorityInstructions';
-import { createEditingInstructionForDateGroups } from './DateInstructions';
+import { Task } from 'Task/Task';
+import type { AllTaskDateFields } from 'DateTime/DateFieldTypes';
+import type { TaskEditingInstruction } from 'ui/EditInstructions/TaskEditingInstruction';
+import { createEditingInstructionForPriorityGroups } from 'ui/EditInstructions/PriorityInstructions';
+import { createEditingInstructionForDateGroups } from 'ui/EditInstructions/DateInstructions';
 
 /**
  * Creates a task-editing instruction for a group column based on the grouping property
@@ -41,4 +41,23 @@ export function createEditingInstructionForGroup(groupedBy: string, firstTask: T
 /** Convert Task field names like 'dueDate' to groupedBy names like 'due' */
 function groupedPropertyForDateField(field: AllTaskDateFields): string {
     return field.replace(/Date$/, '');
+}
+
+/**
+ * Return a string containing all the view instructions that support drag-and-drop editing between columns.
+ *
+ * This generates a file that gets embedded in the docs, so should be updated
+ * when new columns groups are made support editing.
+ */
+export function allViewInstructionsSupportingEditing(): string {
+    return `
+view columns by priority
+
+view columns by cancelled
+view columns by created
+view columns by done
+view columns by due
+view columns by scheduled
+view columns by start
+`;
 }

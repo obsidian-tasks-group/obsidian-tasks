@@ -1,0 +1,84 @@
+.tasks-quick-search-modal-container {
+    .prompt-input {
+        // The sum covers the button's inset and width, so search text does not
+        // extend underneath the absolutely positioned button.
+        padding-inline-end: calc(var(--size-4-16) + var(--size-4-4));
+    }
+
+    .tasks-quick-search-options-button {
+        // Vertically centre the button on the search field and position it
+        // using a logical inset so the layout also works right-to-left.
+        top: 50%;
+        inset-inline-end: var(--size-4-12);
+        transform: translateY(-50%);
+    }
+}
+
+.tasks-quick-search-result {
+    display: grid;
+    grid-template-columns: auto minmax(0, 1fr) auto;
+    column-gap: var(--size-2-2);
+    min-width: 0;
+
+    .tasks-quick-search-result-checkbox {
+        grid-row: 1 / span 2;
+        align-self: start;
+        margin-top: var(--size-2-1);
+        pointer-events: none;
+    }
+
+    .tasks-quick-search-result-description {
+        overflow: hidden;
+        color: var(--text-normal);
+        font-weight: var(--font-semibold, 600);
+        text-overflow: ellipsis;
+        white-space: nowrap;
+
+        > p {
+            overflow: hidden;
+            margin: 0;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+        }
+    }
+
+    .tasks-quick-search-result-location {
+        overflow: hidden;
+        margin-top: var(--size-2-1);
+        color: var(--text-muted);
+        font-size: var(--font-ui-smaller);
+        text-overflow: ellipsis;
+        white-space: nowrap;
+    }
+
+    .tasks-quick-search-result-metadata {
+        grid-column: 3;
+        grid-row: 1 / span 2;
+        align-self: center;
+        max-width: 16rem;
+        overflow: hidden;
+        color: var(--text-muted);
+        font-size: var(--font-ui-smaller);
+        text-align: end;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+    }
+}
+
+@media (max-width: 799px) {
+    .tasks-quick-search-result {
+        grid-template-columns: auto minmax(0, 1fr);
+
+        .tasks-quick-search-result-checkbox {
+            grid-row: 1 / span 3;
+        }
+
+        .tasks-quick-search-result-metadata {
+            grid-column: 2;
+            grid-row: 3;
+            max-width: none;
+            margin-top: var(--size-2-1);
+            text-align: start;
+        }
+    }
+}

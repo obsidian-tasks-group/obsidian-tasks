@@ -1,10 +1,10 @@
 import { type ListItemCache, MetadataCache, Notice, TFile, Vault, Workspace } from 'obsidian';
-import { GlobalFilter } from '../Config/GlobalFilter';
-import { type MockListItemCache, type MockTask, saveMockDataForTesting } from '../lib/MockDataCreator';
-import type { ListItem } from '../Task/ListItem';
-import type { Task } from '../Task/Task';
-import { logging } from '../lib/logging';
-import { logEndOfTaskEdit, logStartOfTaskEdit } from '../lib/LogTasksHelper';
+import { GlobalFilter } from 'Config/GlobalFilter';
+import { type MockListItemCache, type MockTask, saveMockDataForTesting } from 'lib/MockDataCreator';
+import type { ListItem } from 'Task/ListItem';
+import type { Task } from 'Task/Task';
+import { logging } from 'lib/logging';
+import { logEndOfTaskEdit, logStartOfTaskEdit } from 'lib/LogTasksHelper';
 
 let metadataCache: MetadataCache | undefined;
 let vault: Vault | undefined;
@@ -152,7 +152,7 @@ Recommendations:
 
         const timeout = Math.min(Math.pow(10, previousTries), 100); // 1, 10, 100, 100, 100, ...
         logger.debug(`timeout = ${timeout}`);
-        setTimeout(async () => {
+        window.setTimeout(async () => {
             await tryRepetitive({
                 originalTask,
                 newTasks,

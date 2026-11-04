@@ -4,5 +4,6 @@ module.exports = {
   tabWidth: 4,
   useTabs: false,
   singleQuote: true,
-  bracketSpacing: true
+  bracketSpacing: true,
+  plugins: ['prettier-plugin-svelte'],
 };

@@ -1,23 +1,20 @@
-/**
- * @jest-environment jsdom
- */
 import moment from 'moment';
-import { verifyAll } from 'approvals/lib/Providers/Jest/JestApprovals';
-import { Status } from '../../src/Statuses/Status';
-import { StatusConfiguration, StatusType } from '../../src/Statuses/StatusConfiguration';
+import { verifyAll } from '@approval-tests/approvals/lib/Providers/Vitest/VitestApprovals';
+import { Status } from 'Statuses/Status';
+import { StatusConfiguration, StatusType } from 'Statuses/StatusConfiguration';
+import type { Task } from 'Task/Task';
+import { OnCompletion, handleOnCompletion, parseOnCompletionValue } from 'Task/OnCompletion';
 import { fromLine, toMarkdown } from '../TestingTools/TestHelpers';
-import type { Task } from '../../src/Task/Task';
-import { OnCompletion, handleOnCompletion, parseOnCompletionValue } from '../../src/Task/OnCompletion';
 
 window.moment = moment;
 
 beforeEach(() => {
-    jest.useFakeTimers();
-    jest.setSystemTime(new Date('2024-02-11'));
+    vi.useFakeTimers();
+    vi.setSystemTime(new Date('2024-02-11'));
 });
 
 afterEach(() => {
-    jest.useRealTimers();
+    vi.useRealTimers();
     // resetSettings();
 });
 

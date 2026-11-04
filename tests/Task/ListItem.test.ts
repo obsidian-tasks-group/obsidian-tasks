@@ -1,16 +1,13 @@
-/**
- * @jest-environment jsdom
- */
 import moment from 'moment/moment';
 
 import type { Reference } from 'obsidian';
-import { ListItem } from '../../src/Task/ListItem';
-import { Task } from '../../src/Task/Task';
-import { TaskLocation } from '../../src/Task/TaskLocation';
+import { ListItem } from 'Task/ListItem';
+import { Task } from 'Task/Task';
+import { TaskLocation } from 'Task/TaskLocation';
+import { LinkResolver } from 'Task/LinkResolver';
 import { TaskBuilder } from '../TestingTools/TaskBuilder';
 import { fromLine } from '../TestingTools/TestHelpers';
 import { readTasksFromSimulatedFile } from '../Obsidian/SimulatedFile';
-import { LinkResolver } from '../../src/Task/LinkResolver';
 import { createTestTasksFile } from '../TestingTools/TasksFileHelpers';
 import { createChildListItem } from './ListItemHelpers';
 
@@ -162,6 +159,30 @@ describe('list item parsing', () => {
 
         expect(item).toBeNull();
     });
+
+    describe('trailing spaces - for hard breaks in markdown', () => {
+        it('should discard single trailing space when parsing a list item', () => {
+            const expected = '- foo';
+            const suffix = ' ';
+            const item = ListItem.fromListItemLine(expected + suffix, null, taskLocation)!;
+
+            expect(item.markdownHardBreak).toEqual('');
+        });
+
+        it('should preserve Markdown hard-break of 2 spaces when parsing a list item', () => {
+            const line = '- 2 trailing spaces  ';
+            const item = ListItem.fromListItemLine(line, null, taskLocation)!;
+
+            expect(item.markdownHardBreak).toEqual('  ');
+        });
+
+        it('should preserve Markdown hard-break of 3 spaces when parsing a list item', () => {
+            const line = '- 3 trailing spaces   ';
+            const item = ListItem.fromListItemLine(line, null, taskLocation)!;
+
+            expect(item.markdownHardBreak).toEqual('   ');
+        });
+    });
 });
 
 describe('list item writing', () => {
@@ -187,6 +208,30 @@ describe('list item writing', () => {
         const item = ListItem.fromListItemLine('* star', null, taskLocation)!;
 
         expect(item.toFileLineString()).toEqual('* star');
+    });
+
+    describe('trailing spaces', () => {
+        it('should discard single trailing space when writing a list item', () => {
+            const expected = '- foo';
+            const suffix = ' ';
+            const item = ListItem.fromListItemLine(expected + suffix, null, taskLocation)!;
+
+            expect(item.toFileLineString()).toEqual(expected);
+        });
+
+        it('should preserve Markdown hard-break of 2 spaces when writing a list item', () => {
+            const line = '- 2 trailing spaces  ';
+            const item = ListItem.fromListItemLine(line, null, taskLocation)!;
+
+            expect(item.toFileLineString()).toEqual(line);
+        });
+
+        it('should preserve Markdown hard-break of 3 spaces when writing a list item', () => {
+            const line = '- 3 trailing spaces   ';
+            const item = ListItem.fromListItemLine(line, null, taskLocation)!;
+
+            expect(item.toFileLineString()).toEqual(line);
+        });
     });
 });
 

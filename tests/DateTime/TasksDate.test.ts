@@ -1,21 +1,17 @@
-/**
- * @jest-environment jsdom
- */
-
 import moment from 'moment';
 
 import type { unitOfTime } from 'moment/moment';
-import { TasksDate } from '../../src/DateTime/TasksDate';
+import { TasksDate } from 'DateTime/TasksDate';
 
 window.moment = moment;
 
 beforeEach(() => {
-    jest.useFakeTimers();
-    jest.setSystemTime(new Date('2023-06-11 20:00'));
+    vi.useFakeTimers();
+    vi.setSystemTime(new Date('2023-06-11 20:00'));
 });
 
 afterEach(() => {
-    jest.useRealTimers();
+    vi.useRealTimers();
 });
 
 const overdue = new TasksDate(moment('2023-06-10'));
@@ -164,7 +160,7 @@ describe('TasksDate', () => {
                 ['es', 'en 2 días'],
             ];
             it.each(locales)('%s locale', (loc: string, expectedFromNow: string) => {
-                jest.setSystemTime(new Date(thisTime));
+                vi.setSystemTime(new Date(thisTime));
 
                 const now = moment(taskTime);
                 const tasksDate = new TasksDate(now.clone().locale(loc));
@@ -177,12 +173,12 @@ describe('TasksDate', () => {
 
 describe('TasksDate - postpone', () => {
     beforeEach(() => {
-        jest.useFakeTimers();
-        jest.setSystemTime(new Date('2023-11-28'));
+        vi.useFakeTimers();
+        vi.setSystemTime(new Date('2023-11-28'));
     });
 
     afterEach(() => {
-        jest.useRealTimers();
+        vi.useRealTimers();
     });
 
     function checkDatePostponesTo(
@@ -256,7 +252,7 @@ describe('TasksDate - postpone', () => {
         function postponeMultipleDatesBy(amount: number, unitOfTime: unitOfTime.DurationConstructor) {
             // Set a date that is easy to decrement and increment
             const today = '2023-11-10';
-            jest.setSystemTime(new Date(today));
+            vi.setSystemTime(new Date(today));
 
             const dates = [
                 '2023-11-01',

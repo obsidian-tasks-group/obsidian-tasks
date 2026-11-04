@@ -61,5 +61,8 @@ By submitting this pull request, you must agree to follow our
 Put an x in the boxes to confirm you agree.
 -->
 
+- [ ] I am a human submitting this, not an AI, and I have reviewed the changes to ensure that I understand them and could maintain them myself.
+- [ ] If this PR changes any code in the `src/` directory other than non-trivial typo errors, I have installed the built plugin in an Obsidian vault and tested these changes myself.
+- [ ] This Pull Request is created from the Pull Request [template](https://raw.githubusercontent.com/obsidian-tasks-group/obsidian-tasks/refs/heads/main/.github/pull_request_template.md), and I have not deleted or reordered any sections from it.
 - [ ] My contribution follows this project's [contributing guide](https://publish.obsidian.md/tasks-contributing)
 - [ ] I agree to follow this project's [Code of Conduct](https://github.com/obsidian-tasks-group/obsidian-tasks/blob/main/CODE_OF_CONDUCT.md)

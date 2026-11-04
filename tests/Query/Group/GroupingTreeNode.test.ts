@@ -1,7 +1,4 @@
-/**
- * @jest-environment jsdom
- */
-import { GroupingTreeNode } from '../../../src/Query/Group/GroupingTreeNode';
+import { GroupingTreeNode } from 'Query/Group/GroupingTreeNode';
 
 describe('Grouping Tree', () => {
     it('correctly generates all paths', () => {

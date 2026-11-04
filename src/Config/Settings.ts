@@ -2,31 +2,20 @@ import {
     DEFAULT_MAX_GENERIC_SUGGESTIONS,
     makeDefaultSuggestionBuilder,
     onlySuggestIfBracketOpen,
-} from '../Suggestor/Suggestor';
-import { DEFAULT_SYMBOLS } from '../TaskSerializer/DefaultTaskSerializer';
-import { DATAVIEW_SYMBOLS } from '../TaskSerializer/DataviewTaskSerializer';
-import { StatusConfiguration } from '../Statuses/StatusConfiguration';
-import { Status } from '../Statuses/Status';
-import { DefaultTaskSerializer, type TaskSerializer } from '../TaskSerializer';
-import type { SuggestionBuilder } from '../Suggestor';
-import type { LogOptions } from '../lib/logging';
-import { DataviewTaskSerializer } from '../TaskSerializer/DataviewTaskSerializer';
-import { i18n } from '../i18n/i18n';
-import { type PresetsMap, defaultPresets } from '../Query/Presets/Presets';
-import { DebugSettings } from './DebugSettings';
-import { type EditModalShowSettings, defaultEditModalShowSettings } from './EditModalShowSettings';
-import { StatusSettings } from './StatusSettings';
-import { Feature } from './Feature';
-import type { FeatureFlag } from './Feature';
-import type { DismissedNotices } from './DismissibleNotices';
-
-interface SettingsMap {
-    [key: string]: string | boolean;
-}
-
-export type HeadingState = {
-    [id: string]: boolean;
-};
+} from 'Suggestor/Suggestor';
+import { DEFAULT_SYMBOLS } from 'TaskSerializer/DefaultTaskSerializer';
+import { DATAVIEW_SYMBOLS, DataviewTaskSerializer } from 'TaskSerializer/DataviewTaskSerializer';
+import { StatusConfiguration } from 'Statuses/StatusConfiguration';
+import { Status } from 'Statuses/Status';
+import { DefaultTaskSerializer, type TaskSerializer } from 'TaskSerializer';
+import type { SuggestionBuilder } from 'Suggestor';
+import type { LogOptions } from 'lib/logging';
+import { i18n } from 'i18n/i18n';
+import { type PresetsMap, defaultPresets } from 'Query/Presets/Presets';
+import { DebugSettings } from 'Config/DebugSettings';
+import { type EditModalShowSettings, defaultEditModalShowSettings } from 'Config/EditModalShowSettings';
+import { StatusSettings } from 'Config/StatusSettings';
+import type { DismissedNotices } from 'Config/DismissibleNotices';
 
 /**
  * Interface encapsulating how a Task is written to and read from text
@@ -63,6 +52,34 @@ export const TASK_FORMATS = {
 
 export type TASK_FORMATS = typeof TASK_FORMATS; // For convenience to make some typing easier
 
+export type QuickSearchSettings = {
+    fuzzyMatching: boolean;
+};
+
+export const POSTPONE_DATE_FIELD_VALUES: PostponeDateField[] = [
+    'due-scheduled-start',
+    'scheduled-due-start',
+    'start-scheduled-due',
+    'due',
+    'scheduled',
+    'start',
+];
+
+// prettier-ignore
+export type PostponeDateField =
+    | 'due-scheduled-start'
+    | 'scheduled-due-start'
+    | 'start-scheduled-due'
+    | 'due'
+    | 'scheduled'
+    | 'start';
+
+export const DEFAULT_POSTPONE_DATE_FIELD_OPTION = 'due-scheduled-start';
+
+export type PostponeSettings = {
+    dateField: PostponeDateField;
+};
+
 export interface Settings {
     presets: PresetsMap;
     globalQuery: string;
@@ -72,6 +89,7 @@ export interface Settings {
     setCreatedDate: boolean;
     setDoneDate: boolean;
     setCancelledDate: boolean;
+    postpone: PostponeSettings;
     autoSuggestInEditor: boolean;
     autoSuggestMinMatch: number;
     autoSuggestMaxItems: number;
@@ -84,6 +102,7 @@ export interface Settings {
     searchResults: {
         taskCountLocation: 'top' | 'bottom';
     };
+    quickSearch: QuickSearchSettings;
 
     // The custom status states.
     statusSettings: StatusSettings;
@@ -95,15 +114,6 @@ export interface Settings {
     // Keys are stable notice IDs.
     dismissedNotices: DismissedNotices;
 
-    // Collection of feature flag IDs and their state.
-    features: FeatureFlag;
-
-    // Settings are moved to a more general map to allow the settings UI to be
-    // dynamically generated.
-    generalSettings: SettingsMap;
-
-    // Tracks the stage of the headings in the settings UI.
-    headingOpened: HeadingState;
     debugSettings: DebugSettings;
 
     loggingOptions: LogOptions;
@@ -118,6 +128,9 @@ const defaultSettings: Readonly<Settings> = {
     setCreatedDate: false,
     setDoneDate: true,
     setCancelledDate: true,
+    postpone: {
+        dateField: DEFAULT_POSTPONE_DATE_FIELD_OPTION,
+    },
     autoSuggestInEditor: true,
     autoSuggestMinMatch: 0,
     autoSuggestMaxItems: 20,
@@ -130,6 +143,9 @@ const defaultSettings: Readonly<Settings> = {
     searchResults: {
         taskCountLocation: 'bottom',
     },
+    quickSearch: {
+        fuzzyMatching: true,
+    },
     statusSettings: new StatusSettings(),
     isShownInEditModal: defaultEditModalShowSettings,
     dismissedNotices: {
@@ -138,17 +154,6 @@ const defaultSettings: Readonly<Settings> = {
         'live-preview-callout-warning': false,
     },
 
-    features: Feature.settingsFlags,
-    generalSettings: {
-        /* Prevent duplicate values in user settings for now,
-           at least until I start porting the pre-1.23.0 settings
-           code to be generated from settingsConfiguration.json.
-         */
-        // globalFilter: '',
-        // removeGlobalFilter: false,
-        // setDoneDate: true,
-    },
-    headingOpened: {},
     debugSettings: new DebugSettings(),
 
     /*
@@ -191,7 +196,6 @@ function addNewOptionsToUserSettings<KeysAndValues>(defaultValues: KeysAndValues
  */
 export const getSettings = (): Settings => {
     // Check to see if there are any new options that need to be added to the user's settings.
-    addNewOptionsToUserSettings(Feature.settingsFlags, settings.features);
     addNewOptionsToUserSettings(defaultSettings.loggingOptions.minLevels, settings.loggingOptions.minLevels);
     addNewOptionsToUserSettings(defaultSettings.debugSettings, settings.debugSettings);
 
@@ -221,47 +225,8 @@ export const updateSettings = (newSettings: Partial<Settings>): Settings => {
 };
 
 export const resetSettings = (): Settings => {
-    settings = JSON.parse(JSON.stringify(defaultSettings));
+    settings = JSON.parse(JSON.stringify(defaultSettings)) as Settings;
     return settings;
-};
-
-export const updateGeneralSetting = (name: string, value: string | boolean): Settings => {
-    settings.generalSettings[name] = value;
-
-    /* Prevent duplicate values in user settings for now,
-       at least until I start porting the pre-1.23.0 settings
-       code to be generated from settingsConfiguration.json.
-     */
-    // sync the old settings for the moment so a larger change is not needed.
-    // updateSettings({
-    //     globalFilter: <string>settings.generalSettings['globalFilter'],
-    //     removeGlobalFilter: <boolean>settings.generalSettings['removeGlobalFilter'],
-    //     setDoneDate: <boolean>settings.generalSettings['setDoneDate'],
-    // });
-
-    return getSettings();
-};
-
-/**
- * Returns the enabled state of the feature from settings.
- *
- * @param internalName the internal name of the feature.
- * @returns true if the feature is enabled.
- */
-export const isFeatureEnabled = (internalName: string): boolean => {
-    return settings.features[internalName] ?? false;
-};
-
-/**
- * enables toggling the feature and returning the current collection with state.
- *
- * @param internalName the internal name of the feature.
- * @param enabled the expected state of the feature.
- * @returns the features with the specified feature toggled.
- */
-export const toggleFeature = (internalName: string, enabled: boolean): FeatureFlag => {
-    settings.features[internalName] = enabled;
-    return settings.features;
 };
 
 /**
@@ -282,10 +247,44 @@ export function getUserSelectedTaskFormat(): TaskFormat {
 function migrateSettings(loadedSettings: Record<string, unknown>): Partial<Settings> {
     const migratedSettings: Record<string, unknown> = { ...loadedSettings };
 
+    // Ensure validity of postpone.dateField value.
+    // This is worth doing as otherwise the Postpone button will never be shown
+    // in search results.
+    const postpone = migratedSettings.postpone;
+    if (postpone && typeof postpone === 'object' && 'dateField' in postpone) {
+        const dateField = postpone.dateField;
+        if (typeof dateField !== 'string' || !POSTPONE_DATE_FIELD_VALUES.includes(dateField as PostponeDateField)) {
+            (postpone as PostponeSettings).dateField = DEFAULT_POSTPONE_DATE_FIELD_OPTION;
+        }
+    }
+
     // Migrate 'includes' to 'presets' if present
     if ('includes' in migratedSettings && !('presets' in migratedSettings)) {
         migratedSettings.presets = migratedSettings.includes;
         delete migratedSettings.includes;
+    }
+
+    // Remove the obsolete default 'features' setting from older data.json files.
+    // (The only reason that the value would differ from our old default is if
+    // the code is running in a Fork of Tasks, whose author decided to use the Features facility.
+    // This is highly unlikely, but a precaution worth taking.)
+    const oldDefaultFeatures = { INTERNAL_TESTING_ENABLED_BY_DEFAULT: true };
+    if (JSON.stringify(migratedSettings.features) === JSON.stringify(oldDefaultFeatures)) {
+        delete migratedSettings.features;
+    }
+
+    const oldDefaultGeneralSettings = {};
+    if (JSON.stringify(migratedSettings.generalSettings) === JSON.stringify(oldDefaultGeneralSettings)) {
+        delete migratedSettings.generalSettings;
+    }
+
+    // Remove all 'headingOpened' settings from older data.json files.
+    // Since its keys were subject to translation via i18n, it is not possible to determine
+    // whether a particular data.json file has values used by forks of the plugin,
+    // so we just delete them.
+
+    if (migratedSettings.headingOpened !== undefined) {
+        delete migratedSettings.headingOpened;
     }
 
     // Add future migrations here as needed

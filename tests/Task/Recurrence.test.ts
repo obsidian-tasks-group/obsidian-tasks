@@ -1,11 +1,8 @@
-/**
- * @jest-environment jsdom
- */
 import moment from 'moment';
-import { Occurrence } from '../../src/Task/Occurrence';
-import { Recurrence } from '../../src/Task/Recurrence';
+import { Occurrence } from 'Task/Occurrence';
+import { Recurrence } from 'Task/Recurrence';
+import { updateSettings } from 'Config/Settings';
 import { RecurrenceBuilder } from '../TestingTools/RecurrenceBuilder';
-import { updateSettings } from '../../src/Config/Settings';
 
 window.moment = moment;
 
@@ -277,11 +274,11 @@ describe('Recurrence - with removeScheduledDateOnRecurrence', () => {
 
     describe('dropScheduledDate and when done', () => {
         beforeEach(() => {
-            jest.useFakeTimers();
-            jest.setSystemTime(new Date('2022-01-10'));
+            vi.useFakeTimers();
+            vi.setSystemTime(new Date('2022-01-10'));
         });
         afterEach(() => {
-            jest.useRealTimers();
+            vi.useRealTimers();
         });
 
         it('calculates correct start date with "dropScheduledDate" and "when done", with no due date', () => {

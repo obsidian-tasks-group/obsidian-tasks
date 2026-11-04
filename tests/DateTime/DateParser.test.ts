@@ -1,10 +1,7 @@
-/**
- * @jest-environment jsdom
- */
 import moment from 'moment';
-import { DateParser } from '../../src/DateTime/DateParser';
+import { DateParser } from 'DateTime/DateParser';
 
-import { TaskRegularExpressions } from '../../src/Task/TaskRegularExpressions';
+import { TaskRegularExpressions } from 'Task/TaskRegularExpressions';
 
 window.moment = moment;
 
@@ -77,12 +74,12 @@ describe('DateParser - date ranges', () => {
 
 describe('DateParser - relative date ranges', () => {
     beforeAll(() => {
-        jest.useFakeTimers();
-        jest.setSystemTime(new Date('2021-10-06'));
+        vi.useFakeTimers();
+        vi.setSystemTime(new Date('2021-10-06'));
     });
 
     afterAll(() => {
-        jest.useRealTimers();
+        vi.useRealTimers();
     });
 
     it('should return relative date range (week)', () => {

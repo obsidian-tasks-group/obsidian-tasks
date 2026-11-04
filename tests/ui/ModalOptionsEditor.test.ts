@@ -1,5 +1,5 @@
-import type { EditModalShowSettings } from '../../src/Config/EditModalShowSettings';
-import { type Settings, getSettings, resetSettings, updateSettings } from '../../src/Config/Settings';
+import type { EditModalShowSettings } from 'Config/EditModalShowSettings';
+import { type Settings, getSettings, resetSettings, updateSettings } from 'Config/Settings';
 import {
     checkAndClickApplyButton,
     checkAndClickCancelButton,
@@ -13,14 +13,14 @@ afterEach(() => {
 });
 
 describe('ModalOptionsEditor snapshot tests', () => {
-    it('should match snapshot', () => {
-        verifyModalHTML();
+    it('should match snapshot', async () => {
+        await verifyModalHTML();
     });
 
-    it('should match snapshot - all options present even when a random option is absent', () => {
+    it('should match snapshot - all options present even when a random option is absent', async () => {
         updateSettings({ isShownInEditModal: optionsWithoutARandomField() });
 
-        verifyModalHTML();
+        await verifyModalHTML();
     });
 });
 

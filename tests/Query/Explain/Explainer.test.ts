@@ -1,14 +1,10 @@
-/**
- * @jest-environment jsdom
- */
-
 import moment from 'moment';
 
-import { GlobalFilter } from '../../../src/Config/GlobalFilter';
-import { Query } from '../../../src/Query/Query';
-import { Explainer } from '../../../src/Query/Explain/Explainer';
-import { resetSettings, updateSettings } from '../../../src/Config/Settings';
-import { DebugSettings } from '../../../src/Config/DebugSettings';
+import { GlobalFilter } from 'Config/GlobalFilter';
+import { Query } from 'Query/Query';
+import { Explainer } from 'Query/Explain/Explainer';
+import { resetSettings, updateSettings } from 'Config/Settings';
+import { DebugSettings } from 'Config/DebugSettings';
 import { createTestTasksFile } from '../../TestingTools/TasksFileHelpers';
 
 window.moment = moment;
@@ -83,7 +79,8 @@ ignore global query
             filter by function task.path === '{{query.file.path}}' =>
             filter by function task.path === 'sample.md'
 
-            not done
+            not done =>
+              status type is TODO or IN_PROGRESS or ON_HOLD
 
             (has start date) AND (description includes some) =>
               AND (All of):
@@ -138,7 +135,8 @@ ignore global query
               filter by function task.path === '{{query.file.path}}' =>
               filter by function task.path === 'sample.md'
 
-              not done
+              not done =>
+                status type is TODO or IN_PROGRESS or ON_HOLD
 
               (has start date) AND (description includes some) =>
                 AND (All of):

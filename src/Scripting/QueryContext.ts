@@ -1,7 +1,7 @@
-import { getSettings } from '../Config/Settings';
-import type { Task } from '../Task/Task';
-import type { PresetsMap } from '../Query/Presets/Presets';
-import type { TasksFile } from './TasksFile';
+import { getSettings } from 'Config/Settings';
+import type { Task } from 'Task/Task';
+import type { PresetsMap } from 'Query/Presets/Presets';
+import type { TasksFile } from 'Scripting/TasksFile';
 
 /**
  * This interface is part of the implementation of placeholders and scripting.
@@ -24,7 +24,7 @@ export interface QueryContext {
     query: {
         file: TasksFile;
         allTasks: Readonly<Task[]>;
-        searchCache: Record<string, any>; // Added caching capability
+        searchCache: Record<string, unknown>; // Added caching capability
     };
     preset: PresetsMap;
 }

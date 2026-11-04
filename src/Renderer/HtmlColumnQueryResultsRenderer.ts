@@ -1,11 +1,10 @@
-import type { TaskGroups } from '../Query/Group/TaskGroups';
-import type { Task } from '../Task/Task';
-import type { TaskEditingInstruction } from '../ui/EditInstructions/TaskEditingInstruction';
-import type { TaskGroup } from '../Query/Group/TaskGroup';
-import { createEditingInstructionForGroup } from '../ui/EditInstructions/CreateEditingInstructionForGroup';
-import { DragState } from './DragState';
-import { HtmlQueryResultsRenderer } from './HtmlQueryResultsRenderer';
-import { createAndAppendElement } from './TaskLineRenderer';
+import type { TaskGroups } from 'Query/Group/TaskGroups';
+import type { Task } from 'Task/Task';
+import type { TaskEditingInstruction } from 'ui/EditInstructions/TaskEditingInstruction';
+import type { TaskGroup } from 'Query/Group/TaskGroup';
+import { createEditingInstructionForGroup } from 'ui/EditInstructions/CreateEditingInstructionForGroup';
+import { DragState } from 'Renderer/DragState';
+import { HtmlQueryResultsRenderer } from 'Renderer/HtmlQueryResultsRenderer';
 
 export class HtmlColumnQueryResultsRenderer extends HtmlQueryResultsRenderer {
     private readonly dragState = new DragState();
@@ -17,7 +16,7 @@ export class HtmlColumnQueryResultsRenderer extends HtmlQueryResultsRenderer {
         this.columnContainers.length = 0;
         this.activeDropColumn = null;
 
-        const columnsContainer = createAndAppendElement('div', originalParent);
+        const columnsContainer = originalParent.createDiv();
         columnsContainer.classList.add('tasks-columns');
 
         for (const group of tasksSortedLimitedGrouped.groups) {
@@ -25,8 +24,8 @@ export class HtmlColumnQueryResultsRenderer extends HtmlQueryResultsRenderer {
                 continue;
             }
 
-            if (group.groupHeadings[0].nestingLevel === 0) {
-                const columnContainer = createAndAppendElement('div', columnsContainer);
+            if (group.groupHeadings.length == 0 || group.groupHeadings[0].nestingLevel === 0) {
+                const columnContainer = columnsContainer.createDiv();
                 columnContainer.classList.add('tasks-columns-column');
                 this.columnContainers.push(columnContainer);
 

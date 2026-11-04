@@ -1,10 +1,10 @@
 import { App, Editor, EditorSuggest, MarkdownView, Notice, TFile, editorInfoField } from 'obsidian';
 import type { EditorPosition, EditorSuggestContext, EditorSuggestTriggerInfo } from 'obsidian';
 import type TasksPlugin from 'main';
-import { ensureTaskHasId } from '../Task/TaskDependency';
-import { replaceTaskWithTasks } from '../Obsidian/File';
-import { type Settings, getUserSelectedTaskFormat } from '../Config/Settings';
-import { canSuggestForLine } from './Suggestor';
+import { ensureTaskHasId } from 'Task/TaskDependency';
+import { replaceTaskWithTasks } from 'Obsidian/File';
+import { type Settings, TASK_FORMATS, getSettings } from 'Config/Settings';
+import { canSuggestForLine } from 'Suggestor/Suggestor';
 import type { SuggestInfo } from '.';
 
 export type SuggestInfoWithContext = SuggestInfo & {
@@ -21,13 +21,11 @@ function showError(message: string) {
 }
 
 export class EditorSuggestor extends EditorSuggest<SuggestInfoWithContext> {
-    private settings: Settings;
     private plugin: TasksPlugin;
     private popupIsOpen = false;
 
-    constructor(app: App, settings: Settings, plugin: TasksPlugin) {
+    constructor(app: App, plugin: TasksPlugin) {
         super(app);
-        this.settings = settings;
         this.plugin = plugin;
 
         // EditorSuggestor swallows tabs while the suggestor popup is open
@@ -48,7 +46,9 @@ export class EditorSuggestor extends EditorSuggest<SuggestInfoWithContext> {
     onTrigger(cursor: EditorPosition, editor: Editor, _file: TFile): EditorSuggestTriggerInfo | null {
         this.popupIsOpen = false;
 
-        if (!this.settings.autoSuggestInEditor) return null;
+        // Read the settings on each call, not once at startup, so that changes to them take effect.
+        const settings = getSettings();
+        if (!settings.autoSuggestInEditor) return null;
 
         if (_file === undefined) {
             // We won't be able to save any changes, so tell Obsidian that we cannot make suggestions.
@@ -62,7 +62,7 @@ export class EditorSuggestor extends EditorSuggest<SuggestInfoWithContext> {
             return null;
         }
 
-        if (this.grabSuggestions(editor, _file, line).length === 0) return null;
+        if (this.grabSuggestions(editor, _file, line, settings).length === 0) return null;
 
         this.popupIsOpen = true;
         return {
@@ -88,13 +88,18 @@ export class EditorSuggestor extends EditorSuggest<SuggestInfoWithContext> {
             return [] as SuggestInfoWithContext[];
         }
 
-        const suggestions: SuggestInfo[] = this.grabSuggestions(context.editor, context.file, context.query);
+        const suggestions: SuggestInfo[] = this.grabSuggestions(
+            context.editor,
+            context.file,
+            context.query,
+            getSettings(),
+        );
 
         // Add the editor context to all the suggestions
         return suggestions.map((s) => ({ ...s, context }));
     }
 
-    private grabSuggestions(editor: Editor, file: TFile, line: string) {
+    private grabSuggestions(editor: Editor, file: TFile, line: string, settings: Settings) {
         const currentCursor = editor.getCursor();
         const allTasks = this.plugin.getTasks();
 
@@ -109,10 +114,10 @@ export class EditorSuggestor extends EditorSuggest<SuggestInfoWithContext> {
         const canSaveEdits = this.canSaveEdits(markdownFileInfo);
 
         return (
-            getUserSelectedTaskFormat().buildSuggestions?.(
+            TASK_FORMATS[settings.taskFormat].buildSuggestions?.(
                 line,
                 currentCursor.ch,
-                this.settings,
+                settings,
                 allTasks,
                 canSaveEdits,
                 taskToSuggestFor,
@@ -120,12 +125,12 @@ export class EditorSuggestor extends EditorSuggest<SuggestInfoWithContext> {
         );
     }
 
-    private getMarkdownFileInfo(editor: Editor) {
+    private getMarkdownFileInfo(editor: Editor): unknown {
         // @ts-expect-error: TS2339: Property cm does not exist on type Editor
         return editor.cm.state.field(editorInfoField);
     }
 
-    private canSaveEdits(markdownFileInfo: any) {
+    private canSaveEdits(markdownFileInfo: unknown): markdownFileInfo is MarkdownView {
         return markdownFileInfo instanceof MarkdownView;
     }
 

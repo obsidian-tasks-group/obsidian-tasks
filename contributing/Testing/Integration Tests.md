@@ -34,10 +34,10 @@ Use any of the following to run these tests:
 
 ```bash
 yarn test:integration
-jest --config jest.integration.config.js
+yarn vitest run -c vitest.integration.config.ts
 ```
 
-If you want to execute the `integration_tests/` tests in your IDE, you must add the command line arguments `--config jest.integration.config.js` to the IDE's runner configuration for that directory.
+If you want to execute the `integration_tests/` tests in your IDE, select Vitest as the test runner and use `vitest.integration.config.ts` as the configuration file for that directory. If the IDE accepts command line arguments instead, use `-c vitest.integration.config.ts`.
 
 ## How the tests work
 

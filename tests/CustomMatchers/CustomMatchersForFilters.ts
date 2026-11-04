@@ -1,20 +1,20 @@
 import { diff } from 'jest-diff';
-import type { Task } from '../../src/Task/Task';
-import type { FilterOrErrorMessage } from '../../src/Query/Filter/FilterOrErrorMessage';
-import { fromLine } from '../TestingTools/TestHelpers';
+import type { Task } from 'Task/Task';
+import type { FilterOrErrorMessage } from 'Query/Filter/FilterOrErrorMessage';
+import type { StatusConfiguration } from 'Statuses/StatusConfiguration';
+import { Status } from 'Statuses/Status';
+import { SearchInfo } from 'Query/SearchInfo';
 import { TaskBuilder } from '../TestingTools/TaskBuilder';
-import type { StatusConfiguration } from '../../src/Statuses/StatusConfiguration';
-import { Status } from '../../src/Statuses/Status';
-import { SearchInfo } from '../../src/Query/SearchInfo';
+import { fromLine } from '../TestingTools/TestHelpers';
 
 /**
  @summary
- This file contains Jest custom matchers, for idiomatic testing of filtering
+ This file contains Vitest custom matchers, for idiomatic testing of filtering
  via Field classes.
 
  @description
  These matchers are a more idiomatic way of testing custom objects via
- the Jest test framework than the helper functions in tests/TestingTools/
+ the Vitest test framework than the helper functions in tests/TestingTools/
  and various testing helpers in individual x.test.ts files.
  <br>
 
@@ -34,7 +34,7 @@ import { SearchInfo } from '../../src/Query/SearchInfo';
 
  // Setup:
 
- Imports are done automatically in tests/CustomMatchers/jest.custom_matchers.setup.ts
+ Imports are done automatically in tests/CustomMatchers/vitest.custom_matchers.setup.ts
 
  // Inside it() and describe() blocks:
  it('works negating regexes', () => {
@@ -56,51 +56,23 @@ import { SearchInfo } from '../../src/Query/SearchInfo';
 
 /* MAINTENANCE NOTE:
         Please add any newly added matchers to this file:
-            tests/CustomMatchers/jest.custom_matchers.setup.ts
+            tests/CustomMatchers/vitest.custom_matchers.setup.ts
         so that tests can find them automatically, without needing
         to write imports, and complex 'expect.extend(...)' lines.
         Thank you.
  */
-declare global {
-    namespace jest {
-        interface Matchers<R> {
-            toBeValid(): R;
-            toHaveExplanation(expectedExplanation: string): R;
-            toMatchTaskWithSearchInfo(task: Task, searchInfo: SearchInfo): R;
-            toMatchTaskInTaskList(task: Task, allTasks: Task[]): R;
-            toMatchTask(task: Task): R;
-            toMatchTaskFromLine(line: string): R;
-            toMatchTaskWithDescription(description: string): R;
-            toMatchTaskWithHeading(heading: string | null): R;
-            toMatchTaskWithPath(path: string): R;
-            toMatchTaskWithStatus(statusConfiguration: StatusConfiguration): R;
-        }
-
-        interface Expect {
-            toBeValid(): any;
-            toHaveExplanation(expectedExplanation: string): any;
-            toMatchTaskWithSearchInfo(task: Task, searchInfo: SearchInfo): any;
-            toMatchTaskInTaskList(task: Task, allTasks: Task[]): any;
-            toMatchTask(task: Task): any;
-            toMatchTaskFromLine(line: string): any;
-            toMatchTaskWithDescription(description: string): any;
-            toMatchTaskWithHeading(heading: string | null): any;
-            toMatchTaskWithPath(path: string): any;
-            toMatchTaskWithStatus(statusConfiguration: StatusConfiguration): any;
-        }
-
-        interface InverseAsymmetricMatchers {
-            toBeValid(): any;
-            toHaveExplanation(expectedExplanation: string): any;
-            toMatchTaskWithSearchInfo(task: Task, searchInfo: SearchInfo): any;
-            toMatchTaskInTaskList(task: Task, allTasks: Task[]): any;
-            toMatchTask(task: Task): any;
-            toMatchTaskFromLine(line: string): any;
-            toMatchTaskWithDescription(description: string): any;
-            toMatchTaskWithHeading(heading: string | null): any;
-            toMatchTaskWithPath(path: string): any;
-            toMatchTaskWithStatus(statusConfiguration: StatusConfiguration): any;
-        }
+declare module 'vitest' {
+    interface Matchers<R> {
+        toBeValid(): R;
+        toHaveExplanation(expectedExplanation: string): R;
+        toMatchTaskWithSearchInfo(task: Task, searchInfo: SearchInfo): R;
+        toMatchTaskInTaskList(task: Task, allTasks: Task[]): R;
+        toMatchTask(task: Task): R;
+        toMatchTaskFromLine(line: string): R;
+        toMatchTaskWithDescription(description: string): R;
+        toMatchTaskWithHeading(heading: string | null): R;
+        toMatchTaskWithPath(path: string): R;
+        toMatchTaskWithStatus(statusConfiguration: StatusConfiguration): R;
     }
 }
 
@@ -198,7 +170,7 @@ export function toMatchTaskWithDescription(filter: FilterOrErrorMessage, descrip
     return toMatchTask(filter, task);
 }
 
-export function toMatchTaskWithHeading(filter: FilterOrErrorMessage, heading: string) {
+export function toMatchTaskWithHeading(filter: FilterOrErrorMessage, heading: string | null) {
     const builder = new TaskBuilder();
     const task = builder.precedingHeader(heading).build();
     return toMatchTask(filter, task);

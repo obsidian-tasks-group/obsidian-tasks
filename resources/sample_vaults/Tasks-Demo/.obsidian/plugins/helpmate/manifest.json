@@ -1,7 +1,7 @@
 {
 	"id": "helpmate",
 	"name": "HelpMate",
-	"version": "1.0.12",
+	"version": "1.0.26",
 	"minAppVersion": "1.9.14",
 	"description": "Integrating help systems into the Obsidian UI.",
 	"author": "TfTHacker",

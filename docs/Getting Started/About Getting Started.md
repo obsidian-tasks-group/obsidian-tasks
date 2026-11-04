@@ -12,6 +12,8 @@ publish: true
 - [[Getting Started]]
   - Descriptive overview of setting up your tasks.
   - Also has a long list of known limitations.
+- [[Quick Search]]
+  - Quickly find a task by searching for its description.
 - [[Global Filter]]
   - **Optionally** set a global filter so Tasks only matches specific checklist items.
   - See also [[Global Query]], which is much more powerful, once you know how searching works.

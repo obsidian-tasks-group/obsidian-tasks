@@ -1,6 +1,6 @@
-import type { Task } from '../../Task/Task';
-import type { SearchInfo } from '../SearchInfo';
-import { Statement } from '../Statement';
+import type { Task } from 'Task/Task';
+import type { SearchInfo } from 'Query/SearchInfo';
+import { Statement } from 'Query/Statement';
 
 /**
  * A group-naming function, that takes a Task object and returns zero or more

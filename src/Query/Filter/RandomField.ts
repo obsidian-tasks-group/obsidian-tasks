@@ -1,6 +1,6 @@
-import type { Comparator } from '../Sort/Sorter';
-import type { Task } from '../../Task/Task';
-import { FilterInstructionsBasedField } from './FilterInstructionsBasedField';
+import type { Comparator } from 'Query/Sort/Sorter';
+import type { Task } from 'Task/Task';
+import { FilterInstructionsBasedField } from 'Query/Filter/FilterInstructionsBasedField';
 
 /**
  * Sort tasks in a stable, random order.

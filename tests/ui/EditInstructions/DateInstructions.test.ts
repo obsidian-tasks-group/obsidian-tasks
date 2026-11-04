@@ -1,10 +1,6 @@
-/**
- * @jest-environment jsdom
- */
 import moment from 'moment';
 
 import type { unitOfTime } from 'moment/moment';
-import { TaskBuilder } from '../../TestingTools/TaskBuilder';
 import {
     RemoveTaskDate,
     SetRelativeTaskDate,
@@ -12,13 +8,14 @@ import {
     allHappensDateInstructions,
     allLifeCycleDateInstructions,
     createEditingInstructionForDateGroups,
-} from '../../../src/ui/EditInstructions/DateInstructions';
-import type { AllTaskDateFields } from '../../../src/DateTime/DateFieldTypes';
-import { Task } from '../../../src/Task/Task';
-import { TaskLayoutComponent } from '../../../src/Layout/TaskLayoutOptions';
-import { TasksDate } from '../../../src/DateTime/TasksDate';
-import { SEPARATOR_INSTRUCTION_DISPLAY_NAME } from '../../../src/ui/EditInstructions/MenuDividerInstruction';
-import type { TaskEditingInstruction } from '../../../src/ui/EditInstructions/TaskEditingInstruction';
+} from 'ui/EditInstructions/DateInstructions';
+import type { AllTaskDateFields } from 'DateTime/DateFieldTypes';
+import { Task } from 'Task/Task';
+import { TaskLayoutComponent } from 'Layout/TaskLayoutOptions';
+import { TasksDate } from 'DateTime/TasksDate';
+import { SEPARATOR_INSTRUCTION_DISPLAY_NAME } from 'ui/EditInstructions/MenuDividerInstruction';
+import type { TaskEditingInstruction } from 'ui/EditInstructions/TaskEditingInstruction';
+import { TaskBuilder } from '../../TestingTools/TaskBuilder';
 import { fromMarkdown } from '../../TestingTools/TestHelpers';
 
 window.moment = moment;
@@ -28,12 +25,12 @@ const today = '2024-10-01';
 const tomorrow = '2024-10-02';
 
 beforeEach(() => {
-    jest.useFakeTimers();
-    jest.setSystemTime(new Date(today));
+    vi.useFakeTimers();
+    vi.setSystemTime(new Date(today));
 });
 
 afterEach(() => {
-    jest.useRealTimers();
+    vi.useRealTimers();
 });
 
 const taskWithNoDates = new TaskBuilder().build();

@@ -1,19 +1,19 @@
 import type { CachedMetadata, ListItemCache, SectionCache } from 'obsidian';
-import type { Logger } from '../lib/logging';
-import { Task } from '../Task/Task';
-import type { TasksFile } from '../Scripting/TasksFile';
-import { Lazy } from '../lib/Lazy';
-import { DateFallback } from '../DateTime/DateFallback';
-import { ListItem } from '../Task/ListItem';
-import { TaskLocation } from '../Task/TaskLocation';
-import { Cache } from './Cache';
+import type { Logger } from 'lib/logging';
+import { Task } from 'Task/Task';
+import type { TasksFile } from 'Scripting/TasksFile';
+import { Lazy } from 'lib/Lazy';
+import { DateFallback } from 'DateTime/DateFallback';
+import { ListItem } from 'Task/ListItem';
+import { TaskLocation } from 'Task/TaskLocation';
+import { Cache } from 'Obsidian/Cache';
 
 export class FileParser {
     private readonly tasksFile: TasksFile;
     private readonly fileContent: string;
     private readonly listItems: ListItemCache[];
     private readonly logger: Logger;
-    private readonly errorReporter: (e: any, filePath: string, listItem: ListItemCache, line: string) => void;
+    private readonly errorReporter: (e: unknown, filePath: string, listItem: ListItemCache, line: string) => void;
 
     private readonly fileLines: string[];
     private readonly line2ListItem: Map<number, ListItem> = new Map();
@@ -25,7 +25,7 @@ export class FileParser {
         fileContent: string,
         listItems: ListItemCache[],
         logger: Logger,
-        errorReporter: (e: any, filePath: string, listItem: ListItemCache, line: string) => void,
+        errorReporter: (e: unknown, filePath: string, listItem: ListItemCache, line: string) => void,
     ) {
         this.tasksFile = tasksFile;
         this.fileContent = fileContent;
