@@ -1,4 +1,4 @@
-import { MenuDividerInstruction } from '../../../src/ui/EditInstructions/MenuDividerInstruction';
+import { MenuDividerInstruction } from 'ui/EditInstructions/MenuDividerInstruction';
 import { TaskBuilder } from '../../TestingTools/TaskBuilder';
 
 describe('MenuDividerInstruction', () => {

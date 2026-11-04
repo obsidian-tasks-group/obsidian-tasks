@@ -1,6 +1,6 @@
-import { validateRegExpSafety } from '../../lib/RegExpTools';
-import { Explanation } from '../Explain/Explanation';
-import { IStringMatcher } from './IStringMatcher';
+import { validateRegExpSafety } from 'lib/RegExpTools';
+import { Explanation } from 'Query/Explain/Explanation';
+import { IStringMatcher } from 'Query/Matchers/IStringMatcher';
 
 /**
  * Regular-expression-based implementation of IStringMatcher.

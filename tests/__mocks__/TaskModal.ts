@@ -1,5 +1,5 @@
 import type { App } from 'obsidian';
-import type { Task } from '../../src/Task/Task';
+import type { Task } from 'Task/Task';
 
 /**
  * {@link TaskModal} needs to be mocked, because it depends on {@link obsidian.Modal}, which is not available.

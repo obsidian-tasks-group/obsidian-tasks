@@ -2,8 +2,8 @@ import {
     DEFAULT_ENABLE_JS_IN_TASKS_QUERIES,
     ENABLE_JS_IN_TASKS_QUERIES_KEY,
     EnableJsInTasksQueries,
-} from '../../src/Config/EnableJsInTasksQueries';
-import { InMemoryLocalStorageProvider } from '../../src/Config/InMemoryLocalStorageProvider';
+} from 'Config/EnableJsInTasksQueries';
+import { InMemoryLocalStorageProvider } from 'Config/InMemoryLocalStorageProvider';
 
 describe('EnableJsInTasksQueries', () => {
     it('should default to false', () => {

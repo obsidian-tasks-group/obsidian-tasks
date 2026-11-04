@@ -1,10 +1,10 @@
 import { diff } from 'jest-diff';
 import type { Matcher, MatcherState } from 'vitest';
 import moment from 'moment';
-import type { TaskDetails } from '../../src/TaskSerializer';
-import { Recurrence } from '../../src/Task/Recurrence';
-import { Priority } from '../../src/Task/Priority';
-import { TaskRegularExpressions } from '../../src/Task/TaskRegularExpressions';
+import type { TaskDetails } from 'TaskSerializer';
+import { Recurrence } from 'Task/Recurrence';
+import { Priority } from 'Task/Priority';
+import { TaskRegularExpressions } from 'Task/TaskRegularExpressions';
 
 declare module 'vitest' {
     interface Matchers<R> {

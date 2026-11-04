@@ -1,5 +1,5 @@
-import { generateHiddenClassForTaskList } from './LayoutHelpers';
-import { TaskLayoutOptions } from './TaskLayoutOptions';
+import { generateHiddenClassForTaskList } from 'Layout/LayoutHelpers';
+import { TaskLayoutOptions } from 'Layout/TaskLayoutOptions';
 
 /**
  * This class generates a list of hidden task components' classes.

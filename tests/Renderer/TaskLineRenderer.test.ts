@@ -1,15 +1,15 @@
 import moment from 'moment';
 
-import { DebugSettings } from '../../src/Config/DebugSettings';
-import { GlobalFilter } from '../../src/Config/GlobalFilter';
-import { resetSettings, updateSettings } from '../../src/Config/Settings';
-import { QueryLayoutOptions } from '../../src/Layout/QueryLayoutOptions';
-import { TaskLayoutComponent, TaskLayoutOptions, taskLayoutComponents } from '../../src/Layout/TaskLayoutOptions';
-import { DateParser } from '../../src/DateTime/DateParser';
-import type { TextRenderer } from '../../src/Renderer/TaskLineRenderer';
-import { TaskLineRenderer, reconcileReplacementTask } from '../../src/Renderer/TaskLineRenderer';
-import type { Task } from '../../src/Task/Task';
-import { TaskRegularExpressions } from '../../src/Task/TaskRegularExpressions';
+import { DebugSettings } from 'Config/DebugSettings';
+import { GlobalFilter } from 'Config/GlobalFilter';
+import { resetSettings, updateSettings } from 'Config/Settings';
+import { QueryLayoutOptions } from 'Layout/QueryLayoutOptions';
+import { TaskLayoutComponent, TaskLayoutOptions, taskLayoutComponents } from 'Layout/TaskLayoutOptions';
+import { DateParser } from 'DateTime/DateParser';
+import type { TextRenderer } from 'Renderer/TaskLineRenderer';
+import { TaskLineRenderer, reconcileReplacementTask } from 'Renderer/TaskLineRenderer';
+import type { Task } from 'Task/Task';
+import { TaskRegularExpressions } from 'Task/TaskRegularExpressions';
 import { verifyWithFileExtension } from '../TestingTools/ApprovalTestHelpers';
 import { prettifyHTML } from '../TestingTools/HTMLHelpers';
 import { TaskBuilder } from '../TestingTools/TaskBuilder';

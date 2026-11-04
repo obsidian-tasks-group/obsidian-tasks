@@ -1,4 +1,4 @@
-import { RootField } from '../../../src/Query/Filter/RootField';
+import { RootField } from 'Query/Filter/RootField';
 import { fromLine } from '../../TestingTools/TestHelpers';
 import { SampleTasks } from '../../TestingTools/SampleTasks';
 

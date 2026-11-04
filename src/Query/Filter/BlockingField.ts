@@ -1,5 +1,5 @@
-import type { SearchInfo } from '../SearchInfo';
-import { FilterInstructionsBasedField } from './FilterInstructionsBasedField';
+import type { SearchInfo } from 'Query/SearchInfo';
+import { FilterInstructionsBasedField } from 'Query/Filter/FilterInstructionsBasedField';
 
 export class BlockingField extends FilterInstructionsBasedField {
     constructor() {

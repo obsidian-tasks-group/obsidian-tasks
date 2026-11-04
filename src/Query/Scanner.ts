@@ -1,4 +1,4 @@
-import { Statement } from './Statement';
+import { Statement } from 'Query/Statement';
 
 function endsWith1Slash(inputLine: string) {
     return inputLine.endsWith('\\');

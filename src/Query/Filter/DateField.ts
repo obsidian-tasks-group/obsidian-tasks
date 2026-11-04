@@ -1,15 +1,15 @@
-import { DateRange } from '../../DateTime/DateRange';
-import type { Task } from '../../Task/Task';
-import { DateParser } from '../../DateTime/DateParser';
-import { Explanation } from '../Explain/Explanation';
-import type { Comparator } from '../Sort/Sorter';
-import { compareByDate } from '../../DateTime/DateTools';
-import type { GrouperFunction } from '../Group/Grouper';
-import { TemplatingPluginTools } from '../../lib/TemplatingPluginTools';
-import { Field } from './Field';
-import { Filter, type FilterFunction } from './Filter';
-import { FilterInstructions } from './FilterInstructions';
-import { FilterOrErrorMessage } from './FilterOrErrorMessage';
+import { DateRange } from 'DateTime/DateRange';
+import type { Task } from 'Task/Task';
+import { DateParser } from 'DateTime/DateParser';
+import { Explanation } from 'Query/Explain/Explanation';
+import type { Comparator } from 'Query/Sort/Sorter';
+import { compareByDate } from 'DateTime/DateTools';
+import type { GrouperFunction } from 'Query/Group/Grouper';
+import { TemplatingPluginTools } from 'lib/TemplatingPluginTools';
+import { Field } from 'Query/Filter/Field';
+import { Filter, type FilterFunction } from 'Query/Filter/Filter';
+import { FilterInstructions } from 'Query/Filter/FilterInstructions';
+import { FilterOrErrorMessage } from 'Query/Filter/FilterOrErrorMessage';
 
 export type DateFilterFunction = (date: Moment | null) => boolean;
 

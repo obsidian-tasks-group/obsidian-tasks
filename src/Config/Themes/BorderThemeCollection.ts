@@ -1,4 +1,4 @@
-import type { StatusCollection } from '../../Statuses/StatusCollection';
+import type { StatusCollection } from 'Statuses/StatusCollection';
 
 /**
  * Statuses supported by the Border theme. {@link https://github.com/Akifyss/obsidian-border?tab=readme-ov-file#alternate-checkboxes}

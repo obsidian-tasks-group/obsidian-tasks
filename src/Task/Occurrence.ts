@@ -1,6 +1,6 @@
 import type { Moment } from 'moment/moment';
-import { compareByDate } from '../DateTime/DateTools';
-import { getSettings } from '../Config/Settings';
+import { compareByDate } from 'DateTime/DateTools';
+import { getSettings } from 'Config/Settings';
 
 /**
  * A set of dates on a single instance of {@link Recurrence}.

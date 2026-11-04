@@ -1,10 +1,10 @@
 import moment from 'moment';
 import type { EditorPosition } from 'obsidian';
-import { getNewCursorPosition, toggleLine } from '../../src/Commands/ToggleDone';
-import { GlobalFilter } from '../../src/Config/GlobalFilter';
-import { StatusRegistry } from '../../src/Statuses/StatusRegistry';
-import { Status } from '../../src/Statuses/Status';
-import { StatusConfiguration, StatusType } from '../../src/Statuses/StatusConfiguration';
+import { getNewCursorPosition, toggleLine } from 'Commands/ToggleDone';
+import { GlobalFilter } from 'Config/GlobalFilter';
+import { StatusRegistry } from 'Statuses/StatusRegistry';
+import { Status } from 'Statuses/Status';
+import { StatusConfiguration, StatusType } from 'Statuses/StatusConfiguration';
 
 window.moment = moment;
 

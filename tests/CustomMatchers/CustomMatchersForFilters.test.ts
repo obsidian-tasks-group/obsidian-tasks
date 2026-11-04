@@ -1,9 +1,9 @@
-import { SearchInfo } from '../../src/Query/SearchInfo';
-import type { Task } from '../../src/Task/Task';
+import { SearchInfo } from 'Query/SearchInfo';
+import type { Task } from 'Task/Task';
+import { FilterOrErrorMessage } from 'Query/Filter/FilterOrErrorMessage';
+import { Filter } from 'Query/Filter/Filter';
+import { Explanation } from 'Query/Explain/Explanation';
 import { TaskBuilder } from '../TestingTools/TaskBuilder';
-import { FilterOrErrorMessage } from '../../src/Query/Filter/FilterOrErrorMessage';
-import { Filter } from '../../src/Query/Filter/Filter';
-import { Explanation } from '../../src/Query/Explain/Explanation';
 
 describe('CustomMatchersForFilters', () => {
     it('should check filter with supplied SearchInfo', () => {

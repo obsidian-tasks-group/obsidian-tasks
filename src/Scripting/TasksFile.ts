@@ -6,7 +6,7 @@ import {
     getAllTags,
     parseFrontMatterTags,
 } from 'obsidian';
-import { Link } from '../Task/Link';
+import { Link } from 'Task/Link';
 
 export type OptionalTasksFile = TasksFile | undefined;
 

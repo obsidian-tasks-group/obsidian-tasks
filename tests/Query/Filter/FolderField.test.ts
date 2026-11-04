@@ -1,4 +1,4 @@
-import { FolderField } from '../../../src/Query/Filter/FolderField';
+import { FolderField } from 'Query/Filter/FolderField';
 import { fromLine } from '../../TestingTools/TestHelpers';
 import { SampleTasks } from '../../TestingTools/SampleTasks';
 

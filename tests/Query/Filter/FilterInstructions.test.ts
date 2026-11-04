@@ -1,5 +1,5 @@
-import { FilterInstructions } from '../../../src/Query/Filter/FilterInstructions';
-import type { Task } from '../../../src/Task/Task';
+import { FilterInstructions } from 'Query/Filter/FilterInstructions';
+import type { Task } from 'Task/Task';
 
 describe('FilterInstructions', () => {
     it('should be able to add a valid instruction', () => {

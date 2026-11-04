@@ -1,13 +1,10 @@
 import type { App } from 'obsidian';
-import { State } from '../../src/Obsidian/Cache';
-import type { FilterOrErrorMessage } from '../../src/Query/Filter/FilterOrErrorMessage';
-import { Query } from '../../src/Query/Query';
-import type {
-    HTMLQueryRendererParameters,
-    HtmlQueryResultsRenderer,
-} from '../../src/Renderer/HtmlQueryResultsRenderer';
-import { MarkdownQueryResultsRenderer } from '../../src/Renderer/MarkdownQueryResultsRenderer';
-import type { Task } from '../../src/Task/Task';
+import { State } from 'Obsidian/Cache';
+import type { FilterOrErrorMessage } from 'Query/Filter/FilterOrErrorMessage';
+import { Query } from 'Query/Query';
+import type { HTMLQueryRendererParameters, HtmlQueryResultsRenderer } from 'Renderer/HtmlQueryResultsRenderer';
+import { MarkdownQueryResultsRenderer } from 'Renderer/MarkdownQueryResultsRenderer';
+import type { Task } from 'Task/Task';
 import { verifyWithFileExtension } from '../TestingTools/ApprovalTestHelpers';
 import { prettifyHTML } from '../TestingTools/HTMLHelpers';
 import { createTestTasksFile } from '../TestingTools/TasksFileHelpers';

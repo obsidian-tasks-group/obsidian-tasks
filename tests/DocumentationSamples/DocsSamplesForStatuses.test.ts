@@ -1,8 +1,8 @@
-import { Status } from '../../src/Statuses/Status';
-import { StatusConfiguration, StatusType } from '../../src/Statuses/StatusConfiguration';
-import type { StatusCollection, StatusCollectionEntry } from '../../src/Statuses/StatusCollection';
-import * as Themes from '../../src/Config/Themes';
-import { StatusValidator } from '../../src/Statuses/StatusValidator';
+import { Status } from 'Statuses/Status';
+import { StatusConfiguration, StatusType } from 'Statuses/StatusConfiguration';
+import type { StatusCollection, StatusCollectionEntry } from 'Statuses/StatusCollection';
+import * as Themes from 'Config/Themes';
+import { StatusValidator } from 'Statuses/StatusValidator';
 import * as VerifyStatuses from '../TestingTools/VerifyStatuses';
 import * as StatusExamples from '../TestingTools/StatusExamples';
 import { constructStatuses } from '../TestingTools/StatusesTestHelpers';

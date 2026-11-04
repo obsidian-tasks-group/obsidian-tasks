@@ -1,11 +1,11 @@
-import type { Task } from '../../Task/Task';
-import { StatusTypeField } from '../Filter/StatusTypeField';
-import { DueDateField } from '../Filter/DueDateField';
-import { PriorityField } from '../Filter/PriorityField';
-import { PathField } from '../Filter/PathField';
-import { UrgencyField } from '../Filter/UrgencyField';
-import type { SearchInfo } from '../SearchInfo';
-import type { Comparator, Sorter } from './Sorter';
+import type { Task } from 'Task/Task';
+import { StatusTypeField } from 'Query/Filter/StatusTypeField';
+import { DueDateField } from 'Query/Filter/DueDateField';
+import { PriorityField } from 'Query/Filter/PriorityField';
+import { PathField } from 'Query/Filter/PathField';
+import { UrgencyField } from 'Query/Filter/UrgencyField';
+import type { SearchInfo } from 'Query/SearchInfo';
+import type { Comparator, Sorter } from 'Query/Sort/Sorter';
 
 type PlainComparator = (a: Task, b: Task) => number;
 

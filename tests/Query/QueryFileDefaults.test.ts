@@ -1,6 +1,6 @@
+import { QueryFileDefaults } from 'Query/QueryFileDefaults';
 import { getTasksFileFromMockData } from '../TestingTools/MockDataHelpers';
 
-import { QueryFileDefaults } from '../../src/Query/QueryFileDefaults';
 import type { MockDataName } from '../Obsidian/AllCacheSampleData';
 
 function generateQueryFileDefaultsSource(testDataName: MockDataName) {

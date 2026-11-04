@@ -1,5 +1,5 @@
-import { StatusConfiguration, StatusType } from './StatusConfiguration';
-import type { StatusCollectionEntry } from './StatusCollection';
+import { StatusConfiguration, StatusType } from 'Statuses/StatusConfiguration';
+import type { StatusCollectionEntry } from 'Statuses/StatusCollection';
 
 /**
  * Tracks the possible states that a task can be in.

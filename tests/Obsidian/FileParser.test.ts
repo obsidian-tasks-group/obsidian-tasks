@@ -1,5 +1,5 @@
+import type { Task } from 'Task/Task';
 import { MockDataLoader } from '../TestingTools/MockDataLoader';
-import type { Task } from '../../src/Task/Task';
 import { type SimulatedFile, getMockDataAndReadTasks, readTasksFromSimulatedFile } from './SimulatedFile';
 import type { MockDataName } from './AllCacheSampleData';
 

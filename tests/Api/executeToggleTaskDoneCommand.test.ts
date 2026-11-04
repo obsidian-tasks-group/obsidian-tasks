@@ -1,6 +1,6 @@
 import moment from 'moment';
-import type TasksPlugin from '../../src/main';
-import { tasksApiV1 } from '../../src/Api';
+import type TasksPlugin from 'main';
+import { tasksApiV1 } from 'Api';
 
 // This needs to be mocked because the API imports TaskModal which extends Obsidian's Modal
 // class which is not available during tests.

@@ -1,6 +1,6 @@
 import moment from 'moment';
-import { CancelledDateField } from '../../../src/Query/Filter/CancelledDateField';
-import type { FilterOrErrorMessage } from '../../../src/Query/Filter/FilterOrErrorMessage';
+import { CancelledDateField } from 'Query/Filter/CancelledDateField';
+import type { FilterOrErrorMessage } from 'Query/Filter/FilterOrErrorMessage';
 import { TaskBuilder } from '../../TestingTools/TaskBuilder';
 import { testFilter } from '../../TestingTools/FilterTestHelpers';
 import { expectTaskComparesAfter, expectTaskComparesBefore } from '../../CustomMatchers/CustomMatchersForSorting';

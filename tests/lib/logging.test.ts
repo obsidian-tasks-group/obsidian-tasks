@@ -1,4 +1,4 @@
-import { LogManager, type LogOptions } from '../../src/lib/logging';
+import { LogManager, type LogOptions } from 'lib/logging';
 
 describe('Logger responds to changed logging options', () => {
     const optionsWithCacheLevel = (level: string): LogOptions => ({

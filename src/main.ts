@@ -1,27 +1,27 @@
 import { Plugin, type Reference, getLinkpath } from 'obsidian';
 
 import type { Task } from 'Task/Task';
-import { i18n, initializeI18n } from './i18n/i18n';
-import { Cache, State } from './Obsidian/Cache';
-import { Commands } from './Commands';
-import { GlobalQuery } from './Config/GlobalQuery';
-import { TasksEvents } from './Obsidian/TasksEvents';
-import { initializeFile } from './Obsidian/File';
-import { InlineRenderer } from './Obsidian/InlineRenderer';
-import { newLivePreviewExtension } from './Obsidian/LivePreviewExtension';
-import { QueryRenderer } from './Renderer/QueryRenderer';
-import { getSettings, updateSettings } from './Config/Settings';
-import { SettingsTab } from './Config/SettingsTab';
-import { StatusRegistry } from './Statuses/StatusRegistry';
-import { log, logging } from './lib/logging';
-import { EditorSuggestor } from './Suggestor/EditorSuggestorPopup';
-import { StatusSettings } from './Config/StatusSettings';
-import { tasksApiV1 } from './Api';
-import { GlobalFilter } from './Config/GlobalFilter';
-import { QueryFileDefaults } from './Query/QueryFileDefaults';
-import { LinkResolver } from './Task/LinkResolver';
-import { ObsidianLocalStorageProvider } from './Config/ObsidianLocalStorageProvider';
-import { EnableJsInTasksQueries } from './Config/EnableJsInTasksQueries';
+import { i18n, initializeI18n } from 'i18n/i18n';
+import { Cache, State } from 'Obsidian/Cache';
+import { Commands } from 'Commands';
+import { GlobalQuery } from 'Config/GlobalQuery';
+import { TasksEvents } from 'Obsidian/TasksEvents';
+import { initializeFile } from 'Obsidian/File';
+import { InlineRenderer } from 'Obsidian/InlineRenderer';
+import { newLivePreviewExtension } from 'Obsidian/LivePreviewExtension';
+import { QueryRenderer } from 'Renderer/QueryRenderer';
+import { getSettings, updateSettings } from 'Config/Settings';
+import { SettingsTab } from 'Config/SettingsTab';
+import { StatusRegistry } from 'Statuses/StatusRegistry';
+import { log, logging } from 'lib/logging';
+import { EditorSuggestor } from 'Suggestor/EditorSuggestorPopup';
+import { StatusSettings } from 'Config/StatusSettings';
+import { tasksApiV1 } from 'Api';
+import { GlobalFilter } from 'Config/GlobalFilter';
+import { QueryFileDefaults } from 'Query/QueryFileDefaults';
+import { LinkResolver } from 'Task/LinkResolver';
+import { ObsidianLocalStorageProvider } from 'Config/ObsidianLocalStorageProvider';
+import { EnableJsInTasksQueries } from 'Config/EnableJsInTasksQueries';
 
 export default class TasksPlugin extends Plugin {
     private cache: Cache | undefined;

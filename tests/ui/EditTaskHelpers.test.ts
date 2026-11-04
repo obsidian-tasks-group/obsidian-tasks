@@ -1,4 +1,4 @@
-import { focusOnceClearOfKeyboard, labelContentWithAccessKey } from '../../src/ui/EditTaskHelpers';
+import { focusOnceClearOfKeyboard, labelContentWithAccessKey } from 'ui/EditTaskHelpers';
 
 describe('labelContentWithAccessKey() tests', () => {
     it.each([

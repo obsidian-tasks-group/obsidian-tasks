@@ -1,9 +1,9 @@
 import type moment from 'moment';
-import { DateParser } from '../../src/DateTime/DateParser';
-import type { Sorter } from '../../src/Query/Sort/Sorter';
-import type { Task } from '../../src/Task/Task';
-import { compareByDate } from '../../src/DateTime/DateTools';
-import { SearchInfo } from '../../src/Query/SearchInfo';
+import { DateParser } from 'DateTime/DateParser';
+import type { Sorter } from 'Query/Sort/Sorter';
+import type { Task } from 'Task/Task';
+import { compareByDate } from 'DateTime/DateTools';
+import { SearchInfo } from 'Query/SearchInfo';
 import { createTestTasksFile } from '../TestingTools/TasksFileHelpers';
 
 declare module 'vitest' {

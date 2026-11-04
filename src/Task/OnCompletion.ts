@@ -1,5 +1,5 @@
-import { StatusType } from '../Statuses/StatusConfiguration';
-import type { Task } from './Task';
+import { StatusType } from 'Statuses/StatusConfiguration';
+import type { Task } from 'Task/Task';
 
 export enum OnCompletion {
     Ignore = '',

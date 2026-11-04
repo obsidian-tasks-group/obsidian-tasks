@@ -1,7 +1,7 @@
 import moment from 'moment';
-import { DateParser } from '../../src/DateTime/DateParser';
+import { DateParser } from 'DateTime/DateParser';
 
-import { TaskRegularExpressions } from '../../src/Task/TaskRegularExpressions';
+import { TaskRegularExpressions } from 'Task/TaskRegularExpressions';
 
 window.moment = moment;
 

@@ -1,5 +1,5 @@
-import { Explanation } from '../Explain/Explanation';
-import { IStringMatcher } from './IStringMatcher';
+import { Explanation } from 'Query/Explain/Explanation';
+import { IStringMatcher } from 'Query/Matchers/IStringMatcher';
 
 /**
  * Substring-based implementation of IStringMatcher.

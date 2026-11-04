@@ -1,4 +1,4 @@
-import { escapeInvisibleCharacters } from '../../src/lib/StringHelpers';
+import { escapeInvisibleCharacters } from 'lib/StringHelpers';
 
 describe('StringHelpers', () => {
     it('escapeInvisibleCharacters', () => {

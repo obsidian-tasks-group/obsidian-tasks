@@ -1,6 +1,6 @@
-import { TaskExpression, constructArguments, parseAndEvaluateExpression } from '../../src/Scripting/TaskExpression';
+import { TaskExpression, constructArguments, parseAndEvaluateExpression } from 'Scripting/TaskExpression';
+import { makeQueryContext } from 'Scripting/QueryContext';
 import { TaskBuilder } from '../TestingTools/TaskBuilder';
-import { makeQueryContext } from '../../src/Scripting/QueryContext';
 import { createTestTasksFile } from '../TestingTools/TasksFileHelpers';
 
 describe('TaskExpression', () => {

@@ -1,12 +1,12 @@
 import type { PluginValue } from '@codemirror/view';
 import { EditorView, ViewPlugin } from '@codemirror/view';
-import { TasksFile } from '../Scripting/TasksFile';
+import { TasksFile } from 'Scripting/TasksFile';
 
-import { Task } from '../Task/Task';
-import { TaskLocation } from '../Task/TaskLocation';
-import { type SettingsSaver, showDismissibleNotice } from '../Config/DismissibleNotices';
-import { i18n } from '../i18n/i18n';
-import { ToggleTaskDoneCommandName } from '../Commands';
+import { Task } from 'Task/Task';
+import { TaskLocation } from 'Task/TaskLocation';
+import { type SettingsSaver, showDismissibleNotice } from 'Config/DismissibleNotices';
+import { i18n } from 'i18n/i18n';
+import { ToggleTaskDoneCommandName } from 'Commands';
 
 // CodeMirror constructs view plugins with only the EditorView, so capture the Tasks plugin here
 // to enable us to ask the plugin to save settings.

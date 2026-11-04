@@ -1,8 +1,8 @@
 import moment from 'moment';
-import { resetSettings, updateSettings } from '../../src/Config/Settings';
-import { taskFromLine } from '../../src/Commands/CreateOrEditTaskParser';
-import { GlobalFilter } from '../../src/Config/GlobalFilter';
-import { Priority } from '../../src/Task/Priority';
+import { resetSettings, updateSettings } from 'Config/Settings';
+import { taskFromLine } from 'Commands/CreateOrEditTaskParser';
+import { GlobalFilter } from 'Config/GlobalFilter';
+import { Priority } from 'Task/Priority';
 
 window.moment = moment;
 
