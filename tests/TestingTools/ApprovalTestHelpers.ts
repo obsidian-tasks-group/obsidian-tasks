@@ -1,11 +1,11 @@
 import { Options } from '@approval-tests/approvals/lib/Core/Options';
 import { verify } from '@approval-tests/approvals/lib/Providers/Vitest/VitestApprovals';
-import type { GlobalFilter } from '../../src/Config/GlobalFilter';
-import type { GlobalQuery } from '../../src/Config/GlobalQuery';
-import { Query } from '../../src/Query/Query';
-import { explainResults } from '../../src/Query/QueryRendererHelper';
-import type { Task } from '../../src/Task/Task';
-import type { OptionalTasksFile } from '../../src/Scripting/TasksFile';
+import type { GlobalFilter } from 'Config/GlobalFilter';
+import type { GlobalQuery } from 'Config/GlobalQuery';
+import { Query } from 'Query/Query';
+import { explainResults } from 'Query/QueryRendererHelper';
+import type { Task } from 'Task/Task';
+import type { OptionalTasksFile } from 'Scripting/TasksFile';
 import { verifyMarkdown } from './VerifyMarkdown';
 import { createTestTasksFile } from './TasksFileHelpers';
 

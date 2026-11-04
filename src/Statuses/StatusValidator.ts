@@ -1,8 +1,8 @@
-import type { StatusConfiguration } from './StatusConfiguration';
-import { StatusType } from './StatusConfiguration';
-import type { StatusCollectionEntry } from './StatusCollection';
-import { Status } from './Status';
-import { StatusRegistry } from './StatusRegistry';
+import type { StatusConfiguration } from 'Statuses/StatusConfiguration';
+import { StatusType } from 'Statuses/StatusConfiguration';
+import type { StatusCollectionEntry } from 'Statuses/StatusCollection';
+import { Status } from 'Statuses/Status';
+import { StatusRegistry } from 'Statuses/StatusRegistry';
 
 export class StatusValidator {
     /**

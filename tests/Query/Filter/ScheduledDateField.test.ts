@@ -1,5 +1,5 @@
 import moment from 'moment';
-import { ScheduledDateField } from '../../../src/Query/Filter/ScheduledDateField';
+import { ScheduledDateField } from 'Query/Filter/ScheduledDateField';
 import { TaskBuilder } from '../../TestingTools/TaskBuilder';
 import { expectTaskComparesAfter, expectTaskComparesBefore } from '../../CustomMatchers/CustomMatchersForSorting';
 import { SampleTasks } from '../../TestingTools/SampleTasks';

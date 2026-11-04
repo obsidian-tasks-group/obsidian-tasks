@@ -1,6 +1,6 @@
-import type { Task } from '../../Task/Task';
-import { allPriorityInstructions } from '../EditInstructions/PriorityInstructions';
-import { TaskEditingMenu, type TaskSaver, defaultTaskSaver } from './TaskEditingMenu';
+import type { Task } from 'Task/Task';
+import { allPriorityInstructions } from 'ui/EditInstructions/PriorityInstructions';
+import { TaskEditingMenu, type TaskSaver, defaultTaskSaver } from 'ui/Menus/TaskEditingMenu';
 
 /**
  * A Menu of options for editing the status of a Task object.

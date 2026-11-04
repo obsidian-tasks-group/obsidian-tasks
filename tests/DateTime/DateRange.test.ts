@@ -1,5 +1,5 @@
 import moment from 'moment';
-import { DateRange } from '../../src/DateTime/DateRange';
+import { DateRange } from 'DateTime/DateRange';
 
 window.moment = moment;
 

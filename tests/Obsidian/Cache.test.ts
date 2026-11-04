@@ -1,7 +1,7 @@
 import moment from 'moment/moment';
 import type { CachedMetadata } from 'obsidian';
-import { GlobalFilter } from '../../src/Config/GlobalFilter';
-import type { ListItem } from '../../src/Task/ListItem';
+import { GlobalFilter } from 'Config/GlobalFilter';
+import type { ListItem } from 'Task/ListItem';
 import { getTasksFileFromMockData, listPathAndData } from '../TestingTools/MockDataHelpers';
 import { AllMockDataNames, type MockDataName } from './AllCacheSampleData';
 import { getMockDataAndReadTasks, readTasksFromSimulatedFile } from './SimulatedFile';

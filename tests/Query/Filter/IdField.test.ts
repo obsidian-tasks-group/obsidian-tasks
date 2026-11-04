@@ -1,6 +1,6 @@
+import { IdField } from 'Query/Filter/IdField';
 import { testFilter } from '../../TestingTools/FilterTestHelpers';
 import { TaskBuilder } from '../../TestingTools/TaskBuilder';
-import { IdField } from '../../../src/Query/Filter/IdField';
 import {
     expectTaskComparesAfter,
     expectTaskComparesBefore,

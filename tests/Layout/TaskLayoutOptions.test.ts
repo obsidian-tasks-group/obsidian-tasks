@@ -1,4 +1,4 @@
-import { TaskLayoutComponent, TaskLayoutOptions, parseTaskShowHideOptions } from '../../src/Layout/TaskLayoutOptions';
+import { TaskLayoutComponent, TaskLayoutOptions, parseTaskShowHideOptions } from 'Layout/TaskLayoutOptions';
 
 describe('TaskLayoutOptions', () => {
     it('should be constructable', () => {

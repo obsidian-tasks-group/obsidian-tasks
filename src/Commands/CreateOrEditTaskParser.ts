@@ -1,14 +1,14 @@
-import { TasksFile } from '../Scripting/TasksFile';
-import { Status } from '../Statuses/Status';
-import { OnCompletion } from '../Task/OnCompletion';
-import { Task } from '../Task/Task';
-import { DateFallback } from '../DateTime/DateFallback';
-import { StatusRegistry } from '../Statuses/StatusRegistry';
-import { TaskLocation } from '../Task/TaskLocation';
-import { getSettings } from '../Config/Settings';
-import { GlobalFilter } from '../Config/GlobalFilter';
-import { Priority } from '../Task/Priority';
-import { TaskRegularExpressions } from '../Task/TaskRegularExpressions';
+import { TasksFile } from 'Scripting/TasksFile';
+import { Status } from 'Statuses/Status';
+import { OnCompletion } from 'Task/OnCompletion';
+import { Task } from 'Task/Task';
+import { DateFallback } from 'DateTime/DateFallback';
+import { StatusRegistry } from 'Statuses/StatusRegistry';
+import { TaskLocation } from 'Task/TaskLocation';
+import { getSettings } from 'Config/Settings';
+import { GlobalFilter } from 'Config/GlobalFilter';
+import { Priority } from 'Task/Priority';
+import { TaskRegularExpressions } from 'Task/TaskRegularExpressions';
 
 function getDefaultCreatedDate() {
     const { setCreatedDate } = getSettings();

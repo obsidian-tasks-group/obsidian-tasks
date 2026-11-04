@@ -1,9 +1,9 @@
 import moment from 'moment/moment';
 import type { Mock } from 'vitest';
 import type { CachedMetadata, EventRef, MetadataCache, TFile, Vault, Workspace } from 'obsidian';
-import { Cache, State } from '../../src/Obsidian/Cache';
-import type { TasksEvents } from '../../src/Obsidian/TasksEvents';
-import type { Logger } from '../../src/lib/logging';
+import { Cache, State } from 'Obsidian/Cache';
+import type { TasksEvents } from 'Obsidian/TasksEvents';
+import type { Logger } from 'lib/logging';
 import { createTFile } from '../__mocks__/obsidian';
 import { MockDataLoader } from '../TestingTools/MockDataLoader';
 

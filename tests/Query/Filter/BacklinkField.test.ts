@@ -1,4 +1,4 @@
-import { BacklinkField } from '../../../src/Query/Filter/BacklinkField';
+import { BacklinkField } from 'Query/Filter/BacklinkField';
 import { fromLine } from '../../TestingTools/TestHelpers';
 import { SampleTasks } from '../../TestingTools/SampleTasks';
 

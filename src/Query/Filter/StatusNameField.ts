@@ -1,5 +1,5 @@
-import type { Task } from '../../Task/Task';
-import { TextField } from './TextField';
+import type { Task } from 'Task/Task';
+import { TextField } from 'Query/Filter/TextField';
 
 /**
  * A {@link Field} implementation for searching status.name

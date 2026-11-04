@@ -1,6 +1,6 @@
-import { FilterInstruction } from './FilterInstruction';
-import { FilterOrErrorMessage } from './FilterOrErrorMessage';
-import type { FilterFunction } from './Filter';
+import { FilterInstruction } from 'Query/Filter/FilterInstruction';
+import { FilterOrErrorMessage } from 'Query/Filter/FilterOrErrorMessage';
+import type { FilterFunction } from 'Query/Filter/Filter';
 
 /**
  * Implementation of a collection of instructions for filtering tasks.

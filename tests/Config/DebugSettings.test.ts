@@ -1,6 +1,6 @@
-import { DebugSettings } from '../../src/Config/DebugSettings';
-import { resetSettings, updateSettings } from '../../src/Config/Settings';
-import { Query } from '../../src/Query/Query';
+import { DebugSettings } from 'Config/DebugSettings';
+import { resetSettings, updateSettings } from 'Config/Settings';
+import { Query } from 'Query/Query';
 import { createTasksFromMarkdown } from '../TestingTools/TestHelpers';
 
 describe('DebugSettings', () => {

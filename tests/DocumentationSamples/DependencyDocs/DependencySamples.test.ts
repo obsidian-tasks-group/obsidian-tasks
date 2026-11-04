@@ -1,12 +1,12 @@
 import moment from 'moment';
 
-import { StatusConfiguration, StatusType } from '../../../src/Statuses/StatusConfiguration';
-import { StatusRegistry } from '../../../src/Statuses/StatusRegistry';
-import { SearchInfo } from '../../../src/Query/SearchInfo';
-import { parseFilter } from '../../../src/Query/FilterParser';
+import { StatusConfiguration, StatusType } from 'Statuses/StatusConfiguration';
+import { StatusRegistry } from 'Statuses/StatusRegistry';
+import { SearchInfo } from 'Query/SearchInfo';
+import { parseFilter } from 'Query/FilterParser';
+import { MarkdownTable } from 'lib/MarkdownTable';
 import { SampleTasks } from '../../TestingTools/SampleTasks';
 import { booleanToEmoji } from '../../TestingTools/FilterTestHelpers';
-import { MarkdownTable } from '../../../src/lib/MarkdownTable';
 import { verifyMarkdownForDocs } from '../../TestingTools/VerifyMarkdown';
 import { addBackticks } from '../../Scripting/ScriptingTestHelpers';
 

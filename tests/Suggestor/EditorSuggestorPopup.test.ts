@@ -1,8 +1,8 @@
 import moment from 'moment';
 import { type App, type Editor, type EditorSuggestContext, MarkdownView } from 'obsidian';
-import type TasksPlugin from '../../src/main';
-import { resetSettings, updateSettings } from '../../src/Config/Settings';
-import { EditorSuggestor } from '../../src/Suggestor/EditorSuggestorPopup';
+import type TasksPlugin from 'main';
+import { resetSettings, updateSettings } from 'Config/Settings';
+import { EditorSuggestor } from 'Suggestor/EditorSuggestorPopup';
 import { createTFile } from '../__mocks__/obsidian';
 
 window.moment = moment;

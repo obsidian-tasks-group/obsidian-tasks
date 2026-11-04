@@ -4,13 +4,13 @@
  */
 
 import { type App, Component, MarkdownRenderer, Notice, SuggestModal, setIcon } from 'obsidian';
-import type { Task } from '../Task/Task';
-import { TASK_FORMATS, getSettings, updateSettings } from '../Config/Settings';
-import { TaskLayoutComponent } from '../Layout/TaskLayoutOptions';
-import { findTasksByDescription } from '../lib/QuickSearchTasks';
-import { GlobalFilter } from '../Config/GlobalFilter';
-import { getTaskLineAndFile } from '../Obsidian/File';
-import { QuickSearchOptionsModal } from './QuickSearchOptionsModal';
+import type { Task } from 'Task/Task';
+import { TASK_FORMATS, getSettings, updateSettings } from 'Config/Settings';
+import { TaskLayoutComponent } from 'Layout/TaskLayoutOptions';
+import { findTasksByDescription } from 'lib/QuickSearchTasks';
+import { GlobalFilter } from 'Config/GlobalFilter';
+import { getTaskLineAndFile } from 'Obsidian/File';
+import { QuickSearchOptionsModal } from 'ui/QuickSearchOptionsModal';
 
 interface TaskSearchSuggestionText {
     description: string;

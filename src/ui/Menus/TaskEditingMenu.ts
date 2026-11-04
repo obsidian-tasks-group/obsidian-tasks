@@ -1,8 +1,8 @@
 import { Menu, type MenuItem } from 'obsidian';
-import type { Task } from '../../Task/Task';
-import { replaceTaskWithTasks } from '../../Obsidian/File';
-import type { TaskEditingInstruction } from '../EditInstructions/TaskEditingInstruction';
-import { SEPARATOR_INSTRUCTION_DISPLAY_NAME } from '../EditInstructions/MenuDividerInstruction';
+import type { Task } from 'Task/Task';
+import { replaceTaskWithTasks } from 'Obsidian/File';
+import type { TaskEditingInstruction } from 'ui/EditInstructions/TaskEditingInstruction';
+import { SEPARATOR_INSTRUCTION_DISPLAY_NAME } from 'ui/EditInstructions/MenuDividerInstruction';
 
 /**
  * A function for replacing one task with zero or more new tasks.

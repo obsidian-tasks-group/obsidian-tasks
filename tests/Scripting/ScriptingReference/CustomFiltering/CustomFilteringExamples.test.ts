@@ -1,5 +1,7 @@
 import moment from 'moment';
-import type { Task } from '../../../../src/Task/Task';
+import type { Task } from 'Task/Task';
+import { StatusRegistry } from 'Statuses/StatusRegistry';
+import { StatusConfiguration } from 'Statuses/StatusConfiguration';
 import { readAllTasksFromAllSimulatedFiles } from '../../../Obsidian/SimulatedFile';
 import { fromLine, fromLines } from '../../../TestingTools/TestHelpers';
 import { SampleTasks } from '../../../TestingTools/SampleTasks';
@@ -8,8 +10,6 @@ import {
     verifyFunctionFieldFilterSamplesForDocs,
     verifyFunctionFieldFilterSamplesOnTasks,
 } from '../VerifyFunctionFieldSamples';
-import { StatusRegistry } from '../../../../src/Statuses/StatusRegistry';
-import { StatusConfiguration } from '../../../../src/Statuses/StatusConfiguration';
 
 window.moment = moment;
 

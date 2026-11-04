@@ -1,9 +1,9 @@
 import moment from 'moment';
-import { getSettings, resetSettings, updateSettings } from '../../../src/Config/Settings';
-import { Query } from '../../../src/Query/Query';
-import type { Statement } from '../../../src/Query/Statement';
-import { type PresetsMap, defaultPresets } from '../../../src/Query/Presets/Presets';
-import { EnableJsInTasksQueries } from '../../../src/Config/EnableJsInTasksQueries';
+import { getSettings, resetSettings, updateSettings } from 'Config/Settings';
+import { Query } from 'Query/Query';
+import type { Statement } from 'Query/Statement';
+import { type PresetsMap, defaultPresets } from 'Query/Presets/Presets';
+import { EnableJsInTasksQueries } from 'Config/EnableJsInTasksQueries';
 import { expectQueryErrorToMentionDisabledJavaScript } from '../../Scripting/ScriptingTestHelpers';
 import { createTestTasksFile } from '../../TestingTools/TasksFileHelpers';
 

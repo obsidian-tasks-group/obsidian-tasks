@@ -1,15 +1,15 @@
 // Builder
 import type { Moment } from 'moment';
-import { Status } from '../../src/Statuses/Status';
-import { OnCompletion } from '../../src/Task/OnCompletion';
-import { Occurrence } from '../../src/Task/Occurrence';
-import { Task } from '../../src/Task/Task';
-import { Recurrence } from '../../src/Task/Recurrence';
-import { DateParser } from '../../src/DateTime/DateParser';
-import { StatusConfiguration, StatusType } from '../../src/Statuses/StatusConfiguration';
-import { TaskLocation } from '../../src/Task/TaskLocation';
-import { Priority } from '../../src/Task/Priority';
-import type { ListItem } from '../../src/Task/ListItem';
+import { Status } from 'Statuses/Status';
+import { OnCompletion } from 'Task/OnCompletion';
+import { Occurrence } from 'Task/Occurrence';
+import { Task } from 'Task/Task';
+import { Recurrence } from 'Task/Recurrence';
+import { DateParser } from 'DateTime/DateParser';
+import { StatusConfiguration, StatusType } from 'Statuses/StatusConfiguration';
+import { TaskLocation } from 'Task/TaskLocation';
+import { Priority } from 'Task/Priority';
+import type { ListItem } from 'Task/ListItem';
 import type { SimulatedFile } from '../Obsidian/SimulatedFile';
 import type { MockDataName } from '../Obsidian/AllCacheSampleData';
 import { MockDataLoader } from './MockDataLoader';

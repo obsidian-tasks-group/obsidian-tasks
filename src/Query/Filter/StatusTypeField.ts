@@ -1,12 +1,12 @@
-import type { Task } from '../../Task/Task';
-import type { GrouperFunction } from '../Group/Grouper';
-import { StatusType } from '../../Statuses/StatusConfiguration';
-import type { Comparator } from '../Sort/Sorter';
-import { Explanation } from '../Explain/Explanation';
-import { Field } from './Field';
-import { Filter } from './Filter';
-import type { FilterFunction } from './Filter';
-import { FilterOrErrorMessage } from './FilterOrErrorMessage';
+import type { Task } from 'Task/Task';
+import type { GrouperFunction } from 'Query/Group/Grouper';
+import { StatusType } from 'Statuses/StatusConfiguration';
+import type { Comparator } from 'Query/Sort/Sorter';
+import { Explanation } from 'Query/Explain/Explanation';
+import { Field } from 'Query/Filter/Field';
+import { Filter } from 'Query/Filter/Filter';
+import type { FilterFunction } from 'Query/Filter/Filter';
+import { FilterOrErrorMessage } from 'Query/Filter/FilterOrErrorMessage';
 
 /**
  * A ${@link Field} implementation for searching status.type

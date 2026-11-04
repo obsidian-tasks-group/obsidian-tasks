@@ -1,6 +1,6 @@
-import type { Task } from '../Task/Task';
-import type { TaskEditingInstruction } from '../ui/EditInstructions/TaskEditingInstruction';
-import { defaultTaskSaver } from '../ui/Menus/TaskEditingMenu';
+import type { Task } from 'Task/Task';
+import type { TaskEditingInstruction } from 'ui/EditInstructions/TaskEditingInstruction';
+import { defaultTaskSaver } from 'ui/Menus/TaskEditingMenu';
 
 /**
  * Tracks which {@link Task} is currently being dragged during a drag-and-drop operation.

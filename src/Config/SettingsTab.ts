@@ -15,14 +15,14 @@ import {
     debounce,
     sanitizeHTMLToDom,
 } from 'obsidian';
-import { StatusConfiguration, StatusType } from '../Statuses/StatusConfiguration';
-import type TasksPlugin from '../main';
-import { StatusRegistry } from '../Statuses/StatusRegistry';
-import type { StatusCollection } from '../Statuses/StatusCollection';
-import { createStatusRegistryReport } from '../Statuses/StatusRegistryReport';
-import { i18n } from '../i18n/i18n';
-import type { TasksEvents } from '../Obsidian/TasksEvents';
-import * as Themes from './Themes';
+import { StatusConfiguration, StatusType } from 'Statuses/StatusConfiguration';
+import type TasksPlugin from 'main';
+import { StatusRegistry } from 'Statuses/StatusRegistry';
+import type { StatusCollection } from 'Statuses/StatusCollection';
+import { createStatusRegistryReport } from 'Statuses/StatusRegistryReport';
+import { i18n } from 'i18n/i18n';
+import type { TasksEvents } from 'Obsidian/TasksEvents';
+import * as Themes from 'Config/Themes';
 import {
     POSTPONE_DATE_FIELD_VALUES,
     type PostponeDateField,
@@ -30,15 +30,15 @@ import {
     TASK_FORMATS,
     getSettings,
     updateSettings,
-} from './Settings';
-import { GlobalFilter } from './GlobalFilter';
-import { StatusSettings } from './StatusSettings';
+} from 'Config/Settings';
+import { GlobalFilter } from 'Config/GlobalFilter';
+import { StatusSettings } from 'Config/StatusSettings';
 
-import { CustomStatusModal } from './CustomStatusModal';
-import { GlobalQuery } from './GlobalQuery';
-import { GlobalQueryModal } from './GlobalQueryModal';
-import { PresetsSettingsUI } from './PresetsSettingsUI';
-import { EnableJsInTasksQueries } from './EnableJsInTasksQueries';
+import { CustomStatusModal } from 'Config/CustomStatusModal';
+import { GlobalQuery } from 'Config/GlobalQuery';
+import { GlobalQueryModal } from 'Config/GlobalQueryModal';
+import { PresetsSettingsUI } from 'Config/PresetsSettingsUI';
+import { EnableJsInTasksQueries } from 'Config/EnableJsInTasksQueries';
 
 /**
  * A snapshot of the settings when the plugin loaded.

@@ -1,5 +1,5 @@
-import type { OptionalTasksFile, TasksFile } from '../Scripting/TasksFile';
-import { Query } from './Query';
+import type { OptionalTasksFile, TasksFile } from 'Scripting/TasksFile';
+import { Query } from 'Query/Query';
 
 // Enum for handler types
 enum Handler {

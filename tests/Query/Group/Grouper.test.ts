@@ -1,7 +1,7 @@
-import { Grouper, type GrouperFunction } from '../../../src/Query/Group/Grouper';
-import type { Task } from '../../../src/Task/Task';
-import type { SearchInfo } from '../../../src/Query/SearchInfo';
-import { Statement } from '../../../src/Query/Statement';
+import { Grouper, type GrouperFunction } from 'Query/Group/Grouper';
+import type { Task } from 'Task/Task';
+import type { SearchInfo } from 'Query/SearchInfo';
+import { Statement } from 'Query/Statement';
 
 describe('Grouper', () => {
     const grouperFunction: GrouperFunction = (task: Task, _searchInfo: SearchInfo) => {

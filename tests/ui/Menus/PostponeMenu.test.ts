@@ -1,6 +1,6 @@
 import moment from 'moment/moment';
 
-import { PostponeMenu } from '../../../src/ui/Menus/PostponeMenu';
+import { PostponeMenu } from 'ui/Menus/PostponeMenu';
 import { TaskBuilder } from '../../TestingTools/TaskBuilder';
 import { TestableTaskSaver, menuToString } from './MenuTestingHelpers';
 

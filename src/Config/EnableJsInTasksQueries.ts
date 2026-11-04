@@ -1,4 +1,4 @@
-import type { LocalStorageProvider } from './LocalStorageProvider';
+import type { LocalStorageProvider } from 'Config/LocalStorageProvider';
 
 export const ENABLE_JS_IN_TASKS_QUERIES_KEY = 'enableJsInTasksQueries';
 export const DEFAULT_ENABLE_JS_IN_TASKS_QUERIES = false;

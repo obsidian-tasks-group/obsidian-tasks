@@ -1,4 +1,4 @@
-import { InMemoryLocalStorageProvider } from '../../src/Config/InMemoryLocalStorageProvider';
+import { InMemoryLocalStorageProvider } from 'Config/InMemoryLocalStorageProvider';
 
 describe('InMemoryLocalStorageProvider', () => {
     it('should return null for a missing key', () => {

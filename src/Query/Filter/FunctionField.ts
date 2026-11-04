@@ -1,18 +1,18 @@
-import type { Task } from '../../Task/Task';
-import type { GrouperFunction } from '../Group/Grouper';
-import { Grouper } from '../Group/Grouper';
-import { Explanation } from '../Explain/Explanation';
-import { TaskExpression, parseAndEvaluateExpression } from '../../Scripting/TaskExpression';
-import type { QueryContext } from '../../Scripting/QueryContext';
-import type { SearchInfo } from '../SearchInfo';
-import { Sorter } from '../Sort/Sorter';
-import { compareByDate } from '../../DateTime/DateTools';
-import { getValueType } from '../../lib/TypeDetection';
-import { EnableJsInTasksQueries } from '../../Config/EnableJsInTasksQueries';
-import { JsInTasksQueriesDisabledError } from '../../Scripting/JsInTasksQueriesDisabledError';
-import { Field } from './Field';
-import { Filter, type FilterFunction } from './Filter';
-import { FilterOrErrorMessage } from './FilterOrErrorMessage';
+import type { Task } from 'Task/Task';
+import type { GrouperFunction } from 'Query/Group/Grouper';
+import { Grouper } from 'Query/Group/Grouper';
+import { Explanation } from 'Query/Explain/Explanation';
+import { TaskExpression, parseAndEvaluateExpression } from 'Scripting/TaskExpression';
+import type { QueryContext } from 'Scripting/QueryContext';
+import type { SearchInfo } from 'Query/SearchInfo';
+import { Sorter } from 'Query/Sort/Sorter';
+import { compareByDate } from 'DateTime/DateTools';
+import { getValueType } from 'lib/TypeDetection';
+import { EnableJsInTasksQueries } from 'Config/EnableJsInTasksQueries';
+import { JsInTasksQueriesDisabledError } from 'Scripting/JsInTasksQueriesDisabledError';
+import { Field } from 'Query/Filter/Field';
+import { Filter, type FilterFunction } from 'Query/Filter/Filter';
+import { FilterOrErrorMessage } from 'Query/Filter/FilterOrErrorMessage';
 
 /**
  * A {@link Field} implement that accepts a JavaScript expression to filter or group tasks.

@@ -1,4 +1,4 @@
-import { getSettings } from '../Config/Settings';
+import { getSettings } from 'Config/Settings';
 
 /**
  * Helper class for measuring performance of code, and adding labels for profiling.

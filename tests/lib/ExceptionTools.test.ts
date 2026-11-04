@@ -1,4 +1,4 @@
-import { errorMessageForException } from '../../src/lib/ExceptionTools';
+import { errorMessageForException } from 'lib/ExceptionTools';
 
 describe('errorMessageForException()', () => {
     it('should include exception type and text in error message', () => {

@@ -1,6 +1,7 @@
+import { PriorityField } from 'Query/Filter/PriorityField';
+import { Priority } from 'Task/Priority';
 import { TaskBuilder } from '../../TestingTools/TaskBuilder';
 import { testFilter } from '../../TestingTools/FilterTestHelpers';
-import { PriorityField } from '../../../src/Query/Filter/PriorityField';
 import { fromLine } from '../../TestingTools/TestHelpers';
 import { SampleTasks } from '../../TestingTools/SampleTasks';
 
@@ -9,7 +10,6 @@ import {
     expectTaskComparesBefore,
     expectTaskComparesEqual,
 } from '../../CustomMatchers/CustomMatchersForSorting';
-import { Priority } from '../../../src/Task/Priority';
 
 function testTaskFilterForTaskWithPriority(filter: string, priority: Priority, expected: boolean) {
     const builder = new TaskBuilder();

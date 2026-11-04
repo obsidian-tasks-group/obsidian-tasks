@@ -4,14 +4,14 @@
  */
 
 import { prepareFuzzySearch } from 'obsidian';
-import { getSettings } from '../Config/Settings';
-import type { Task } from '../Task/Task';
-import { GlobalQuery } from '../Config/GlobalQuery';
-import { SearchInfo } from '../Query/SearchInfo';
-import type { Filter } from '../Query/Filter/Filter';
-import { TasksFile } from '../Scripting/TasksFile';
-import { DescriptionField } from '../Query/Filter/DescriptionField';
-import { Sort } from '../Query/Sort/Sort';
+import { getSettings } from 'Config/Settings';
+import type { Task } from 'Task/Task';
+import { GlobalQuery } from 'Config/GlobalQuery';
+import { SearchInfo } from 'Query/SearchInfo';
+import type { Filter } from 'Query/Filter/Filter';
+import { TasksFile } from 'Scripting/TasksFile';
+import { DescriptionField } from 'Query/Filter/DescriptionField';
+import { Sort } from 'Query/Sort/Sort';
 
 interface TaskDescriptionMatch {
     score: number;
