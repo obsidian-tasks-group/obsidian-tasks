@@ -1,6 +1,6 @@
-import { GroupDisplayHeading } from './GroupDisplayHeading';
-import type { Grouper } from './Grouper';
-import type { TaskGroupingTreeStorage } from './TaskGroupingTreeStorage';
+import { GroupDisplayHeading } from 'Query/Group/GroupDisplayHeading';
+import type { Grouper } from 'Query/Group/Grouper';
+import type { TaskGroupingTreeStorage } from 'Query/Group/TaskGroupingTreeStorage';
 
 /*
  * This file contains implementation details of Group.ts

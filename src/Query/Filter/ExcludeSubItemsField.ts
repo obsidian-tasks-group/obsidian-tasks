@@ -1,4 +1,4 @@
-import { FilterInstructionsBasedField } from './FilterInstructionsBasedField';
+import { FilterInstructionsBasedField } from 'Query/Filter/FilterInstructionsBasedField';
 
 /**
  * Implements 'exclude sub-items' filter

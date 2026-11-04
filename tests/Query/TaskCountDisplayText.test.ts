@@ -1,4 +1,4 @@
-import { totalTasksCountDisplayText } from '../../src/Query/TaskCountDisplayText';
+import { totalTasksCountDisplayText } from 'Query/TaskCountDisplayText';
 
 describe('Text representation of tasks count', () => {
     // Simple cases - where no limit was applied

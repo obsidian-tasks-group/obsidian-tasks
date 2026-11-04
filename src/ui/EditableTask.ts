@@ -1,15 +1,15 @@
-import { GlobalFilter } from '../Config/GlobalFilter';
-import { parseTypedDateForSaving } from '../DateTime/DateTools';
-import { PriorityTools } from '../lib/PriorityTools';
-import { replaceTaskWithTasks } from '../Obsidian/File';
-import type { Status } from '../Statuses/Status';
-import type { OnCompletion } from '../Task/OnCompletion';
-import { Occurrence } from '../Task/Occurrence';
-import { Priority } from '../Task/Priority';
-import { Recurrence } from '../Task/Recurrence';
-import { Task } from '../Task/Task';
-import { addDependencyToParent, ensureTaskHasId, generateUniqueId, removeDependency } from '../Task/TaskDependency';
-import { StatusType } from '../Statuses/StatusConfiguration';
+import { GlobalFilter } from 'Config/GlobalFilter';
+import { parseTypedDateForSaving } from 'DateTime/DateTools';
+import { PriorityTools } from 'lib/PriorityTools';
+import { replaceTaskWithTasks } from 'Obsidian/File';
+import type { Status } from 'Statuses/Status';
+import type { OnCompletion } from 'Task/OnCompletion';
+import { Occurrence } from 'Task/Occurrence';
+import { Priority } from 'Task/Priority';
+import { Recurrence } from 'Task/Recurrence';
+import { Task } from 'Task/Task';
+import { addDependencyToParent, ensureTaskHasId, generateUniqueId, removeDependency } from 'Task/TaskDependency';
+import { StatusType } from 'Statuses/StatusConfiguration';
 
 /**
  * {@link Task} objects are immutable. This class allows to create a mutable object from a {@link Task}, apply the edits,

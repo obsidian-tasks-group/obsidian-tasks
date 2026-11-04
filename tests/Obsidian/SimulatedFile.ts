@@ -1,7 +1,7 @@
 import type { CachedMetadata } from 'obsidian';
 import type { Task } from 'Task/Task';
-import { logging } from '../../src/lib/logging';
-import { FileParser } from '../../src/Obsidian/FileParser';
+import { logging } from 'lib/logging';
+import { FileParser } from 'Obsidian/FileParser';
 import { MockDataLoader } from '../TestingTools/MockDataLoader';
 import { createTestTasksFile } from '../TestingTools/TasksFileHelpers';
 import { AllMockDataNames, type MockDataName } from './AllCacheSampleData';

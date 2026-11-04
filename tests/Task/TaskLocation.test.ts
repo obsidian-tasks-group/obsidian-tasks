@@ -1,5 +1,5 @@
-import type { TasksFile } from '../../src/Scripting/TasksFile';
-import { TaskLocation } from '../../src/Task/TaskLocation';
+import type { TasksFile } from 'Scripting/TasksFile';
+import { TaskLocation } from 'Task/TaskLocation';
 import { createTestTasksFile } from '../TestingTools/TasksFileHelpers';
 
 describe('TaskLocation', () => {

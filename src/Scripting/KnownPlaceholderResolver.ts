@@ -1,5 +1,5 @@
-import type { QueryContext } from './QueryContext';
-import type { TasksFile } from './TasksFile';
+import type { QueryContext } from 'Scripting/QueryContext';
+import type { TasksFile } from 'Scripting/TasksFile';
 
 export type KnownPlaceholderResolution =
     | {

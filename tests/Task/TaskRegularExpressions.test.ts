@@ -1,4 +1,4 @@
-import { TaskRegularExpressions } from '../../src/Task/TaskRegularExpressions';
+import { TaskRegularExpressions } from 'Task/TaskRegularExpressions';
 
 describe('List Markers', () => {
     it.each([

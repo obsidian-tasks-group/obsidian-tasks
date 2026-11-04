@@ -1,4 +1,4 @@
-import { QueryLayoutOptions, parseQueryShowHideOptions } from '../../src/Layout/QueryLayoutOptions';
+import { QueryLayoutOptions, parseQueryShowHideOptions } from 'Layout/QueryLayoutOptions';
 
 describe('parsing query show/hide layout options', () => {
     function parseOptionAndCheck(options: QueryLayoutOptions, option: string, hide: boolean) {

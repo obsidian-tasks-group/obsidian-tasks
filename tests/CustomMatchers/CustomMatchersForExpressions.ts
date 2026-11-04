@@ -1,6 +1,6 @@
 import { diff } from 'jest-diff';
 import type { SyncMatcherResult } from 'vitest';
-import { evaluateExpression, parseExpression } from '../../src/Scripting/Expression';
+import { evaluateExpression, parseExpression } from 'Scripting/Expression';
 
 declare module 'vitest' {
     interface Matchers<R> {

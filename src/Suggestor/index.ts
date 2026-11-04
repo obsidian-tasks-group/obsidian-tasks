@@ -1,5 +1,5 @@
 import type { Task } from 'Task/Task';
-import type { Settings } from '../Config/Settings';
+import type { Settings } from 'Config/Settings';
 
 /*
  * A suggestion presented to the user and some metadata about it.

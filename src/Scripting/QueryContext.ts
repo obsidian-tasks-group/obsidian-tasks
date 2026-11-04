@@ -1,8 +1,8 @@
-import { getSettings } from '../Config/Settings';
-import type { Task } from '../Task/Task';
-import type { PresetsMap } from '../Query/Presets/Presets';
-import type { TasksFile } from './TasksFile';
-import { ActiveFile } from './ActiveFile';
+import { getSettings } from 'Config/Settings';
+import type { Task } from 'Task/Task';
+import type { PresetsMap } from 'Query/Presets/Presets';
+import type { TasksFile } from 'Scripting/TasksFile';
+import { ActiveFile } from 'Scripting/ActiveFile';
 
 /**
  * This interface is part of the implementation of placeholders and scripting.

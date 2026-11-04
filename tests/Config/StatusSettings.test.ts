@@ -1,9 +1,9 @@
 import { verifyAsJson } from '@approval-tests/approvals/lib/Providers/Vitest/VitestApprovals';
-import { StatusSettings } from '../../src/Config/StatusSettings';
-import { Status } from '../../src/Statuses/Status';
-import { StatusConfiguration, StatusType } from '../../src/Statuses/StatusConfiguration';
-import { StatusRegistry } from '../../src/Statuses/StatusRegistry';
-import type { StatusCollection } from '../../src/Statuses/StatusCollection';
+import { StatusSettings } from 'Config/StatusSettings';
+import { Status } from 'Statuses/Status';
+import { StatusConfiguration, StatusType } from 'Statuses/StatusConfiguration';
+import { StatusRegistry } from 'Statuses/StatusRegistry';
+import type { StatusCollection } from 'Statuses/StatusCollection';
 
 describe('StatusSettings', () => {
     it('verify default status settings', () => {

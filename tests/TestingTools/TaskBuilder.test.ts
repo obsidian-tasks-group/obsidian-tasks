@@ -1,7 +1,7 @@
 import moment from 'moment';
-import type { Task } from '../../src/Task/Task';
-import { ListItem } from '../../src/Task/ListItem';
-import { TaskLocation } from '../../src/Task/TaskLocation';
+import type { Task } from 'Task/Task';
+import { ListItem } from 'Task/ListItem';
+import { TaskLocation } from 'Task/TaskLocation';
 import { TaskBuilder } from './TaskBuilder';
 import { MockDataLoader } from './MockDataLoader';
 import { createTestTasksFile } from './TasksFileHelpers';

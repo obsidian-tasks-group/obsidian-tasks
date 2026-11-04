@@ -1,6 +1,6 @@
 import { verify } from '@approval-tests/approvals/lib/Providers/Vitest/VitestApprovals';
-import { DescriptionField } from '../../../src/Query/Filter/DescriptionField';
-import { Query } from '../../../src/Query/Query';
+import { DescriptionField } from 'Query/Filter/DescriptionField';
+import { Query } from 'Query/Query';
 
 describe('should report regular expression errors to user ', () => {
     it('should report mismatched parenthesis', () => {

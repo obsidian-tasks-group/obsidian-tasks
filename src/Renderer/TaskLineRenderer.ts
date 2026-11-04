@@ -1,20 +1,20 @@
 import { type App, Component, MarkdownRenderer } from 'obsidian';
-import { GlobalFilter } from '../Config/GlobalFilter';
-import { TASK_FORMATS, getSettings } from '../Config/Settings';
-import type { AllTaskDateFields } from '../DateTime/DateFieldTypes';
-import { splitDateText } from '../DateTime/Postponer';
-import type { QueryLayoutOptions } from '../Layout/QueryLayoutOptions';
-import { TaskLayoutComponent, type TaskLayoutOptions } from '../Layout/TaskLayoutOptions';
-import { replaceTaskWithTasks } from '../Obsidian/File';
-import { StatusRegistry } from '../Statuses/StatusRegistry';
-import type { ListItem } from '../Task/ListItem';
-import { Task } from '../Task/Task';
-import { TaskRegularExpressions } from '../Task/TaskRegularExpressions';
-import { DateMenu } from '../ui/Menus/DateMenu';
-import { promptForDate } from '../ui/Menus/DatePicker';
-import { StatusMenu } from '../ui/Menus/StatusMenu';
-import { defaultTaskSaver, showMenu } from '../ui/Menus/TaskEditingMenu';
-import { TaskFieldRenderer } from './TaskFieldRenderer';
+import { GlobalFilter } from 'Config/GlobalFilter';
+import { TASK_FORMATS, getSettings } from 'Config/Settings';
+import type { AllTaskDateFields } from 'DateTime/DateFieldTypes';
+import { splitDateText } from 'DateTime/Postponer';
+import type { QueryLayoutOptions } from 'Layout/QueryLayoutOptions';
+import { TaskLayoutComponent, type TaskLayoutOptions } from 'Layout/TaskLayoutOptions';
+import { replaceTaskWithTasks } from 'Obsidian/File';
+import { StatusRegistry } from 'Statuses/StatusRegistry';
+import type { ListItem } from 'Task/ListItem';
+import { Task } from 'Task/Task';
+import { TaskRegularExpressions } from 'Task/TaskRegularExpressions';
+import { DateMenu } from 'ui/Menus/DateMenu';
+import { promptForDate } from 'ui/Menus/DatePicker';
+import { StatusMenu } from 'ui/Menus/StatusMenu';
+import { defaultTaskSaver, showMenu } from 'ui/Menus/TaskEditingMenu';
+import { TaskFieldRenderer } from 'Renderer/TaskFieldRenderer';
 
 /**
  * The function used to render a Markdown task line into an existing HTML element.

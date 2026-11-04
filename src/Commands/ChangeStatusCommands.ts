@@ -1,11 +1,11 @@
 import { type Command, Notice } from 'obsidian';
-import { TasksFile } from '../Scripting/TasksFile';
-import type { Status } from '../Statuses/Status';
-import { Task } from '../Task/Task';
-import { TaskLocation } from '../Task/TaskLocation';
-import type { StatusRegistry } from '../Statuses/StatusRegistry';
-import { allStatusInstructions } from '../ui/EditInstructions/StatusInstructions';
-import { type EditorInsertion, type LineTransformer, createEditorCallback } from './CreateEditorCallback';
+import { TasksFile } from 'Scripting/TasksFile';
+import type { Status } from 'Statuses/Status';
+import { Task } from 'Task/Task';
+import { TaskLocation } from 'Task/TaskLocation';
+import type { StatusRegistry } from 'Statuses/StatusRegistry';
+import { allStatusInstructions } from 'ui/EditInstructions/StatusInstructions';
+import { type EditorInsertion, type LineTransformer, createEditorCallback } from 'Commands/CreateEditorCallback';
 
 /**
  * Sets a task's status on a single line, returning the new text and cursor position.

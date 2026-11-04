@@ -2,15 +2,15 @@ import type { PostfixExpression } from 'boon-js';
 import { parse as boonParse } from 'boon-js';
 import { type Token, Tokens } from 'boon-js/lib/types';
 
-import { parseFilter } from '../FilterParser';
-import type { Task } from '../../Task/Task';
-import { Explanation } from '../Explain/Explanation';
-import type { SearchInfo } from '../SearchInfo';
-import { Field } from './Field';
-import { FilterOrErrorMessage } from './FilterOrErrorMessage';
-import { Filter } from './Filter';
-import { BooleanDelimiters } from './BooleanDelimiters';
-import { BooleanPreprocessor, type BooleanPreprocessorResult } from './BooleanPreprocessor';
+import { parseFilter } from 'Query/FilterParser';
+import type { Task } from 'Task/Task';
+import { Explanation } from 'Query/Explain/Explanation';
+import type { SearchInfo } from 'Query/SearchInfo';
+import { Field } from 'Query/Filter/Field';
+import { FilterOrErrorMessage } from 'Query/Filter/FilterOrErrorMessage';
+import { Filter } from 'Query/Filter/Filter';
+import { BooleanDelimiters } from 'Query/Filter/BooleanDelimiters';
+import { BooleanPreprocessor, type BooleanPreprocessorResult } from 'Query/Filter/BooleanPreprocessor';
 
 /**
  * BooleanField is a 'container' field type that parses a high-level filtering query of

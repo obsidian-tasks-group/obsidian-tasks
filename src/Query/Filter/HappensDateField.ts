@@ -1,8 +1,8 @@
-import type { Task } from '../../Task/Task';
-import type { FilterFunction } from './Filter';
-import { FilterInstructions } from './FilterInstructions';
-import type { DateFilterFunction } from './DateField';
-import { DateField } from './DateField';
+import type { Task } from 'Task/Task';
+import type { FilterFunction } from 'Query/Filter/Filter';
+import { FilterInstructions } from 'Query/Filter/FilterInstructions';
+import type { DateFilterFunction } from 'Query/Filter/DateField';
+import { DateField } from 'Query/Filter/DateField';
 
 /**
  * Support the 'happens' search instruction, which searches all of

@@ -1,8 +1,8 @@
-import type { Task } from '../../Task/Task';
-import type { IStringMatcher } from '../Matchers/IStringMatcher';
-import { Grouper } from '../Group/Grouper';
-import { TextField } from './TextField';
-import type { FilterFunction } from './Filter';
+import type { Task } from 'Task/Task';
+import type { IStringMatcher } from 'Query/Matchers/IStringMatcher';
+import { Grouper } from 'Query/Group/Grouper';
+import { TextField } from 'Query/Filter/TextField';
+import type { FilterFunction } from 'Query/Filter/Filter';
 
 /**
  * MultiTextField is an abstract base class to help implement

@@ -1,6 +1,6 @@
-import type { Task } from '../../Task/Task';
-import { totalTasksCountDisplayText } from '../TaskCountDisplayText';
-import type { GroupDisplayHeading } from './GroupDisplayHeading';
+import type { Task } from 'Task/Task';
+import { totalTasksCountDisplayText } from 'Query/TaskCountDisplayText';
+import type { GroupDisplayHeading } from 'Query/Group/GroupDisplayHeading';
 
 /**
  * Store a single group of tasks, that all share the same group names.

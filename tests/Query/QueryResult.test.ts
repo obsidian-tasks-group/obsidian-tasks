@@ -1,18 +1,18 @@
 import moment from 'moment/moment';
-import { DescriptionField } from '../../src/Query/Filter/DescriptionField';
-import { TagsField } from '../../src/Query/Filter/TagsField';
-import type { Grouper } from '../../src/Query/Group/Grouper';
-import { TaskGroups } from '../../src/Query/Group/TaskGroups';
-import { Query } from '../../src/Query/Query';
-import { QueryResult } from '../../src/Query/QueryResult';
-import { SearchInfo } from '../../src/Query/SearchInfo';
-import type { Task } from '../../src/Task/Task';
+import { DescriptionField } from 'Query/Filter/DescriptionField';
+import { TagsField } from 'Query/Filter/TagsField';
+import type { Grouper } from 'Query/Group/Grouper';
+import { TaskGroups } from 'Query/Group/TaskGroups';
+import { Query } from 'Query/Query';
+import { QueryResult } from 'Query/QueryResult';
+import { SearchInfo } from 'Query/SearchInfo';
+import type { Task } from 'Task/Task';
+import { FunctionField } from 'Query/Filter/FunctionField';
 import { readTasksFromSimulatedFile } from '../Obsidian/SimulatedFile';
 import { renderMarkdown } from '../Renderer/RenderingTestHelpers';
 import { TaskBuilder } from '../TestingTools/TaskBuilder';
 import { fromLine, fromLines } from '../TestingTools/TestHelpers';
 import { getTasksFileFromMockData } from '../TestingTools/MockDataHelpers';
-import { FunctionField } from '../../src/Query/Filter/FunctionField';
 
 window.moment = moment;
 

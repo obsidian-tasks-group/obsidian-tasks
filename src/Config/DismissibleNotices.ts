@@ -1,6 +1,6 @@
 import { Notice } from 'obsidian';
-import { i18n } from '../i18n/i18n';
-import { getSettings } from './Settings';
+import { i18n } from 'i18n/i18n';
+import { getSettings } from 'Config/Settings';
 
 export type DismissibleNoticeId = 'live-preview-callout-warning';
 

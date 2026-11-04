@@ -1,6 +1,6 @@
 import moment from 'moment';
 
-import { RandomField } from '../../../src/Query/Filter/RandomField';
+import { RandomField } from 'Query/Filter/RandomField';
 import { fromLine } from '../../TestingTools/TestHelpers';
 import { expectTaskComparesEqual } from '../../CustomMatchers/CustomMatchersForSorting';
 import { TaskBuilder } from '../../TestingTools/TaskBuilder';

@@ -1,8 +1,8 @@
-import type { TasksDate } from '../DateTime/TasksDate';
-import type { StatusType } from '../Statuses/StatusConfiguration';
-import type { OnCompletion } from './OnCompletion';
-import type { Priority } from './Priority';
-import type { Task } from './Task';
+import type { TasksDate } from 'DateTime/TasksDate';
+import type { StatusType } from 'Statuses/StatusConfiguration';
+import type { OnCompletion } from 'Task/OnCompletion';
+import type { Priority } from 'Task/Priority';
+import type { Task } from 'Task/Task';
 
 /**
  * An immutable snapshot of a {@link Status}, for use in {@link ReadOnlyTask}.

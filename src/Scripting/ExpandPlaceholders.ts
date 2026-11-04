@@ -1,10 +1,10 @@
 import Mustache from 'mustache';
 import proxyData from 'mustache-validator';
-import { EnableJsInTasksQueries } from '../Config/EnableJsInTasksQueries';
-import { type ExpressionParameter, evaluateExpression, parseExpression } from './Expression';
-import type { QueryContext } from './QueryContext';
-import { resolveKnownPlaceholder } from './KnownPlaceholderResolver';
-import { JsInTasksQueriesDisabledError } from './JsInTasksQueriesDisabledError';
+import { EnableJsInTasksQueries } from 'Config/EnableJsInTasksQueries';
+import { type ExpressionParameter, evaluateExpression, parseExpression } from 'Scripting/Expression';
+import type { QueryContext } from 'Scripting/QueryContext';
+import { resolveKnownPlaceholder } from 'Scripting/KnownPlaceholderResolver';
+import { JsInTasksQueriesDisabledError } from 'Scripting/JsInTasksQueriesDisabledError';
 
 // https://github.com/janl/mustache.js
 

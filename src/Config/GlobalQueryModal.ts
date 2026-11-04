@@ -1,5 +1,5 @@
 import { type App, ButtonComponent, Modal, TextAreaComponent } from 'obsidian';
-import { i18n } from '../i18n/i18n';
+import { i18n } from 'i18n/i18n';
 
 /**
  * Modal for editing the Global query in a full-width, multi-line textarea.

@@ -1,4 +1,4 @@
-import { Explanation } from '../../../src/Query/Explain/Explanation';
+import { Explanation } from 'Query/Explain/Explanation';
 
 describe('Explain', () => {
     it('Explains single filter', () => {

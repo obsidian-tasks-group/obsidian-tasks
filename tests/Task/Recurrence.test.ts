@@ -1,8 +1,8 @@
 import moment from 'moment';
-import { Occurrence } from '../../src/Task/Occurrence';
-import { Recurrence } from '../../src/Task/Recurrence';
+import { Occurrence } from 'Task/Occurrence';
+import { Recurrence } from 'Task/Recurrence';
+import { updateSettings } from 'Config/Settings';
 import { RecurrenceBuilder } from '../TestingTools/RecurrenceBuilder';
-import { updateSettings } from '../../src/Config/Settings';
 
 window.moment = moment;
 

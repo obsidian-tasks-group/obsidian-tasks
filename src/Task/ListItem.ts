@@ -1,9 +1,9 @@
 import type { LinkCache } from 'obsidian';
-import type { TasksFile } from '../Scripting/TasksFile';
-import type { Task } from './Task';
-import type { TaskLocation } from './TaskLocation';
-import { TaskRegularExpressions } from './TaskRegularExpressions';
-import { Link } from './Link';
+import type { TasksFile } from 'Scripting/TasksFile';
+import type { Task } from 'Task/Task';
+import type { TaskLocation } from 'Task/TaskLocation';
+import { TaskRegularExpressions } from 'Task/TaskRegularExpressions';
+import { Link } from 'Task/Link';
 
 /**
  * Represents a single list item line.

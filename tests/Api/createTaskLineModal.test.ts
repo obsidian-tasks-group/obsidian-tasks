@@ -1,7 +1,7 @@
 import type { App } from 'obsidian';
-import type { Task } from '../../src/Task/Task';
-import { taskFromLine } from '../../src/Commands/CreateOrEditTaskParser';
-import { createTaskLineModal } from '../../src/Api/createTaskLineModal';
+import type { Task } from 'Task/Task';
+import { taskFromLine } from 'Commands/CreateOrEditTaskParser';
+import { createTaskLineModal } from 'Api/createTaskLineModal';
 import { TaskModal } from '../__mocks__/TaskModal';
 
 const app = {} as App;
