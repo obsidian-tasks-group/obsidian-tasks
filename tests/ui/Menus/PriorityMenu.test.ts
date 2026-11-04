@@ -1,6 +1,6 @@
-import { PriorityMenu } from '../../../src/ui/Menus/PriorityMenu';
+import { PriorityMenu } from 'ui/Menus/PriorityMenu';
+import { Priority } from 'Task/Priority';
 import { TaskBuilder } from '../../TestingTools/TaskBuilder';
-import { Priority } from '../../../src/Task/Priority';
 import { TestableTaskSaver, menuToString } from './MenuTestingHelpers';
 
 export {};

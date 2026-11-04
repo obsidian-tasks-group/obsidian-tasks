@@ -1,7 +1,7 @@
 import moment from 'moment';
 
 import type { unitOfTime } from 'moment/moment';
-import { TasksDate } from '../../src/DateTime/TasksDate';
+import { TasksDate } from 'DateTime/TasksDate';
 
 window.moment = moment;
 

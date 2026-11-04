@@ -1,4 +1,4 @@
-import { RegexMatcher } from '../../../src/Query/Matchers/RegexMatcher';
+import { RegexMatcher } from 'Query/Matchers/RegexMatcher';
 
 describe('RegexMatcher', () => {
     it('should match simple regular expression', () => {

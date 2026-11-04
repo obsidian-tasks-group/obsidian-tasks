@@ -2,22 +2,22 @@ import moment from 'moment';
 import * as chrono from 'chrono-node';
 import type { Task } from 'Task/Task';
 import { verifyAll, verifyAsJson } from '@approval-tests/approvals/lib/Providers/Vitest/VitestApprovals';
-import { getSettings, resetSettings } from '../../src/Config/Settings';
-import type { SuggestInfo, SuggestionBuilder } from '../../src/Suggestor';
+import { getSettings, resetSettings } from 'Config/Settings';
+import type { SuggestInfo, SuggestionBuilder } from 'Suggestor';
 import {
     canSuggestForLine,
     lastOpenBracket,
     makeDefaultSuggestionBuilder,
     onlySuggestIfBracketOpen,
-} from '../../src/Suggestor/Suggestor';
-import { DEFAULT_SYMBOLS } from '../../src/TaskSerializer/DefaultTaskSerializer';
-import { DATAVIEW_SYMBOLS } from '../../src/TaskSerializer/DataviewTaskSerializer';
-import { verifyMarkdown } from '../TestingTools/VerifyMarkdown';
-import { GlobalFilter } from '../../src/Config/GlobalFilter';
-import { MarkdownTable } from '../../src/lib/MarkdownTable';
+} from 'Suggestor/Suggestor';
+import { DEFAULT_SYMBOLS } from 'TaskSerializer/DefaultTaskSerializer';
+import { DATAVIEW_SYMBOLS } from 'TaskSerializer/DataviewTaskSerializer';
+import { GlobalFilter } from 'Config/GlobalFilter';
+import { MarkdownTable } from 'lib/MarkdownTable';
+import { StatusRegistry } from 'Statuses/StatusRegistry';
+import { StatusConfiguration, StatusType } from 'Statuses/StatusConfiguration';
 import { TaskBuilder } from '../TestingTools/TaskBuilder';
-import { StatusRegistry } from '../../src/Statuses/StatusRegistry';
-import { StatusConfiguration, StatusType } from '../../src/Statuses/StatusConfiguration';
+import { verifyMarkdown } from '../TestingTools/VerifyMarkdown';
 
 window.moment = moment;
 

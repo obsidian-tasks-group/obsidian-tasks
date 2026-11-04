@@ -1,10 +1,10 @@
-import { Link } from '../../src/Task/Link';
+import { Link } from 'Task/Link';
 
+import { LinkResolver } from 'Task/LinkResolver';
 import { AllMockDataNames, type MockDataName } from '../Obsidian/AllCacheSampleData';
 import { addBackticks, formatToRepresentType } from '../Scripting/ScriptingTestHelpers';
 import { getTasksFileFromMockData } from '../TestingTools/MockDataHelpers';
 import { verifyMarkdown } from '../TestingTools/VerifyMarkdown';
-import { LinkResolver } from '../../src/Task/LinkResolver';
 import { getFirstLinkpathDest, getFirstLinkpathDestFromData } from '../__mocks__/obsidian';
 import { MockDataLoader } from '../TestingTools/MockDataLoader';
 import { createTestTasksFile } from '../TestingTools/TasksFileHelpers';

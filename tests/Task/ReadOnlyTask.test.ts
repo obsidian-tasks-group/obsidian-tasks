@@ -1,10 +1,10 @@
 import moment from 'moment';
 
-import { TasksDate } from '../../src/DateTime/TasksDate';
-import { StatusType } from '../../src/Statuses/StatusConfiguration';
-import { OnCompletion } from '../../src/Task/OnCompletion';
-import { Priority } from '../../src/Task/Priority';
-import { taskToReadOnlyTask } from '../../src/Task/ReadOnlyTask';
+import { TasksDate } from 'DateTime/TasksDate';
+import { StatusType } from 'Statuses/StatusConfiguration';
+import { OnCompletion } from 'Task/OnCompletion';
+import { Priority } from 'Task/Priority';
+import { taskToReadOnlyTask } from 'Task/ReadOnlyTask';
 import { TaskBuilder } from '../TestingTools/TaskBuilder';
 
 window.moment = moment;

@@ -1,16 +1,16 @@
-import { StatusField } from '../../../src/Query/Filter/StatusField';
+import { StatusField } from 'Query/Filter/StatusField';
+import { Status } from 'Statuses/Status';
+import { StatusConfiguration, StatusType } from 'Statuses/StatusConfiguration';
+import { StatusRegistry } from 'Statuses/StatusRegistry';
+import type { StatusCollection } from 'Statuses/StatusCollection';
 import { TaskBuilder } from '../../TestingTools/TaskBuilder';
-import { Status } from '../../../src/Statuses/Status';
 import * as TestHelpers from '../../TestingTools/TestHelpers';
 import {
     expectTaskComparesAfter,
     expectTaskComparesBefore,
     expectTaskComparesEqual,
 } from '../../CustomMatchers/CustomMatchersForSorting';
-import { StatusConfiguration, StatusType } from '../../../src/Statuses/StatusConfiguration';
 import { fromLine } from '../../TestingTools/TestHelpers';
-import { StatusRegistry } from '../../../src/Statuses/StatusRegistry';
-import type { StatusCollection } from '../../../src/Statuses/StatusCollection';
 
 beforeAll(() => {
     StatusRegistry.getInstance().resetToDefaultStatuses();

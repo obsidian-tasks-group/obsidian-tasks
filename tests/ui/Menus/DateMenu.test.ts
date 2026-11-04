@@ -1,8 +1,8 @@
 import moment from 'moment/moment';
 
-import { DateMenu } from '../../../src/ui/Menus/DateMenu';
+import { DateMenu } from 'ui/Menus/DateMenu';
+import { TaskLayoutComponent } from 'Layout/TaskLayoutOptions';
 import { TaskBuilder } from '../../TestingTools/TaskBuilder';
-import { TaskLayoutComponent } from '../../../src/Layout/TaskLayoutOptions';
 import { TestableTaskSaver, menuToString } from './MenuTestingHelpers';
 
 window.moment = moment;

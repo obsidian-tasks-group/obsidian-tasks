@@ -1,11 +1,11 @@
 import moment from 'moment';
-import { BooleanField } from '../../../src/Query/Filter/BooleanField';
-import type { FilterOrErrorMessage } from '../../../src/Query/Filter/FilterOrErrorMessage';
-import { TaskBuilder } from '../../TestingTools/TaskBuilder';
+import { BooleanField } from 'Query/Filter/BooleanField';
+import type { FilterOrErrorMessage } from 'Query/Filter/FilterOrErrorMessage';
+import { Query } from 'Query/Query';
+import { Explainer } from 'Query/Explain/Explainer';
+import { BooleanPreprocessor } from 'Query/Filter/BooleanPreprocessor';
 import { testFilter } from '../../TestingTools/FilterTestHelpers';
-import { Query } from '../../../src/Query/Query';
-import { Explainer } from '../../../src/Query/Explain/Explainer';
-import { BooleanPreprocessor } from '../../../src/Query/Filter/BooleanPreprocessor';
+import { TaskBuilder } from '../../TestingTools/TaskBuilder';
 import { createTestTasksFile } from '../../TestingTools/TasksFileHelpers';
 import { verifyBooleanExpressionExplanation, verifyBooleanExpressionPreprocessing } from './BooleanFieldVerify';
 

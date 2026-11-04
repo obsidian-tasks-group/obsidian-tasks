@@ -1,9 +1,9 @@
 import moment from 'moment';
 import type { Task } from 'Task/Task';
-import { GlobalFilter } from '../../src/Config/GlobalFilter';
-import { Status } from '../../src/Statuses/Status';
-import { OnCompletion } from '../../src/Task/OnCompletion';
-import { EditableTask } from '../../src/ui/EditableTask';
+import { GlobalFilter } from 'Config/GlobalFilter';
+import { Status } from 'Statuses/Status';
+import { OnCompletion } from 'Task/OnCompletion';
+import { EditableTask } from 'ui/EditableTask';
 import { TaskBuilder } from '../TestingTools/TaskBuilder';
 
 window.moment = moment;

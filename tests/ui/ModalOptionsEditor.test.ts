@@ -1,5 +1,5 @@
-import type { EditModalShowSettings } from '../../src/Config/EditModalShowSettings';
-import { type Settings, getSettings, resetSettings, updateSettings } from '../../src/Config/Settings';
+import type { EditModalShowSettings } from 'Config/EditModalShowSettings';
+import { type Settings, getSettings, resetSettings, updateSettings } from 'Config/Settings';
 import {
     checkAndClickApplyButton,
     checkAndClickCancelButton,

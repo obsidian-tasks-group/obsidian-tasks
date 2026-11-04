@@ -1,11 +1,7 @@
-import {
-    type ParseViewLayoutOptionResult,
-    ViewLayoutOptions,
-    parseQueryViewMode,
-} from '../../src/Layout/ViewLayoutOptions';
-import { PriorityField } from '../../src/Query/Filter/PriorityField';
-import { EnableJsInTasksQueries } from '../../src/Config/EnableJsInTasksQueries';
-import { JsInTasksQueriesDisabledError } from '../../src/Scripting/JsInTasksQueriesDisabledError';
+import { type ParseViewLayoutOptionResult, ViewLayoutOptions, parseQueryViewMode } from 'Layout/ViewLayoutOptions';
+import { PriorityField } from 'Query/Filter/PriorityField';
+import { EnableJsInTasksQueries } from 'Config/EnableJsInTasksQueries';
+import { JsInTasksQueriesDisabledError } from 'Scripting/JsInTasksQueriesDisabledError';
 
 afterEach(() => {
     EnableJsInTasksQueries.getInstance().set(true);

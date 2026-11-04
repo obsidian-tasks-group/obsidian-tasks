@@ -1,5 +1,5 @@
-import { ListItem } from '../../src/Task/ListItem';
-import { TaskLocation } from '../../src/Task/TaskLocation';
+import { ListItem } from 'Task/ListItem';
+import { TaskLocation } from 'Task/TaskLocation';
 
 export function createChildListItem(originalMarkdown: string, parent: ListItem) {
     // This exists purely to silence WebStorm about typescript:S1848

@@ -1,4 +1,4 @@
-import { PropertyCategory } from '../../src/lib/PropertyCategory';
+import { PropertyCategory } from 'lib/PropertyCategory';
 
 describe('PropertyCategory', () => {
     it('should retain values passed to constructor', () => {

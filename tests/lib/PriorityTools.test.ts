@@ -1,5 +1,5 @@
-import { PriorityTools } from '../../src/lib/PriorityTools';
-import { Priority } from '../../src/Task/Priority';
+import { PriorityTools } from 'lib/PriorityTools';
+import { Priority } from 'Task/Priority';
 
 describe('priority naming', () => {
     it.each(Object.values(Priority))('should name priority value: "%i"', (priority) => {

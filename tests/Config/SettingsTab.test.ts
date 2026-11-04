@@ -1,10 +1,10 @@
 import { verifyAsJson } from '@approval-tests/approvals/lib/Providers/Vitest/VitestApprovals';
-import { MarkdownView, lastModalState, resetLastModalState } from '../__mocks__/obsidian';
 
-import { SettingsTab } from '../../src/Config/SettingsTab';
-import { GlobalFilter } from '../../src/Config/GlobalFilter';
-import { getSettings, resetSettings } from '../../src/Config/Settings';
-import { i18n } from '../../src/i18n/i18n';
+import { SettingsTab } from 'Config/SettingsTab';
+import { GlobalFilter } from 'Config/GlobalFilter';
+import { getSettings, resetSettings } from 'Config/Settings';
+import { i18n } from 'i18n/i18n';
+import { MarkdownView, lastModalState, resetLastModalState } from '../__mocks__/obsidian';
 
 // Convert the declarative settings tree into approval-friendly JSON.
 // This preserves visible text/HTML and replaces callbacks with stable markers.

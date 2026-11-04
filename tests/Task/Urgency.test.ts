@@ -1,9 +1,9 @@
 import moment from 'moment';
+import { Urgency } from 'Task/Urgency';
+import { Priority } from 'Task/Priority';
 import { TaskBuilder } from '../TestingTools/TaskBuilder';
-import { Urgency } from '../../src/Task/Urgency';
 import { calculateRelativeDate } from '../TestingTools/DateTestHelpers';
 import { fromLine } from '../TestingTools/TestHelpers';
-import { Priority } from '../../src/Task/Priority';
 
 window.moment = moment;
 

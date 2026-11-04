@@ -1,9 +1,9 @@
 import type { App } from 'obsidian';
-import type { Task } from '../../src/Task/Task';
-import { editTaskLineModal } from '../../src/Api/editTaskLineModal';
-import { taskFromLine } from '../../src/Commands/CreateOrEditTaskParser';
+import type { Task } from 'Task/Task';
+import { editTaskLineModal } from 'Api/editTaskLineModal';
+import { taskFromLine } from 'Commands/CreateOrEditTaskParser';
+import type { TaskModalParams } from 'Obsidian/TaskModal';
 import { TaskModal } from '../__mocks__/TaskModal';
-import type { TaskModalParams } from '../../src/Obsidian/TaskModal';
 
 const app = {} as App;
 const noOpOnSaveSettings = async () => {};

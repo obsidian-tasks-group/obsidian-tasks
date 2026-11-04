@@ -1,10 +1,10 @@
 import moment from 'moment';
-import { StatusRegistry } from '../../src/Statuses/StatusRegistry';
-import { Status } from '../../src/Statuses/Status';
-import { StatusConfiguration, StatusType } from '../../src/Statuses/StatusConfiguration';
-import { Task } from '../../src/Task/Task';
-import { TaskLocation } from '../../src/Task/TaskLocation';
-import type { StatusCollection, StatusCollectionEntry } from '../../src/Statuses/StatusCollection';
+import { StatusRegistry } from 'Statuses/StatusRegistry';
+import { Status } from 'Statuses/Status';
+import { StatusConfiguration, StatusType } from 'Statuses/StatusConfiguration';
+import { Task } from 'Task/Task';
+import { TaskLocation } from 'Task/TaskLocation';
+import type { StatusCollection, StatusCollectionEntry } from 'Statuses/StatusCollection';
 import * as TestHelpers from '../TestingTools/TestHelpers';
 import * as StatusExamples from '../TestingTools/StatusExamples';
 import { constructStatuses } from '../TestingTools/StatusesTestHelpers';

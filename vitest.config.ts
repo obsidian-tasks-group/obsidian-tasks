@@ -8,6 +8,7 @@ const dirname = path.dirname(fileURLToPath(import.meta.url));
 export default defineConfig({
     plugins: [svelte()],
     resolve: {
+        tsconfigPaths: true,
         alias: {
             // Resolve 'obsidian' imports to the test mock, since the package contains only types.
             obsidian: path.resolve(dirname, 'tests/__mocks__/obsidian.ts'),

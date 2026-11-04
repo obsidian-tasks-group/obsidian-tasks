@@ -1,8 +1,8 @@
-import { Filter } from '../../../src/Query/Filter/Filter';
-import { FilterOrErrorMessage } from '../../../src/Query/Filter/FilterOrErrorMessage';
-import type { FilterFunction } from '../../../src/Query/Filter/Filter';
-import type { Task } from '../../../src/Task/Task';
-import { Explanation } from '../../../src/Query/Explain/Explanation';
+import { Filter } from 'Query/Filter/Filter';
+import { FilterOrErrorMessage } from 'Query/Filter/FilterOrErrorMessage';
+import type { FilterFunction } from 'Query/Filter/Filter';
+import type { Task } from 'Task/Task';
+import { Explanation } from 'Query/Explain/Explanation';
 
 describe('Filter', () => {
     it('should create a Filter object', () => {

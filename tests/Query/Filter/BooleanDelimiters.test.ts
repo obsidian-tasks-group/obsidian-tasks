@@ -1,4 +1,4 @@
-import { BooleanDelimiters } from '../../../src/Query/Filter/BooleanDelimiters';
+import { BooleanDelimiters } from 'Query/Filter/BooleanDelimiters';
 
 function shouldDelimitWithParentheses(line: string) {
     const delimiters = BooleanDelimiters.fromInstructionLine(line);

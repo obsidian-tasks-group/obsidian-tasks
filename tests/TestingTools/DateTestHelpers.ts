@@ -1,4 +1,4 @@
-import { DateParser } from '../../src/DateTime/DateParser';
+import { DateParser } from 'DateTime/DateParser';
 
 /**
  * Create a date string that is a certain number of days away from the given date.

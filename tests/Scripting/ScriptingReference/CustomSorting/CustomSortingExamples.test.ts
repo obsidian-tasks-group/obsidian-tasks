@@ -1,5 +1,5 @@
 import moment from 'moment';
-import type { Task } from '../../../../src/Task/Task';
+import type { Task } from 'Task/Task';
 import { fromLine, fromLines } from '../../../TestingTools/TestHelpers';
 import { SampleTasks } from '../../../TestingTools/SampleTasks';
 import type { CustomPropertyDocsTestData, QueryInstructionLineAndDescription } from '../VerifyFunctionFieldSamples';

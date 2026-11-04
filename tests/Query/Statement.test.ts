@@ -1,4 +1,4 @@
-import { Statement } from '../../src/Query/Statement';
+import { Statement } from 'Query/Statement';
 
 describe('Statement', () => {
     it('should store the instruction', () => {

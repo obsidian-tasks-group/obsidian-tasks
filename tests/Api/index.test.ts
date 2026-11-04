@@ -1,9 +1,9 @@
 import type { App } from 'obsidian';
-import type TasksPlugin from '../../src/main';
-import type { Task } from '../../src/Task/Task';
-import { createTaskLineModal } from '../../src/Api/createTaskLineModal';
-import { editTaskLineModal } from '../../src/Api/editTaskLineModal';
-import { tasksApiV1 } from '../../src/Api/index';
+import type TasksPlugin from 'main';
+import type { Task } from 'Task/Task';
+import { createTaskLineModal } from 'Api/createTaskLineModal';
+import { editTaskLineModal } from 'Api/editTaskLineModal';
+import { tasksApiV1 } from 'Api/index';
 
 vi.mock('../../src/Api/createTaskLineModal', () => ({
     createTaskLineModal: vi.fn(),

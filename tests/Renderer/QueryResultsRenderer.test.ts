@@ -1,10 +1,10 @@
 import moment from 'moment';
 import type { Task } from 'Task/Task';
-import { GlobalQuery } from '../../src/Config/GlobalQuery';
-import { resetSettings, updateSettings } from '../../src/Config/Settings';
-import { State } from '../../src/Obsidian/Cache';
-import { QueryResultsRenderer } from '../../src/Renderer/QueryResultsRenderer';
-import type { TasksFile } from '../../src/Scripting/TasksFile';
+import { GlobalQuery } from 'Config/GlobalQuery';
+import { resetSettings, updateSettings } from 'Config/Settings';
+import { State } from 'Obsidian/Cache';
+import { QueryResultsRenderer } from 'Renderer/QueryResultsRenderer';
+import type { TasksFile } from 'Scripting/TasksFile';
 import { mockApp } from '../__mocks__/obsidian';
 import { verifyWithFileExtension } from '../TestingTools/ApprovalTestHelpers';
 import { TaskBuilder } from '../TestingTools/TaskBuilder';

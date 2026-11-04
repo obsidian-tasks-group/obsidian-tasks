@@ -1,6 +1,6 @@
-import { allTaskPluginEmojis } from '../../src/TaskSerializer/DefaultTaskSerializer';
+import { allTaskPluginEmojis } from 'TaskSerializer/DefaultTaskSerializer';
+import { Task } from 'Task/Task';
 import { verifyWithFileExtension } from '../TestingTools/ApprovalTestHelpers';
-import { Task } from '../../src/Task/Task';
 
 function createTasksValidationCodeBlock(filters: string[]) {
     return `
