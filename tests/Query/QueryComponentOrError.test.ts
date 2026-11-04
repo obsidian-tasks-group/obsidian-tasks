@@ -1,4 +1,4 @@
-import { QueryComponentOrError } from '../../src/Query/QueryComponentOrError';
+import { QueryComponentOrError } from 'Query/QueryComponentOrError';
 
 describe('QueryComponentOrError', () => {
     it('should check validity', () => {

@@ -1,4 +1,4 @@
-import type { TasksFile } from '../Scripting/TasksFile';
+import type { TasksFile } from 'Scripting/TasksFile';
 
 /**
  * TaskLocation is the place where all information about a task line's location

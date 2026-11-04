@@ -15,14 +15,14 @@ import {
     debounce,
     sanitizeHTMLToDom,
 } from 'obsidian';
-import { StatusConfiguration, StatusType } from '../Statuses/StatusConfiguration';
-import type TasksPlugin from '../main';
-import { StatusRegistry } from '../Statuses/StatusRegistry';
-import type { StatusCollection } from '../Statuses/StatusCollection';
-import { createStatusRegistryReport } from '../Statuses/StatusRegistryReport';
-import { i18n } from '../i18n/i18n';
-import type { TasksEvents } from '../Obsidian/TasksEvents';
-import * as Themes from './Themes';
+import { StatusConfiguration, StatusType } from 'Statuses/StatusConfiguration';
+import type TasksPlugin from 'main';
+import { StatusRegistry } from 'Statuses/StatusRegistry';
+import type { StatusCollection } from 'Statuses/StatusCollection';
+import { createStatusRegistryReport } from 'Statuses/StatusRegistryReport';
+import { i18n } from 'i18n/i18n';
+import type { TasksEvents } from 'Obsidian/TasksEvents';
+import * as Themes from 'Config/Themes';
 import {
     POSTPONE_DATE_FIELD_VALUES,
     type PostponeDateField,
@@ -30,15 +30,15 @@ import {
     TASK_FORMATS,
     getSettings,
     updateSettings,
-} from './Settings';
-import { GlobalFilter } from './GlobalFilter';
-import { StatusSettings } from './StatusSettings';
+} from 'Config/Settings';
+import { GlobalFilter } from 'Config/GlobalFilter';
+import { StatusSettings } from 'Config/StatusSettings';
 
-import { CustomStatusModal } from './CustomStatusModal';
-import { GlobalQuery } from './GlobalQuery';
-import { GlobalQueryModal } from './GlobalQueryModal';
-import { PresetsSettingsUI } from './PresetsSettingsUI';
-import { EnableJsInTasksQueries } from './EnableJsInTasksQueries';
+import { CustomStatusModal } from 'Config/CustomStatusModal';
+import { GlobalQuery } from 'Config/GlobalQuery';
+import { GlobalQueryModal } from 'Config/GlobalQueryModal';
+import { PresetsSettingsUI } from 'Config/PresetsSettingsUI';
+import { EnableJsInTasksQueries } from 'Config/EnableJsInTasksQueries';
 
 /**
  * A snapshot of the settings when the plugin loaded.
@@ -197,6 +197,13 @@ export class SettingsTab extends PluginSettingTab {
      */
     private redrawTasks() {
         this.events.triggerReloadOpenSearchResults();
+        this.redrawReadingViews();
+    }
+
+    /**
+     * Redraw notes shown in Reading view, which parse and draw their tasks when they are rendered.
+     */
+    private redrawReadingViews() {
         for (const leaf of this.app.workspace.getLeavesOfType('markdown')) {
             if (leaf.view instanceof MarkdownView) {
                 leaf.view.previewMode.rerender(true);
@@ -241,21 +248,21 @@ export class SettingsTab extends PluginSettingTab {
                     i18n.t('settings.format.description.line2'),
                 ]),
             ),
-            render: this.withDocs(
-                this.withReload('taskFormat', (setting, refreshReloadButton) => {
-                    setting.addDropdown((dropdown) => {
-                        for (const key of Object.keys(TASK_FORMATS) as (keyof TASK_FORMATS)[]) {
-                            dropdown.addOption(key, TASK_FORMATS[key].getDisplayName());
-                        }
-                        dropdown.setValue(getSettings().taskFormat).onChange(async (value) => {
-                            updateSettings({ taskFormat: value as keyof TASK_FORMATS });
-                            await this.plugin.saveSettings();
-                            refreshReloadButton();
-                        });
+            render: this.withDocs((setting) => {
+                setting.addDropdown((dropdown) => {
+                    for (const key of Object.keys(TASK_FORMATS) as (keyof TASK_FORMATS)[]) {
+                        dropdown.addOption(key, TASK_FORMATS[key].getDisplayName());
+                    }
+                    dropdown.setValue(getSettings().taskFormat).onChange(async (value) => {
+                        updateSettings({ taskFormat: value as keyof TASK_FORMATS });
+                        await this.plugin.saveSettings();
+                        // Tasks are parsed using the task format, so re-read them all.
+                        // Open searches are redrawn once that has finished.
+                        this.events.triggerReloadVault();
+                        this.redrawReadingViews();
                     });
-                }),
-                'https://publish.obsidian.md/tasks/Reference/Task+Formats/About+Task+Formats',
-            ),
+                });
+            }, 'https://publish.obsidian.md/tasks/Reference/Task+Formats/About+Task+Formats'),
         };
     }
 

@@ -6,11 +6,11 @@ import {
     createSetStatusLineTransformer,
     selectedLineNumbers,
     setStatusOnLine,
-} from '../../src/Commands/ChangeStatusCommands';
-import { Status } from '../../src/Statuses/Status';
-import { StatusRegistry } from '../../src/Statuses/StatusRegistry';
-import { StatusConfiguration, StatusType } from '../../src/Statuses/StatusConfiguration';
-import { resetSettings, updateSettings } from '../../src/Config/Settings';
+} from 'Commands/ChangeStatusCommands';
+import { Status } from 'Statuses/Status';
+import { StatusRegistry } from 'Statuses/StatusRegistry';
+import { StatusConfiguration, StatusType } from 'Statuses/StatusConfiguration';
+import { resetSettings, updateSettings } from 'Config/Settings';
 
 vi.mock('obsidian', () => ({
     MarkdownView: class MarkdownView {},

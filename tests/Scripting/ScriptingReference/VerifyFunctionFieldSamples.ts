@@ -1,15 +1,15 @@
 import { verifyAll } from '@approval-tests/approvals/lib/Providers/Vitest/VitestApprovals';
-import { FunctionField } from '../../../src/Query/Filter/FunctionField';
-import type { Task } from '../../../src/Task/Task';
-import { groupHeadingsForTask } from '../../CustomMatchers/CustomMatchersForGrouping';
-import { verifyMarkdownForDocs } from '../../TestingTools/VerifyMarkdown';
-import { expandPlaceholders } from '../../../src/Scripting/ExpandPlaceholders';
-import { makeQueryContext } from '../../../src/Scripting/QueryContext';
-import { splitSourceHonouringLineContinuations } from '../../../src/Query/Scanner';
-import { SearchInfo } from '../../../src/Query/SearchInfo';
-import { Sort } from '../../../src/Query/Sort/Sort';
+import { FunctionField } from 'Query/Filter/FunctionField';
+import type { Task } from 'Task/Task';
+import { expandPlaceholders } from 'Scripting/ExpandPlaceholders';
+import { makeQueryContext } from 'Scripting/QueryContext';
+import { splitSourceHonouringLineContinuations } from 'Query/Scanner';
+import { SearchInfo } from 'Query/SearchInfo';
+import { Sort } from 'Query/Sort/Sort';
+import type { TasksFile } from 'Scripting/TasksFile';
 import { toLines } from '../../TestingTools/TestHelpers';
-import type { TasksFile } from '../../../src/Scripting/TasksFile';
+import { verifyMarkdownForDocs } from '../../TestingTools/VerifyMarkdown';
+import { groupHeadingsForTask } from '../../CustomMatchers/CustomMatchersForGrouping';
 import { createTestTasksFile } from '../../TestingTools/TasksFileHelpers';
 
 /** For example, 'task.due' */

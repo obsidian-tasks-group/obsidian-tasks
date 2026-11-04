@@ -1,9 +1,9 @@
-import { getSettings } from '../Config/Settings';
-import { capitalizeFirstLetter } from '../lib/StringHelpers';
-import { Task } from '../Task/Task';
-import { DateFallback } from './DateFallback';
-import { TasksDate } from './TasksDate';
-import type { AllTaskDateFields, HappensDate } from './DateFieldTypes';
+import { getSettings } from 'Config/Settings';
+import { capitalizeFirstLetter } from 'lib/StringHelpers';
+import { Task } from 'Task/Task';
+import { DateFallback } from 'DateTime/DateFallback';
+import { TasksDate } from 'DateTime/TasksDate';
+import type { AllTaskDateFields, HappensDate } from 'DateTime/DateFieldTypes';
 
 export function shouldShowPostponeButton(task: Task) {
     // don't postpone if any invalid dates

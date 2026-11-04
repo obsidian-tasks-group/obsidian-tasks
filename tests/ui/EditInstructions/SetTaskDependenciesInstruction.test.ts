@@ -1,5 +1,5 @@
 import moment from 'moment/moment';
-import { Task } from '../../../src/Task/Task';
+import { Task } from 'Task/Task';
 import { createTasksFromMarkdown } from '../../TestingTools/TestHelpers';
 
 window.moment = moment;

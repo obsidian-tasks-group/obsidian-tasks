@@ -4,6 +4,8 @@ on:
     branches: ['*']
   pull_request:
     branches: [main]
+  schedule:
+    - cron: '16 0 * * *'  # <https://crontab.guru/#16_0_*_*_*> - "At 00:16."
   workflow_dispatch:
 
 permissions:

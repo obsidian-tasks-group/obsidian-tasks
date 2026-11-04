@@ -1,6 +1,6 @@
-import { EnableJsInTasksQueries } from '../src/Config/EnableJsInTasksQueries';
-import { InMemoryLocalStorageProvider } from '../src/Config/InMemoryLocalStorageProvider';
-import { initializeI18n } from '../src/i18n/i18n';
+import { EnableJsInTasksQueries } from 'Config/EnableJsInTasksQueries';
+import { InMemoryLocalStorageProvider } from 'Config/InMemoryLocalStorageProvider';
+import { initializeI18n } from 'i18n/i18n';
 import type { CreateDivOptions, CreateElOptions, CreateSpanOptions } from './TestingTools/DOMExtensions';
 
 // ------------------------------------------------------------------

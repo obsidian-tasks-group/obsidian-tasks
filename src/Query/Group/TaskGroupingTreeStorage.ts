@@ -1,4 +1,4 @@
-import type { Task } from '../../Task/Task';
+import type { Task } from 'Task/Task';
 
 /**
  * Storage used for the initial grouping together of tasks.

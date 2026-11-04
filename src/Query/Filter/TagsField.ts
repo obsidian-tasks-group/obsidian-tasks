@@ -1,10 +1,10 @@
-import type { Task } from '../../Task/Task';
-import type { Comparator } from '../Sort/Sorter';
-import { Sorter } from '../Sort/Sorter';
-import type { GrouperFunction } from '../Group/Grouper';
-import type { FilterOrErrorMessage } from './FilterOrErrorMessage';
-import { FilterInstructions } from './FilterInstructions';
-import { MultiTextField } from './MultiTextField';
+import type { Task } from 'Task/Task';
+import type { Comparator } from 'Query/Sort/Sorter';
+import { Sorter } from 'Query/Sort/Sorter';
+import type { GrouperFunction } from 'Query/Group/Grouper';
+import type { FilterOrErrorMessage } from 'Query/Filter/FilterOrErrorMessage';
+import { FilterInstructions } from 'Query/Filter/FilterInstructions';
+import { MultiTextField } from 'Query/Filter/MultiTextField';
 
 /**
  * Support the 'tag' and 'tags' search instructions.

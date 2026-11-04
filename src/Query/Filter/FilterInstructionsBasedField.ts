@@ -1,6 +1,6 @@
-import { Field } from './Field';
-import { FilterInstructions } from './FilterInstructions';
-import type { FilterOrErrorMessage } from './FilterOrErrorMessage';
+import { Field } from 'Query/Filter/Field';
+import { FilterInstructions } from 'Query/Filter/FilterInstructions';
+import type { FilterOrErrorMessage } from 'Query/Filter/FilterOrErrorMessage';
 
 /**
  * This class is an implementation for implements of {@link Field}

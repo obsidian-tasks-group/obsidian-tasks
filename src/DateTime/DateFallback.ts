@@ -1,6 +1,6 @@
-import { getSettings } from '../Config/Settings';
-import type { TaskLocation } from '../Task/TaskLocation';
-import { Task } from '../Task/Task';
+import { getSettings } from 'Config/Settings';
+import type { TaskLocation } from 'Task/TaskLocation';
+import { Task } from 'Task/Task';
 
 /**
  * Implement date from path detection

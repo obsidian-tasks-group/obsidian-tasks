@@ -1,11 +1,5 @@
-import {
-    type PostponeDateField,
-    type Settings,
-    getSettings,
-    resetSettings,
-    updateSettings,
-} from '../../src/Config/Settings';
-import { defaultPresets } from '../../src/Query/Presets/Presets';
+import { type PostponeDateField, type Settings, getSettings, resetSettings, updateSettings } from 'Config/Settings';
+import { defaultPresets } from 'Query/Presets/Presets';
 
 beforeEach(() => {
     resetSettings();

@@ -1,4 +1,4 @@
-import { StatusNameField } from '../../../src/Query/Filter/StatusNameField';
+import { StatusNameField } from 'Query/Filter/StatusNameField';
 import {
     expectTaskComparesAfter,
     expectTaskComparesBefore,

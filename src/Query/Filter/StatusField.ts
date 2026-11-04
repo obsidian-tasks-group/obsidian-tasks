@@ -1,7 +1,7 @@
-import type { Task } from '../../Task/Task';
-import type { Comparator } from '../Sort/Sorter';
-import type { GrouperFunction } from '../Group/Grouper';
-import { FilterInstructionsBasedField } from './FilterInstructionsBasedField';
+import type { Task } from 'Task/Task';
+import type { Comparator } from 'Query/Sort/Sorter';
+import type { GrouperFunction } from 'Query/Group/Grouper';
+import { FilterInstructionsBasedField } from 'Query/Filter/FilterInstructionsBasedField';
 
 export class StatusField extends FilterInstructionsBasedField {
     constructor() {

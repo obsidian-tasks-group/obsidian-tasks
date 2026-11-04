@@ -1,10 +1,10 @@
 import moment from 'moment';
 
-import { TASK_FORMATS, resetSettings, updateSettings } from '../../src/Config/Settings';
+import { TASK_FORMATS, resetSettings, updateSettings } from 'Config/Settings';
+import { allTaskPluginEmojis } from 'TaskSerializer/DefaultTaskSerializer';
+import { MarkdownTable } from 'lib/MarkdownTable';
 import { verifyMarkdown, verifyMarkdownForDocs } from '../TestingTools/VerifyMarkdown';
 import { SampleTasks } from '../TestingTools/SampleTasks';
-import { allTaskPluginEmojis } from '../../src/TaskSerializer/DefaultTaskSerializer';
-import { MarkdownTable } from '../../src/lib/MarkdownTable';
 
 window.moment = moment;
 

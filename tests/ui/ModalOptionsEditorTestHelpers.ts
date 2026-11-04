@@ -1,5 +1,5 @@
 import { type RenderResult, render } from '@testing-library/svelte';
-import ModalOptionsEditor from '../../src/ui/ModalOptionsEditor.svelte';
+import ModalOptionsEditor from 'ui/ModalOptionsEditor.svelte';
 import { verifyWithFileExtension } from '../TestingTools/ApprovalTestHelpers';
 import { prettifyHTML } from '../TestingTools/HTMLHelpers';
 

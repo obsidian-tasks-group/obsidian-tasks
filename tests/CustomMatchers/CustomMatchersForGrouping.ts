@@ -1,11 +1,11 @@
 import { diff } from 'jest-diff';
 import type { SyncMatcherResult } from 'vitest';
-import type { Task } from '../../src/Task/Task';
-import type { Grouper } from '../../src/Query/Group/Grouper';
-import type { Field } from '../../src/Query/Filter/Field';
-import { TaskGroups } from '../../src/Query/Group/TaskGroups';
+import type { Task } from 'Task/Task';
+import type { Grouper } from 'Query/Group/Grouper';
+import type { Field } from 'Query/Filter/Field';
+import { TaskGroups } from 'Query/Group/TaskGroups';
+import { SearchInfo } from 'Query/SearchInfo';
 import { TaskBuilder } from '../TestingTools/TaskBuilder';
-import { SearchInfo } from '../../src/Query/SearchInfo';
 
 declare module 'vitest' {
     interface Matchers<R> {

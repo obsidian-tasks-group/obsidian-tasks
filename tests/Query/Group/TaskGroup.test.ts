@@ -1,6 +1,6 @@
-import { TaskGroup } from '../../../src/Query/Group/TaskGroup';
+import { TaskGroup } from 'Query/Group/TaskGroup';
+import type { Task } from 'Task/Task';
 import { TaskBuilder } from '../../TestingTools/TaskBuilder';
-import type { Task } from '../../../src/Task/Task';
 
 function createTaskGroupAndApplyLimit(numTasks: number, limit: number) {
     const groups = ['Level 1'];

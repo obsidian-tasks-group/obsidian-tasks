@@ -1,6 +1,6 @@
+import { ExcludeSubItemsField } from 'Query/Filter/ExcludeSubItemsField';
 import { testTaskFilter } from '../../TestingTools/FilterTestHelpers';
 import { fromLine } from '../../TestingTools/TestHelpers';
-import { ExcludeSubItemsField } from '../../../src/Query/Filter/ExcludeSubItemsField';
 
 describe('sub-items', () => {
     it('exclude sub-items', () => {

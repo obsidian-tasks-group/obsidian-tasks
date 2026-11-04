@@ -1,11 +1,11 @@
 import moment from 'moment';
-import { RecurrenceBuilder } from '../TestingTools/RecurrenceBuilder';
+import { DATAVIEW_SYMBOLS, DataviewTaskSerializer } from 'TaskSerializer/DataviewTaskSerializer';
+import type { Task } from 'Task/Task';
+import type { TaskDetails } from 'TaskSerializer';
+import { OnCompletion } from 'Task/OnCompletion';
+import { Priority } from 'Task/Priority';
 import { TaskBuilder } from '../TestingTools/TaskBuilder';
-import { DATAVIEW_SYMBOLS, DataviewTaskSerializer } from '../../src/TaskSerializer/DataviewTaskSerializer';
-import type { Task } from '../../src/Task/Task';
-import type { TaskDetails } from '../../src/TaskSerializer';
-import { OnCompletion } from '../../src/Task/OnCompletion';
-import { Priority } from '../../src/Task/Priority';
+import { RecurrenceBuilder } from '../TestingTools/RecurrenceBuilder';
 
 window.moment = moment;
 

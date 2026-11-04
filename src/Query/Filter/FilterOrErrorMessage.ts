@@ -1,5 +1,5 @@
-import { QueryComponentOrError } from '../QueryComponentOrError';
-import type { Filter, FilterFunction } from './Filter';
+import { QueryComponentOrError } from 'Query/QueryComponentOrError';
+import type { Filter, FilterFunction } from 'Query/Filter/Filter';
 
 /**
  * A class which stores one of:

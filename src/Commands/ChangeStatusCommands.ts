@@ -7,18 +7,18 @@ import {
     type MarkdownView,
     Notice,
 } from 'obsidian';
-import { TasksFile } from '../Scripting/TasksFile';
-import type { Status } from '../Statuses/Status';
-import { Task } from '../Task/Task';
-import { TaskLocation } from '../Task/TaskLocation';
-import type { StatusRegistry } from '../Statuses/StatusRegistry';
-import { allStatusInstructions } from '../ui/EditInstructions/StatusInstructions';
+import { TasksFile } from 'Scripting/TasksFile';
+import type { Status } from 'Statuses/Status';
+import { Task } from 'Task/Task';
+import { TaskLocation } from 'Task/TaskLocation';
+import type { StatusRegistry } from 'Statuses/StatusRegistry';
+import { allStatusInstructions } from 'ui/EditInstructions/StatusInstructions';
 import {
     type EditorInsertion,
     type LineTransformer,
     createEditorCallback,
     replaceLineChange,
-} from './CreateEditorCallback';
+} from 'Commands/CreateEditorCallback';
 
 const notATaskMessage = 'Cannot set status: line is not a task or does not match global filter';
 

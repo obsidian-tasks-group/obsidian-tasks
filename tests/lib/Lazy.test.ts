@@ -1,4 +1,4 @@
-import { Lazy } from '../../src/lib/Lazy';
+import { Lazy } from 'lib/Lazy';
 
 describe('Lazy', () => {
     it('should return produced value', () => {

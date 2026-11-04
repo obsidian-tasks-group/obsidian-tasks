@@ -1,4 +1,4 @@
-import type { Task } from '../Task/Task';
+import type { Task } from 'Task/Task';
 
 // NEW_TASK_FIELD_EDIT_REQUIRED - if new field is included in 'happens' searches.
 export type HappensDate = keyof Pick<Task, 'startDate' | 'scheduledDate' | 'dueDate'>;

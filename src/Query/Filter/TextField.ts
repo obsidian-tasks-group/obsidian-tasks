@@ -1,14 +1,14 @@
-import type { Task } from '../../Task/Task';
-import { SubstringMatcher } from '../Matchers/SubstringMatcher';
-import { RegexMatcher } from '../Matchers/RegexMatcher';
-import type { IStringMatcher } from '../Matchers/IStringMatcher';
-import type { Comparator } from '../Sort/Sorter';
-import type { GrouperFunction } from '../Group/Grouper';
-import { errorMessageForException } from '../../lib/ExceptionTools';
-import { Field } from './Field';
-import type { FilterFunction } from './Filter';
-import { Filter } from './Filter';
-import { FilterOrErrorMessage } from './FilterOrErrorMessage';
+import type { Task } from 'Task/Task';
+import { SubstringMatcher } from 'Query/Matchers/SubstringMatcher';
+import { RegexMatcher } from 'Query/Matchers/RegexMatcher';
+import type { IStringMatcher } from 'Query/Matchers/IStringMatcher';
+import type { Comparator } from 'Query/Sort/Sorter';
+import type { GrouperFunction } from 'Query/Group/Grouper';
+import { errorMessageForException } from 'lib/ExceptionTools';
+import { Field } from 'Query/Filter/Field';
+import type { FilterFunction } from 'Query/Filter/Filter';
+import { Filter } from 'Query/Filter/Filter';
+import { FilterOrErrorMessage } from 'Query/Filter/FilterOrErrorMessage';
 
 /**
  * TextField is an abstract base class to help implement

@@ -1,9 +1,9 @@
-import type { GlobalFilter } from '../Config/GlobalFilter';
-import type { GlobalQuery } from '../Config/GlobalQuery';
-import type { OptionalTasksFile } from '../Scripting/TasksFile';
-import { Query } from './Query';
-import { Explainer } from './Explain/Explainer';
-import { QueryFileDefaults } from './QueryFileDefaults';
+import type { GlobalFilter } from 'Config/GlobalFilter';
+import type { GlobalQuery } from 'Config/GlobalQuery';
+import type { OptionalTasksFile } from 'Scripting/TasksFile';
+import { Query } from 'Query/Query';
+import { Explainer } from 'Query/Explain/Explainer';
+import { QueryFileDefaults } from 'Query/QueryFileDefaults';
 
 /**
  * @summary

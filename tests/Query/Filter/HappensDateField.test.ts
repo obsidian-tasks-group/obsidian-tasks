@@ -1,5 +1,5 @@
 import moment from 'moment';
-import { HappensDateField } from '../../../src/Query/Filter/HappensDateField';
+import { HappensDateField } from 'Query/Filter/HappensDateField';
 import { TaskBuilder } from '../../TestingTools/TaskBuilder';
 import { testFilter } from '../../TestingTools/FilterTestHelpers';
 import * as CustomMatchersForSorting from '../../CustomMatchers/CustomMatchersForSorting';

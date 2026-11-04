@@ -1,7 +1,7 @@
 import { verifyAsJson } from '@approval-tests/approvals/lib/Providers/Vitest/VitestApprovals';
 import type { Reference } from 'obsidian';
+import { LinkResolver } from 'Task/LinkResolver';
 import { getTasksFileFromMockData, listPathAndData } from '../TestingTools/MockDataHelpers';
-import { LinkResolver } from '../../src/Task/LinkResolver';
 import type { MockDataName } from '../Obsidian/AllCacheSampleData';
 import { getAllTags, getFirstLinkpathDest, parseFrontMatterTags } from '../__mocks__/obsidian';
 import { MockDataLoader } from '../TestingTools/MockDataLoader';

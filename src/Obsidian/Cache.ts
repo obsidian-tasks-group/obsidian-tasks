@@ -8,18 +8,18 @@ import {
 } from 'obsidian';
 import { MetadataCache, Notice, TAbstractFile, TFile, Vault } from 'obsidian';
 import { Mutex } from 'async-mutex';
-import { TasksFile } from '../Scripting/TasksFile';
-import { ListItem } from '../Task/ListItem';
+import { TasksFile } from 'Scripting/TasksFile';
+import { ListItem } from 'Task/ListItem';
 
-import { Task } from '../Task/Task';
-import { DateFallback } from '../DateTime/DateFallback';
-import { getSettings } from '../Config/Settings';
-import { Lazy } from '../lib/Lazy';
-import { Logger, logging } from '../lib/logging';
-import { PerformanceTracker } from '../lib/PerformanceTracker';
-import { GlobalFilter } from '../Config/GlobalFilter';
-import type { TasksEvents } from './TasksEvents';
-import { FileParser } from './FileParser';
+import { Task } from 'Task/Task';
+import { DateFallback } from 'DateTime/DateFallback';
+import { getSettings } from 'Config/Settings';
+import { Lazy } from 'lib/Lazy';
+import { Logger, logging } from 'lib/logging';
+import { PerformanceTracker } from 'lib/PerformanceTracker';
+import { GlobalFilter } from 'Config/GlobalFilter';
+import type { TasksEvents } from 'Obsidian/TasksEvents';
+import { FileParser } from 'Obsidian/FileParser';
 
 const MAX_CONCURRENT_FILE_READS = 4;
 

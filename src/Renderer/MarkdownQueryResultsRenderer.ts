@@ -1,10 +1,10 @@
-import type { IQuery } from '../IQuery';
-import type { GroupDisplayHeading } from '../Query/Group/GroupDisplayHeading';
-import type { QueryResult } from '../Query/QueryResult';
-import type { TasksFile } from '../Scripting/TasksFile';
-import type { ListItem } from '../Task/ListItem';
-import type { Task } from '../Task/Task';
-import { QueryResultsRendererBase } from './QueryResultsRendererBase';
+import type { IQuery } from 'IQuery';
+import type { GroupDisplayHeading } from 'Query/Group/GroupDisplayHeading';
+import type { QueryResult } from 'Query/QueryResult';
+import type { TasksFile } from 'Scripting/TasksFile';
+import type { ListItem } from 'Task/ListItem';
+import type { Task } from 'Task/Task';
+import { QueryResultsRendererBase } from 'Renderer/QueryResultsRendererBase';
 
 /**
  * @example
