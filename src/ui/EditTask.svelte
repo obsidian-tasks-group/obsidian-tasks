@@ -1,6 +1,6 @@
 <script lang="ts">
     import { onMount } from 'svelte';
-    import { defaultEditModalShowSettings, editModalFieldGroupsInOrder } from '../Config/EditModalShowSettings';
+    import { defaultEditModalShowSettings } from '../Config/EditModalShowSettings';
 
     import { TASK_FORMATS, getSettings } from '../Config/Settings';
     import type { Status } from '../Statuses/Status';
@@ -63,7 +63,7 @@
     $: isDescriptionValid = editableTask.description.trim() !== '';
 
     $: isShownInEditModal = { ...defaultEditModalShowSettings, ...$settingsStore.isShownInEditModal };
-    $: fieldGroups = editModalFieldGroupsInOrder($settingsStore.editModalFieldOrder);
+    $: fieldGroups = $settingsStore.editModalFieldOrder;
 
     onMount(() => {
         settingsStore.set(getSettings());
@@ -153,8 +153,7 @@ Availability of access keys:
             accesskey={accesskey('t')}
             on:keydown={_onDescriptionKeyDown}
             on:paste={_removeLinebreaksFromDescription}
-            on:drop={_removeLinebreaksFromDescription}
-        ></textarea>
+            on:drop={_removeLinebreaksFromDescription}></textarea>
     </section>
 
     <!--
@@ -162,9 +161,9 @@ Availability of access keys:
     chosen by the user in OptionsModal. Rendering them in that order (rather than
     reordering them with CSS) keeps the Tab order the same as the visual order.
     -->
-    {#each fieldGroups as group, groupIndex (group.name)}
+    {#each fieldGroups as group, groupIndex (group)}
         {@const isLastGroup = groupIndex === fieldGroups.length - 1}
-        {#if group.name === 'priority'}
+        {#if group.includes('priority')}
             <!-- --------------------------------------------------------------------------- -->
             <!--  Priority  -->
             <!-- --------------------------------------------------------------------------- -->
@@ -176,12 +175,12 @@ Availability of access keys:
                     <hr id="line-after-priority" />
                 {/if}
             {/if}
-        {:else if group.name === 'dates'}
+        {:else if group.includes('recurrence')}
             <!-- --------------------------------------------------------------------------- -->
             <!--  Dates  -->
             <!-- --------------------------------------------------------------------------- -->
             <section class="tasks-modal-dates-section">
-                {#each group.fields as field (field)}
+                {#each group as field (field)}
                     {#if isShownInEditModal[field]}
                         {#if field === 'recurrence'}
                             <!-- --------------------------------------------------------------------------- -->
@@ -250,13 +249,13 @@ Availability of access keys:
             {#if !isLastGroup && (isShownInEditModal.due || isShownInEditModal.scheduled || isShownInEditModal.start)}
                 <hr id="line-after-happens-dates" />
             {/if}
-        {:else if group.name === 'dependencies'}
+        {:else if group.includes('before_this')}
             <!-- --------------------------------------------------------------------------- -->
             <!--  Dependencies  -->
             <!-- --------------------------------------------------------------------------- -->
             <section class="tasks-modal-dependencies-section">
                 {#if allTasks.length > 0 && mountComplete}
-                    {#each group.fields as field (field)}
+                    {#each group as field (field)}
                         {#if isShownInEditModal[field]}
                             {#if field === 'before_this'}
                                 <!-- --------------------------------------------------------------------------- -->
@@ -298,9 +297,9 @@ Availability of access keys:
             {#if !isLastGroup && (isShownInEditModal.before_this || isShownInEditModal.after_this)}
                 <hr id="line-after-dependencies" />
             {/if}
-        {:else if group.name === 'statusAndDates'}
+        {:else if group.includes('status')}
             <section class="tasks-modal-dates-section">
-                {#each group.fields as field (field)}
+                {#each group as field (field)}
                     {#if isShownInEditModal[field]}
                         {#if field === 'status'}
                             <!-- --------------------------------------------------------------------------- -->

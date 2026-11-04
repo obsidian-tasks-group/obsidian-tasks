@@ -1,5 +1,5 @@
 import { fireEvent } from '@testing-library/svelte';
-import { type EditModalShowSettings, defaultEditModalFieldOrder } from 'Config/EditModalShowSettings';
+import { type EditModalShowSettings, editModalFieldGroups } from 'Config/EditModalShowSettings';
 import { type Settings, getSettings, resetSettings, updateSettings } from 'Config/Settings';
 import { settingsStore } from 'ui/SettingsStore';
 import {
@@ -87,20 +87,13 @@ describe('ModalOptionsEditor reordering tests', () => {
         await fireEvent.keyDown(groupHandles(container)[0], { key: 'ArrowDown' });
 
         const expectedOrder = [
-            'recurrence',
-            'due',
-            'scheduled',
-            'start',
-            'priority',
-            'before_this',
-            'after_this',
-            'status',
-            'created',
-            'done',
-            'cancelled',
+            ['recurrence', 'due', 'scheduled', 'start'],
+            ['priority'],
+            ['before_this', 'after_this'],
+            ['status', 'created', 'done', 'cancelled'],
         ];
-        expect(renderedFields(container)).toEqual(expectedOrder);
-        expect(getSettings().editModalFieldOrder).toEqual(defaultEditModalFieldOrder);
+        expect(renderedFields(container)).toEqual(expectedOrder.flat());
+        expect(getSettings().editModalFieldOrder).toEqual(editModalFieldGroups);
 
         checkAndClickApplyButton(result);
         expect(getSettings().editModalFieldOrder).toEqual(expectedOrder);
@@ -112,7 +105,7 @@ describe('ModalOptionsEditor reordering tests', () => {
         await fireEvent.keyDown(fieldHandle(container, 'scheduled'), { key: 'ArrowUp' });
         checkAndClickApplyButton(result);
 
-        expect(getSettings().editModalFieldOrder.slice(1, 5)).toEqual(['recurrence', 'scheduled', 'due', 'start']);
+        expect(getSettings().editModalFieldOrder[1]).toEqual(['recurrence', 'scheduled', 'due', 'start']);
     });
 
     it('should not move the first field up, out of its group', async () => {
@@ -120,7 +113,7 @@ describe('ModalOptionsEditor reordering tests', () => {
 
         await fireEvent.keyDown(fieldHandle(container, 'status'), { key: 'ArrowUp' });
 
-        expect(renderedFields(container)).toEqual(defaultEditModalFieldOrder);
+        expect(renderedFields(container)).toEqual(editModalFieldGroups.flat());
     });
 
     it('should not save the order when Cancel is clicked', async () => {
@@ -129,15 +122,28 @@ describe('ModalOptionsEditor reordering tests', () => {
         await fireEvent.keyDown(groupHandles(container)[0], { key: 'ArrowDown' });
         checkAndClickCancelButton(result);
 
-        expect(getSettings().editModalFieldOrder).toEqual(defaultEditModalFieldOrder);
+        expect(getSettings().editModalFieldOrder).toEqual(editModalFieldGroups);
+    });
+
+    it('should keep field order changes local when Cancel is clicked', async () => {
+        const { result, container } = renderAndCheckModal();
+
+        await fireEvent.keyDown(fieldHandle(container, 'scheduled'), { key: 'ArrowUp' });
+        expect(getSettings().editModalFieldOrder).toEqual(editModalFieldGroups);
+        checkAndClickCancelButton(result);
+
+        expect(getSettings().editModalFieldOrder).toEqual(editModalFieldGroups);
     });
 
     it('should reset the order when Reset order is clicked', async () => {
-        settingsStore.set({ ...getSettings(), editModalFieldOrder: [...defaultEditModalFieldOrder].reverse() });
+        settingsStore.set({
+            ...getSettings(),
+            editModalFieldOrder: editModalFieldGroups.map((group) => [...group]).reverse(),
+        });
         const { result, container } = renderAndCheckModal();
 
         await fireEvent.click(result.getByText('Reset order'));
 
-        expect(renderedFields(container)).toEqual(defaultEditModalFieldOrder);
+        expect(renderedFields(container)).toEqual(editModalFieldGroups.flat());
     });
 });

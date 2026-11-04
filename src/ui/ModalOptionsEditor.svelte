@@ -2,9 +2,9 @@
     import { setIcon } from 'obsidian';
     import { tick } from 'svelte';
     import {
-        type EditModalFieldGroup,
+        type EditModalField,
         defaultEditModalShowSettings,
-        editModalFieldGroupsInOrder,
+        editModalFieldGroups,
     } from '../Config/EditModalShowSettings';
     import { settingsStore } from './SettingsStore';
 
@@ -16,7 +16,7 @@
     // <input type="checkbox" checked={options[fieldName]} /> below. This is solved in Svelte 5.
     let options: any = { ...defaultEditModalShowSettings, ...$settingsStore.isShownInEditModal };
 
-    let groups: EditModalFieldGroup[] = editModalFieldGroupsInOrder($settingsStore.editModalFieldOrder);
+    let groups: EditModalField[][] = $settingsStore.editModalFieldOrder.map((group) => [...group]);
 
     const onChange = (fieldName: string) => (event: Event) => {
         options[fieldName] = (event.target as HTMLInputElement).checked;
@@ -26,13 +26,13 @@
         settingsStore.set({
             ...$settingsStore,
             isShownInEditModal: options,
-            editModalFieldOrder: groups.flatMap((group) => group.fields),
+            editModalFieldOrder: groups,
         });
         onSave();
     };
 
     const onResetOrder = () => {
-        groups = editModalFieldGroupsInOrder(undefined);
+        groups = editModalFieldGroups.map((group) => [...group]);
     };
 
     // Helper to format field names for display
@@ -65,9 +65,9 @@
     };
 
     const moveField =
-        (group: EditModalFieldGroup): MoveItem =>
+        (group: EditModalField[]): MoveItem =>
         (from, to) => {
-            group.fields = moved(group.fields, from, to);
+            group.splice(to, 0, ...group.splice(from, 1));
             groups = groups;
         };
 
@@ -137,7 +137,7 @@
 
 <div class="tasks-options-modal">
     <div class="tasks-options-modal-groups">
-        {#each groups as group, groupIndex (group.name)}
+        {#each groups as group, groupIndex (group)}
             <div class="tasks-options-modal-group" data-reorder-item>
                 <button
                     type="button"
@@ -148,7 +148,7 @@
                     on:keydown={(event) => onHandleKeyDown(event, moveGroup)}
                 ></button>
                 <div class="tasks-options-modal-checkboxes">
-                    {#each group.fields as fieldName (fieldName)}
+                    {#each group as fieldName (fieldName)}
                         <div class="tasks-options-modal-field" data-reorder-item>
                             <label>
                                 <input
@@ -159,7 +159,7 @@
                                 />
                                 <span>{formatFieldName(fieldName)}</span>
                             </label>
-                            {#if group.fields.length > 1}
+                            {#if group.length > 1}
                                 <button
                                     type="button"
                                     class="tasks-options-modal-handle clickable-icon"

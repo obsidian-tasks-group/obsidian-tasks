@@ -830,17 +830,10 @@ describe('Ordering modal fields', () => {
     it('should render groups and fields in the saved order', () => {
         updateSettings({
             editModalFieldOrder: [
-                'cancelled',
-                'done',
-                'status',
-                'created',
-                'start',
-                'due',
-                'recurrence',
-                'scheduled',
-                'priority',
-                'after_this',
-                'before_this',
+                ['cancelled', 'done', 'status', 'created'],
+                ['start', 'due', 'recurrence', 'scheduled'],
+                ['priority'],
+                ['after_this', 'before_this'],
             ],
         });
 
@@ -863,7 +856,12 @@ describe('Ordering modal fields', () => {
         const fullyPopulatedLine = TaskBuilder.createFullyPopulatedTask().toFileLineString();
         const task = taskFromLine({ line: fullyPopulatedLine, path: '' });
         updateSettings({
-            editModalFieldOrder: ['status', 'created', 'done', 'cancelled', 'before_this', 'after_this', 'priority'],
+            editModalFieldOrder: [
+                ['status', 'created', 'done', 'cancelled'],
+                ['before_this', 'after_this'],
+                ['priority'],
+                ['recurrence', 'due', 'scheduled', 'start'],
+            ],
         });
 
         const { container } = renderAndCheckModal(task, () => {});
