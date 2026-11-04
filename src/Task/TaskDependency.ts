@@ -1,4 +1,4 @@
-import { Task } from './Task';
+import { Task } from 'Task/Task';
 
 export function generateUniqueId(existingIds: string[]) {
     let id = '';

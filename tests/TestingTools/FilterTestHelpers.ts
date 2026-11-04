@@ -1,8 +1,8 @@
-import type { FilterOrErrorMessage } from '../../src/Query/Filter/FilterOrErrorMessage';
-import { Task } from '../../src/Task/Task';
-import { Query } from '../../src/Query/Query';
-import { TaskLocation } from '../../src/Task/TaskLocation';
-import { SearchInfo } from '../../src/Query/SearchInfo';
+import type { FilterOrErrorMessage } from 'Query/Filter/FilterOrErrorMessage';
+import { Task } from 'Task/Task';
+import { Query } from 'Query/Query';
+import { TaskLocation } from 'Task/TaskLocation';
+import { SearchInfo } from 'Query/SearchInfo';
 import type { TaskBuilder } from './TaskBuilder';
 import { createTestTasksFile } from './TasksFileHelpers';
 

@@ -1,6 +1,6 @@
 import moment from 'moment';
 
-import { ScheduledDateField } from '../../../src/Query/Filter/ScheduledDateField';
+import { ScheduledDateField } from 'Query/Filter/ScheduledDateField';
 
 window.moment = moment;
 

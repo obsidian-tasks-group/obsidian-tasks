@@ -1,6 +1,6 @@
-import type { TaskLayoutComponent } from '../Layout/TaskLayoutOptions';
-import { PriorityTools } from '../lib/PriorityTools';
-import type { Task } from '../Task/Task';
+import type { TaskLayoutComponent } from 'Layout/TaskLayoutOptions';
+import { PriorityTools } from 'lib/PriorityTools';
+import type { Task } from 'Task/Task';
 
 /**
  * A renderer for individual {@link Task} fields in an HTML context.

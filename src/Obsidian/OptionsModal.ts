@@ -1,7 +1,7 @@
 import type { App } from 'obsidian';
 import { Modal } from 'obsidian';
 import { mount, unmount } from 'svelte';
-import ModalOptionsEditor from '../ui/ModalOptionsEditor.svelte';
+import ModalOptionsEditor from 'ui/ModalOptionsEditor.svelte';
 
 /**
  * Constructor parameter for {@link OptionsModal}.

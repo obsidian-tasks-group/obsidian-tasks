@@ -1,7 +1,7 @@
-import type { StatusSettings } from '../Config/StatusSettings';
-import { i18n } from '../i18n/i18n';
-import type { StatusRegistry } from './StatusRegistry';
-import { sampleTaskLinesForValidStatuses, tabulateStatusSettings } from './StatusSettingsReport';
+import type { StatusSettings } from 'Config/StatusSettings';
+import { i18n } from 'i18n/i18n';
+import type { StatusRegistry } from 'Statuses/StatusRegistry';
+import { sampleTaskLinesForValidStatuses, tabulateStatusSettings } from 'Statuses/StatusSettingsReport';
 
 export function createStatusRegistryReport(
     statusSettings: StatusSettings,

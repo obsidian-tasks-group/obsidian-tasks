@@ -1,7 +1,7 @@
-import { Explanation } from '../Explain/Explanation';
-import { Filter } from './Filter';
-import type { FilterFunction } from './Filter';
-import { FilterOrErrorMessage } from './FilterOrErrorMessage';
+import { Explanation } from 'Query/Explain/Explanation';
+import { Filter } from 'Query/Filter/Filter';
+import type { FilterFunction } from 'Query/Filter/Filter';
+import { FilterOrErrorMessage } from 'Query/Filter/FilterOrErrorMessage';
 
 /**
  * Implementation of a single instruction for filtering tasks, and its corresponding predicate.

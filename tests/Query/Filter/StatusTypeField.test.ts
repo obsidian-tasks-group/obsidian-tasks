@@ -1,13 +1,13 @@
-import { StatusTypeField } from '../../../src/Query/Filter/StatusTypeField';
+import { StatusTypeField } from 'Query/Filter/StatusTypeField';
+import { StatusType } from 'Statuses/StatusConfiguration';
+import { Status } from 'Statuses/Status';
+import * as FilterParser from 'Query/FilterParser';
+import { TaskBuilder } from '../../TestingTools/TaskBuilder';
 import {
     expectTaskComparesAfter,
     expectTaskComparesBefore,
     expectTaskComparesEqual,
 } from '../../CustomMatchers/CustomMatchersForSorting';
-import { TaskBuilder } from '../../TestingTools/TaskBuilder';
-import { StatusType } from '../../../src/Statuses/StatusConfiguration';
-import { Status } from '../../../src/Statuses/Status';
-import * as FilterParser from '../../../src/Query/FilterParser';
 import { fromLine } from '../../TestingTools/TestHelpers';
 import { SampleTasks } from '../../TestingTools/SampleTasks';
 import { verifyWithFileExtension } from '../../TestingTools/ApprovalTestHelpers';

@@ -1,4 +1,4 @@
-import { Commands } from '../../src/Commands';
+import { Commands } from 'Commands';
 
 describe('Registering commands', () => {
     it('should register the quick search command', () => {

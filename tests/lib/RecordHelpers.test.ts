@@ -1,4 +1,4 @@
-import { renameKeyInRecordPreservingOrder } from '../../src/lib/RecordHelpers';
+import { renameKeyInRecordPreservingOrder } from 'lib/RecordHelpers';
 
 describe('renameKeyInRecordPreservingOrder', () => {
     it('should rename a key without changing the order of other keys', () => {

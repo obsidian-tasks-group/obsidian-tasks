@@ -1,11 +1,11 @@
-import type { Task } from '../../Task/Task';
-import { Explanation } from '../Explain/Explanation';
-import type { Comparator } from '../Sort/Sorter';
-import type { GrouperFunction } from '../Group/Grouper';
-import { Priority } from '../../Task/Priority';
-import { Field } from './Field';
-import { Filter } from './Filter';
-import { FilterOrErrorMessage } from './FilterOrErrorMessage';
+import type { Task } from 'Task/Task';
+import { Explanation } from 'Query/Explain/Explanation';
+import type { Comparator } from 'Query/Sort/Sorter';
+import type { GrouperFunction } from 'Query/Group/Grouper';
+import { Priority } from 'Task/Priority';
+import { Field } from 'Query/Filter/Field';
+import { Filter } from 'Query/Filter/Filter';
+import { FilterOrErrorMessage } from 'Query/Filter/FilterOrErrorMessage';
 
 export class PriorityField extends Field {
     // The trick in the following to manage whitespace with optional values

@@ -1,7 +1,7 @@
 import { fireEvent } from '@testing-library/svelte';
-import { type EditModalShowSettings, defaultEditModalFieldOrder } from '../../src/Config/EditModalShowSettings';
-import { type Settings, getSettings, resetSettings, updateSettings } from '../../src/Config/Settings';
-import { settingsStore } from '../../src/ui/SettingsStore';
+import { type EditModalShowSettings, defaultEditModalFieldOrder } from 'Config/EditModalShowSettings';
+import { type Settings, getSettings, resetSettings, updateSettings } from 'Config/Settings';
+import { settingsStore } from 'ui/SettingsStore';
 import {
     checkAndClickApplyButton,
     checkAndClickCancelButton,

@@ -1,9 +1,9 @@
-import { StatusSettings } from '../../src/Config/StatusSettings';
-import { sampleTaskLinesForValidStatuses, tabulateStatusSettings } from '../../src/Statuses/StatusSettingsReport';
-import type { StatusCollection } from '../../src/Statuses/StatusCollection';
+import { StatusSettings } from 'Config/StatusSettings';
+import { sampleTaskLinesForValidStatuses, tabulateStatusSettings } from 'Statuses/StatusSettingsReport';
+import type { StatusCollection } from 'Statuses/StatusCollection';
+import { GlobalFilter } from 'Config/GlobalFilter';
 import { verifyWithFileExtension } from '../TestingTools/ApprovalTestHelpers';
 import { coreStatusesData, createStatuses } from '../TestingTools/StatusesTestHelpers';
-import { GlobalFilter } from '../../src/Config/GlobalFilter';
 
 afterEach(() => {
     GlobalFilter.getInstance().reset();

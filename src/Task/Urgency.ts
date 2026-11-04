@@ -1,5 +1,5 @@
-import type { Task } from './Task';
-import { Priority } from './Priority';
+import type { Task } from 'Task/Task';
+import { Priority } from 'Task/Priority';
 
 export class Urgency {
     private static readonly dueCoefficient = 12.0;

@@ -2,26 +2,26 @@ import {
     DEFAULT_MAX_GENERIC_SUGGESTIONS,
     makeDefaultSuggestionBuilder,
     onlySuggestIfBracketOpen,
-} from '../Suggestor/Suggestor';
-import { DEFAULT_SYMBOLS } from '../TaskSerializer/DefaultTaskSerializer';
-import { DATAVIEW_SYMBOLS } from '../TaskSerializer/DataviewTaskSerializer';
-import { StatusConfiguration } from '../Statuses/StatusConfiguration';
-import { Status } from '../Statuses/Status';
-import { DefaultTaskSerializer, type TaskSerializer } from '../TaskSerializer';
-import type { SuggestionBuilder } from '../Suggestor';
-import type { LogOptions } from '../lib/logging';
-import { DataviewTaskSerializer } from '../TaskSerializer/DataviewTaskSerializer';
-import { i18n } from '../i18n/i18n';
-import { type PresetsMap, defaultPresets } from '../Query/Presets/Presets';
-import { DebugSettings } from './DebugSettings';
+} from 'Suggestor/Suggestor';
+import { DEFAULT_SYMBOLS } from 'TaskSerializer/DefaultTaskSerializer';
+import { DATAVIEW_SYMBOLS } from 'TaskSerializer/DataviewTaskSerializer';
+import { StatusConfiguration } from 'Statuses/StatusConfiguration';
+import { Status } from 'Statuses/Status';
+import { DefaultTaskSerializer, type TaskSerializer } from 'TaskSerializer';
+import type { SuggestionBuilder } from 'Suggestor';
+import type { LogOptions } from 'lib/logging';
+import { DataviewTaskSerializer } from 'TaskSerializer/DataviewTaskSerializer';
+import { i18n } from 'i18n/i18n';
+import { type PresetsMap, defaultPresets } from 'Query/Presets/Presets';
+import { DebugSettings } from 'Config/DebugSettings';
 import {
     type EditModalField,
     type EditModalShowSettings,
     defaultEditModalFieldOrder,
     defaultEditModalShowSettings,
-} from './EditModalShowSettings';
-import { StatusSettings } from './StatusSettings';
-import type { DismissedNotices } from './DismissibleNotices';
+} from 'Config/EditModalShowSettings';
+import { StatusSettings } from 'Config/StatusSettings';
+import type { DismissedNotices } from 'Config/DismissibleNotices';
 
 /**
  * Interface encapsulating how a Task is written to and read from text

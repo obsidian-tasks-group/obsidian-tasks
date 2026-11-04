@@ -1,6 +1,6 @@
 import moment from 'moment';
-import { resetSettings, updateSettings } from '../../src/Config/Settings';
-import type { Task } from '../../src/Task/Task';
+import { resetSettings, updateSettings } from 'Config/Settings';
+import type { Task } from 'Task/Task';
 import {
     createFixedDateTask,
     createPostponedTask,
@@ -12,12 +12,12 @@ import {
     postponementSuccessMessage,
     removeDateMenuItemTitle,
     shouldShowPostponeButton,
-} from '../../src/DateTime/Postponer';
-import { Status } from '../../src/Statuses/Status';
-import { StatusConfiguration, StatusType } from '../../src/Statuses/StatusConfiguration';
-import type { PostponingFunction } from '../../src/ui/Menus/PostponeMenu';
+} from 'DateTime/Postponer';
+import { Status } from 'Statuses/Status';
+import { StatusConfiguration, StatusType } from 'Statuses/StatusConfiguration';
+import type { PostponingFunction } from 'ui/Menus/PostponeMenu';
+import type { HappensDate } from 'DateTime/DateFieldTypes';
 import { TaskBuilder } from '../TestingTools/TaskBuilder';
-import type { HappensDate } from '../../src/DateTime/DateFieldTypes';
 
 window.moment = moment;
 

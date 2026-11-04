@@ -1,5 +1,5 @@
 import type { App } from 'obsidian';
-import type { LocalStorageProvider } from './LocalStorageProvider';
+import type { LocalStorageProvider } from 'Config/LocalStorageProvider';
 
 /**
  * Implementation of {@link LocalStorageProvider} backed by Obsidian's vault-local app storage.

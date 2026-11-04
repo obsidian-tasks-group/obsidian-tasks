@@ -1,4 +1,4 @@
-import { BooleanDelimiters, anyOfTheseChars } from './BooleanDelimiters';
+import { BooleanDelimiters, anyOfTheseChars } from 'Query/Filter/BooleanDelimiters';
 
 export type BooleanPreprocessorResult = {
     simplifiedLine: string;

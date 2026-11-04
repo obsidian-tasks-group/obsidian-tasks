@@ -1,9 +1,9 @@
-import { Sorter } from '../Sort/Sorter';
-import type { Comparator } from '../Sort/Sorter';
-import * as RegExpTools from '../../lib/RegExpTools';
-import { Grouper } from '../Group/Grouper';
-import type { GrouperFunction } from '../Group/Grouper';
-import type { FilterOrErrorMessage } from './FilterOrErrorMessage';
+import { Sorter } from 'Query/Sort/Sorter';
+import type { Comparator } from 'Query/Sort/Sorter';
+import * as RegExpTools from 'lib/RegExpTools';
+import { Grouper } from 'Query/Group/Grouper';
+import type { GrouperFunction } from 'Query/Group/Grouper';
+import type { FilterOrErrorMessage } from 'Query/Filter/FilterOrErrorMessage';
 
 /**
  * Field is an abstract base class for each type of filter instruction.

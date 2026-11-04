@@ -1,10 +1,10 @@
 import { App, Editor, EditorSuggest, MarkdownView, Notice, TFile, editorInfoField } from 'obsidian';
 import type { EditorPosition, EditorSuggestContext, EditorSuggestTriggerInfo } from 'obsidian';
 import type TasksPlugin from 'main';
-import { ensureTaskHasId } from '../Task/TaskDependency';
-import { replaceTaskWithTasks } from '../Obsidian/File';
-import { type Settings, TASK_FORMATS, getSettings } from '../Config/Settings';
-import { canSuggestForLine } from './Suggestor';
+import { ensureTaskHasId } from 'Task/TaskDependency';
+import { replaceTaskWithTasks } from 'Obsidian/File';
+import { type Settings, TASK_FORMATS, getSettings } from 'Config/Settings';
+import { canSuggestForLine } from 'Suggestor/Suggestor';
 import type { SuggestInfo } from '.';
 
 export type SuggestInfoWithContext = SuggestInfo & {

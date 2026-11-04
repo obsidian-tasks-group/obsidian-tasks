@@ -1,6 +1,6 @@
-import { htmlEncodeCharacter, htmlEncodeString } from '../lib/HTMLCharacterEntities';
-import { Status } from './Status';
-import { StatusConfiguration, StatusType } from './StatusConfiguration';
+import { htmlEncodeCharacter, htmlEncodeString } from 'lib/HTMLCharacterEntities';
+import { Status } from 'Statuses/Status';
+import { StatusConfiguration, StatusType } from 'Statuses/StatusConfiguration';
 
 /**
  * Tracks all the registered statuses a task can have.

@@ -1,12 +1,12 @@
-import type { Task } from '../Task/Task';
+import type { Task } from 'Task/Task';
+import type { QueryContext } from 'Scripting/QueryContext';
 import {
     type ExpressionParameter,
     FunctionOrError,
     evaluateExpression,
     evaluateExpressionOrCatch,
     parseExpression,
-} from './Expression';
-import type { QueryContext } from './QueryContext';
+} from 'Scripting/Expression';
 
 /**
  *  From: https://www.educative.io/answers/parameter-vs-argument

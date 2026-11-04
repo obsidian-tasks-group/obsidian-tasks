@@ -1,18 +1,18 @@
 import moment from 'moment';
 import { Notice } from 'obsidian';
 
-import { TaskBuilder } from '../TestingTools/TaskBuilder';
-import { Priority } from '../../src/Task/Priority';
+import { Priority } from 'Task/Priority';
 import {
     QuickSearchTasksModal,
     openTaskAtSourceLocation,
     taskSearchMetadataText,
     taskSearchSuggestionText,
-} from '../../src/ui/QuickSearchTasksModal';
-import { GlobalFilter } from '../../src/Config/GlobalFilter';
-import { Status } from '../../src/Statuses/Status';
+} from 'ui/QuickSearchTasksModal';
+import { GlobalFilter } from 'Config/GlobalFilter';
+import { Status } from 'Statuses/Status';
+import { getTaskLineAndFile } from 'Obsidian/File';
 import { fromMarkdown } from '../TestingTools/TestHelpers';
-import { getTaskLineAndFile } from '../../src/Obsidian/File';
+import { TaskBuilder } from '../TestingTools/TaskBuilder';
 
 vi.mock('obsidian', async () => ({
     ...(await vi.importActual('../__mocks__/obsidian')),

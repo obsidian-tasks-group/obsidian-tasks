@@ -1,12 +1,12 @@
 import type { Reference } from 'obsidian';
-import { makeQueryContextWithTasks } from '../../src/Scripting/QueryContext';
+import { makeQueryContextWithTasks } from 'Scripting/QueryContext';
 
+import { MarkdownTable } from 'lib/MarkdownTable';
+import { parseAndEvaluateExpression } from 'Scripting/TaskExpression';
+import { LinkResolver } from 'Task/LinkResolver';
 import { verifyMarkdownForDocs } from '../TestingTools/VerifyMarkdown';
-import { MarkdownTable } from '../../src/lib/MarkdownTable';
-import { parseAndEvaluateExpression } from '../../src/Scripting/TaskExpression';
 import { TaskBuilder } from '../TestingTools/TaskBuilder';
 import { getTasksFileFromMockData } from '../TestingTools/MockDataHelpers';
-import { LinkResolver } from '../../src/Task/LinkResolver';
 import { getFirstLinkpathDestFromData } from '../__mocks__/obsidian';
 import { MockDataLoader } from '../TestingTools/MockDataLoader';
 import { createTestTasksFile } from '../TestingTools/TasksFileHelpers';

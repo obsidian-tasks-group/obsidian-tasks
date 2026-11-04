@@ -1,6 +1,6 @@
+import { DependsOnField } from 'Query/Filter/DependsOnField';
 import { testFilter } from '../../TestingTools/FilterTestHelpers';
 import { TaskBuilder } from '../../TestingTools/TaskBuilder';
-import { DependsOnField } from '../../../src/Query/Filter/DependsOnField';
 
 describe('id', () => {
     const blockedByField = new DependsOnField();

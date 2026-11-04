@@ -1,7 +1,7 @@
-import type { StatusRegistry } from '../../Statuses/StatusRegistry';
-import type { Task } from '../../Task/Task';
-import { allStatusInstructions } from '../EditInstructions/StatusInstructions';
-import { TaskEditingMenu, type TaskSaver, defaultTaskSaver } from './TaskEditingMenu';
+import type { StatusRegistry } from 'Statuses/StatusRegistry';
+import type { Task } from 'Task/Task';
+import { allStatusInstructions } from 'ui/EditInstructions/StatusInstructions';
+import { TaskEditingMenu, type TaskSaver, defaultTaskSaver } from 'ui/Menus/TaskEditingMenu';
 
 /**
  * A Menu of options for editing the status of a Task object.

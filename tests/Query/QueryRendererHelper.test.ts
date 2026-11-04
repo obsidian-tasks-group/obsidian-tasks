@@ -1,8 +1,8 @@
 import moment from 'moment';
-import { Query } from '../../src/Query/Query';
-import { explainResults, getQueryForQueryRenderer } from '../../src/Query/QueryRendererHelper';
-import { GlobalFilter } from '../../src/Config/GlobalFilter';
-import { GlobalQuery } from '../../src/Config/GlobalQuery';
+import { Query } from 'Query/Query';
+import { explainResults, getQueryForQueryRenderer } from 'Query/QueryRendererHelper';
+import { GlobalFilter } from 'Config/GlobalFilter';
+import { GlobalQuery } from 'Config/GlobalQuery';
 import { getTasksFileFromMockData } from '../TestingTools/MockDataHelpers';
 import { createTestTasksFile } from '../TestingTools/TasksFileHelpers';
 

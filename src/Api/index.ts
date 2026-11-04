@@ -1,8 +1,8 @@
-import type TasksPlugin from '../main';
-import { toggleLine } from '../Commands/ToggleDone';
-import { createTaskLineModal } from './createTaskLineModal';
-import type { TasksApiV1 } from './TasksApiV1';
-import { editTaskLineModal } from './editTaskLineModal';
+import type TasksPlugin from 'main';
+import { toggleLine } from 'Commands/ToggleDone';
+import { createTaskLineModal } from 'Api/createTaskLineModal';
+import type { TasksApiV1 } from 'Api/TasksApiV1';
+import { editTaskLineModal } from 'Api/editTaskLineModal';
 
 /**
  * Factory method for API v1

@@ -1,7 +1,7 @@
 import type { App } from 'obsidian';
-import type { Task } from '../Task/Task';
-import { taskFromLine } from '../Commands/CreateOrEditTaskParser';
-import { TaskModal } from '../Obsidian/TaskModal';
+import type { Task } from 'Task/Task';
+import { taskFromLine } from 'Commands/CreateOrEditTaskParser';
+import { TaskModal } from 'Obsidian/TaskModal';
 
 /**
  * Opens the Tasks UI and returns the Markdown string for the task entered.

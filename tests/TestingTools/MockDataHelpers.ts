@@ -1,4 +1,4 @@
-import type { TasksFile } from '../../src/Scripting/TasksFile';
+import type { TasksFile } from 'Scripting/TasksFile';
 import type { SimulatedFile } from '../Obsidian/SimulatedFile';
 import type { MockDataName } from '../Obsidian/AllCacheSampleData';
 import { MockDataLoader } from './MockDataLoader';

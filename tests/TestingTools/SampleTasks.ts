@@ -1,11 +1,11 @@
-import { Occurrence } from '../../src/Task/Occurrence';
-import { Task } from '../../src/Task/Task';
-import { Recurrence } from '../../src/Task/Recurrence';
-import { Status } from '../../src/Statuses/Status';
-import { StatusType } from '../../src/Statuses/StatusConfiguration';
-import { Priority } from '../../src/Task/Priority';
-import { PriorityTools } from '../../src/lib/PriorityTools';
-import { OnCompletion } from '../../src/Task/OnCompletion';
+import { Occurrence } from 'Task/Occurrence';
+import { Task } from 'Task/Task';
+import { Recurrence } from 'Task/Recurrence';
+import { Status } from 'Statuses/Status';
+import { StatusType } from 'Statuses/StatusConfiguration';
+import { Priority } from 'Task/Priority';
+import { PriorityTools } from 'lib/PriorityTools';
+import { OnCompletion } from 'Task/OnCompletion';
 import { TaskBuilder } from './TaskBuilder';
 import { fromLine, fromLines } from './TestHelpers';
 

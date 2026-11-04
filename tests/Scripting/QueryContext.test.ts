@@ -1,11 +1,11 @@
+import { FilenameField } from 'Query/Filter/FilenameField';
+import { FolderField } from 'Query/Filter/FolderField';
+import { PathField } from 'Query/Filter/PathField';
+import { RootField } from 'Query/Filter/RootField';
+import { makeQueryContext } from 'Scripting/QueryContext';
+import { FunctionField } from 'Query/Filter/FunctionField';
+import { SearchInfo } from 'Query/SearchInfo';
 import { TaskBuilder } from '../TestingTools/TaskBuilder';
-import { FilenameField } from '../../src/Query/Filter/FilenameField';
-import { FolderField } from '../../src/Query/Filter/FolderField';
-import { PathField } from '../../src/Query/Filter/PathField';
-import { RootField } from '../../src/Query/Filter/RootField';
-import { makeQueryContext } from '../../src/Scripting/QueryContext';
-import { FunctionField } from '../../src/Query/Filter/FunctionField';
-import { SearchInfo } from '../../src/Query/SearchInfo';
 import { createTestTasksFile } from '../TestingTools/TasksFileHelpers';
 
 const tasksFile = createTestTasksFile('a/b/c.md');

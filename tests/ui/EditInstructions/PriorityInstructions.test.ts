@@ -1,11 +1,11 @@
-import { TaskBuilder } from '../../TestingTools/TaskBuilder';
 import {
     SetPriority,
     allPriorityInstructions,
     createEditingInstructionForPriorityGroups,
-} from '../../../src/ui/EditInstructions/PriorityInstructions';
-import { Priority } from '../../../src/Task/Priority';
-import type { TaskEditingInstruction } from '../../../src/ui/EditInstructions/TaskEditingInstruction';
+} from 'ui/EditInstructions/PriorityInstructions';
+import { Priority } from 'Task/Priority';
+import type { TaskEditingInstruction } from 'ui/EditInstructions/TaskEditingInstruction';
+import { TaskBuilder } from '../../TestingTools/TaskBuilder';
 
 describe('SetPriority', () => {
     const lowPriorityTask = new TaskBuilder().priority(Priority.Low).build();

@@ -1,7 +1,7 @@
-import { type Comparator, Sorter } from '../../../src/Query/Sort/Sorter';
-import type { Task } from '../../../src/Task/Task';
-import type { SearchInfo } from '../../../src/Query/SearchInfo';
-import { Statement } from '../../../src/Query/Statement';
+import { type Comparator, Sorter } from 'Query/Sort/Sorter';
+import type { Task } from 'Task/Task';
+import type { SearchInfo } from 'Query/SearchInfo';
+import { Statement } from 'Query/Statement';
 
 describe('Sorter', () => {
     const comparator: Comparator = (a: Task, b: Task, _searchInfo: SearchInfo) => {

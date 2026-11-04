@@ -1,4 +1,4 @@
-import type { LocalStorageProvider } from './LocalStorageProvider';
+import type { LocalStorageProvider } from 'Config/LocalStorageProvider';
 
 /**
  * Test implementation of {@link LocalStorageProvider}.

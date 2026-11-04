@@ -1,10 +1,10 @@
-import type { OptionalTasksFile } from '../Scripting/TasksFile';
-import type { Task } from '../Task/Task';
-import type { Filter } from './Filter/Filter';
-import { TaskGroups } from './Group/TaskGroups';
-import type { TaskGroup } from './Group/TaskGroup';
-import { SearchInfo } from './SearchInfo';
-import { totalTasksCountDisplayText } from './TaskCountDisplayText';
+import type { OptionalTasksFile } from 'Scripting/TasksFile';
+import type { Task } from 'Task/Task';
+import type { Filter } from 'Query/Filter/Filter';
+import { TaskGroups } from 'Query/Group/TaskGroups';
+import type { TaskGroup } from 'Query/Group/TaskGroup';
+import { SearchInfo } from 'Query/SearchInfo';
+import { totalTasksCountDisplayText } from 'Query/TaskCountDisplayText';
 
 export class QueryResult {
     public readonly taskGroups: TaskGroups;

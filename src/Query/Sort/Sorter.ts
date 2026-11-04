@@ -1,6 +1,6 @@
-import type { Task } from '../../Task/Task';
-import type { SearchInfo } from '../SearchInfo';
-import { Statement } from '../Statement';
+import type { Task } from 'Task/Task';
+import type { SearchInfo } from 'Query/SearchInfo';
+import { Statement } from 'Query/Statement';
 
 /**
  * A sorting function, that takes two Task objects and returns

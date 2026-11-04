@@ -1,4 +1,4 @@
-import { SerialRunner } from '../../src/lib/SerialRunner';
+import { SerialRunner } from 'lib/SerialRunner';
 
 /**
  * A job that records the data it saw, and only finishes when the test says so.

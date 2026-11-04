@@ -1,5 +1,5 @@
-import { parseGrouper } from '../Query/FilterParser';
-import type { Grouper } from '../Query/Group/Grouper';
+import { parseGrouper } from 'Query/FilterParser';
+import type { Grouper } from 'Query/Group/Grouper';
 
 export const queryViewModes = ['list', 'columns'] as const;
 export type QueryViewMode = (typeof queryViewModes)[number];

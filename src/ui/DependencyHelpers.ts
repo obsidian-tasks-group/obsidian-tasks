@@ -1,6 +1,6 @@
 import { type FuzzyMatch, prepareSimpleSearch } from 'obsidian';
-import type { Task } from '../Task/Task';
-import { GlobalFilter } from '../Config/GlobalFilter';
+import type { Task } from 'Task/Task';
+import { GlobalFilter } from 'Config/GlobalFilter';
 
 const MAX_SEARCH_RESULTS = 20;
 

@@ -1,9 +1,9 @@
 import { ButtonComponent, Modal, Notice, Setting, TextComponent } from 'obsidian';
 import type { Plugin } from 'obsidian';
-import { StatusConfiguration, StatusType } from '../Statuses/StatusConfiguration';
-import { StatusValidator } from '../Statuses/StatusValidator';
-import { Status } from '../Statuses/Status';
-import { i18n } from '../i18n/i18n';
+import { StatusConfiguration, StatusType } from 'Statuses/StatusConfiguration';
+import { StatusValidator } from 'Statuses/StatusValidator';
+import { Status } from 'Statuses/Status';
+import { i18n } from 'i18n/i18n';
 
 const validator = new StatusValidator();
 

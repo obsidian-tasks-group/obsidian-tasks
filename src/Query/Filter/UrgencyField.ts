@@ -1,8 +1,8 @@
-import type { Comparator } from '../Sort/Sorter';
-import type { Task } from '../../Task/Task';
-import type { Grouper, GrouperFunction } from '../Group/Grouper';
-import { Field } from './Field';
-import { FilterOrErrorMessage } from './FilterOrErrorMessage';
+import type { Comparator } from 'Query/Sort/Sorter';
+import type { Task } from 'Task/Task';
+import type { Grouper, GrouperFunction } from 'Query/Group/Grouper';
+import { Field } from 'Query/Filter/Field';
+import { FilterOrErrorMessage } from 'Query/Filter/FilterOrErrorMessage';
 
 /**
  * Support 'urgency' sorting.

@@ -1,10 +1,10 @@
-import type { TaskGroups } from '../Query/Group/TaskGroups';
-import type { Task } from '../Task/Task';
-import type { TaskEditingInstruction } from '../ui/EditInstructions/TaskEditingInstruction';
-import type { TaskGroup } from '../Query/Group/TaskGroup';
-import { createEditingInstructionForGroup } from '../ui/EditInstructions/CreateEditingInstructionForGroup';
-import { DragState } from './DragState';
-import { HtmlQueryResultsRenderer } from './HtmlQueryResultsRenderer';
+import type { TaskGroups } from 'Query/Group/TaskGroups';
+import type { Task } from 'Task/Task';
+import type { TaskEditingInstruction } from 'ui/EditInstructions/TaskEditingInstruction';
+import type { TaskGroup } from 'Query/Group/TaskGroup';
+import { createEditingInstructionForGroup } from 'ui/EditInstructions/CreateEditingInstructionForGroup';
+import { DragState } from 'Renderer/DragState';
+import { HtmlQueryResultsRenderer } from 'Renderer/HtmlQueryResultsRenderer';
 
 export class HtmlColumnQueryResultsRenderer extends HtmlQueryResultsRenderer {
     private readonly dragState = new DragState();
