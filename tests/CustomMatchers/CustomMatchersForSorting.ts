@@ -14,18 +14,17 @@ declare module 'vitest' {
     }
 }
 
+type DateOrString = string | moment.Moment | null;
+
 expect.extend({
-    toGiveCompareToResult(dates: (string | null)[], expected: -1 | 0 | 1) {
+    toGiveCompareToResult(dates: DateOrString[], expected: -1 | 0 | 1) {
         expect(dates.length).toEqual(2);
 
         const dateA = dates[0];
         const dateB = dates[1];
 
-        let a: moment.Moment | null = null;
-        if (dateA !== null) a = DateParser.parseDate(dateA);
-
-        let b: moment.Moment | null = null;
-        if (dateB !== null) b = DateParser.parseDate(dateB);
+        const a = typeof dateA === 'string' ? DateParser.parseDate(dateA) : dateA;
+        const b = typeof dateB === 'string' ? DateParser.parseDate(dateB) : dateB;
 
         const actual = compareByDate(a, b);
 
@@ -75,19 +74,19 @@ const before = -1; // This will actually pass if the comparator returns any valu
 // ---------------------------------------------------------------------
 // Sorting Dates
 // ---------------------------------------------------------------------
-export function expectDateComparesBefore(dateA: string | null, dateB: string | null) {
+export function expectDateComparesBefore(dateA: DateOrString, dateB: DateOrString) {
     testCompareByDateBothWays(dateA, dateB, before);
 }
 
-export function expectDateComparesEqual(dateA: string | null, dateB: string | null) {
+export function expectDateComparesEqual(dateA: DateOrString, dateB: DateOrString) {
     testCompareByDateBothWays(dateA, dateB, equal);
 }
 
-export function expectDateComparesAfter(dateA: string | null, dateB: string | null) {
+export function expectDateComparesAfter(dateA: DateOrString, dateB: DateOrString) {
     testCompareByDateBothWays(dateA, dateB, after);
 }
 
-function testCompareByDateBothWays(dateA: string | null, dateB: string | null, expected: -1 | 0 | 1) {
+function testCompareByDateBothWays(dateA: DateOrString, dateB: DateOrString, expected: -1 | 0 | 1) {
     expect([dateA, dateB]).toGiveCompareToResult(expected);
 
     const reverseExpected = expected === equal ? equal : expected === before ? after : before;
