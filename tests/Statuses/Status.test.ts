@@ -1,7 +1,7 @@
 import moment from 'moment';
-import { Status } from '../../src/Statuses/Status';
-import { StatusConfiguration, StatusType } from '../../src/Statuses/StatusConfiguration';
-import type { StatusCollectionEntry } from '../../src/Statuses/StatusCollection';
+import { Status } from 'Statuses/Status';
+import { StatusConfiguration, StatusType } from 'Statuses/StatusConfiguration';
+import type { StatusCollectionEntry } from 'Statuses/StatusCollection';
 
 window.moment = moment;
 

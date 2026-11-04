@@ -1,12 +1,12 @@
-import type TasksPlugin from '../main';
-import { toggleLine } from '../Commands/ToggleDone';
-import { QueryRenderer } from '../Renderer/QueryRenderer';
-import type { ReadOnlyTask } from '../Task/ReadOnlyTask';
-import { GlobalQuery } from '../Config/GlobalQuery';
-import { createTaskLineModal } from './createTaskLineModal';
-import type { TasksApiV1 } from './TasksApiV1';
-import { editTaskLineModal } from './editTaskLineModal';
-import { queryTasks } from './queryTasks';
+import type TasksPlugin from 'main';
+import { toggleLine } from 'Commands/ToggleDone';
+import { QueryRenderer } from 'Renderer/QueryRenderer';
+import type { ReadOnlyTask } from 'Task/ReadOnlyTask';
+import { GlobalQuery } from 'Config/GlobalQuery';
+import { createTaskLineModal } from 'Api/createTaskLineModal';
+import type { TasksApiV1 } from 'Api/TasksApiV1';
+import { editTaskLineModal } from 'Api/editTaskLineModal';
+import { queryTasks } from 'Api/queryTasks';
 
 /**
  * Factory method for API v1

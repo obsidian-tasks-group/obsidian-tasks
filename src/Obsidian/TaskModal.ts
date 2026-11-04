@@ -2,11 +2,11 @@ import { type App, setIcon } from 'obsidian';
 import { Modal } from 'obsidian';
 import { mount, unmount } from 'svelte';
 
-import EditTask from '../ui/EditTask.svelte';
-import type { Task } from '../Task/Task';
-import { StatusRegistry } from '../Statuses/StatusRegistry';
-import { Status } from '../Statuses/Status';
-import { OptionsModal } from './OptionsModal';
+import EditTask from 'ui/EditTask.svelte';
+import type { Task } from 'Task/Task';
+import { StatusRegistry } from 'Statuses/StatusRegistry';
+import { Status } from 'Statuses/Status';
+import { OptionsModal } from 'Obsidian/OptionsModal';
 
 export interface TaskModalParams {
     app: App;

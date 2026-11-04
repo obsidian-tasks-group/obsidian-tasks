@@ -1,4 +1,4 @@
-import { escapeRegExp } from '../../lib/RegExpTools';
+import { escapeRegExp } from 'lib/RegExpTools';
 
 export function anyOfTheseChars(allowedChars: string): string {
     return new RegExp('[' + escapeRegExp(allowedChars) + ']').source;

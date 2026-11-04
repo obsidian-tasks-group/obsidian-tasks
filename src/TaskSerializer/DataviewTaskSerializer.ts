@@ -1,8 +1,8 @@
-import { TaskLayoutComponent } from '../Layout/TaskLayoutOptions';
-import { PriorityTools } from '../lib/PriorityTools';
-import type { Priority } from '../Task/Priority';
-import type { Task } from '../Task/Task';
-import { DefaultTaskSerializer, taskIdRegex, taskIdSequenceRegex } from './DefaultTaskSerializer';
+import { TaskLayoutComponent } from 'Layout/TaskLayoutOptions';
+import { PriorityTools } from 'lib/PriorityTools';
+import type { Priority } from 'Task/Priority';
+import type { Task } from 'Task/Task';
+import { DefaultTaskSerializer, taskIdRegex, taskIdSequenceRegex } from 'TaskSerializer/DefaultTaskSerializer';
 
 /**
  * Takes a regex of the form 'key:: value' and turns it into a regex that can parse

@@ -1,4 +1,4 @@
-import { checkRegExpsIdentical, validateRegExpSafety } from '../../src/lib/RegExpTools';
+import { checkRegExpsIdentical, validateRegExpSafety } from 'lib/RegExpTools';
 
 describe('regular expression equality', () => {
     it('should recognise identical regular expressions', () => {

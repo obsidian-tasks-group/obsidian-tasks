@@ -1,8 +1,8 @@
-import { Task } from '../../Task/Task';
-import type { AllTaskDateFields } from '../../DateTime/DateFieldTypes';
-import type { TaskEditingInstruction } from './TaskEditingInstruction';
-import { createEditingInstructionForPriorityGroups } from './PriorityInstructions';
-import { createEditingInstructionForDateGroups } from './DateInstructions';
+import { Task } from 'Task/Task';
+import type { AllTaskDateFields } from 'DateTime/DateFieldTypes';
+import type { TaskEditingInstruction } from 'ui/EditInstructions/TaskEditingInstruction';
+import { createEditingInstructionForPriorityGroups } from 'ui/EditInstructions/PriorityInstructions';
+import { createEditingInstructionForDateGroups } from 'ui/EditInstructions/DateInstructions';
 
 /**
  * Creates a task-editing instruction for a group column based on the grouping property

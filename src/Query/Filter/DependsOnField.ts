@@ -1,7 +1,7 @@
-import type { Task } from '../../Task/Task';
-import { Field } from './Field';
-import { FilterOrErrorMessage } from './FilterOrErrorMessage';
-import { FilterInstructions } from './FilterInstructions';
+import type { Task } from 'Task/Task';
+import { Field } from 'Query/Filter/Field';
+import { FilterOrErrorMessage } from 'Query/Filter/FilterOrErrorMessage';
+import { FilterInstructions } from 'Query/Filter/FilterInstructions';
 
 export class DependsOnField extends Field {
     private readonly filterInstructions: FilterInstructions = new FilterInstructions();

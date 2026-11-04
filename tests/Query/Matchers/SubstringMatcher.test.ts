@@ -1,4 +1,4 @@
-import { SubstringMatcher } from '../../../src/Query/Matchers/SubstringMatcher';
+import { SubstringMatcher } from 'Query/Matchers/SubstringMatcher';
 
 describe('SubstringMatcher', () => {
     it('should match simple text', () => {

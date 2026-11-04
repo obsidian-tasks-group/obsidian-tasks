@@ -1,12 +1,12 @@
 import moment from 'moment';
-import { findTasksByDescription } from '../../src/lib/QuickSearchTasks';
-import { Status } from '../../src/Statuses/Status';
-import { TaskBuilder } from '../TestingTools/TaskBuilder';
+import { findTasksByDescription } from 'lib/QuickSearchTasks';
+import { Status } from 'Statuses/Status';
+import { GlobalQuery } from 'Config/GlobalQuery';
+import type { PresetsMap } from 'Query/Presets/Presets';
+import { type QuickSearchSettings, resetSettings, updateSettings } from 'Config/Settings';
+import type { Task } from 'Task/Task';
 import { fromLines } from '../TestingTools/TestHelpers';
-import { GlobalQuery } from '../../src/Config/GlobalQuery';
-import type { PresetsMap } from '../../src/Query/Presets/Presets';
-import { type QuickSearchSettings, resetSettings, updateSettings } from '../../src/Config/Settings';
-import type { Task } from '../../src/Task/Task';
+import { TaskBuilder } from '../TestingTools/TaskBuilder';
 
 window.moment = moment;
 

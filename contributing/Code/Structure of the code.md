@@ -92,7 +92,8 @@ The remainder are:
 - [\_\_test_data\_\_/MockDataForTogglingTasks/](https://github.com/obsidian-tasks-group/obsidian-tasks/tree/main/tests/__test_data__/MockDataForTogglingTasks)
   - Some data used by [File.test.ts](https://github.com/obsidian-tasks-group/obsidian-tasks/blob/main/tests/Obsidian/File.test.ts).
 - [global-setup.js](https://github.com/obsidian-tasks-group/obsidian-tasks/blob/main/tests/global-setup.js)
-  - Enforce all tests to run in UTC time.
+  - Enforce all tests to run in UTC time, by default.
+  - Individual tests can use `withTimezone()` to run in another time zone: see [[Testing and Time Zones]].
 - [CustomMatchers/](https://github.com/obsidian-tasks-group/obsidian-tasks/tree/main/tests/CustomMatchers)
   - Vitest custom matchers for Tasks classes.
 - [Obsidian/\_\_test_data\_\_/](https://github.com/obsidian-tasks-group/obsidian-tasks/tree/main/tests/Obsidian/__test_data__)

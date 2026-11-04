@@ -1,10 +1,10 @@
 import moment from 'moment';
-import { Task } from '../../src/Task/Task';
-import type { TaskDetails, TaskSerializer } from '../../src/TaskSerializer';
+import { Task } from 'Task/Task';
+import type { TaskDetails, TaskSerializer } from 'TaskSerializer';
+import { OnCompletion } from 'Task/OnCompletion';
+import { Priority } from 'Task/Priority';
+import { TaskRegularExpressions } from 'Task/TaskRegularExpressions';
 import { TaskBuilder } from '../TestingTools/TaskBuilder';
-import { OnCompletion } from '../../src/Task/OnCompletion';
-import { Priority } from '../../src/Task/Priority';
-import { TaskRegularExpressions } from '../../src/Task/TaskRegularExpressions';
 
 window.moment = moment;
 

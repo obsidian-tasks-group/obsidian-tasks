@@ -1,7 +1,7 @@
 import { type RenderResult, fireEvent } from '@testing-library/svelte';
-import type { EditModalShowSettings } from '../../src/Config/EditModalShowSettings';
-import { getSettings } from '../../src/Config/Settings';
-import type EditTask from '../../src/ui/EditTask.svelte';
+import type { EditModalShowSettings } from 'Config/EditModalShowSettings';
+import { getSettings } from 'Config/Settings';
+import type EditTask from 'ui/EditTask.svelte';
 
 /**
  * Find the element with the given id.

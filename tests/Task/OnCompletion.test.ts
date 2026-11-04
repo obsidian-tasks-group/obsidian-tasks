@@ -1,10 +1,10 @@
 import moment from 'moment';
 import { verifyAll } from '@approval-tests/approvals/lib/Providers/Vitest/VitestApprovals';
-import { Status } from '../../src/Statuses/Status';
-import { StatusConfiguration, StatusType } from '../../src/Statuses/StatusConfiguration';
+import { Status } from 'Statuses/Status';
+import { StatusConfiguration, StatusType } from 'Statuses/StatusConfiguration';
+import type { Task } from 'Task/Task';
+import { OnCompletion, handleOnCompletion, parseOnCompletionValue } from 'Task/OnCompletion';
 import { fromLine, toMarkdown } from '../TestingTools/TestHelpers';
-import type { Task } from '../../src/Task/Task';
-import { OnCompletion, handleOnCompletion, parseOnCompletionValue } from '../../src/Task/OnCompletion';
 
 window.moment = moment;
 

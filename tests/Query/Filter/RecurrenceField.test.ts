@@ -1,6 +1,6 @@
 import moment from 'moment';
 
-import { RecurrenceField } from '../../../src/Query/Filter/RecurrenceField';
+import { RecurrenceField } from 'Query/Filter/RecurrenceField';
 import { TaskBuilder } from '../../TestingTools/TaskBuilder';
 import { RecurrenceBuilder } from '../../TestingTools/RecurrenceBuilder';
 import { fromLine } from '../../TestingTools/TestHelpers';

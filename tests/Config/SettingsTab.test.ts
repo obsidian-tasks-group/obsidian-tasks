@@ -1,7 +1,10 @@
 import { verifyAsJson } from '@approval-tests/approvals/lib/Providers/Vitest/VitestApprovals';
-import { lastModalState, resetLastModalState } from '../__mocks__/obsidian';
 
-import { SettingsTab } from '../../src/Config/SettingsTab';
+import { SettingsTab } from 'Config/SettingsTab';
+import { GlobalFilter } from 'Config/GlobalFilter';
+import { getSettings, resetSettings } from 'Config/Settings';
+import { i18n } from 'i18n/i18n';
+import { MarkdownView, lastModalState, resetLastModalState } from '../__mocks__/obsidian';
 
 // Convert the declarative settings tree into approval-friendly JSON.
 // This preserves visible text/HTML and replaces callbacks with stable markers.
@@ -132,5 +135,99 @@ describe('SettingsTab post-1.13', () => {
         // TODO Show the 'Enable custom searches' modal.
         // TODO Show options in the 'Task count location' dropdown.
         verifyAsJson(serializeForApproval(settingsTab.getSettingDefinitions()));
+    });
+});
+
+describe('SettingsTab applies changed settings without reloading', () => {
+    const readingView = Object.assign(new MarkdownView(), { previewMode: { rerender: vi.fn() } });
+    const pluginWithWorkspace = {
+        ...plugin,
+        app: { workspace: { getLeavesOfType: vi.fn(() => [{ view: readingView }]) } },
+    } as any;
+
+    afterEach(() => {
+        resetSettings();
+        GlobalFilter.getInstance().reset();
+        vi.clearAllMocks();
+    });
+
+    /**
+     * Find the definition of the setting with the given display name, anywhere in the
+     * nested groups and pages returned by {@link SettingsTab.getSettingDefinitions}.
+     */
+    function findSetting(items: unknown, name: string): any {
+        if (Array.isArray(items)) {
+            for (const item of items) {
+                const found = findSetting(item, name);
+                if (found) return found;
+            }
+        } else if (items !== null && typeof items === 'object') {
+            const record = items as Record<string, unknown>;
+            if (record.name === name) return record;
+            for (const value of Object.values(record)) {
+                const found = findSetting(value, name);
+                if (found) return found;
+            }
+        }
+        return undefined;
+    }
+
+    /**
+     * Render a toggle or dropdown setting, as the Tasks settings pane would, and return its onChange handler,
+     * so a test can change the setting as if the user changed the control.
+     *
+     * Obsidian's Setting is replaced by a fake with only the methods the setting calls.
+     */
+    function renderSetting<T>(name: string) {
+        const settingsTab = new SettingsTab({ plugin: pluginWithWorkspace, events });
+        const definition = findSetting(settingsTab.getSettingDefinitions(), name);
+        expect(definition).toBeDefined();
+
+        let onChange: (value: T) => Promise<void> = async () => {};
+        const addValueComponent = (callback: (component: any) => void) => {
+            // Capture the handler the setting registers with component.onChange().
+            const component = {
+                addOption: () => component,
+                setValue: () => component,
+                onChange: (handler: typeof onChange) => {
+                    onChange = handler;
+                    return component;
+                },
+            };
+            callback(component);
+            return fakeSetting;
+        };
+        const fakeSetting = {
+            addToggle: addValueComponent,
+            addDropdown: addValueComponent,
+            addExtraButton: () => fakeSetting,
+        };
+        definition.render(fakeSetting);
+
+        return (value: T) => onChange(value);
+    }
+
+    it('should redraw tasks when "Remove global filter" changes', async () => {
+        const changeToggle = renderSetting<boolean>(i18n.t('settings.globalFilter.removeFilter.name'));
+        // Toggle to the opposite of the current value, so the test does not depend on the default.
+        const newValue = !getSettings().removeGlobalFilter;
+
+        await changeToggle(newValue);
+
+        expect(getSettings().removeGlobalFilter).toEqual(newValue);
+        expect(GlobalFilter.getInstance().getRemoveGlobalFilter()).toEqual(newValue);
+        expect(events.triggerReloadOpenSearchResults).toHaveBeenCalled();
+        expect(readingView.previewMode.rerender).toHaveBeenCalledWith(true);
+    });
+
+    it('should re-read the vault when "Task format" changes', async () => {
+        const changeDropdown = renderSetting<string>(i18n.t('settings.format.name'));
+
+        await changeDropdown('dataview');
+
+        expect(getSettings().taskFormat).toEqual('dataview');
+        // Tasks are parsed using the task format, so the vault's tasks need re-reading.
+        expect(events.triggerReloadVault).toHaveBeenCalled();
+        expect(readingView.previewMode.rerender).toHaveBeenCalledWith(true);
     });
 });

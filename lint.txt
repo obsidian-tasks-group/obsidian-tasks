@@ -2,11 +2,9 @@ yarn run v1.22.19
 $ eslint ./src       && eslint ./tests       && tsc --noEmit --pretty && svelte-check
 
 /Users/clare/Documents/develop/Obsidian/schemar/obsidian-tasks/src/Config/SettingsTab.ts
-    47:14  warning  This PluginSettingTab does not implement getSettingDefinitions(); its settings will not appear in Obsidian's settings search for users on 1.13.0 or later. Consider adopting the declarative settings API  obsidianmd/settings-tab/prefer-setting-definitions
-    51:37  warning  The `Function` type accepts any function-like value.
-Prefer explicitly defining any function parameters and return type                                                                                    @typescript-eslint/no-unsafe-function-type
-   714:17  warning  Unsafe call of a `Function` typed value                                                                                                                                                                    @typescript-eslint/no-unsafe-call
-  1009:9   warning  Unsafe call of a type that could not be resolved                                                                                                                                                           @typescript-eslint/no-unsafe-call
+   54:18  warning  Invalid type "unknown" of template literal expression                             @typescript-eslint/restrict-template-expressions
+  309:67  warning  Promise returned in function argument where a void return was expected            @typescript-eslint/no-misused-promises
+  546:29  warning  Promise-returning function provided to property where a void return was expected  @typescript-eslint/no-misused-promises
 
 /Users/clare/Documents/develop/Obsidian/schemar/obsidian-tasks/src/Obsidian/Cache.ts
   240:64  warning  Promise returned in function argument where a void return was expected  @typescript-eslint/no-misused-promises
@@ -16,7 +14,7 @@ Prefer explicitly defining any function parameters and return type              
   245:38  warning  '_' is assigned a value but never used                                  @typescript-eslint/no-unused-vars
 
 /Users/clare/Documents/develop/Obsidian/schemar/obsidian-tasks/src/Obsidian/TaskModal.ts
-  59:17  warning  Promise-returning function provided to property where a void return was expected  @typescript-eslint/no-misused-promises
+  61:17  warning  Promise-returning function provided to property where a void return was expected  @typescript-eslint/no-misused-promises
 
 /Users/clare/Documents/develop/Obsidian/schemar/obsidian-tasks/src/Query/Filter/BooleanField.ts
   193:62  warning  Invalid operand for a '+' operation. Operands must each be a number or string, allowing a string + any of: `any`, `boolean`, `null`, `RegExp`, `undefined`. Got `Token`  @typescript-eslint/restrict-plus-operands
@@ -79,20 +77,19 @@ Prefer explicitly defining any function parameters and return type  @typescript-
   31:24  warning  '_name' is assigned a value but never used  @typescript-eslint/no-unused-vars
 
 /Users/clare/Documents/develop/Obsidian/schemar/obsidian-tasks/src/Suggestor/EditorSuggestorPopup.ts
-  115:16  warning  Unsafe call of a type that could not be resolved                                                                                         @typescript-eslint/no-unsafe-call
-  115:26  warning  Unsafe member access .state on a type that cannot be resolved                                                                            @typescript-eslint/no-unsafe-member-access
-  126:5   warning  Promise-returning method provided where a void return was expected by extended/implemented type 'EditorSuggest<SuggestInfoWithContext>'  @typescript-eslint/no-misused-promises
-  136:13  warning  Unsafe call of an `any` typed value                                                                                                      @typescript-eslint/no-unsafe-call
-  136:24  warning  Unexpected any. Specify a different type                                                                                                 @typescript-eslint/no-explicit-any
-  136:30  warning  Unsafe member access .cm on an `any` value                                                                                               @typescript-eslint/no-unsafe-member-access
+  120:16  warning  Unsafe call of a type that could not be resolved                                                                                         @typescript-eslint/no-unsafe-call
+  120:26  warning  Unsafe member access .state on a type that cannot be resolved                                                                            @typescript-eslint/no-unsafe-member-access
+  131:5   warning  Promise-returning method provided where a void return was expected by extended/implemented type 'EditorSuggest<SuggestInfoWithContext>'  @typescript-eslint/no-misused-promises
+  141:13  warning  Unsafe call of an `any` typed value                                                                                                      @typescript-eslint/no-unsafe-call
+  141:24  warning  Unexpected any. Specify a different type                                                                                                 @typescript-eslint/no-explicit-any
+  141:30  warning  Unsafe member access .cm on an `any` value                                                                                               @typescript-eslint/no-unsafe-member-access
 
 /Users/clare/Documents/develop/Obsidian/schemar/obsidian-tasks/src/Suggestor/Suggestor.ts
   483:57  warning  Invalid type "string | string[]" of template literal expression  @typescript-eslint/restrict-template-expressions
 
 /Users/clare/Documents/develop/Obsidian/schemar/obsidian-tasks/src/Task/ListItem.ts
-  143:19  warning  Unsafe assignment of an `any` value                                                               @typescript-eslint/no-unsafe-assignment
-  177:17  warning  'this[el]' may use Object's default stringification format ('[object Object]') when stringified   @typescript-eslint/no-base-to-string
-  177:42  warning  'other[el]' may use Object's default stringification format ('[object Object]') when stringified  @typescript-eslint/no-base-to-string
+  174:17  warning  'this[el]' may use Object's default stringification format ('[object Object]') when stringified   @typescript-eslint/no-base-to-string
+  174:42  warning  'other[el]' may use Object's default stringification format ('[object Object]') when stringified  @typescript-eslint/no-base-to-string
 
 /Users/clare/Documents/develop/Obsidian/schemar/obsidian-tasks/src/Task/Task.ts
   104:24  warning  Unexpected any. Specify a different type                                                          @typescript-eslint/no-explicit-any
@@ -140,14 +137,20 @@ Prefer explicitly defining any function parameters and return type  @typescript-
   37:9   warning  Promise-returning function provided to property where a void return was expected  @typescript-eslint/no-misused-promises
   76:38  warning  Promise returned in function argument where a void return was expected            @typescript-eslint/no-misused-promises
 
-✖ 88 problems (0 errors, 88 warnings)
+/Users/clare/Documents/develop/Obsidian/schemar/obsidian-tasks/src/ui/QuickSearchTasksModal.ts
+  86:9  warning  Promises must be awaited, end with a call to .catch, end with a call to .then with a rejection handler or be explicitly marked as ignored with the `void` operator  @typescript-eslint/no-floating-promises
+
+✖ 87 problems (0 errors, 87 warnings)
   0 errors and 10 warnings potentially fixable with the `--fix` option.
 
 
-====================================
+/Users/clare/Documents/develop/Obsidian/schemar/obsidian-tasks/tests/__mocks__/obsidian.ts
+  121:5  warning  Do not write to DOM directly using innerHTML/outerHTML property  @microsoft/sdl/no-inner-html
+
+✖ 1 problem (0 errors, 1 warning)
+
 Loading svelte-check in workspace: /Users/clare/Documents/develop/Obsidian/schemar/obsidian-tasks
 Getting Svelte diagnostics...
 
-====================================
 svelte-check found 0 errors and 0 warnings
-Done in 23.64s.
+Done in 12.69s.

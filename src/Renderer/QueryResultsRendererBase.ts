@@ -1,15 +1,15 @@
-import { GlobalFilter } from '../Config/GlobalFilter';
-import { GlobalQuery } from '../Config/GlobalQuery';
-import type { IQuery } from '../IQuery';
-import { State } from '../Obsidian/Cache';
-import type { GroupDisplayHeading } from '../Query/Group/GroupDisplayHeading';
-import type { TaskGroups } from '../Query/Group/TaskGroups';
-import { explainResults } from '../Query/QueryRendererHelper';
-import type { QueryResult } from '../Query/QueryResult';
-import type { TasksFile } from '../Scripting/TasksFile';
-import type { ListItem } from '../Task/ListItem';
-import { Task } from '../Task/Task';
-import type { TaskGroup } from '../Query/Group/TaskGroup';
+import { GlobalFilter } from 'Config/GlobalFilter';
+import { GlobalQuery } from 'Config/GlobalQuery';
+import type { IQuery } from 'IQuery';
+import { State } from 'Obsidian/Cache';
+import type { GroupDisplayHeading } from 'Query/Group/GroupDisplayHeading';
+import type { TaskGroups } from 'Query/Group/TaskGroups';
+import { explainResults } from 'Query/QueryRendererHelper';
+import type { QueryResult } from 'Query/QueryResult';
+import type { TasksFile } from 'Scripting/TasksFile';
+import type { ListItem } from 'Task/ListItem';
+import { Task } from 'Task/Task';
+import type { TaskGroup } from 'Query/Group/TaskGroup';
 
 export abstract class QueryResultsRendererBase {
     private readonly source: string;

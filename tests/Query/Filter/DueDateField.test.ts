@@ -1,6 +1,9 @@
 import moment from 'moment';
-import { DueDateField } from '../../../src/Query/Filter/DueDateField';
-import type { FilterOrErrorMessage } from '../../../src/Query/Filter/FilterOrErrorMessage';
+import { DueDateField } from 'Query/Filter/DueDateField';
+import type { FilterOrErrorMessage } from 'Query/Filter/FilterOrErrorMessage';
+import { Query } from 'Query/Query';
+import { MarkdownTable } from 'lib/MarkdownTable';
+import { Explainer } from 'Query/Explain/Explainer';
 import { TaskBuilder } from '../../TestingTools/TaskBuilder';
 import { testFilter } from '../../TestingTools/FilterTestHelpers';
 import {
@@ -8,11 +11,8 @@ import {
     expectTaskComparesBefore,
     expectTaskComparesEqual,
 } from '../../CustomMatchers/CustomMatchersForSorting';
-import { Query } from '../../../src/Query/Query';
 import { verifyMarkdown } from '../../TestingTools/VerifyMarkdown';
 import { SampleTasks } from '../../TestingTools/SampleTasks';
-import { MarkdownTable } from '../../../src/lib/MarkdownTable';
-import { Explainer } from '../../../src/Query/Explain/Explainer';
 
 window.moment = moment;
 

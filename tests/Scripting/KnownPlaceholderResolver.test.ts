@@ -1,5 +1,5 @@
-import { resolveKnownPlaceholder } from '../../src/Scripting/KnownPlaceholderResolver';
-import { makeQueryContext } from '../../src/Scripting/QueryContext';
+import { resolveKnownPlaceholder } from 'Scripting/KnownPlaceholderResolver';
+import { makeQueryContext } from 'Scripting/QueryContext';
 import { getTasksFileFromMockData } from '../TestingTools/MockDataHelpers';
 
 describe('KnownPlaceholderResolver', () => {

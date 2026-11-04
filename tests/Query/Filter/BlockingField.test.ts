@@ -1,7 +1,7 @@
+import { BlockingField } from 'Query/Filter/BlockingField';
+import { BooleanField } from 'Query/Filter/BooleanField';
+import { Status } from 'Statuses/Status';
 import { TaskBuilder } from '../../TestingTools/TaskBuilder';
-import { BlockingField } from '../../../src/Query/Filter/BlockingField';
-import { BooleanField } from '../../../src/Query/Filter/BooleanField';
-import { Status } from '../../../src/Statuses/Status';
 import { fromLine } from '../../TestingTools/TestHelpers';
 
 describe('blocking', () => {

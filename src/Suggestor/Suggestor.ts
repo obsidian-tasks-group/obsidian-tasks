@@ -1,22 +1,22 @@
 import type { Editor, EditorPosition } from 'obsidian';
 
-import type { Settings } from '../Config/Settings';
-import { DateParser } from '../DateTime/DateParser';
-import { doAutocomplete } from '../DateTime/DateAbbreviations';
-import { Occurrence } from '../Task/Occurrence';
-import { Recurrence } from '../Task/Recurrence';
+import type { Settings } from 'Config/Settings';
+import { DateParser } from 'DateTime/DateParser';
+import { doAutocomplete } from 'DateTime/DateAbbreviations';
+import { Occurrence } from 'Task/Occurrence';
+import { Recurrence } from 'Task/Recurrence';
 import {
     type DefaultTaskSerializerSymbols,
     allTaskPluginEmojis,
     taskIdRegex,
-} from '../TaskSerializer/DefaultTaskSerializer';
-import { Task } from '../Task/Task';
-import { generateUniqueId } from '../Task/TaskDependency';
-import { GlobalFilter } from '../Config/GlobalFilter';
-import { TaskRegularExpressions } from '../Task/TaskRegularExpressions';
-import { searchForCandidateTasksForDependency } from '../ui/DependencyHelpers';
-import { escapeRegExp } from '../lib/RegExpTools';
-import { StatusType } from '../Statuses/StatusConfiguration';
+} from 'TaskSerializer/DefaultTaskSerializer';
+import { Task } from 'Task/Task';
+import { generateUniqueId } from 'Task/TaskDependency';
+import { GlobalFilter } from 'Config/GlobalFilter';
+import { TaskRegularExpressions } from 'Task/TaskRegularExpressions';
+import { searchForCandidateTasksForDependency } from 'ui/DependencyHelpers';
+import { escapeRegExp } from 'lib/RegExpTools';
+import { StatusType } from 'Statuses/StatusConfiguration';
 import type { SuggestInfo, SuggestionBuilder } from '.';
 
 /**
@@ -165,7 +165,9 @@ function addTaskPropertySuggestions(
 }
 
 function addField(genericSuggestions: SuggestInfo[], line: string, dateSymbol: string, fieldName: string) {
-    if (!line.includes(dateSymbol))
+    // Strip tags to prevent emojis inside tags from hiding the field suggestions
+    const lineWithoutTags = line.replace(TaskRegularExpressions.hashTags, '');
+    if (!lineWithoutTags.includes(dateSymbol))
         genericSuggestions.push({
             displayText: `${dateSymbol} ${fieldName}`,
             appendText: `${dateSymbol} `,

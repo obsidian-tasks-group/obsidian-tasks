@@ -1,5 +1,5 @@
-import { Task } from '../../src/Task/Task';
-import { TaskLocation } from '../../src/Task/TaskLocation';
+import { Task } from 'Task/Task';
+import { TaskLocation } from 'Task/TaskLocation';
 import { createTestTasksFile } from './TasksFileHelpers';
 
 /**

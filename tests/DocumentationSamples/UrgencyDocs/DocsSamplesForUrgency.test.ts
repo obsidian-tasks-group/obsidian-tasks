@@ -1,10 +1,9 @@
 import moment from 'moment';
 
+import { Urgency } from 'Task/Urgency';
+import { Priority } from 'Task/Priority';
 import { verifyMarkdownForDocs } from '../../TestingTools/VerifyMarkdown';
 import { TaskBuilder } from '../../TestingTools/TaskBuilder';
-import { Urgency } from '../../../src/Task/Urgency';
-
-import { Priority } from '../../../src/Task/Priority';
 
 window.moment = moment;
 

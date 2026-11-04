@@ -1,10 +1,10 @@
-import { StatusSettings } from '../Config/StatusSettings';
-import { MarkdownTable } from '../lib/MarkdownTable';
-import { i18n } from '../i18n/i18n';
-import { GlobalFilter } from '../Config/GlobalFilter';
-import { type StatusConfiguration, StatusType } from './StatusConfiguration';
-import { Status } from './Status';
-import { StatusRegistry } from './StatusRegistry';
+import { StatusSettings } from 'Config/StatusSettings';
+import { MarkdownTable } from 'lib/MarkdownTable';
+import { i18n } from 'i18n/i18n';
+import { GlobalFilter } from 'Config/GlobalFilter';
+import { type StatusConfiguration, StatusType } from 'Statuses/StatusConfiguration';
+import { Status } from 'Statuses/Status';
+import { StatusRegistry } from 'Statuses/StatusRegistry';
 
 function getFirstIndex(statusConfigurations: StatusConfiguration[], wantedSymbol: string) {
     return statusConfigurations.findIndex((s) => s.symbol === wantedSymbol);

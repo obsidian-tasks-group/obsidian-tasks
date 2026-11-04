@@ -1,6 +1,6 @@
 import type { Reference } from 'obsidian';
-import type { TasksFile } from '../Scripting/TasksFile';
-import { LinkResolver } from './LinkResolver';
+import type { TasksFile } from 'Scripting/TasksFile';
+import { LinkResolver } from 'Task/LinkResolver';
 
 export class Link {
     private readonly rawLink: Reference;

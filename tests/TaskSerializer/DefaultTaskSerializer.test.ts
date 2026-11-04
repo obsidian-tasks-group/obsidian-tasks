@@ -1,16 +1,16 @@
 import moment from 'moment';
-import type { Settings } from '../../src/Config/Settings';
-import { DefaultTaskSerializer } from '../../src/TaskSerializer';
-import { RecurrenceBuilder } from '../TestingTools/RecurrenceBuilder';
+import type { Settings } from 'Config/Settings';
+import { DefaultTaskSerializer } from 'TaskSerializer';
 import {
     DEFAULT_SYMBOLS,
     type DefaultTaskSerializerSymbols,
     allTaskPluginEmojis,
-} from '../../src/TaskSerializer/DefaultTaskSerializer';
+} from 'TaskSerializer/DefaultTaskSerializer';
+import { OnCompletion } from 'Task/OnCompletion';
+import { Priority } from 'Task/Priority';
+import { escapeInvisibleCharacters } from 'lib/StringHelpers';
 import { TaskBuilder } from '../TestingTools/TaskBuilder';
-import { OnCompletion } from '../../src/Task/OnCompletion';
-import { Priority } from '../../src/Task/Priority';
-import { escapeInvisibleCharacters } from '../../src/lib/StringHelpers';
+import { RecurrenceBuilder } from '../TestingTools/RecurrenceBuilder';
 
 window.moment = moment;
 

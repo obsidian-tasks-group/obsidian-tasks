@@ -1,8 +1,8 @@
-import type { Task } from '../../Task/Task';
-import type { SearchInfo } from '../SearchInfo';
-import type { Grouper } from './Grouper';
-import { GroupingTreeNode } from './GroupingTreeNode';
-import type { TaskGroupingTreeStorage } from './TaskGroupingTreeStorage';
+import type { Task } from 'Task/Task';
+import type { SearchInfo } from 'Query/SearchInfo';
+import type { Grouper } from 'Query/Group/Grouper';
+import { GroupingTreeNode } from 'Query/Group/GroupingTreeNode';
+import type { TaskGroupingTreeStorage } from 'Query/Group/TaskGroupingTreeStorage';
 
 /*
  * A tree of tasks where every level in the tree corresponds to a grouping property.

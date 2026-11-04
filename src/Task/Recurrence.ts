@@ -1,5 +1,5 @@
 import { RRule } from 'rrule';
-import type { Occurrence } from './Occurrence';
+import type { Occurrence } from 'Task/Occurrence';
 
 export class Recurrence {
     private readonly rrule: RRule;

@@ -1,4 +1,4 @@
-import type { Explanation } from '../Explain/Explanation';
+import type { Explanation } from 'Query/Explain/Explanation';
 
 /**
  * An interface for determining whether a string value matches a particular condition.

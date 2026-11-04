@@ -1,4 +1,4 @@
-import { SearchInfo } from '../../src/Query/SearchInfo';
+import { SearchInfo } from 'Query/SearchInfo';
 import { TaskBuilder } from '../TestingTools/TaskBuilder';
 import { createTestTasksFile } from '../TestingTools/TasksFileHelpers';
 

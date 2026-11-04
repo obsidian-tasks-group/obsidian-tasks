@@ -1,7 +1,7 @@
-import type { Task } from '../../Task/Task';
-import { Explanation } from '../Explain/Explanation';
-import type { SearchInfo } from '../SearchInfo';
-import { Statement } from '../Statement';
+import type { Task } from 'Task/Task';
+import { Explanation } from 'Query/Explain/Explanation';
+import type { SearchInfo } from 'Query/SearchInfo';
+import { Statement } from 'Query/Statement';
 
 /**
  * A filtering function, that takes a Task object and returns

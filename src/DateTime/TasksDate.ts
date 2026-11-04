@@ -1,6 +1,6 @@
 import { Notice } from 'obsidian';
-import { PropertyCategory } from '../lib/PropertyCategory';
-import { TaskRegularExpressions } from '../Task/TaskRegularExpressions';
+import { PropertyCategory } from 'lib/PropertyCategory';
+import { TaskRegularExpressions } from 'Task/TaskRegularExpressions';
 
 /**
  * TasksDate encapsulates a date, for simplifying the JavaScript expressions users need to

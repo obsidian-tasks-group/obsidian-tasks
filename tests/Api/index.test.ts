@@ -1,11 +1,11 @@
 import type { App, CachedMetadata, TFile } from 'obsidian';
+import type TasksPlugin from 'main';
+import { GlobalQuery } from 'Config/GlobalQuery';
+import { createTaskLineModal } from 'Api/createTaskLineModal';
+import { editTaskLineModal } from 'Api/editTaskLineModal';
+import { tasksApiV1 } from 'Api/index';
 import { createTFile } from '../__mocks__/obsidian';
-import type TasksPlugin from '../../src/main';
-import { GlobalQuery } from '../../src/Config/GlobalQuery';
 import { TaskBuilder } from '../TestingTools/TaskBuilder';
-import { createTaskLineModal } from '../../src/Api/createTaskLineModal';
-import { editTaskLineModal } from '../../src/Api/editTaskLineModal';
-import { tasksApiV1 } from '../../src/Api/index';
 
 import { MockDataLoader } from '../TestingTools/MockDataLoader';
 import type { SimulatedFile } from '../Obsidian/SimulatedFile';

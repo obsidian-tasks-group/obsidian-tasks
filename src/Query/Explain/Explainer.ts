@@ -1,6 +1,6 @@
-import { getSettings } from '../../Config/Settings';
-import type { Query } from '../Query';
-import type { Statement } from '../Statement';
+import { getSettings } from 'Config/Settings';
+import type { Query } from 'Query/Query';
+import type { Statement } from 'Query/Statement';
 
 export class Explainer {
     private readonly indentation: string;

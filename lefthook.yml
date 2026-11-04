@@ -14,11 +14,13 @@ pre-commit:
   parallel: false
   commands:
     lint:
-      glob: '*.ts'
-      run: yarn lint "{staged_files}" && git add "{staged_files}"
-    lint-svelte:
-      glob: '*.svelte'
-      run: yarn lint && git add "{staged_files}"
+      glob: '{src,tests}/{*,**/*}.{ts,svelte}'
+      run: yarn eslint --fix "{staged_files}" && git add "{staged_files}"
+    # svelte-check type-checks every .ts file in tsconfig.json too, not just .svelte files,
+    # so it replaces tsc here and keeps every commit compiling (for git bisect).
+    typecheck:
+      glob: '*.{ts,svelte}'
+      run: yarn svelte-check
     lint-markdown:
       glob: '*.md'
       run: yarn lint:markdown && git add "{staged_files}"

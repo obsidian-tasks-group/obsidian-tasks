@@ -1,7 +1,7 @@
 import { verifyAll } from '@approval-tests/approvals/lib/Providers/Vitest/VitestApprovals';
-import { errorMessageForException } from '../../../src/lib/ExceptionTools';
-import { BooleanField } from '../../../src/Query/Filter/BooleanField';
-import { BooleanDelimiters } from '../../../src/Query/Filter/BooleanDelimiters';
+import { errorMessageForException } from 'lib/ExceptionTools';
+import { BooleanField } from 'Query/Filter/BooleanField';
+import { BooleanDelimiters } from 'Query/Filter/BooleanDelimiters';
 
 export const inputs = `
 (not done) AND (is recurring)

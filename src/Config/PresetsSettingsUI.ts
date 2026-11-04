@@ -8,12 +8,12 @@ import {
     TextComponent,
     displayTooltip,
 } from 'obsidian';
-import type TasksPlugin from '../main';
-import type { TasksEvents } from '../Obsidian/TasksEvents';
-import { PresetsSettingsService } from '../Query/Presets/PresetsSettingsService';
-import type { PresetsMap } from '../Query/Presets/Presets';
-import { i18n } from '../i18n/i18n';
-import { type Settings, getSettings, updateSettings } from './Settings';
+import type TasksPlugin from 'main';
+import type { TasksEvents } from 'Obsidian/TasksEvents';
+import { PresetsSettingsService } from 'Query/Presets/PresetsSettingsService';
+import type { PresetsMap } from 'Query/Presets/Presets';
+import { i18n } from 'i18n/i18n';
+import { type Settings, getSettings, updateSettings } from 'Config/Settings';
 
 type RefreshViewCallback = () => void;
 

@@ -1,6 +1,6 @@
 import moment from 'moment';
 
-import type { Task } from '../../../../src/Task/Task';
+import type { Task } from 'Task/Task';
 import { readAllTasksFromAllSimulatedFiles } from '../../../Obsidian/SimulatedFile';
 import { SampleTasks } from '../../../TestingTools/SampleTasks';
 import {

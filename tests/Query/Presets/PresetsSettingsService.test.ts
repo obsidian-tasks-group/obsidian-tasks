@@ -1,5 +1,5 @@
-import { PresetsSettingsService } from '../../../src/Query/Presets/PresetsSettingsService';
-import type { PresetsMap } from '../../../src/Query/Presets/Presets';
+import { PresetsSettingsService } from 'Query/Presets/PresetsSettingsService';
+import type { PresetsMap } from 'Query/Presets/Presets';
 
 describe('PresetsSettingsService', () => {
     let service: PresetsSettingsService;

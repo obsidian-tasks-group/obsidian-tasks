@@ -2,7 +2,6 @@
   "extends": "@tsconfig/svelte/tsconfig.json",
   "compilerOptions": {
     "allowSyntheticDefaultImports": true,
-    "baseUrl": "./src",
     "resolveJsonModule": true,
     "esModuleInterop": true,
     "inlineSources": true,
@@ -15,14 +14,12 @@
     "verbatimModuleSyntax": true,
     "allowJs": true,
     "noImplicitAny": true,
-    "moduleResolution": "node",
+    "moduleResolution": "bundler",
     "importHelpers": true,
-    "ignoreDeprecations": "5.0",
     "outDir": "generated",
     "paths": {
-      "src": [
-        "src/*",
-        "tests/*"
+      "*": [
+        "./src/*"
       ]
     },
     "types": [
@@ -48,6 +45,7 @@
   ],
   "typedocOptions": {
     "name": "Tasks plugin",
+    "pretty": false,
     "readme": "src/README-code-docs.md",
     "excludePrivate": false,
     "excludeProtected": false,

@@ -1,6 +1,6 @@
-import type { GrouperFunction } from '../Group/Grouper';
-import type { Task } from '../../Task/Task';
-import { TextField } from './TextField';
+import type { GrouperFunction } from 'Query/Group/Grouper';
+import type { Task } from 'Task/Task';
+import { TextField } from 'Query/Filter/TextField';
 
 /** Support the 'heading' search instruction.
  *

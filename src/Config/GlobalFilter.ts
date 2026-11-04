@@ -1,4 +1,4 @@
-import * as RegExpTools from '../lib/RegExpTools';
+import * as RegExpTools from 'lib/RegExpTools';
 
 /**
  * GlobalFilter has its own data, independent of {@link Settings.globalFilter} value in {@link Settings}.

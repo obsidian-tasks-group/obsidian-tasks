@@ -1,7 +1,7 @@
-import type { Task } from '../../Task/Task';
-import type { FilterOrErrorMessage } from './FilterOrErrorMessage';
-import { FilterInstructions } from './FilterInstructions';
-import { TextField } from './TextField';
+import type { Task } from 'Task/Task';
+import type { FilterOrErrorMessage } from 'Query/Filter/FilterOrErrorMessage';
+import { FilterInstructions } from 'Query/Filter/FilterInstructions';
+import { TextField } from 'Query/Filter/TextField';
 
 export class IdField extends TextField {
     private readonly filterInstructions: FilterInstructions = new FilterInstructions();

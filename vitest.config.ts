@@ -8,6 +8,7 @@ const dirname = path.dirname(fileURLToPath(import.meta.url));
 export default defineConfig({
     plugins: [svelte()],
     resolve: {
+        tsconfigPaths: true,
         alias: {
             // Resolve 'obsidian' imports to the test mock, since the package contains only types.
             obsidian: path.resolve(dirname, 'tests/__mocks__/obsidian.ts'),
@@ -18,9 +19,11 @@ export default defineConfig({
     test: {
         globals: true,
         environment: 'jsdom',
-        // Create jsdom once per worker instead of once per test file, keeping each file isolated.
-        // About 4x faster, see https://vitest.dev/guide/improving-performance#test-environments
-        pool: 'vmThreads',
+        // Create jsdom once per worker instead of once per test file, keeping each file isolated in a VM context.
+        // Both vmThreads and vmForks are about 4x faster than standard threads/forks.
+        // vmForks runs workers in child processes so individual tests can override process.env.TZ at runtime.
+        // See https://vitest.dev/guide/improving-performance#test-environments
+        pool: 'vmForks',
         include: ['tests/**/*.test.ts'],
         setupFiles: ['./tests/vitest.setup.ts', './tests/CustomMatchers/vitest.custom_matchers.setup.ts', 'jest-sorted'],
         globalSetup: './tests/global-setup.js',

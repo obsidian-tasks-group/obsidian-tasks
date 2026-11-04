@@ -1,7 +1,7 @@
 import moment from 'moment/moment';
-import { GlobalFilter } from '../../src/Config/GlobalFilter';
-import { State } from '../../src/Obsidian/Cache';
-import { Priority } from '../../src/Task/Priority';
+import { GlobalFilter } from 'Config/GlobalFilter';
+import { State } from 'Obsidian/Cache';
+import { Priority } from 'Task/Priority';
 import { readTasksFromSimulatedFile } from '../Obsidian/SimulatedFile';
 import { TaskBuilder } from '../TestingTools/TaskBuilder';
 import { fromMarkdown } from '../TestingTools/TestHelpers';

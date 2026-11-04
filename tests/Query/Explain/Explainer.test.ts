@@ -1,10 +1,10 @@
 import moment from 'moment';
 
-import { GlobalFilter } from '../../../src/Config/GlobalFilter';
-import { Query } from '../../../src/Query/Query';
-import { Explainer } from '../../../src/Query/Explain/Explainer';
-import { resetSettings, updateSettings } from '../../../src/Config/Settings';
-import { DebugSettings } from '../../../src/Config/DebugSettings';
+import { GlobalFilter } from 'Config/GlobalFilter';
+import { Query } from 'Query/Query';
+import { Explainer } from 'Query/Explain/Explainer';
+import { resetSettings, updateSettings } from 'Config/Settings';
+import { DebugSettings } from 'Config/DebugSettings';
 import { createTestTasksFile } from '../../TestingTools/TasksFileHelpers';
 
 window.moment = moment;

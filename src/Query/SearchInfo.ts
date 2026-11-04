@@ -1,6 +1,6 @@
-import type { Task } from '../Task/Task';
-import { type QueryContext, makeQueryContextWithTasks } from '../Scripting/QueryContext';
-import type { OptionalTasksFile } from '../Scripting/TasksFile';
+import type { Task } from 'Task/Task';
+import { type QueryContext, makeQueryContextWithTasks } from 'Scripting/QueryContext';
+import type { OptionalTasksFile } from 'Scripting/TasksFile';
 
 /**
  * SearchInfo contains selected data passed in from the {@link Query} being executed.

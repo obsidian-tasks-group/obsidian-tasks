@@ -1,5 +1,5 @@
-import * as FilterParser from '../../src/Query/FilterParser';
-import { fieldCreators } from '../../src/Query/FilterParser';
+import * as FilterParser from 'Query/FilterParser';
+import { fieldCreators } from 'Query/FilterParser';
 
 describe('FilterParser', () => {
     it('should parse new-style group line correctly', () => {

@@ -1,6 +1,6 @@
 import { diff } from 'jest-diff';
+import type { Task } from 'Task/Task';
 import { fromLine } from '../TestingTools/TestHelpers';
-import type { Task } from '../../src/Task/Task';
 
 declare module 'vitest' {
     interface Matchers<R> {
