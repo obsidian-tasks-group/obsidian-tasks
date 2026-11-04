@@ -4,14 +4,8 @@ import moment from 'moment';
 window.moment = moment;
 // end-snippet
 
-import {
-    datesAreIdentical,
-    getDateFormat,
-    hasTime,
-    momentWithFormat,
-    preserveTime,
-} from '../../src/DateTime/DateTools';
-import { TaskRegularExpressions } from '../../src/Task/TaskRegularExpressions';
+import { datesAreIdentical, getDateFormat, hasTime, momentWithFormat, preserveTime } from 'DateTime/DateTools';
+import { TaskRegularExpressions } from 'Task/TaskRegularExpressions';
 import {
     expectDateComparesAfter,
     expectDateComparesBefore,

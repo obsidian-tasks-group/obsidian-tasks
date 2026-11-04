@@ -1,5 +1,5 @@
 import * as chrono from 'chrono-node';
-import { TaskRegularExpressions } from '../Task/TaskRegularExpressions';
+import { TaskRegularExpressions } from 'Task/TaskRegularExpressions';
 
 export function compareByDate(a: moment.Moment | null, b: moment.Moment | null): -1 | 0 | 1 {
     if (a !== null && b === null) {
