@@ -1,5 +1,5 @@
-import { Query } from '../Query/Query';
-import type { OptionalTasksFile } from '../Scripting/TasksFile';
+import { Query } from 'Query/Query';
+import type { OptionalTasksFile } from 'Scripting/TasksFile';
 
 /**
  * Global Query set in the {@link SettingsTab} and associated services.

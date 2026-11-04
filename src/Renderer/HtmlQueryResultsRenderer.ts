@@ -1,19 +1,19 @@
 import type { App, Component, TFile } from 'obsidian';
-import { getSettings } from '../Config/Settings';
-import { postponeButtonTitle, shouldShowPostponeButton } from '../DateTime/Postponer';
-import type { IQuery } from '../IQuery';
-import { QueryLayout } from '../Layout/QueryLayout';
-import { TaskLayout } from '../Layout/TaskLayout';
-import type { GroupDisplayHeading } from '../Query/Group/GroupDisplayHeading';
-import type { QueryResult } from '../Query/QueryResult';
-import type { TasksFile } from '../Scripting/TasksFile';
-import type { ListItem } from '../Task/ListItem';
-import type { Task } from '../Task/Task';
-import { PostponeMenu } from '../ui/Menus/PostponeMenu';
-import { showMenu } from '../ui/Menus/TaskEditingMenu';
-import type { BacklinksEventHandler, EditButtonClickHandler } from './QueryResultsRenderer';
-import { QueryResultsRendererBase } from './QueryResultsRendererBase';
-import { TaskLineRenderer, type TextRenderer } from './TaskLineRenderer';
+import { getSettings } from 'Config/Settings';
+import { postponeButtonTitle, shouldShowPostponeButton } from 'DateTime/Postponer';
+import type { IQuery } from 'IQuery';
+import { QueryLayout } from 'Layout/QueryLayout';
+import { TaskLayout } from 'Layout/TaskLayout';
+import type { GroupDisplayHeading } from 'Query/Group/GroupDisplayHeading';
+import type { QueryResult } from 'Query/QueryResult';
+import type { TasksFile } from 'Scripting/TasksFile';
+import type { ListItem } from 'Task/ListItem';
+import type { Task } from 'Task/Task';
+import { PostponeMenu } from 'ui/Menus/PostponeMenu';
+import { showMenu } from 'ui/Menus/TaskEditingMenu';
+import type { BacklinksEventHandler, EditButtonClickHandler } from 'Renderer/QueryResultsRenderer';
+import { QueryResultsRendererBase } from 'Renderer/QueryResultsRendererBase';
+import { TaskLineRenderer, type TextRenderer } from 'Renderer/TaskLineRenderer';
 
 /**
  * Represent the parameters required for rendering a query with {@link QueryResultsRenderer}.

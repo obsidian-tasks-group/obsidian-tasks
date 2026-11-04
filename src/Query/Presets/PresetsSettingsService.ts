@@ -1,5 +1,5 @@
-import { renameKeyInRecordPreservingOrder } from '../../lib/RecordHelpers';
-import type { PresetsMap } from './Presets';
+import { renameKeyInRecordPreservingOrder } from 'lib/RecordHelpers';
+import type { PresetsMap } from 'Query/Presets/Presets';
 
 export class PresetsSettingsService {
     /**

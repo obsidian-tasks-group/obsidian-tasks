@@ -1,6 +1,6 @@
-import type { Task } from '../../Task/Task';
-import type { GrouperFunction } from '../Group/Grouper';
-import { TextField } from './TextField';
+import type { Task } from 'Task/Task';
+import type { GrouperFunction } from 'Query/Group/Grouper';
+import { TextField } from 'Query/Filter/TextField';
 
 /** Support the 'path' search instruction.
  *

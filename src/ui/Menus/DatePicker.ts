@@ -1,8 +1,8 @@
 import flatpickr from 'flatpickr';
-import type { Task } from '../../Task/Task';
-import { RemoveTaskDate, SetTaskDate } from '../EditInstructions/DateInstructions';
-import type { AllTaskDateFields } from '../../DateTime/DateFieldTypes';
-import type { TaskSaver } from './TaskEditingMenu';
+import type { Task } from 'Task/Task';
+import { RemoveTaskDate, SetTaskDate } from 'ui/EditInstructions/DateInstructions';
+import type { AllTaskDateFields } from 'DateTime/DateFieldTypes';
+import type { TaskSaver } from 'ui/Menus/TaskEditingMenu';
 
 interface LocaleWithWeekInfo extends Intl.Locale {
     weekInfo?: { firstDay: number };

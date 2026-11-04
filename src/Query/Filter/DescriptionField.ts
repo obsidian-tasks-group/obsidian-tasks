@@ -1,7 +1,7 @@
-import { GlobalFilter } from '../../Config/GlobalFilter';
-import type { Task } from '../../Task/Task';
-import type { Comparator } from '../Sort/Sorter';
-import { TextField } from './TextField';
+import { GlobalFilter } from 'Config/GlobalFilter';
+import type { Task } from 'Task/Task';
+import type { Comparator } from 'Query/Sort/Sorter';
+import { TextField } from 'Query/Filter/TextField';
 
 /**
  * Support the 'description' search instruction.

@@ -1,5 +1,5 @@
 import { type App, Notice, type TFile } from 'obsidian';
-import { QueryFileDefaults } from '../Query/QueryFileDefaults';
+import { QueryFileDefaults } from 'Query/QueryFileDefaults';
 
 export async function ensureQueryFileDefaultsInFrontmatter(app: App, file: TFile) {
     await app.fileManager.processFrontMatter(file, (frontmatter: Record<string, unknown>) => {

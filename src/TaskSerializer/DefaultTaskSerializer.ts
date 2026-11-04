@@ -1,10 +1,10 @@
-import { TaskLayoutComponent, TaskLayoutOptions } from '../Layout/TaskLayoutOptions';
-import { OnCompletion, parseOnCompletionValue } from '../Task/OnCompletion';
-import { Occurrence } from '../Task/Occurrence';
-import { Recurrence } from '../Task/Recurrence';
-import { Task } from '../Task/Task';
-import { Priority } from '../Task/Priority';
-import { TaskRegularExpressions } from '../Task/TaskRegularExpressions';
+import { TaskLayoutComponent, TaskLayoutOptions } from 'Layout/TaskLayoutOptions';
+import { OnCompletion, parseOnCompletionValue } from 'Task/OnCompletion';
+import { Occurrence } from 'Task/Occurrence';
+import { Recurrence } from 'Task/Recurrence';
+import { Task } from 'Task/Task';
+import { Priority } from 'Task/Priority';
+import { TaskRegularExpressions } from 'Task/TaskRegularExpressions';
 import type { TaskDetails, TaskSerializer } from '.';
 
 /* Interface describing the symbols that {@link DefaultTaskSerializer}

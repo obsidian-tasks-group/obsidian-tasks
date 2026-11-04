@@ -1,7 +1,7 @@
-import { QueryComponentOrError } from '../Query/QueryComponentOrError';
-import { errorMessageForException } from '../lib/ExceptionTools';
-import { EnableJsInTasksQueries } from '../Config/EnableJsInTasksQueries';
-import { JsInTasksQueriesDisabledError } from './JsInTasksQueriesDisabledError';
+import { QueryComponentOrError } from 'Query/QueryComponentOrError';
+import { errorMessageForException } from 'lib/ExceptionTools';
+import { EnableJsInTasksQueries } from 'Config/EnableJsInTasksQueries';
+import { JsInTasksQueriesDisabledError } from 'Scripting/JsInTasksQueriesDisabledError';
 
 export class FunctionOrError extends QueryComponentOrError<Function> {}
 

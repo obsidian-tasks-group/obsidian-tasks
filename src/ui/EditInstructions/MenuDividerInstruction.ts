@@ -1,5 +1,5 @@
 import type { Task } from 'Task/Task';
-import type { TaskEditingInstruction } from './TaskEditingInstruction';
+import type { TaskEditingInstruction } from 'ui/EditInstructions/TaskEditingInstruction';
 
 /**
  * A placeholder to indicate that an instruction is meant to be a menu separator.

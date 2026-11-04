@@ -1,7 +1,7 @@
-import { Task } from '../../Task/Task';
-import { PriorityTools } from '../../lib/PriorityTools';
-import { Priority } from '../../Task/Priority';
-import type { TaskEditingInstruction } from './TaskEditingInstruction';
+import { Task } from 'Task/Task';
+import { PriorityTools } from 'lib/PriorityTools';
+import { Priority } from 'Task/Priority';
+import type { TaskEditingInstruction } from 'ui/EditInstructions/TaskEditingInstruction';
 
 /**
  * An instruction class, for editing a {@link Task} object's {@link Priority}.

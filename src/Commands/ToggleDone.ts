@@ -1,9 +1,9 @@
-import { TasksFile } from '../Scripting/TasksFile';
+import { TasksFile } from 'Scripting/TasksFile';
 
-import { Task } from '../Task/Task';
-import { TaskLocation } from '../Task/TaskLocation';
-import { TaskRegularExpressions } from '../Task/TaskRegularExpressions';
-import { type EditorInsertion, createEditorCallback } from './CreateEditorCallback';
+import { Task } from 'Task/Task';
+import { TaskLocation } from 'Task/TaskLocation';
+import { TaskRegularExpressions } from 'Task/TaskRegularExpressions';
+import { type EditorInsertion, createEditorCallback } from 'Commands/CreateEditorCallback';
 
 // Re-export for backwards compatibility with existing test imports
 export { getNewCursorPosition } from './CreateEditorCallback';

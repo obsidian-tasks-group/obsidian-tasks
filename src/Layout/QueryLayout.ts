@@ -1,5 +1,5 @@
-import { generateHiddenClassForTaskList } from './LayoutHelpers';
-import { QueryLayoutOptions } from './QueryLayoutOptions';
+import { generateHiddenClassForTaskList } from 'Layout/LayoutHelpers';
+import { QueryLayoutOptions } from 'Layout/QueryLayoutOptions';
 
 /**
  * This class generates a list of hidden query components' classes.

@@ -1,12 +1,12 @@
 import type { CachedMetadata, ListItemCache, SectionCache } from 'obsidian';
-import type { Logger } from '../lib/logging';
-import { Task } from '../Task/Task';
-import type { TasksFile } from '../Scripting/TasksFile';
-import { Lazy } from '../lib/Lazy';
-import { DateFallback } from '../DateTime/DateFallback';
-import { ListItem } from '../Task/ListItem';
-import { TaskLocation } from '../Task/TaskLocation';
-import { Cache } from './Cache';
+import type { Logger } from 'lib/logging';
+import { Task } from 'Task/Task';
+import type { TasksFile } from 'Scripting/TasksFile';
+import { Lazy } from 'lib/Lazy';
+import { DateFallback } from 'DateTime/DateFallback';
+import { ListItem } from 'Task/ListItem';
+import { TaskLocation } from 'Task/TaskLocation';
+import { Cache } from 'Obsidian/Cache';
 
 export class FileParser {
     private readonly tasksFile: TasksFile;

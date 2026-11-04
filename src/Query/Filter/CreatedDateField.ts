@@ -1,5 +1,5 @@
-import type { Task } from '../../Task/Task';
-import { DateField } from './DateField';
+import type { Task } from 'Task/Task';
+import { DateField } from 'Query/Filter/DateField';
 
 /**
  * Support the 'created' search instruction.

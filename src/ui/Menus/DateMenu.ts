@@ -1,7 +1,7 @@
-import type { Task } from '../../Task/Task';
-import { type AllTaskDateFields, isAHappensDate } from '../../DateTime/DateFieldTypes';
-import { allHappensDateInstructions, allLifeCycleDateInstructions } from '../EditInstructions/DateInstructions';
-import { TaskEditingMenu, type TaskSaver, defaultTaskSaver } from './TaskEditingMenu';
+import type { Task } from 'Task/Task';
+import { type AllTaskDateFields, isAHappensDate } from 'DateTime/DateFieldTypes';
+import { allHappensDateInstructions, allLifeCycleDateInstructions } from 'ui/EditInstructions/DateInstructions';
+import { TaskEditingMenu, type TaskSaver, defaultTaskSaver } from 'ui/Menus/TaskEditingMenu';
 
 export class DateMenu extends TaskEditingMenu {
     /**

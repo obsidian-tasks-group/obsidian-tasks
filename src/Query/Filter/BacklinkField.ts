@@ -1,7 +1,7 @@
-import type { Task } from '../../Task/Task';
-import type { GrouperFunction } from '../Group/Grouper';
-import { FilterOrErrorMessage } from './FilterOrErrorMessage';
-import { TextField } from './TextField';
+import type { Task } from 'Task/Task';
+import type { GrouperFunction } from 'Query/Group/Grouper';
+import { FilterOrErrorMessage } from 'Query/Filter/FilterOrErrorMessage';
+import { TextField } from 'Query/Filter/TextField';
 
 export class BacklinkField extends TextField {
     public fieldName(): string {
