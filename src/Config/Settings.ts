@@ -4,13 +4,12 @@ import {
     onlySuggestIfBracketOpen,
 } from 'Suggestor/Suggestor';
 import { DEFAULT_SYMBOLS } from 'TaskSerializer/DefaultTaskSerializer';
-import { DATAVIEW_SYMBOLS } from 'TaskSerializer/DataviewTaskSerializer';
+import { DATAVIEW_SYMBOLS, DataviewTaskSerializer } from 'TaskSerializer/DataviewTaskSerializer';
 import { StatusConfiguration } from 'Statuses/StatusConfiguration';
 import { Status } from 'Statuses/Status';
 import { DefaultTaskSerializer, type TaskSerializer } from 'TaskSerializer';
 import type { SuggestionBuilder } from 'Suggestor';
 import type { LogOptions } from 'lib/logging';
-import { DataviewTaskSerializer } from 'TaskSerializer/DataviewTaskSerializer';
 import { i18n } from 'i18n/i18n';
 import { type PresetsMap, defaultPresets } from 'Query/Presets/Presets';
 import { DebugSettings } from 'Config/DebugSettings';
