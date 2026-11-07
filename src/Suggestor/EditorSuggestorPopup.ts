@@ -22,6 +22,7 @@ function showError(message: string) {
 
 export class EditorSuggestor extends EditorSuggest<SuggestInfoWithContext> {
     private plugin: TasksPlugin;
+    private popupIsOpen = false;
 
     constructor(app: App, plugin: TasksPlugin) {
         super(app);
@@ -29,9 +30,9 @@ export class EditorSuggestor extends EditorSuggest<SuggestInfoWithContext> {
 
         // EditorSuggestor swallows tabs while the suggestor popup is open
         // This is a hack to support indenting while popup is open
-        app.scope.register([], 'Tab', () => {
+        const tabHandler = app.scope.register([], 'Tab', () => {
             const editor = this.context?.editor;
-            if (editor) {
+            if (editor && this.popupIsOpen) {
                 editor.exec('indentMore');
                 // Returning false triggers preventDefault
                 // Should prevent double indent if tabs start to get passed through
@@ -39,9 +40,12 @@ export class EditorSuggestor extends EditorSuggest<SuggestInfoWithContext> {
             }
             return true;
         });
+        plugin.register(() => app.scope.unregister(tabHandler));
     }
 
     onTrigger(cursor: EditorPosition, editor: Editor, _file: TFile): EditorSuggestTriggerInfo | null {
+        this.popupIsOpen = false;
+
         // Read the settings on each call, not once at startup, so that changes to them take effect.
         const settings = getSettings();
         if (!settings.autoSuggestInEditor) return null;
@@ -60,6 +64,7 @@ export class EditorSuggestor extends EditorSuggest<SuggestInfoWithContext> {
 
         if (this.grabSuggestions(editor, _file, line, settings).length === 0) return null;
 
+        this.popupIsOpen = true;
         return {
             start: { line: cursor.line, ch: 0 },
             end: {
@@ -68,6 +73,11 @@ export class EditorSuggestor extends EditorSuggest<SuggestInfoWithContext> {
             },
             query: line,
         };
+    }
+
+    close(): void {
+        this.popupIsOpen = false;
+        super.close();
     }
 
     getSuggestions(context: EditorSuggestContext): SuggestInfoWithContext[] {
