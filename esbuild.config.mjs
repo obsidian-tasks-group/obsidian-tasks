@@ -111,13 +111,6 @@ Copyright (c) 2014, Wanasit Tanakitrungruang
 */
 
 /*
-License flatpickr (included library):
-The MIT License (MIT)
-
-Copyright (c) 2017 Gregory Petrosyan
-*/
-
-/*
 License @floating-ui/dom (included library):
 
 MIT License
