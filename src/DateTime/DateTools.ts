@@ -1,4 +1,5 @@
 import * as chrono from 'chrono-node';
+import { TaskRegularExpressions } from 'Task/TaskRegularExpressions';
 
 export function compareByDate(a: moment.Moment | null, b: moment.Moment | null): -1 | 0 | 1 {
     if (a !== null && b === null) {
@@ -24,6 +25,61 @@ export function compareByDate(a: moment.Moment | null, b: moment.Moment | null):
     } else {
         return 0;
     }
+}
+
+/**
+ * Returns true if {@link date} is a valid Moment that was created with an explicit time format
+ * (`YYYY-MM-DD HH:mm`).
+ */
+export function hasTime(date: moment.Moment | null): boolean {
+    if (!date?.isValid()) return false;
+    return date.creationData()?.format === TaskRegularExpressions.dateTimeFormat;
+}
+
+/**
+ * Returns the format string for {@link date}: `YYYY-MM-DD HH:mm` if {@link date} has a time,
+ * or `YYYY-MM-DD` otherwise.
+ */
+export function getDateFormat(date: moment.Moment | null): string {
+    return hasTime(date) ? TaskRegularExpressions.dateTimeFormat : TaskRegularExpressions.dateFormat;
+}
+
+/**
+ * Returns true if {@link a} and {@link b} represent the same point in time (or are both null / both invalid)
+ * and have the same date format (distinguishing date-only `YYYY-MM-DD` from timed `YYYY-MM-DD HH:mm` at `00:00`).
+ */
+export function datesAreIdentical(a: moment.Moment | null, b: moment.Moment | null): boolean {
+    if (compareByDate(a, b) !== 0) {
+        return false;
+    }
+    return getDateFormat(a) === getDateFormat(b);
+}
+
+/**
+ * Formats and strictly re-parses {@link date} so that its `creationData().format` is {@link format}.
+ */
+export function momentWithFormat(date: Date | moment.Moment, format: string): moment.Moment {
+    return window.moment(window.moment(date).format(format), format, true);
+}
+
+/**
+ * If {@link sourceDate} has an explicit time component, returns a new Moment with {@link targetDate}'s
+ * calendar date and {@link sourceDate}'s hour, minute, and format.
+ * Otherwise returns {@link targetDate} unchanged.
+ *
+ * If the copied time falls in a daylight-saving spring-forward gap on {@link targetDate}
+ * (for example, 02:30 on the spring-forward day in `America/New_York`), Moment normalizes
+ * the non-existent local time forward by one hour (to 03:30).
+ */
+export function preserveTime(targetDate: moment.Moment, sourceDate: moment.Moment | null): moment.Moment {
+    if (!sourceDate || !hasTime(sourceDate)) {
+        return targetDate;
+    }
+    const withTime = targetDate.clone().set({
+        hour: sourceDate.hour(),
+        minute: sourceDate.minute(),
+    });
+    return momentWithFormat(withTime, getDateFormat(sourceDate));
 }
 
 /*
