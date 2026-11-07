@@ -1,5 +1,7 @@
-import type { EditModalShowSettings } from 'Config/EditModalShowSettings';
+import { fireEvent } from '@testing-library/svelte';
+import { type EditModalShowSettings, defaultEditModalFieldOrder } from 'Config/EditModalShowSettings';
 import { type Settings, getSettings, resetSettings, updateSettings } from 'Config/Settings';
+import { settingsStore } from 'ui/SettingsStore';
 import {
     checkAndClickApplyButton,
     checkAndClickCancelButton,
@@ -58,5 +60,84 @@ describe('ModalOptionsEditor settings edit tests', () => {
         expect(getSettings().isShownInEditModal[field]).toEqual(true);
         // checking that the settings edit would not be saved in data.json
         expect(savedSettings.isShownInEditModal[field]).toEqual(true);
+    });
+});
+
+describe('ModalOptionsEditor reordering tests', () => {
+    // The modal reads the settings from settingsStore, which resetSettings() does not update.
+    beforeEach(() => {
+        settingsStore.set(getSettings());
+    });
+
+    function groupHandles(container: HTMLElement) {
+        return Array.from(container.querySelectorAll('.tasks-options-modal-group > .tasks-options-modal-handle'));
+    }
+
+    function fieldHandle(container: HTMLElement, field: keyof EditModalShowSettings) {
+        return container.querySelector(`#${field}`)!.closest('.tasks-options-modal-field')!.querySelector('button')!;
+    }
+
+    function renderedFields(container: HTMLElement) {
+        return Array.from(container.querySelectorAll('input[type="checkbox"]')).map((input) => input.id);
+    }
+
+    it('should move a group down with the keyboard, and save the order when Apply is clicked', async () => {
+        const { result, container } = renderAndCheckModal();
+
+        await fireEvent.keyDown(groupHandles(container)[0], { key: 'ArrowDown' });
+
+        const expectedOrder = [
+            'recurrence',
+            'due',
+            'scheduled',
+            'start',
+            'priority',
+            'before_this',
+            'after_this',
+            'status',
+            'created',
+            'done',
+            'cancelled',
+        ];
+        expect(renderedFields(container)).toEqual(expectedOrder);
+        expect(getSettings().editModalFieldOrder).toEqual(defaultEditModalFieldOrder);
+
+        checkAndClickApplyButton(result);
+        expect(getSettings().editModalFieldOrder).toEqual(expectedOrder);
+    });
+
+    it('should move a field up within its group with the keyboard', async () => {
+        const { result, container } = renderAndCheckModal();
+
+        await fireEvent.keyDown(fieldHandle(container, 'scheduled'), { key: 'ArrowUp' });
+        checkAndClickApplyButton(result);
+
+        expect(getSettings().editModalFieldOrder.slice(1, 5)).toEqual(['recurrence', 'scheduled', 'due', 'start']);
+    });
+
+    it('should not move the first field up, out of its group', async () => {
+        const { container } = renderAndCheckModal();
+
+        await fireEvent.keyDown(fieldHandle(container, 'status'), { key: 'ArrowUp' });
+
+        expect(renderedFields(container)).toEqual(defaultEditModalFieldOrder);
+    });
+
+    it('should not save the order when Cancel is clicked', async () => {
+        const { result, container } = renderAndCheckModal();
+
+        await fireEvent.keyDown(groupHandles(container)[0], { key: 'ArrowDown' });
+        checkAndClickCancelButton(result);
+
+        expect(getSettings().editModalFieldOrder).toEqual(defaultEditModalFieldOrder);
+    });
+
+    it('should reset the order when Reset order is clicked', async () => {
+        settingsStore.set({ ...getSettings(), editModalFieldOrder: [...defaultEditModalFieldOrder].reverse() });
+        const { result, container } = renderAndCheckModal();
+
+        await fireEvent.click(result.getByText('Reset order'));
+
+        expect(renderedFields(container)).toEqual(defaultEditModalFieldOrder);
     });
 });

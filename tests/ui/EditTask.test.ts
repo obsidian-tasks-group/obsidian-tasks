@@ -794,6 +794,86 @@ describe('Hiding modal fields', () => {
     });
 });
 
+describe('Ordering modal fields', () => {
+    afterEach(() => {
+        resetSettings();
+    });
+
+    function renderedFieldIds() {
+        const fullyPopulatedLine = TaskBuilder.createFullyPopulatedTask().toFileLineString();
+        const task = taskFromLine({ line: fullyPopulatedLine, path: '' });
+        const { container } = renderAndCheckModal(task, () => {});
+
+        // The order of elements in the DOM is also the Tab order.
+        const fields = Object.keys(getSettings().isShownInEditModal);
+        return Array.from(container.querySelectorAll('[id]'))
+            .map((element) => element.id)
+            .filter((id) => fields.includes(id));
+    }
+
+    it('should render fields in the default order', () => {
+        expect(renderedFieldIds()).toEqual([
+            'priority',
+            'recurrence',
+            'due',
+            'scheduled',
+            'start',
+            'before_this',
+            'after_this',
+            'status',
+            'created',
+            'done',
+            'cancelled',
+        ]);
+    });
+
+    it('should render groups and fields in the saved order', () => {
+        updateSettings({
+            editModalFieldOrder: [
+                'cancelled',
+                'done',
+                'status',
+                'created',
+                'start',
+                'due',
+                'recurrence',
+                'scheduled',
+                'priority',
+                'after_this',
+                'before_this',
+            ],
+        });
+
+        expect(renderedFieldIds()).toEqual([
+            'cancelled',
+            'done',
+            'status',
+            'created',
+            'start',
+            'due',
+            'recurrence',
+            'scheduled',
+            'priority',
+            'after_this',
+            'before_this',
+        ]);
+    });
+
+    it('should not render a line after the last group', () => {
+        const fullyPopulatedLine = TaskBuilder.createFullyPopulatedTask().toFileLineString();
+        const task = taskFromLine({ line: fullyPopulatedLine, path: '' });
+        updateSettings({
+            editModalFieldOrder: ['status', 'created', 'done', 'cancelled', 'before_this', 'after_this', 'priority'],
+        });
+
+        const { container } = renderAndCheckModal(task, () => {});
+
+        expect(container.querySelector('#line-after-status-and-dates')).not.toBeNull();
+        expect(container.querySelector('#line-after-priority')).not.toBeNull();
+        expect(container.querySelector('#line-after-happens-dates')).toBeNull();
+    });
+});
+
 describe('Buttons in the modal on mobile', () => {
     // Regression test for the Apply button needing two taps on mobile.
     //
