@@ -1,0 +1,26 @@
+name: circular-deps-check
+on:
+  pull_request:
+    branches: [main]
+
+jobs:
+  circular-deps:
+    if: github.repository == 'obsidian-tasks-group/obsidian-tasks'
+    runs-on: ubuntu-latest
+    steps:
+      # For pull_request events, the default checkout is a merge of the PR into main,
+      # so HEAD^1 is the commit on main that the PR is being merged onto.
+      # fetch-depth: 2 makes HEAD^1 available.
+      - uses: actions/checkout@v7
+        with:
+          fetch-depth: 2
+
+      - uses: actions/setup-node@v7
+        with:
+          node-version: 22
+
+      - name: Install modules
+        run: yarn install --frozen-lockfile --ignore-scripts
+
+      - name: Fail if the pull request adds circular dependencies
+        run: node scripts/circular-deps-compare.mjs HEAD^1
