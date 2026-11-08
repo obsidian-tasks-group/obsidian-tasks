@@ -40,6 +40,8 @@ function circularDependencies(cwd) {
 }
 
 function git(...args) {
+    // 'git' is intentionally found via PATH: there is no portable absolute path for it.
+    // This script is only run on developer machines and in GitHub Actions.
     const result = spawnSync('git', args, { encoding: 'utf8' });
     if (result.status !== 0) {
         throw new Error(`git ${args.join(' ')} failed:\n${result.stderr}`);
