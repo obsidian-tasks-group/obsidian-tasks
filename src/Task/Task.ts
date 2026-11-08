@@ -4,6 +4,7 @@ import { StatusRegistry } from 'Statuses/StatusRegistry';
 import type { Status } from 'Statuses/Status';
 import { compareByDate } from 'DateTime/DateTools';
 import { TasksDate } from 'DateTime/TasksDate';
+import { ALL_DATE_FIELDS } from 'DateTime/DateFieldTypes';
 import { StatusType } from 'Statuses/StatusConfiguration';
 import { PriorityTools } from 'lib/PriorityTools';
 import { logging } from 'lib/logging';
@@ -907,7 +908,7 @@ export class Task extends ListItem {
      * See also {@link AllTaskDateFields}
      */
     public static allDateFields(): (keyof Task)[] {
-        return ['createdDate', 'startDate', 'scheduledDate', 'dueDate', 'doneDate', 'cancelledDate'];
+        return [...ALL_DATE_FIELDS];
     }
 
     /**
