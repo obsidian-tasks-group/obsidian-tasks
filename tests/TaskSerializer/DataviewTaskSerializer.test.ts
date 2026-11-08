@@ -1,5 +1,6 @@
 import moment from 'moment';
 import { DATAVIEW_SYMBOLS, DataviewTaskSerializer } from 'TaskSerializer/DataviewTaskSerializer';
+import { ALL_DATE_FIELDS } from 'DateTime/DateFieldTypes';
 import type { Task } from 'Task/Task';
 import type { TaskDetails } from 'TaskSerializer';
 import { OnCompletion } from 'Task/OnCompletion';
@@ -16,7 +17,7 @@ describe('DataviewTaskSerializer', () => {
     const serialize = taskSerializer.serialize.bind(taskSerializer);
     const deserialize = taskSerializer.deserialize.bind(taskSerializer);
 
-    const dateFields = ['startDate', 'dueDate', 'doneDate', 'createdDate', 'scheduledDate', 'cancelledDate'] as const;
+    const dateFields = ALL_DATE_FIELDS;
 
     describe('deserialize', () => {
         it('should parse an empty string', () => {
