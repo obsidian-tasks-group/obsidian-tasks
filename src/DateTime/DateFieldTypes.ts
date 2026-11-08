@@ -15,6 +15,6 @@ export type AllTaskDateFields = keyof Pick<
     'cancelledDate' | 'createdDate' | 'doneDate' | 'dueDate' | 'scheduledDate' | 'startDate' // alphabetical order, please.
 >;
 
-export function isAHappensDate(field: AllTaskDateFields) {
-    return ['startDate', 'scheduledDate', 'dueDate'].includes(field);
+export function isAHappensDate(field: AllTaskDateFields): field is HappensDate {
+    return HAPPENS_DATE_FIELDS.some((happensField) => happensField === field);
 }
