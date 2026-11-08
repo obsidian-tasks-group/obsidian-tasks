@@ -17,7 +17,7 @@ jobs:
           node-version: 22
 
       - name: Install modules
-        run: yarn
+        run: yarn install --frozen-lockfile --ignore-scripts
 
       # madge exits with status 1 when it finds circular dependencies,
       # so that status must not fail this step.

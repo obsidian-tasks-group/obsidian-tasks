@@ -20,7 +20,7 @@ jobs:
           node-version: 22
 
       - name: Install modules
-        run: yarn
+        run: yarn install --frozen-lockfile --ignore-scripts
 
       - name: Fail if the pull request adds circular dependencies
         run: node scripts/circular-deps-compare.mjs HEAD^1
