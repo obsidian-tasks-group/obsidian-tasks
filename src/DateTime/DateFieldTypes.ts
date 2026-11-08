@@ -1,6 +1,3 @@
-// NEW_TASK_FIELD_EDIT_REQUIRED - if new field is included in 'happens' searches.
-// This is deliberately not checked with `satisfies readonly (keyof Task)[]`:
-// importing Task in this file would create a circular dependency with Task.ts.
 /**
  * The names of the {@link Task} date fields that are used in 'happens' searches.
  *
@@ -10,6 +7,9 @@
  * @see HappensDate
  * @see isAHappensDate
  */
+// This is deliberately not checked with `satisfies readonly (keyof Task)[]`:
+// importing Task in this file would create a circular dependency with Task.ts.
+// NEW_TASK_FIELD_EDIT_REQUIRED - if new field is included in 'happens' searches.
 export const HAPPENS_DATE_FIELDS = ['startDate', 'scheduledDate', 'dueDate'] as const;
 
 /**
@@ -17,7 +17,6 @@ export const HAPPENS_DATE_FIELDS = ['startDate', 'scheduledDate', 'dueDate'] as 
  */
 export type HappensDate = (typeof HAPPENS_DATE_FIELDS)[number];
 
-// NEW_TASK_FIELD_EDIT_REQUIRED - if new field is a date field.
 /**
  * The names of all the {@link Task} date fields, in the same order as {@link Task.allDateFields} returns them.
  *
@@ -37,6 +36,7 @@ export type HappensDate = (typeof HAPPENS_DATE_FIELDS)[number];
  *
  * @see AllTaskDateFields
  */
+// NEW_TASK_FIELD_EDIT_REQUIRED - if new field is a date field.
 export const ALL_DATE_FIELDS = [
     'createdDate',
     'startDate',
