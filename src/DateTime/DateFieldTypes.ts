@@ -1,7 +1,10 @@
 import type { Task } from 'Task/Task';
 
 // NEW_TASK_FIELD_EDIT_REQUIRED - if new field is included in 'happens' searches.
-export type HappensDate = keyof Pick<Task, 'startDate' | 'scheduledDate' | 'dueDate'>;
+// This is deliberately not checked with `satisfies readonly (keyof Task)[]`:
+// importing Task in this file would create a circular dependency with Task.ts.
+export const HAPPENS_DATE_FIELDS = ['startDate', 'scheduledDate', 'dueDate'] as const;
+export type HappensDate = (typeof HAPPENS_DATE_FIELDS)[number];
 
 // NEW_TASK_FIELD_EDIT_REQUIRED - if new field is a date field.
 /**
