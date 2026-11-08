@@ -4,7 +4,7 @@ import { StatusRegistry } from 'Statuses/StatusRegistry';
 import type { Status } from 'Statuses/Status';
 import { compareByDate } from 'DateTime/DateTools';
 import { TasksDate } from 'DateTime/TasksDate';
-import { ALL_DATE_FIELDS } from 'DateTime/DateFieldTypes';
+import { ALL_DATE_FIELDS, HAPPENS_DATE_FIELDS } from 'DateTime/DateFieldTypes';
 import { StatusType } from 'Statuses/StatusConfiguration';
 import { PriorityTools } from 'lib/PriorityTools';
 import { logging } from 'lib/logging';
@@ -733,7 +733,7 @@ export class Task extends ListItem {
      * @see {@link HappensDateField}
      */
     public get happensDates(): (Moment | null)[] {
-        return Array.of(this.startDate, this.scheduledDate, this.dueDate);
+        return HAPPENS_DATE_FIELDS.map((field) => this[field]);
     }
 
     /**
