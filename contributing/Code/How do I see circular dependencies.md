@@ -40,19 +40,31 @@ yarn run circular-deps-image
 `circular-deps.txt`:
 
 ```text
-Processed 122 files (1.2s) (15 warnings)
+Current circular dependencies:
 
-1) Config/Settings.ts > Suggestor/Suggestor.ts
-2) Task.ts > Config/Settings.ts > Suggestor/Suggestor.ts
-3) Task.ts > Config/Settings.ts > Suggestor/Suggestor.ts > TaskSerializer/DefaultTaskSerializer.ts
-4) Task.ts > Config/Settings.ts > TaskSerializer/DataviewTaskSerializer.ts
-5) Task.ts > DateFallback.ts
-6) Task.ts > Scripting/TasksDate.ts
-7) Task.ts > Urgency.ts
-8) Task.ts > lib/PriorityTools.ts
-9) Cache.ts > TasksEvents.ts
-10) Query/FilterParser.ts > Query/Filter/BooleanField.ts
-11) Config/SettingsTab.ts > main.ts
+Config/Settings.ts > Config/DismissibleNotices.ts
+Config/Settings.ts > Suggestor/Suggestor.ts
+Config/Settings.ts > Suggestor/Suggestor.ts > Suggestor/index.ts
+Config/Settings.ts > Suggestor/Suggestor.ts > Suggestor/index.ts > Task/Task.ts
+Config/Settings.ts > Suggestor/Suggestor.ts > Suggestor/index.ts > Task/Task.ts > DateTime/DateFallback.ts
+Task/Task.ts > DateTime/DateFallback.ts
+Scripting/TasksFile.ts > Task/Link.ts
+Task/Task.ts > Task/ListItem.ts
+Config/Settings.ts > Suggestor/Suggestor.ts > Suggestor/index.ts > Task/Task.ts > Task/Occurrence.ts
+Task/Task.ts > Task/OnCompletion.ts
+Task/Task.ts > Task/Urgency.ts
+TaskSerializer/DefaultTaskSerializer.ts > TaskSerializer/index.ts
+Api/index.ts > main.ts
+Query/FilterParser.ts > Query/Filter/BooleanField.ts
+Query/Query.ts > Query/Explain/Explainer.ts
+main.ts > Commands/index.ts
+Obsidian/Cache.ts > Obsidian/FileParser.ts
+Obsidian/TasksEvents.ts > Obsidian/Cache.ts
+main.ts > Config/SettingsTab.ts > Config/PresetsSettingsUI.ts
+main.ts > Config/SettingsTab.ts
+Renderer/QueryResultsRenderer.ts > Renderer/HtmlColumnQueryResultsRenderer.ts > Renderer/HtmlQueryResultsRenderer.ts
+main.ts > Renderer/QueryRenderer.ts
+main.ts > Suggestor/EditorSuggestorPopup.ts
 ```
 
 `circular-deps.png`:
