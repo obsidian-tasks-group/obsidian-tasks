@@ -398,6 +398,7 @@ describe('task line rendering - classes and data attributes', () => {
     });
 
     it.each([
+        // NEW_TASK_FIELD_EDIT_REQUIRED
         ['task-priority', 'taskPriority: medium', 'priority'],
         ['task-createdDate', 'taskCreated: past-far', 'createdDate'],
         ['task-dueDate', 'taskDue: past-far', 'dueDate'],
