@@ -8,6 +8,7 @@ import { DateFallback } from 'DateTime/DateFallback';
 import { StatusRegistry } from 'Statuses/StatusRegistry';
 import type { Task } from 'Task/Task';
 import EditTask from 'ui/EditTask.svelte';
+import { HAPPENS_DATE_FIELDS } from 'DateTime/DateFieldTypes';
 import { verifyWithFileExtension } from '../TestingTools/ApprovalTestHelpers';
 import { verifyAllCombinations3Async } from '../TestingTools/CombinationApprovalsAsync';
 import { prettifyHTML } from '../TestingTools/HTMLHelpers';
@@ -21,6 +22,17 @@ import {
 } from './RenderingTestHelpers';
 
 window.moment = moment;
+
+type RemoveDateSuffix<T extends string> = T extends `${infer Base}Date` ? Base : never;
+
+function removeDateSuffix<T extends `${string}Date`>(field: T): RemoveDateSuffix<T> {
+    return field.slice(0, -4) as RemoveDateSuffix<T>;
+}
+
+const HAPPENS_EDIT_MODAL_FIELDS = HAPPENS_DATE_FIELDS.map(removeDateSuffix) satisfies ReadonlyArray<
+    keyof EditModalShowSettings
+>;
+
 /**
  * Construct an onSubmit function for editing the given task, and when Apply is clicked,
  * returning the edit task(s) converted to a string.
@@ -780,9 +792,7 @@ describe('Hiding modal fields', () => {
     });
 
     it('should hide "Only future dates checkbox" and line after happens dates', () => {
-        // NEW_TASK_FIELD_EDIT_REQUIRED - add new happens date below
-        updateSettings({ isShownInEditModal: hideFields('due', 'scheduled', 'start') });
-
+        updateSettings({ isShownInEditModal: hideFields(...HAPPENS_EDIT_MODAL_FIELDS) });
         testElementNotRendered('only-future-dates');
         testElementNotRendered('line-after-happens-dates');
     });
