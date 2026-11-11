@@ -812,7 +812,7 @@ describe('Ordering modal fields', () => {
             .map((element) => (element.tagName === 'HR' ? '---' : element.id));
     }
 
-    it('should render fields in the default order', () => {
+    it('should render fields in the default order and lines between them', () => {
         expect(renderedFieldIds()).toEqual([
             'priority',
             '---',
@@ -831,7 +831,7 @@ describe('Ordering modal fields', () => {
         ]);
     });
 
-    it('should render groups and fields in the saved order', () => {
+    it('should render fields in the saved order and lines between them', () => {
         updateSettings({
             editModalFieldOrder: [
                 ['cancelled', 'done', 'status', 'created'],
@@ -856,34 +856,6 @@ describe('Ordering modal fields', () => {
             '---',
             'after_this',
             'before_this',
-        ]);
-    });
-
-    it('should not render a line after the last group', () => {
-        updateSettings({
-            editModalFieldOrder: [
-                ['status', 'created', 'done', 'cancelled'],
-                ['before_this', 'after_this'],
-                ['priority'],
-                ['recurrence', 'due', 'scheduled', 'start'],
-            ],
-        });
-
-        expect(renderedFieldIds()).toEqual([
-            'status',
-            'created',
-            'done',
-            'cancelled',
-            '---',
-            'before_this',
-            'after_this',
-            '---',
-            'priority',
-            '---',
-            'recurrence',
-            'due',
-            'scheduled',
-            'start',
         ]);
     });
 });
