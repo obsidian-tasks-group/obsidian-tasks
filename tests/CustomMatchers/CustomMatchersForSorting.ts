@@ -2,7 +2,7 @@ import type moment from 'moment';
 import { DateParser } from 'DateTime/DateParser';
 import type { Sorter } from 'Query/Sort/Sorter';
 import type { Task } from 'Task/Task';
-import { compareByDate } from 'DateTime/DateTools';
+import { compareByDate, getDateFormat } from 'DateTime/DateTools';
 import { SearchInfo } from 'Query/SearchInfo';
 import { createTestTasksFile } from '../TestingTools/TasksFileHelpers';
 
@@ -15,6 +15,13 @@ declare module 'vitest' {
 }
 
 type DateOrString = string | moment.Moment | null;
+
+function formatDateForMessage(date: DateOrString): string {
+    if (typeof date === 'string' || date === null) {
+        return `${date}`;
+    }
+    return date.isValid() ? date.format(getDateFormat(date)) : 'Invalid date';
+}
 
 expect.extend({
     toGiveCompareToResult(dates: DateOrString[], expected: -1 | 0 | 1) {
@@ -29,7 +36,8 @@ expect.extend({
         const actual = compareByDate(a, b);
 
         const pass = actual === expected;
-        const message = () => `${dateA} < ${dateB}: expected=${expected} actual=${actual}`;
+        const message = () =>
+            `${formatDateForMessage(dateA)} < ${formatDateForMessage(dateB)}: expected=${expected} actual=${actual}`;
 
         return { pass, message };
     },

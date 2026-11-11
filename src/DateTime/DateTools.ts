@@ -28,8 +28,13 @@ export function compareByDate(a: moment.Moment | null, b: moment.Moment | null):
 }
 
 /**
- * Returns true if {@link date} is a valid Moment that was created with an explicit time format
- * (`YYYY-MM-DD HH:mm`).
+ * Returns true if {@link date} is a valid Moment whose `creationData().format` is
+ * {@link TaskRegularExpressions.dateTimeFormat} (`YYYY-MM-DD HH:mm`).
+ *
+ * Note: This checks the creation format string rather than the hour/minute values, so it only
+ * returns `true` for Moments built via {@link momentWithFormat} or strict parsing with
+ * `TaskRegularExpressions.dateTimeFormat`. Moments created with other formats (such as
+ * `moment('2026-10-23T14:30')` or `'YYYY-MM-DD HH:mm:ss'`) return `false`.
  */
 export function hasTime(date: moment.Moment | null): boolean {
     if (!date?.isValid()) return false;
@@ -65,15 +70,19 @@ export function momentWithFormat(date: Date | moment.Moment, format: string): mo
 /**
  * If {@link sourceDate} has an explicit time component, returns a new Moment with {@link targetDate}'s
  * calendar date and {@link sourceDate}'s hour, minute, and format.
- * Otherwise returns {@link targetDate} unchanged.
+ * Otherwise returns a clone of {@link targetDate} unchanged.
  *
- * If the copied time falls in a daylight-saving spring-forward gap on {@link targetDate}
- * (for example, 02:30 on the spring-forward day in `America/New_York`), Moment normalizes
- * the non-existent local time forward by one hour (to 03:30).
+ * Daylight-saving transitions:
+ * - If the copied time falls in a spring-forward gap on {@link targetDate} (for example, 02:30 on
+ *   the spring-forward day in `America/New_York`), Moment normalizes the non-existent local time
+ *   forward by one hour (to 03:30 EDT).
+ * - If the copied time falls in a fall-back repeated hour on {@link targetDate} (for example, 01:30
+ *   on the fall-back day in `America/New_York`), the wall-clock time (01:30) is preserved and
+ *   Moment selects the first (daylight-saving, EDT) occurrence.
  */
 export function preserveTime(targetDate: moment.Moment, sourceDate: moment.Moment | null): moment.Moment {
     if (!sourceDate || !hasTime(sourceDate)) {
-        return targetDate;
+        return targetDate.clone();
     }
     const withTime = targetDate.clone().set({
         hour: sourceDate.hour(),
