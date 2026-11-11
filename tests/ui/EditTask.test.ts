@@ -804,22 +804,26 @@ describe('Ordering modal fields', () => {
         const task = taskFromLine({ line: fullyPopulatedLine, path: '' });
         const { container } = renderAndCheckModal(task, () => {});
 
-        // The order of elements in the DOM is also the Tab order.
+        // The order of fields in the DOM is also the Tab order.
+        // Include separator lines to check their positions between groups.
         const fields = Object.keys(getSettings().isShownInEditModal);
-        return Array.from(container.querySelectorAll('[id]'))
-            .map((element) => element.id)
-            .filter((id) => fields.includes(id));
+        return Array.from(container.querySelectorAll('[id], hr'))
+            .filter((element) => element.tagName === 'HR' || fields.includes(element.id))
+            .map((element) => (element.tagName === 'HR' ? '---' : element.id));
     }
 
     it('should render fields in the default order', () => {
         expect(renderedFieldIds()).toEqual([
             'priority',
+            '---',
             'recurrence',
             'due',
             'scheduled',
             'start',
+            '---',
             'before_this',
             'after_this',
+            '---',
             'status',
             'created',
             'done',
@@ -842,19 +846,20 @@ describe('Ordering modal fields', () => {
             'done',
             'status',
             'created',
+            '---',
             'start',
             'due',
             'recurrence',
             'scheduled',
+            '---',
             'priority',
+            '---',
             'after_this',
             'before_this',
         ]);
     });
 
     it('should not render a line after the last group', () => {
-        const fullyPopulatedLine = TaskBuilder.createFullyPopulatedTask().toFileLineString();
-        const task = taskFromLine({ line: fullyPopulatedLine, path: '' });
         updateSettings({
             editModalFieldOrder: [
                 ['status', 'created', 'done', 'cancelled'],
@@ -864,11 +869,22 @@ describe('Ordering modal fields', () => {
             ],
         });
 
-        const { container } = renderAndCheckModal(task, () => {});
-
-        expect(container.querySelector('#line-after-status-and-dates')).not.toBeNull();
-        expect(container.querySelector('#line-after-priority')).not.toBeNull();
-        expect(container.querySelector('#line-after-happens-dates')).toBeNull();
+        expect(renderedFieldIds()).toEqual([
+            'status',
+            'created',
+            'done',
+            'cancelled',
+            '---',
+            'before_this',
+            'after_this',
+            '---',
+            'priority',
+            '---',
+            'recurrence',
+            'due',
+            'scheduled',
+            'start',
+        ]);
     });
 });
 
