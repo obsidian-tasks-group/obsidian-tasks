@@ -106,7 +106,7 @@ describe('ModalOptionsEditor reordering tests', () => {
     it('should move a field up within its group with the keyboard', async () => {
         const { result, container } = renderAndCheckModal();
 
-        await fireEvent.keyDown(fieldHandle(container, 'scheduled'), { key: 'ArrowUp' });
+        await moveFieldUp(container, 'scheduled');
         checkAndClickApplyButton(result);
 
         expect(getSettings().editModalFieldOrder[1]).toEqual(['recurrence', 'scheduled', 'due', 'start']);
@@ -132,7 +132,7 @@ describe('ModalOptionsEditor reordering tests', () => {
     it('should keep field order changes local when Cancel is clicked', async () => {
         const { result, container } = renderAndCheckModal();
 
-        await fireEvent.keyDown(fieldHandle(container, 'scheduled'), { key: 'ArrowUp' });
+        await moveFieldUp(container, 'scheduled');
         expect(getSettings().editModalFieldOrder).toEqual(editModalFieldGroups);
         checkAndClickCancelButton(result);
 
