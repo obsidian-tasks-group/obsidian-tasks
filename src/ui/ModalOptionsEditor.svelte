@@ -66,7 +66,7 @@
         (group: EditModalField[]): MoveItem =>
         (from, to) => {
             group.splice(to, 0, ...group.splice(from, 1));
-            groups = groups;
+            groups = groups; // This is needed to force a refresh. To remove this we would need to use Svelte runes.
         };
 
     function itemAndSiblings(handle: HTMLElement) {
