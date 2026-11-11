@@ -172,7 +172,7 @@ Availability of access keys:
                     <PriorityEditor bind:priority={editableTask.priority} {withAccessKeys} />
                 </section>
                 {#if !isLastGroup}
-                    <hr id="line-after-priority" />
+                    <hr/>
                 {/if}
             {/if}
         {:else if group.includes('recurrence')}
@@ -247,7 +247,7 @@ Availability of access keys:
                 {/if}
             </section>
             {#if !isLastGroup && (isShownInEditModal.due || isShownInEditModal.scheduled || isShownInEditModal.start)}
-                <hr id="line-after-happens-dates" />
+                <hr/>
             {/if}
         {:else if group.includes('before_this')}
             <!-- --------------------------------------------------------------------------- -->
@@ -295,7 +295,7 @@ Availability of access keys:
                 {/if}
             </section>
             {#if !isLastGroup && (isShownInEditModal.before_this || isShownInEditModal.after_this)}
-                <hr id="line-after-dependencies" />
+                <hr/>
             {/if}
         {:else if group.includes('status')}
             <section class="tasks-modal-dates-section">
@@ -347,7 +347,7 @@ Availability of access keys:
                 {/each}
             </section>
             {#if !isLastGroup && (isShownInEditModal.status || isShownInEditModal.created || isShownInEditModal.done || isShownInEditModal.cancelled)}
-                <hr id="line-after-status-and-dates" />
+                <hr/>
             {/if}
         {/if}
     {/each}
