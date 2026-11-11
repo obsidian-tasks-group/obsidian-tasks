@@ -81,6 +81,10 @@ describe('ModalOptionsEditor reordering tests', () => {
         await fireEvent.keyDown(fieldHandle(container, field), { key: 'ArrowUp' });
     }
 
+    async function moveFirstGroupDown(container: HTMLElement) {
+        await fireEvent.keyDown(groupHandles(container)[0], { key: 'ArrowDown' });
+    }
+
     function renderedFields(container: HTMLElement) {
         return Array.from(container.querySelectorAll('input[type="checkbox"]')).map((input) => input.id);
     }
@@ -88,7 +92,7 @@ describe('ModalOptionsEditor reordering tests', () => {
     it('should move a group down with the keyboard, and save the order when Apply is clicked', async () => {
         const { result, container } = renderAndCheckModal();
 
-        await fireEvent.keyDown(groupHandles(container)[0], { key: 'ArrowDown' });
+        await moveFirstGroupDown(container);
 
         const expectedOrder = [
             ['recurrence', 'due', 'scheduled', 'start'],
@@ -123,7 +127,7 @@ describe('ModalOptionsEditor reordering tests', () => {
     it('should not save the order when Cancel is clicked', async () => {
         const { result, container } = renderAndCheckModal();
 
-        await fireEvent.keyDown(groupHandles(container)[0], { key: 'ArrowDown' });
+        await moveFirstGroupDown(container);
         checkAndClickCancelButton(result);
 
         expect(getSettings().editModalFieldOrder).toEqual(editModalFieldGroups);
