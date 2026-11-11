@@ -4,13 +4,13 @@ import {
     createSetStatusCommands,
     createSetStatusEditorCallback,
     createSetStatusLineTransformer,
-    selectedLineNumbers,
     setStatusOnLine,
 } from 'Commands/ChangeStatusCommands';
 import { Status } from 'Statuses/Status';
 import { StatusRegistry } from 'Statuses/StatusRegistry';
 import { StatusConfiguration, StatusType } from 'Statuses/StatusConfiguration';
 import { resetSettings, updateSettings } from 'Config/Settings';
+import { selectedLineNumbers } from 'Commands/CreateEditorCallback';
 
 vi.mock('obsidian', () => ({
     MarkdownView: class MarkdownView {},

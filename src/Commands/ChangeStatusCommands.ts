@@ -2,7 +2,6 @@ import {
     type Command,
     type Editor,
     type EditorChange,
-    type EditorSelection,
     type MarkdownFileInfo,
     type MarkdownView,
     Notice,
@@ -18,6 +17,7 @@ import {
     type LineTransformer,
     createEditorCallback,
     replaceLineChange,
+    selectedLineNumbers,
 } from 'Commands/CreateEditorCallback';
 
 const notATaskMessage = 'Cannot set status: line is not a task or does not match global filter';
@@ -61,24 +61,6 @@ export const createSetStatusLineTransformer = (newStatus: Status): LineTransform
         return result;
     };
 };
-
-/**
- * Returns the numbers of the lines covered by the given selections, in ascending order.
- *
- * A selection that ends at the very start of a line does not include that line,
- * as happens when selecting whole lines by dragging down to the start of the next line.
- */
-export function selectedLineNumbers(selections: EditorSelection[]): number[] {
-    const lineNumbers = new Set<number>();
-    for (const { anchor, head } of selections) {
-        const [from, to] = anchor.line <= head.line ? [anchor, head] : [head, anchor];
-        const lastLine = to.line > from.line && to.ch === 0 ? to.line - 1 : to.line;
-        for (let line = from.line; line <= lastLine; line++) {
-            lineNumbers.add(line);
-        }
-    }
-    return [...lineNumbers].sort((a, b) => a - b);
-}
 
 /**
  * Creates an editor callback that sets the status of the task on the cursor's line,
