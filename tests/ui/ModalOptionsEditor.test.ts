@@ -77,6 +77,10 @@ describe('ModalOptionsEditor reordering tests', () => {
         return container.querySelector(`#${field}`)!.closest('.tasks-options-modal-field')!.querySelector('button')!;
     }
 
+    async function moveFieldUp(container: HTMLElement, field: keyof EditModalShowSettings) {
+        await fireEvent.keyDown(fieldHandle(container, field), { key: 'ArrowUp' });
+    }
+
     function renderedFields(container: HTMLElement) {
         return Array.from(container.querySelectorAll('input[type="checkbox"]')).map((input) => input.id);
     }
@@ -111,7 +115,7 @@ describe('ModalOptionsEditor reordering tests', () => {
     it('should not move the first field up, out of its group', async () => {
         const { container } = renderAndCheckModal();
 
-        await fireEvent.keyDown(fieldHandle(container, 'status'), { key: 'ArrowUp' });
+        await moveFieldUp(container, 'status');
 
         expect(renderedFields(container)).toEqual(editModalFieldGroups.flat());
     });
