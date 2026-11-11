@@ -804,6 +804,72 @@ describe('Hiding modal fields', () => {
     });
 });
 
+describe('Ordering modal fields', () => {
+    afterEach(() => {
+        resetSettings();
+    });
+
+    function renderedFieldIds() {
+        const fullyPopulatedLine = TaskBuilder.createFullyPopulatedTask().toFileLineString();
+        const task = taskFromLine({ line: fullyPopulatedLine, path: '' });
+        const { container } = renderAndCheckModal(task, () => {});
+
+        // The order of fields in the DOM is also the Tab order.
+        // Include separator lines to check their positions between groups.
+        const fields = Object.keys(getSettings().isShownInEditModal);
+        return Array.from(container.querySelectorAll('[id], hr'))
+            .filter((element) => element.tagName === 'HR' || fields.includes(element.id))
+            .map((element) => (element.tagName === 'HR' ? '---' : element.id));
+    }
+
+    it('should render fields in the default order and lines between them', () => {
+        expect(renderedFieldIds()).toEqual([
+            'priority',
+            '---',
+            'recurrence',
+            'due',
+            'scheduled',
+            'start',
+            '---',
+            'before_this',
+            'after_this',
+            '---',
+            'status',
+            'created',
+            'done',
+            'cancelled',
+        ]);
+    });
+
+    it('should render fields in the saved order and lines between them', () => {
+        updateSettings({
+            editModalFieldOrder: [
+                ['cancelled', 'done', 'status', 'created'],
+                ['start', 'due', 'recurrence', 'scheduled'],
+                ['priority'],
+                ['after_this', 'before_this'],
+            ],
+        });
+
+        expect(renderedFieldIds()).toEqual([
+            'cancelled',
+            'done',
+            'status',
+            'created',
+            '---',
+            'start',
+            'due',
+            'recurrence',
+            'scheduled',
+            '---',
+            'priority',
+            '---',
+            'after_this',
+            'before_this',
+        ]);
+    });
+});
+
 describe('Buttons in the modal on mobile', () => {
     // Regression test for the Apply button needing two taps on mobile.
     //

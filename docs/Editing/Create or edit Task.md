@@ -35,6 +35,18 @@ By default, all fields are displayed.
 > [!released]
 > Hiding unused fields was introduced in Tasks 7.23.0.
 
+You can also change the order of the fields in the modal. The fields are in groups: priority, the dates when the task happens, dependencies, and status with its dates. In the Gear modal:
+
+- Drag the handle on the left of a group to move the whole group.
+- Drag the handle on the right of a field to move it within its group. Fields cannot be moved to another group.
+- Alternatively, focus a handle with the `Tab` key and press the `Up` or `Down` arrow key.
+- Click **Reset order** to go back to the default order.
+
+The `Tab` key moves through the fields in the modal in the same order.
+
+> [!released]
+> Reordering fields was introduced in Tasks X.Y.Z.
+
 ## Keyboard shortcuts
 
 > [!released]

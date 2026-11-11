@@ -3,6 +3,8 @@
     <label for="description">Description</label>
     <textarea id="description" class="tasks-modal-description" placeholder="Take out the trash"></textarea>
   </section>
+  <!---->
+  <!---->
   <section class="tasks-modal-priority-section">
     <label id="priority" for="priority-none">Priority</label>
     <div class="task-modal-priority-option-container">
@@ -61,9 +63,12 @@
     <!---->
     <!---->
   </section>
-  <hr id="line-after-priority" />
+  <hr />
+  <!---->
   <!---->
   <section class="tasks-modal-dates-section">
+    <!---->
+    <!---->
     <label for="recurrence">Recurs</label>
     <input id="recurrence" type="text" placeholder="Try 'every day when done'" class="tasks-modal-date-input" />
     <code class="tasks-modal-parsed-date">
@@ -72,12 +77,14 @@
       <!---->
     </code>
     <!---->
+    <!---->
     <label for="due">Due</label>
     <input type="text" placeholder="Try 'Mon' or 'tm' then space" id="due" class="tasks-modal-date-input" />
     <div class="tasks-modal-parsed-date">
       📅
       <input class="tasks-modal-date-editor-picker" type="date" id="date-editor-picker" tabindex="-1" />
     </div>
+    <!---->
     <!---->
     <!---->
     <label for="scheduled">Scheduled</label>
@@ -91,6 +98,7 @@
       <i>invalid scheduled date</i>
       <!---->
     </code>
+    <!---->
     <!---->
     <!---->
     <label for="start">Start</label>
@@ -107,9 +115,12 @@
     </div>
     <!---->
   </section>
-  <hr id="line-after-happens-dates" />
+  <hr />
+  <!---->
   <!---->
   <section class="tasks-modal-dependencies-section">
+    <!---->
+    <!---->
     <!---->
     <label for="blockedBy">Before this</label>
     <span>
@@ -119,6 +130,7 @@
         id="before_this"
         placeholder="Search for tasks that the task being edited depends on..." />
     </span>
+    <!---->
     <!---->
     <!---->
     <!---->
@@ -133,11 +145,13 @@
     <!---->
     <!---->
     <!---->
-    <!---->
   </section>
-  <hr id="line-after-dependencies" />
+  <hr />
+  <!---->
   <!---->
   <section class="tasks-modal-dates-section">
+    <!---->
+    <!---->
     <label for="status" id="status">Status</label>
     <select id="status-type" class="status-editor-status-selector">
       <option value=" ">Todo [ ]</option>
@@ -146,12 +160,14 @@
       <option value="-">Cancelled [-]</option>
     </select>
     <!---->
+    <!---->
     <label for="created">Created</label>
     <input type="text" placeholder="Try 'Mon' or 'tm' then space" id="created" class="tasks-modal-date-input" />
     <div class="tasks-modal-parsed-date">
       ➕
       <input class="tasks-modal-date-editor-picker" type="date" id="date-editor-picker" tabindex="-1" />
     </div>
+    <!---->
     <!---->
     <!---->
     <label for="done">Done</label>
@@ -162,6 +178,7 @@
     </div>
     <!---->
     <!---->
+    <!---->
     <label for="cancelled">Cancelled</label>
     <input type="text" placeholder="Try 'Mon' or 'tm' then space" id="cancelled" class="tasks-modal-date-input" />
     <div class="tasks-modal-parsed-date">
@@ -169,8 +186,9 @@
       <input class="tasks-modal-date-editor-picker" type="date" id="date-editor-picker" tabindex="-1" />
     </div>
     <!---->
-    <!---->
   </section>
+  <!---->
+  <!---->
   <section class="tasks-modal-button-section">
     <button type="submit" class="mod-cta" disabled="">Apply</button>
     <button type="button">Cancel</button>
