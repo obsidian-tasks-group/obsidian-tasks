@@ -1,5 +1,12 @@
 import moment from 'moment';
-import { type Editor, type EditorChange, type EditorPosition, MarkdownView, Notice } from 'obsidian';
+import {
+    type Editor,
+    type EditorChange,
+    type EditorPosition,
+    type MarkdownFileInfo,
+    MarkdownView,
+    Notice,
+} from 'obsidian';
 import { createSetStatusCommands, createSetStatusEditorCallback, setStatusOnLine } from 'Commands/ChangeStatusCommands';
 import { Status } from 'Statuses/Status';
 import { StatusRegistry } from 'Statuses/StatusRegistry';
@@ -189,6 +196,30 @@ describe('createSetStatusEditorCallback', () => {
         runCommand(['- [ ] A simple task'], 0, 0);
 
         expect(MockedNotice).not.toHaveBeenCalled();
+    });
+
+    describe('when checking whether the command is available', () => {
+        function checkCommand(checkedView: MarkdownView | MarkdownFileInfo) {
+            const { editor } = makeEditor(['- [ ] A simple task'], 0, 0);
+            const available = createSetStatusEditorCallback(Status.DONE)(
+                true,
+                editor as unknown as Editor,
+                checkedView,
+            );
+            return available;
+        }
+
+        it('should be available in a Markdown view, without changing anything', () => {
+            const available = checkCommand(view);
+
+            expect(available).toEqual(true);
+        });
+
+        it('should not be available outside a Markdown view', () => {
+            const available = checkCommand({ file: { path: 'file.md' } } as MarkdownFileInfo);
+
+            expect(available).toEqual(false);
+        });
     });
 
     it('should change the status of every task in a multi-line selection, in one transaction', () => {
