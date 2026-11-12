@@ -58,11 +58,11 @@ export const createSetStatusEditorCallback = (newStatus: Status) => {
     const noChangeMessage = notATaskMessage;
 
     const singleLineCallback = createEditorCallback((line: string, path: string) => {
-        const result = lineTransformer(line, path);
-        if (result === undefined) {
+        const insertion = lineTransformer(line, path);
+        if (insertion === undefined) {
             new Notice(noChangeMessage);
         }
-        return result;
+        return insertion;
     });
 
     return (checking: boolean, editor: Editor, view: MarkdownView | MarkdownFileInfo) => {
