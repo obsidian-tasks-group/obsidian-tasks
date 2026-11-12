@@ -55,8 +55,10 @@ export const setStatusOnLine = (line: string, path: string, newStatus: Status): 
  * @param newStatus - The status to set the tasks to
  */
 export const createSetStatusEditorCallback = (newStatus: Status) => {
-    const lineTransformer = (line: string, path: string) => setStatusOnLine(line, path, newStatus);
-    return createMultiLineEditorCallback(lineTransformer, notATaskMessage);
+    return createMultiLineEditorCallback(
+        (line: string, path: string) => setStatusOnLine(line, path, newStatus),
+        notATaskMessage,
+    );
 };
 
 /**
