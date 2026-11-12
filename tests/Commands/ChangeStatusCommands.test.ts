@@ -26,12 +26,12 @@ afterEach(() => {
 });
 
 describe('setStatusOnLine', () => {
-    it('should return refuse to act on a non-task line', () => {
+    it('should refuse to act on a non-task line', () => {
         const result = setStatusOnLine('This is not a task', 'file.md', Status.DONE);
         expect(result).toBeUndefined();
     });
 
-    it('should return refuse to act on an empty line', () => {
+    it('should refuse to act on an empty line', () => {
         const result = setStatusOnLine('', 'file.md', Status.DONE);
         expect(result).toBeUndefined();
     });
