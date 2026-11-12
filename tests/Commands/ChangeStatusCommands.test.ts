@@ -141,7 +141,7 @@ describe('createSetStatusEditorCallback', () => {
             getLine: (n: number) => getLines()[n],
             lineCount: () => getLines().length,
             getCursor: () => ({ line: toLine, ch: 0 }),
-            setCursor: () => {},
+            setCursor: vi.fn(),
             listSelections: () => [
                 { anchor: { line: fromLine, ch: 0 }, head: { line: toLine, ch: lines[toLine].length } },
             ],
@@ -163,7 +163,7 @@ describe('createSetStatusEditorCallback', () => {
     function runCommand(lines: string[], fromLine: number, toLine: number) {
         const { editor, getText } = makeEditor(lines, fromLine, toLine);
         createSetStatusEditorCallback(Status.DONE)(false, editor as unknown as Editor, view);
-        return { text: getText(), transaction: editor.transaction };
+        return { text: getText(), transaction: editor.transaction, setCursor: editor.setCursor };
     }
 
     it('should change the status of a task line', () => {
@@ -196,6 +196,20 @@ describe('createSetStatusEditorCallback', () => {
         runCommand(['- [ ] A simple task'], 0, 0);
 
         expect(MockedNotice).not.toHaveBeenCalled();
+    });
+
+    it('should keep the cursor on the same line after changing a single-line task', () => {
+        const { setCursor } = runCommand(['- [ ] task 1', '- [ ] task 2'], 1, 1);
+
+        expect(setCursor).toHaveBeenCalledTimes(1);
+        expect(setCursor).toHaveBeenCalledWith({ line: 1, ch: 0 });
+    });
+
+    it('should move the cursor to the last line when completing a recurring task adds a line', () => {
+        const { setCursor } = runCommand(['- [ ] A recurring task 🔁 every day 📅 2022-09-04'], 0, 0);
+
+        expect(setCursor).toHaveBeenCalledTimes(1);
+        expect(setCursor).toHaveBeenCalledWith({ line: 1, ch: 0 });
     });
 
     describe('when checking whether the command is available', () => {
