@@ -14,7 +14,6 @@ import type { StatusRegistry } from 'Statuses/StatusRegistry';
 import { allStatusInstructions } from 'ui/EditInstructions/StatusInstructions';
 import {
     type EditorInsertion,
-    type LineTransformer,
     createEditorCallback,
     replaceLineChange,
     selectedLineNumbers,
@@ -47,22 +46,6 @@ export const setStatusOnLine = (line: string, path: string, newStatus: Status): 
 };
 
 /**
- * Creates a line transformer that sets a task's status to the given status.
- *
- * @param newStatus - The status to set the task to
- * @returns A LineTransformer function for use with createEditorCallback
- */
-export const createSetStatusLineTransformer = (newStatus: Status): LineTransformer => {
-    return (line: string, path: string) => {
-        const result = setStatusOnLine(line, path, newStatus);
-        if (result === undefined) {
-            new Notice(notATaskMessage);
-        }
-        return result;
-    };
-};
-
-/**
  * Creates an editor callback that sets the status of the task on the cursor's line,
  * or, when the selections cover several lines, of every task on those lines.
  *
@@ -71,7 +54,13 @@ export const createSetStatusLineTransformer = (newStatus: Status): LineTransform
  * @param newStatus - The status to set the tasks to
  */
 export const createSetStatusEditorCallback = (newStatus: Status) => {
-    const singleLineCallback = createEditorCallback(createSetStatusLineTransformer(newStatus));
+    const singleLineCallback = createEditorCallback((line: string, path: string) => {
+        const result = setStatusOnLine(line, path, newStatus);
+        if (result === undefined) {
+            new Notice(notATaskMessage);
+        }
+        return result;
+    });
 
     return (checking: boolean, editor: Editor, view: MarkdownView | MarkdownFileInfo) => {
         if (checking) {
