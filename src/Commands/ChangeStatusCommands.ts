@@ -54,10 +54,12 @@ export const setStatusOnLine = (line: string, path: string, newStatus: Status): 
  * @param newStatus - The status to set the tasks to
  */
 export const createSetStatusEditorCallback = (newStatus: Status) => {
+    const noChangeMessage = notATaskMessage;
+
     const singleLineCallback = createEditorCallback((line: string, path: string) => {
         const result = setStatusOnLine(line, path, newStatus);
         if (result === undefined) {
-            new Notice(notATaskMessage);
+            new Notice(noChangeMessage);
         }
         return result;
     });
@@ -86,7 +88,7 @@ export const createSetStatusEditorCallback = (newStatus: Status) => {
         }
 
         if (changes.length === 0) {
-            new Notice(notATaskMessage);
+            new Notice(noChangeMessage);
             return;
         }
 
