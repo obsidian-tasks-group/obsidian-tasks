@@ -1,24 +1,11 @@
-import {
-    type Command,
-    type Editor,
-    type EditorChange,
-    type EditorSelection,
-    type MarkdownFileInfo,
-    type MarkdownView,
-    Notice,
-} from 'obsidian';
+import { type Command } from 'obsidian';
 import { TasksFile } from 'Scripting/TasksFile';
 import type { Status } from 'Statuses/Status';
 import { Task } from 'Task/Task';
 import { TaskLocation } from 'Task/TaskLocation';
 import type { StatusRegistry } from 'Statuses/StatusRegistry';
 import { allStatusInstructions } from 'ui/EditInstructions/StatusInstructions';
-import {
-    type EditorInsertion,
-    type LineTransformer,
-    createEditorCallback,
-    replaceLineChange,
-} from 'Commands/CreateEditorCallback';
+import { type EditorInsertion, createMultiLineEditorCallback } from 'Commands/CreateEditorCallback';
 
 const notATaskMessage = 'Cannot set status: line is not a task or does not match global filter';
 
@@ -47,40 +34,6 @@ export const setStatusOnLine = (line: string, path: string, newStatus: Status): 
 };
 
 /**
- * Creates a line transformer that sets a task's status to the given status.
- *
- * @param newStatus - The status to set the task to
- * @returns A LineTransformer function for use with createEditorCallback
- */
-export const createSetStatusLineTransformer = (newStatus: Status): LineTransformer => {
-    return (line: string, path: string) => {
-        const result = setStatusOnLine(line, path, newStatus);
-        if (result === undefined) {
-            new Notice(notATaskMessage);
-        }
-        return result;
-    };
-};
-
-/**
- * Returns the numbers of the lines covered by the given selections, in ascending order.
- *
- * A selection that ends at the very start of a line does not include that line,
- * as happens when selecting whole lines by dragging down to the start of the next line.
- */
-export function selectedLineNumbers(selections: EditorSelection[]): number[] {
-    const lineNumbers = new Set<number>();
-    for (const { anchor, head } of selections) {
-        const [from, to] = anchor.line <= head.line ? [anchor, head] : [head, anchor];
-        const lastLine = to.line > from.line && to.ch === 0 ? to.line - 1 : to.line;
-        for (let line = from.line; line <= lastLine; line++) {
-            lineNumbers.add(line);
-        }
-    }
-    return [...lineNumbers].sort((a, b) => a - b);
-}
-
-/**
  * Creates an editor callback that sets the status of the task on the cursor's line,
  * or, when the selections cover several lines, of every task on those lines.
  *
@@ -89,39 +42,10 @@ export function selectedLineNumbers(selections: EditorSelection[]): number[] {
  * @param newStatus - The status to set the tasks to
  */
 export const createSetStatusEditorCallback = (newStatus: Status) => {
-    const singleLineCallback = createEditorCallback(createSetStatusLineTransformer(newStatus));
-
-    return (checking: boolean, editor: Editor, view: MarkdownView | MarkdownFileInfo) => {
-        if (checking) {
-            return singleLineCallback(checking, editor, view);
-        }
-
-        const lineNumbers = selectedLineNumbers(editor.listSelections());
-        if (lineNumbers.length <= 1) {
-            return singleLineCallback(checking, editor, view);
-        }
-
-        const path = view.file?.path;
-        if (path === undefined) {
-            return;
-        }
-
-        const changes: EditorChange[] = [];
-        for (const lineNumber of lineNumbers) {
-            const insertion = setStatusOnLine(editor.getLine(lineNumber), path, newStatus);
-            if (insertion !== undefined) {
-                changes.push(replaceLineChange(editor, lineNumber, insertion.text));
-            }
-        }
-
-        if (changes.length === 0) {
-            new Notice(notATaskMessage);
-            return;
-        }
-
-        // A single transaction, so that one Undo reverts all the changes.
-        editor.transaction({ changes });
-    };
+    return createMultiLineEditorCallback(
+        (line: string, path: string) => setStatusOnLine(line, path, newStatus),
+        notATaskMessage,
+    );
 };
 
 /**

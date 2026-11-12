@@ -1,4 +1,12 @@
-import { Editor, type EditorChange, type EditorPosition, type MarkdownFileInfo, MarkdownView } from 'obsidian';
+import {
+    Editor,
+    type EditorChange,
+    type EditorPosition,
+    type EditorSelection,
+    type MarkdownFileInfo,
+    MarkdownView,
+    Notice,
+} from 'obsidian';
 
 /**
  * Represents text to be inserted into the editor
@@ -123,3 +131,73 @@ export const createEditorCallback = (lineTransformer: LineTransformer) => {
 
     return editorCallback;
 };
+
+/**
+ * Returns the numbers of the lines covered by the given selections, in ascending order.
+ *
+ * A selection that ends at the very start of a line does not include that line,
+ * as happens when selecting whole lines by dragging down to the start of the next line.
+ */
+export function selectedLineNumbers(selections: EditorSelection[]): number[] {
+    const lineNumbers = new Set<number>();
+    for (const { anchor, head } of selections) {
+        const [from, to] = anchor.line <= head.line ? [anchor, head] : [head, anchor];
+        const lastLine = to.line > from.line && to.ch === 0 ? to.line - 1 : to.line;
+        for (let line = from.line; line <= lastLine; line++) {
+            lineNumbers.add(line);
+        }
+    }
+    return [...lineNumbers].sort((a, b) => a - b);
+}
+
+/**
+ * Creates an editor callback that applies a line transformation to every line covered by the selections.
+ *
+ * When the selections cover a single line, it behaves like {@link createEditorCallback}.
+ * Lines for which the transformer returns undefined are left unchanged.
+ *
+ * @param lineTransformer - A function that takes a line and file path, and returns the transformed text
+ * @param noChangeMessage - Shown to the user, once, if the transformer changed no lines
+ * @returns An editor callback suitable for use with Obsidian's `editorCheckCallback`
+ */
+export function createMultiLineEditorCallback(lineTransformer: LineTransformer, noChangeMessage: string) {
+    const singleLineCallback = createEditorCallback((line: string, path: string) => {
+        const insertion = lineTransformer(line, path);
+        if (insertion === undefined) {
+            new Notice(noChangeMessage);
+        }
+        return insertion;
+    });
+
+    return (checking: boolean, editor: Editor, view: MarkdownView | MarkdownFileInfo) => {
+        if (checking) {
+            return singleLineCallback(checking, editor, view);
+        }
+
+        const lineNumbers = selectedLineNumbers(editor.listSelections());
+        if (lineNumbers.length <= 1) {
+            return singleLineCallback(checking, editor, view);
+        }
+
+        const path = view.file?.path;
+        if (path === undefined) {
+            return;
+        }
+
+        const changes: EditorChange[] = [];
+        for (const lineNumber of lineNumbers) {
+            const insertion = lineTransformer(editor.getLine(lineNumber), path);
+            if (insertion !== undefined) {
+                changes.push(replaceLineChange(editor, lineNumber, insertion.text));
+            }
+        }
+
+        if (changes.length === 0) {
+            new Notice(noChangeMessage);
+            return;
+        }
+
+        // A single transaction, so that one Undo reverts all the changes.
+        editor.transaction({ changes });
+    };
+}
