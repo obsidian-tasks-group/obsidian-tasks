@@ -1,11 +1,6 @@
 import moment from 'moment';
 import { type Editor, type EditorChange, type EditorPosition, MarkdownView, Notice } from 'obsidian';
-import {
-    createSetStatusCommands,
-    createSetStatusEditorCallback,
-    createSetStatusLineTransformer,
-    setStatusOnLine,
-} from 'Commands/ChangeStatusCommands';
+import { createSetStatusCommands, createSetStatusEditorCallback, setStatusOnLine } from 'Commands/ChangeStatusCommands';
 import { Status } from 'Statuses/Status';
 import { StatusRegistry } from 'Statuses/StatusRegistry';
 import { StatusConfiguration, StatusType } from 'Statuses/StatusConfiguration';
@@ -122,36 +117,34 @@ describe('createSetStatusEditorCallback', () => {
     }
 
     it('should change the status of a task line', () => {
-        const transformer = createSetStatusLineTransformer(Status.DONE);
-        const result = transformer('- [ ] A simple task', 'file.md');
-        expect(result).toBeDefined();
-        expect(result).toHaveProperty('text');
-        expect(result).toHaveProperty('moveTo');
+        const { text } = runCommand(['- [ ] A simple task'], 0, 0);
+
+        expect(text).toEqual('- [x] A simple task ✅ 2026-02-27');
     });
 
     it('should mark a task as done', () => {
-        const transformer = createSetStatusLineTransformer(Status.DONE);
-        const result = transformer('- [ ] A simple task', 'file.md');
-        expect(result!.text).toContain('- [x] A simple task');
+        const { text } = runCommand(['- [ ] A simple task'], 0, 0);
+
+        expect(text).toContain('- [x] A simple task');
     });
 
     it('should do nothing when the line is not a task', () => {
-        const transformer = createSetStatusLineTransformer(Status.DONE);
-        const result = transformer('This is not a task', 'file.md');
-        expect(result).toBeUndefined();
+        const { text } = runCommand(['This is not a task'], 0, 0);
+
+        expect(text).toEqual('This is not a task');
     });
 
     it('should notify the user when the line is not a task', () => {
-        const transformer = createSetStatusLineTransformer(Status.DONE);
-        transformer('This is not a task', 'file.md');
+        runCommand(['This is not a task'], 0, 0);
+
         expect(MockedNotice).toHaveBeenCalledWith(
             'Cannot set status: line is not a task or does not match global filter',
         );
     });
 
     it('should not notify the user when changing a valid task', () => {
-        const transformer = createSetStatusLineTransformer(Status.DONE);
-        transformer('- [ ] A simple task', 'file.md');
+        runCommand(['- [ ] A simple task'], 0, 0);
+
         expect(MockedNotice).not.toHaveBeenCalled();
     });
 
