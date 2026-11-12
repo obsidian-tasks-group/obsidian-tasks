@@ -5,6 +5,7 @@ import {
     type EditorSelection,
     type MarkdownFileInfo,
     MarkdownView,
+    Notice,
 } from 'obsidian';
 
 /**
@@ -147,4 +148,56 @@ export function selectedLineNumbers(selections: EditorSelection[]): number[] {
         }
     }
     return [...lineNumbers].sort((a, b) => a - b);
+}
+
+/**
+ * Creates an editor callback that applies a line transformation to every line covered by the selections.
+ *
+ * When the selections cover a single line, it behaves like {@link createEditorCallback}.
+ * Lines for which the transformer returns undefined are left unchanged.
+ *
+ * @param lineTransformer - A function that takes a line and file path, and returns the transformed text
+ * @param noChangeMessage - Shown to the user, once, if the transformer changed no lines
+ * @returns An editor callback suitable for use with Obsidian's `editorCheckCallback`
+ */
+export function createMultiLineEditorCallback(lineTransformer: LineTransformer, noChangeMessage: string) {
+    const singleLineCallback = createEditorCallback((line: string, path: string) => {
+        const insertion = lineTransformer(line, path);
+        if (insertion === undefined) {
+            new Notice(noChangeMessage);
+        }
+        return insertion;
+    });
+
+    return (checking: boolean, editor: Editor, view: MarkdownView | MarkdownFileInfo) => {
+        if (checking) {
+            return singleLineCallback(checking, editor, view);
+        }
+
+        const lineNumbers = selectedLineNumbers(editor.listSelections());
+        if (lineNumbers.length <= 1) {
+            return singleLineCallback(checking, editor, view);
+        }
+
+        const path = view.file?.path;
+        if (path === undefined) {
+            return;
+        }
+
+        const changes: EditorChange[] = [];
+        for (const lineNumber of lineNumbers) {
+            const insertion = lineTransformer(editor.getLine(lineNumber), path);
+            if (insertion !== undefined) {
+                changes.push(replaceLineChange(editor, lineNumber, insertion.text));
+            }
+        }
+
+        if (changes.length === 0) {
+            new Notice(noChangeMessage);
+            return;
+        }
+
+        // A single transaction, so that one Undo reverts all the changes.
+        editor.transaction({ changes });
+    };
 }

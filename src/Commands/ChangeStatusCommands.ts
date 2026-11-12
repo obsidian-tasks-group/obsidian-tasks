@@ -1,24 +1,11 @@
-import {
-    type Command,
-    type Editor,
-    type EditorChange,
-    type MarkdownFileInfo,
-    type MarkdownView,
-    Notice,
-} from 'obsidian';
+import { type Command } from 'obsidian';
 import { TasksFile } from 'Scripting/TasksFile';
 import type { Status } from 'Statuses/Status';
 import { Task } from 'Task/Task';
 import { TaskLocation } from 'Task/TaskLocation';
 import type { StatusRegistry } from 'Statuses/StatusRegistry';
 import { allStatusInstructions } from 'ui/EditInstructions/StatusInstructions';
-import {
-    type EditorInsertion,
-    type LineTransformer,
-    createEditorCallback,
-    replaceLineChange,
-    selectedLineNumbers,
-} from 'Commands/CreateEditorCallback';
+import { type EditorInsertion, createMultiLineEditorCallback } from 'Commands/CreateEditorCallback';
 
 const notATaskMessage = 'Cannot set status: line is not a task or does not match global filter';
 
@@ -60,58 +47,6 @@ export const createSetStatusEditorCallback = (newStatus: Status) => {
         notATaskMessage,
     );
 };
-
-/**
- * Creates an editor callback that applies a line transformation to every line covered by the selections.
- *
- * When the selections cover a single line, it behaves like {@link createEditorCallback}.
- * Lines for which the transformer returns undefined are left unchanged.
- *
- * @param lineTransformer - A function that takes a line and file path, and returns the transformed text
- * @param noChangeMessage - Shown to the user, once, if the transformer changed no lines
- * @returns An editor callback suitable for use with Obsidian's `editorCheckCallback`
- */
-function createMultiLineEditorCallback(lineTransformer: LineTransformer, noChangeMessage: string) {
-    const singleLineCallback = createEditorCallback((line: string, path: string) => {
-        const insertion = lineTransformer(line, path);
-        if (insertion === undefined) {
-            new Notice(noChangeMessage);
-        }
-        return insertion;
-    });
-
-    return (checking: boolean, editor: Editor, view: MarkdownView | MarkdownFileInfo) => {
-        if (checking) {
-            return singleLineCallback(checking, editor, view);
-        }
-
-        const lineNumbers = selectedLineNumbers(editor.listSelections());
-        if (lineNumbers.length <= 1) {
-            return singleLineCallback(checking, editor, view);
-        }
-
-        const path = view.file?.path;
-        if (path === undefined) {
-            return;
-        }
-
-        const changes: EditorChange[] = [];
-        for (const lineNumber of lineNumbers) {
-            const insertion = lineTransformer(editor.getLine(lineNumber), path);
-            if (insertion !== undefined) {
-                changes.push(replaceLineChange(editor, lineNumber, insertion.text));
-            }
-        }
-
-        if (changes.length === 0) {
-            new Notice(noChangeMessage);
-            return;
-        }
-
-        // A single transaction, so that one Undo reverts all the changes.
-        editor.transaction({ changes });
-    };
-}
 
 /**
  * Create set-status commands for each registered status
