@@ -14,6 +14,7 @@ import type { StatusRegistry } from 'Statuses/StatusRegistry';
 import { allStatusInstructions } from 'ui/EditInstructions/StatusInstructions';
 import {
     type EditorInsertion,
+    type LineTransformer,
     createEditorCallback,
     replaceLineChange,
     selectedLineNumbers,
@@ -55,8 +56,10 @@ export const setStatusOnLine = (line: string, path: string, newStatus: Status): 
  */
 export const createSetStatusEditorCallback = (newStatus: Status) => {
     const lineTransformer = (line: string, path: string) => setStatusOnLine(line, path, newStatus);
-    const noChangeMessage = notATaskMessage;
+    return createMultiLineEditorCallback(lineTransformer, notATaskMessage);
+};
 
+function createMultiLineEditorCallback(lineTransformer: LineTransformer, noChangeMessage: string) {
     const singleLineCallback = createEditorCallback((line: string, path: string) => {
         const insertion = lineTransformer(line, path);
         if (insertion === undefined) {
@@ -96,7 +99,7 @@ export const createSetStatusEditorCallback = (newStatus: Status) => {
         // A single transaction, so that one Undo reverts all the changes.
         editor.transaction({ changes });
     };
-};
+}
 
 /**
  * Create set-status commands for each registered status
