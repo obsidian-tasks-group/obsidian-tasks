@@ -59,6 +59,16 @@ export const createSetStatusEditorCallback = (newStatus: Status) => {
     return createMultiLineEditorCallback(lineTransformer, notATaskMessage);
 };
 
+/**
+ * Creates an editor callback that applies a line transformation to every line covered by the selections.
+ *
+ * When the selections cover a single line, it behaves like {@link createEditorCallback}.
+ * Lines for which the transformer returns undefined are left unchanged.
+ *
+ * @param lineTransformer - A function that takes a line and file path, and returns the transformed text
+ * @param noChangeMessage - Shown to the user, once, if the transformer changed no lines
+ * @returns An editor callback suitable for use with Obsidian's `editorCheckCallback`
+ */
 function createMultiLineEditorCallback(lineTransformer: LineTransformer, noChangeMessage: string) {
     const singleLineCallback = createEditorCallback((line: string, path: string) => {
         const insertion = lineTransformer(line, path);
