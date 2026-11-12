@@ -54,10 +54,11 @@ export const setStatusOnLine = (line: string, path: string, newStatus: Status): 
  * @param newStatus - The status to set the tasks to
  */
 export const createSetStatusEditorCallback = (newStatus: Status) => {
+    const lineTransformer = (line: string, path: string) => setStatusOnLine(line, path, newStatus);
     const noChangeMessage = notATaskMessage;
 
     const singleLineCallback = createEditorCallback((line: string, path: string) => {
-        const result = setStatusOnLine(line, path, newStatus);
+        const result = lineTransformer(line, path);
         if (result === undefined) {
             new Notice(noChangeMessage);
         }
@@ -81,7 +82,7 @@ export const createSetStatusEditorCallback = (newStatus: Status) => {
 
         const changes: EditorChange[] = [];
         for (const lineNumber of lineNumbers) {
-            const insertion = setStatusOnLine(editor.getLine(lineNumber), path, newStatus);
+            const insertion = lineTransformer(editor.getLine(lineNumber), path);
             if (insertion !== undefined) {
                 changes.push(replaceLineChange(editor, lineNumber, insertion.text));
             }
