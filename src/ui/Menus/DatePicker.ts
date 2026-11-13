@@ -1,12 +1,24 @@
-import flatpickr from 'flatpickr';
 import type { Task } from 'Task/Task';
 import { RemoveTaskDate, SetTaskDate } from 'ui/EditInstructions/DateInstructions';
 import type { AllTaskDateFields } from 'DateTime/DateFieldTypes';
+import { splitDateText } from 'DateTime/Postponer';
 import type { TaskSaver } from 'ui/Menus/TaskEditingMenu';
 
-interface LocaleWithWeekInfo extends Intl.Locale {
-    weekInfo?: { firstDay: number };
+/** A Svelte action which also lets rendered tasks use the same native date picker. */
+export function datePicker(input: HTMLInputElement) {
+    input.type = 'date';
+    const open = () => {
+        try {
+            input.showPicker();
+        } catch {
+            // On platforms without showPicker(), the input remains clickable and editable.
+        }
+    };
+    input.addEventListener('click', open);
+    return { destroy: () => input.removeEventListener('click', open) };
 }
+
+let closeDatePicker: (() => void) | undefined;
 
 /**
  * A calendar date picker which edits a date value in a {@link Task} object.
@@ -21,61 +33,52 @@ export function promptForDate(
     dateFieldToEdit: AllTaskDateFields,
     taskSaver: TaskSaver,
 ) {
-    const currentValue = task[dateFieldToEdit];
-    // TODO figure out how Today's date is determined: if Obsidian is left
-    //      running overnight, the flatpickr modal shows the previous day as Today.
-    const fp = flatpickr(parentElement, {
-        defaultDate: currentValue ? currentValue.format('YYYY-MM-DD') : new Date(),
-        disableMobile: true,
-        enableTime: false, // Optional: Enable time picker
-        dateFormat: 'Y-m-d', // Adjust the date and time format as needed
-        locale: {
-            // Try to determine the first day of the week based on the locale, or use Monday
-            // if unavailable
-            firstDayOfWeek: (new Intl.Locale(navigator.language) as LocaleWithWeekInfo).weekInfo?.firstDay ?? 1,
-        },
-        onClose: async (selectedDates, _dateStr, instance) => {
-            if (selectedDates.length > 0) {
-                const date = selectedDates[0];
-                const newTask = new SetTaskDate(dateFieldToEdit, date).apply(task);
-                await taskSaver(task, newTask);
-            }
-            instance.destroy();
-        },
-        onReady: (_selectedDates, _dateStr, instance) => {
-            // Add custom buttons dynamically
-            const buttonContainer = instance.calendarContainer.createDiv({ cls: 'tasks-date-picker-buttons' });
+    closeDatePicker?.();
+    const doc = parentElement.ownerDocument;
+    // Keep the input outside rendered Markdown and Live Preview editor content.
+    const popover = doc.body.createDiv({ cls: 'tasks-date-picker-popover' });
+    const input = popover.createEl('input', { attr: { 'aria-label': splitDateText(dateFieldToEdit) } });
+    const picker = datePicker(input);
+    input.value = task[dateFieldToEdit]?.format('YYYY-MM-DD') ?? '';
 
-            // Create "Clear" button
-            addButton(buttonContainer, instance, task, taskSaver, 'Clear', () => {
-                return new RemoveTaskDate(dateFieldToEdit, task).apply(task);
-            });
+    const rect = parentElement.getBoundingClientRect();
+    const view = doc.defaultView ?? window;
+    popover.style.left = `${Math.max(0, Math.min(rect.left, view.innerWidth - popover.offsetWidth))}px`;
+    popover.style.top = `${
+        rect.bottom + popover.offsetHeight > view.innerHeight
+            ? Math.max(0, rect.top - popover.offsetHeight)
+            : rect.bottom
+    }px`;
 
-            // Create "Today" button
-            addButton(buttonContainer, instance, task, taskSaver, 'Today', () => {
-                const today = new Date();
-                return new SetTaskDate(dateFieldToEdit, today).apply(task);
-            });
-        },
-    });
+    const close = () => {
+        picker.destroy();
+        popover.remove();
+        doc.removeEventListener('pointerdown', onPointerDown, true);
+        doc.removeEventListener('keydown', onKeyDown, true);
+        closeDatePicker = undefined;
+    };
+    const onPointerDown = (event: PointerEvent) => {
+        if (!popover.contains(event.target as Node)) {
+            close();
+        }
+    };
+    const onKeyDown = (event: KeyboardEvent) => {
+        if (event.key === 'Escape') {
+            close();
+        }
+    };
+    closeDatePicker = close;
+    doc.addEventListener('pointerdown', onPointerDown, true);
+    doc.addEventListener('keydown', onKeyDown, true);
 
-    // Open the calendar programmatically
-    fp.open();
-}
-
-function addButton(
-    buttonContainer: HTMLDivElement,
-    instance: flatpickr.Instance,
-    task: Task,
-    taskSaver: TaskSaver,
-    buttonName: string,
-    applyDate: () => Task[],
-) {
-    const button = buttonContainer.createEl('button', { cls: 'flatpickr-button', text: buttonName });
-
-    button.addEventListener('click', async () => {
-        const newTask = applyDate();
+    input.addEventListener('change', async () => {
+        const newTask = input.value
+            ? new SetTaskDate(dateFieldToEdit, window.moment(input.value, 'YYYY-MM-DD').toDate()).apply(task)
+            : new RemoveTaskDate(dateFieldToEdit, task).apply(task);
+        close();
         await taskSaver(task, newTask);
-        instance.destroy();
     });
+
+    input.focus();
+    input.click();
 }
