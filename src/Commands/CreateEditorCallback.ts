@@ -82,9 +82,13 @@ export const replaceLineChange = (editor: Editor, lineNumber: number, text: stri
  * Creates an editor callback function that applies a line transformation to the current line.
  *
  * @param lineTransformer - A function that takes the current line and file path, and returns the transformed text
+ * @param getLineNumber - Returns the number of the line to transform. Defaults to the cursor's line.
  * @returns An editor callback suitable for use with Obsidian's `editorCheckCallback`
  */
-export const createEditorCallback = (lineTransformer: LineTransformer) => {
+export const createEditorCallback = (
+    lineTransformer: LineTransformer,
+    getLineNumber: (editor: Editor) => number = (editor) => editor.getCursor().line,
+) => {
     function editorCallback(checking: boolean, editor: Editor, view: MarkdownView | MarkdownFileInfo) {
         if (checking) {
             if (!(view instanceof MarkdownView)) {
@@ -108,7 +112,7 @@ export const createEditorCallback = (lineTransformer: LineTransformer) => {
         }
 
         const origCursorPos = editor.getCursor();
-        const lineNumber = origCursorPos.line;
+        const lineNumber = getLineNumber(editor);
         const line = editor.getLine(lineNumber);
 
         const insertion = lineTransformer(line, path);
@@ -161,13 +165,18 @@ export function selectedLineNumbers(selections: EditorSelection[]): number[] {
  * @returns An editor callback suitable for use with Obsidian's `editorCheckCallback`
  */
 export function createMultiLineEditorCallback(lineTransformer: LineTransformer, noChangeMessage: string) {
-    const singleLineCallback = createEditorCallback((line: string, path: string) => {
+    const lineTransformerWithNotice = (line: string, path: string) => {
         const insertion = lineTransformer(line, path);
         if (insertion === undefined) {
             new Notice(noChangeMessage);
         }
         return insertion;
-    });
+    };
+    const singleLineCallback = createEditorCallback(
+        lineTransformerWithNotice,
+        // Use the selected line, which differs from the cursor's line if the selection ends at the start of the next line.
+        (editor: Editor) => selectedLineNumbers(editor.listSelections())[0],
+    );
 
     return (checking: boolean, editor: Editor, view: MarkdownView | MarkdownFileInfo) => {
         if (checking) {

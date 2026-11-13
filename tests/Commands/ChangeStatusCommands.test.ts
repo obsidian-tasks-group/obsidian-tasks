@@ -128,9 +128,10 @@ describe('createSetStatusEditorCallback', () => {
 
     /**
      * A minimal fake of Obsidian's Editor, holding the given lines,
-     * with the selection running from the start of {@link fromLine} to the end of {@link toLine}.
+     * with the selection running from the start of {@link fromLine} to the end of {@link toLine},
+     * or to column {@link headCh} of {@link toLine}, if given.
      */
-    function makeEditor(lines: string[], fromLine: number, toLine: number) {
+    function makeEditor(lines: string[], fromLine: number, toLine: number, headCh?: number) {
         let text = lines.join('\n');
         const getLines = () => text.split('\n');
         const offset = ({ line, ch }: EditorPosition) =>
@@ -143,7 +144,7 @@ describe('createSetStatusEditorCallback', () => {
             getCursor: () => ({ line: toLine, ch: 0 }),
             setCursor: vi.fn(),
             listSelections: () => [
-                { anchor: { line: fromLine, ch: 0 }, head: { line: toLine, ch: lines[toLine].length } },
+                { anchor: { line: fromLine, ch: 0 }, head: { line: toLine, ch: headCh ?? lines[toLine].length } },
             ],
             replaceRange: (replacement: string, from: EditorPosition, to: EditorPosition) => {
                 text = text.slice(0, offset(from)) + replacement + text.slice(offset(to));
@@ -160,8 +161,8 @@ describe('createSetStatusEditorCallback', () => {
 
     const view = Object.assign(Object.create(MarkdownView.prototype) as MarkdownView, { file: { path: 'file.md' } });
 
-    function runCommand(lines: string[], fromLine: number, toLine: number) {
-        const { editor, getText } = makeEditor(lines, fromLine, toLine);
+    function runCommand(lines: string[], fromLine: number, toLine: number, headCh?: number) {
+        const { editor, getText } = makeEditor(lines, fromLine, toLine, headCh);
         createSetStatusEditorCallback(Status.DONE)(false, editor as unknown as Editor, view);
         return { text: getText(), transaction: editor.transaction, setCursor: editor.setCursor };
     }
@@ -270,6 +271,13 @@ describe('createSetStatusEditorCallback', () => {
 
         expect(text).toEqual(['- [ ] task 1', '- [x] task 2 ✅ 2026-02-27'].join('\n'));
         expect(transaction).not.toHaveBeenCalled();
+    });
+
+    // https://github.com/obsidian-tasks-group/obsidian-tasks/issues/4141
+    it('should change the selected line, not the next one, when the selection ends at the start of the next line', () => {
+        const { text } = runCommand(['- [ ] line 1', '- [ ] line 2'], 0, 1, 0);
+
+        expect(text).toEqual(['- [x] line 1 ✅ 2026-02-27', '- [ ] line 2'].join('\n'));
     });
 });
 
