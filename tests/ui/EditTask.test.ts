@@ -598,6 +598,44 @@ describe('Task editing', () => {
             expect(await editFieldAndSave(line, 'due', '2024-01-01')).toEqual('- [ ] simple 📅 2024-01-01');
         });
 
+        async function expectDueDateForLocale(locale: string, input: string, expectedDate: string) {
+            const previousLocale = moment.locale();
+            try {
+                expect(moment.locale(locale)).toBe(locale);
+
+                const task = taskFromLine({ line, path: '' });
+                const { waitForClose, onSubmit } = constructSerialisingOnSubmit(task);
+                const { result, container } = renderAndCheckModal(task, onSubmit);
+                const due = getAndCheckRenderedElement<HTMLInputElement>(container, 'due');
+                await editInputElement(due, input);
+                const preview = due.nextElementSibling?.querySelector<HTMLInputElement>('input[type="date"]')?.value;
+
+                const submit = getAndCheckApplyButton(result);
+                expect(submit.disabled).toBe(false);
+                submit.click();
+
+                expect({ preview, saved: await waitForClose }).toEqual({
+                    preview: expectedDate,
+                    saved: `${line} 📅 ${expectedDate}`,
+                });
+            } finally {
+                moment.locale(previousLocale);
+            }
+        }
+
+        it.fails('should preview and save an ambiguous due date in day-month order for UK English', async () => {
+            await expectDueDateForLocale('en-gb', '05/11/2026', '2026-11-05');
+        });
+
+        it.each([
+            ['en', '05/11/2026', '2026-05-11'],
+            ['en-gb', '27/11/2026', '2026-11-27'],
+            ['en-gb', '11/27/2026', '2026-11-27'],
+            ['en-gb', '2026-11-05', '2026-11-05'],
+            ['en-gb', '5 Nov 2026', '2026-11-05'],
+            ['en-gb', 'tomorrow', '2024-11-28'],
+        ])('should preview and save %s due date input %s as %s', expectDueDateForLocale);
+
         it('should edit and save scheduled date', async () => {
             expect(await editFieldAndSave(line, 'scheduled', '2024-01-01')).toEqual('- [ ] simple ⏳ 2024-01-01');
         });
