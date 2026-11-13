@@ -1,5 +1,15 @@
 import * as chrono from 'chrono-node';
 
+// The day-first casual configuration also supports relative inputs such as "tomorrow".
+const dayFirstDateParser = new chrono.Chrono(chrono.en.createCasualConfiguration(true));
+
+function parseTypedDate(input: string, referenceDate: Date | undefined, forwardDate: boolean): Date | null {
+    const shortDateFormat = window.moment.localeData().longDateFormat('L');
+    const dayBeforeMonth = shortDateFormat.match(/[DM]/)?.[0] === 'D';
+    const parser = dayBeforeMonth ? dayFirstDateParser : chrono.casual;
+    return parser.parseDate(input, referenceDate, { forwardDate });
+}
+
 export function compareByDate(a: moment.Moment | null, b: moment.Moment | null): -1 | 0 | 1 {
     if (a !== null && b === null) {
         return -1;
@@ -56,9 +66,7 @@ function parseTypedDateForDisplay(
     if (!typedDate) {
         return `<i>no ${fieldName} date</i>`;
     }
-    const parsed = chrono.parseDate(typedDate, forwardDate, {
-        forwardDate: forwardDate != undefined,
-    });
+    const parsed = parseTypedDate(typedDate, forwardDate, forwardDate !== undefined);
     if (parsed !== null) {
         return window.moment(parsed).format('YYYY-MM-DD');
     }
@@ -87,7 +95,7 @@ export function parseTypedDateForDisplayUsingFutureDate(
  */
 export function parseTypedDateForSaving(typedDate: string, forwardDate: boolean): moment.Moment | null {
     let date: moment.Moment | null = null;
-    const parsedDate = chrono.parseDate(typedDate, new Date(), { forwardDate });
+    const parsedDate = parseTypedDate(typedDate, new Date(), forwardDate);
     if (parsedDate !== null) {
         date = window.moment(parsedDate);
     }
