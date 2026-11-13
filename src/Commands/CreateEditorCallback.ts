@@ -172,7 +172,7 @@ export function createMultiLineEditorCallback(lineTransformer: LineTransformer, 
         }
         return insertion;
     };
-    const singleLineCallback = createEditorCallback(lineTransformerWithNotice);
+    const singleLineCallback = createEditorCallback(lineTransformerWithNotice, (editor) => editor.getCursor().line);
 
     return (checking: boolean, editor: Editor, view: MarkdownView | MarkdownFileInfo) => {
         if (checking) {
