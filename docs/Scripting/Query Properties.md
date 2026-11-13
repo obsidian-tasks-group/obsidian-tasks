@@ -60,6 +60,18 @@ This page documents all the available pieces of information in Queries that you 
     - `query.file.outlinksInBody` returns all the links in the body of the note containing the query.
     - `query.file.outlinks` returns all this links in both [[Obsidian Properties]] and the body of the note containing the query.
 
+## Values for Active File Properties
+
+> [!released]
+> `query.activeFile` was introduced in Tasks X.Y.Z.
+
+`query.activeFile` has the same fields as `query.file`, such as `query.activeFile.path` and `query.activeFile.property('status')`, but describes the note open in the main editing area, instead of the note containing the query.
+
+1. The active file is the note in the most recently active tab of the main editing area. Sidebar panes are ignored, so a query in a sidebar sees the note you are editing.
+1. Queries using `query.activeFile` are redrawn when you switch notes, and when the active note's properties change.
+1. If no note is open, using a `query.activeFile` placeholder gives an error.
+1. With several Obsidian windows open, the active file is the note in the most recently focussed window.
+
 ## Values for Query Search Properties
 
 <!-- placeholder to force blank line before included text --><!-- include: QueryProperties.test.query_search_properties.approved.md -->
