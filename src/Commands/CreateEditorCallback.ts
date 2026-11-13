@@ -108,7 +108,8 @@ export const createEditorCallback = (lineTransformer: LineTransformer) => {
         }
 
         const origCursorPos = editor.getCursor();
-        const lineNumber = editor.getCursor().line;
+        const getLineNumber = (editor: Editor) => editor.getCursor().line;
+        const lineNumber = getLineNumber(editor);
         const line = editor.getLine(lineNumber);
 
         const insertion = lineTransformer(line, path);
