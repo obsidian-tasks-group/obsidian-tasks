@@ -623,7 +623,7 @@ describe('Task editing', () => {
             }
         }
 
-        it.fails('should preview and save an ambiguous due date in day-month order for UK English', async () => {
+        it('should preview and save an ambiguous due date in day-month order for UK English', async () => {
             await expectDueDateForLocale('en-gb', '05/11/2026', '2026-11-05');
         });
 
