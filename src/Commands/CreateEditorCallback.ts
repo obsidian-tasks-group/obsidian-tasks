@@ -82,9 +82,13 @@ export const replaceLineChange = (editor: Editor, lineNumber: number, text: stri
  * Creates an editor callback function that applies a line transformation to the current line.
  *
  * @param lineTransformer - A function that takes the current line and file path, and returns the transformed text
+ * @param getLineNumber - Returns the number of the line to transform. Defaults to the cursor's line.
  * @returns An editor callback suitable for use with Obsidian's `editorCheckCallback`
  */
-export const createEditorCallback = (lineTransformer: LineTransformer) => {
+export const createEditorCallback = (
+    lineTransformer: LineTransformer,
+    getLineNumber: (editor: Editor) => number = (editor) => editor.getCursor().line,
+) => {
     function editorCallback(checking: boolean, editor: Editor, view: MarkdownView | MarkdownFileInfo) {
         if (checking) {
             if (!(view instanceof MarkdownView)) {
@@ -108,7 +112,6 @@ export const createEditorCallback = (lineTransformer: LineTransformer) => {
         }
 
         const origCursorPos = editor.getCursor();
-        const getLineNumber = (editor: Editor) => editor.getCursor().line;
         const lineNumber = getLineNumber(editor);
         const line = editor.getLine(lineNumber);
 
