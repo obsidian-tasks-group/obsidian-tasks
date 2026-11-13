@@ -274,14 +274,11 @@ describe('createSetStatusEditorCallback', () => {
     });
 
     // https://github.com/obsidian-tasks-group/obsidian-tasks/issues/4141
-    it.fails(
-        'should change the selected line, not the next one, when the selection ends at the start of the next line',
-        () => {
-            const { text } = runCommand(['- [ ] line 1', '- [ ] line 2'], 0, 1, 0);
+    it('should change the selected line, not the next one, when the selection ends at the start of the next line', () => {
+        const { text } = runCommand(['- [ ] line 1', '- [ ] line 2'], 0, 1, 0);
 
-            expect(text).toEqual(['- [x] line 1 ✅ 2026-02-27', '- [ ] line 2'].join('\n'));
-        },
-    );
+        expect(text).toEqual(['- [x] line 1 ✅ 2026-02-27', '- [ ] line 2'].join('\n'));
+    });
 });
 
 describe('Change status commands', () => {

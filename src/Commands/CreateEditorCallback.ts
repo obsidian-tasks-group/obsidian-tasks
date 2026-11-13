@@ -172,7 +172,11 @@ export function createMultiLineEditorCallback(lineTransformer: LineTransformer, 
         }
         return insertion;
     };
-    const singleLineCallback = createEditorCallback(lineTransformerWithNotice, (editor) => editor.getCursor().line);
+    const singleLineCallback = createEditorCallback(
+        lineTransformerWithNotice,
+        // Use the selected line, which differs from the cursor's line if the selection ends at the start of the next line.
+        (editor: Editor) => selectedLineNumbers(editor.listSelections())[0],
+    );
 
     return (checking: boolean, editor: Editor, view: MarkdownView | MarkdownFileInfo) => {
         if (checking) {
