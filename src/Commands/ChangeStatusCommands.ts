@@ -24,8 +24,11 @@ export const setStatusOnLine = (line: string, path: string, newStatus: Status): 
         fallbackDate: null,
     });
 
+    const taskTransformer = (task: Task): string[] =>
+        task.handleNewStatusWithRecurrenceInUsersOrder(newStatus).map((t) => t.toFileLineString());
+
     if (task !== null) {
-        const lines = task.handleNewStatusWithRecurrenceInUsersOrder(newStatus).map((t) => t.toFileLineString());
+        const lines = taskTransformer(task);
         const newLineNumber = lines.length > 0 ? lines.length - 1 : 0;
         return { text: lines.join('\n'), moveTo: { line: newLineNumber } };
     }
