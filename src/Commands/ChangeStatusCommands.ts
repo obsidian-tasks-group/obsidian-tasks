@@ -20,7 +20,22 @@ const notATaskMessage = 'Cannot set status: line is not a task or does not match
 export const setStatusOnLine = (line: string, path: string, newStatus: Status): EditorInsertion | undefined => {
     const taskTransformer = (task: Task): string[] =>
         task.handleNewStatusWithRecurrenceInUsersOrder(newStatus).map((t) => t.toFileLineString());
+    return transformTaskOnLine(line, path, taskTransformer);
+};
 
+/**
+ * Transforms a task on a single line, returning the new text and cursor position.
+ *
+ * @param line - The line of text to transform
+ * @param path - The file path containing the line
+ * @param taskTransformer - A function that transforms the parsed task into replacement lines
+ * @returns An EditorInsertion with the new text and cursor position, or undefined if the line is not a task
+ */
+function transformTaskOnLine(
+    line: string,
+    path: string,
+    taskTransformer: (task: Task) => string[],
+): EditorInsertion | undefined {
     const task = Task.fromLine({
         line,
         taskLocation: TaskLocation.fromUnknownPosition(new TasksFile(path)),
@@ -34,7 +49,7 @@ export const setStatusOnLine = (line: string, path: string, newStatus: Status): 
     }
 
     return undefined;
-};
+}
 
 /**
  * Creates an editor callback that sets the status of the task on the cursor's line,
