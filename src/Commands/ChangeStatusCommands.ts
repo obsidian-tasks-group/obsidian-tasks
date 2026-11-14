@@ -8,6 +8,7 @@ import {
     createMultiLineEditorCallback,
     transformTaskOnLine,
 } from 'Commands/CreateEditorCallback';
+import type { TaskEditingInstruction } from 'ui/EditInstructions/TaskEditingInstruction';
 
 const notATaskMessage = 'Cannot set status: line is not a task or does not match global filter';
 
@@ -19,7 +20,11 @@ const notATaskMessage = 'Cannot set status: line is not a task or does not match
  * @param instruction - The instruction to edit the task
  * @returns An EditorInsertion with the new text and cursor position, or undefined if the line is not a task
  */
-export const setStatusOnLine = (line: string, path: string, instruction: SetStatus): EditorInsertion | undefined => {
+export const setStatusOnLine = (
+    line: string,
+    path: string,
+    instruction: TaskEditingInstruction,
+): EditorInsertion | undefined => {
     const taskTransformer = (task: Task): string[] => instruction.apply(task).map((t) => t.toFileLineString());
     return transformTaskOnLine(line, path, taskTransformer);
 };
