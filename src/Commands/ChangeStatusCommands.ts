@@ -12,14 +12,14 @@ import type { TaskEditingInstruction } from 'ui/EditInstructions/TaskEditingInst
 const notATaskMessage = 'Cannot set status: line is not a task or does not match global filter';
 
 /**
- * Sets a task's status on a single line, returning the new text and cursor position.
+ * Apply a TaskEditingInstruction to a task on a single line, returning the new text and cursor position.
  *
  * @param line - The line of text to transform
  * @param path - The file path containing the line
  * @param instruction - The instruction to edit the task
  * @returns An EditorInsertion with the new text and cursor position, or undefined if the line is not a task
  */
-export const setStatusOnLine = (
+export const applyInstructionToLine = (
     line: string,
     path: string,
     instruction: TaskEditingInstruction,
@@ -38,7 +38,7 @@ export const setStatusOnLine = (
  */
 export const createSetStatusEditorCallback = (instruction: TaskEditingInstruction) => {
     return createMultiLineEditorCallback(
-        (line: string, path: string) => setStatusOnLine(line, path, instruction),
+        (line: string, path: string) => applyInstructionToLine(line, path, instruction),
         notATaskMessage,
     );
 };
