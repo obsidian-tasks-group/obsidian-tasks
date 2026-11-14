@@ -23,6 +23,8 @@ export const setStatusOnLine = (line: string, path: string, newStatus: Status): 
     return transformTaskOnLine(line, path, taskTransformer);
 };
 
+type TaskTransformer = (task: Task) => string[];
+
 /**
  * Transforms a task on a single line, returning the new text and cursor position.
  *
@@ -34,7 +36,7 @@ export const setStatusOnLine = (line: string, path: string, newStatus: Status): 
 function transformTaskOnLine(
     line: string,
     path: string,
-    taskTransformer: (task: Task) => string[],
+    taskTransformer: TaskTransformer,
 ): EditorInsertion | undefined {
     const task = Task.fromLine({
         line,
