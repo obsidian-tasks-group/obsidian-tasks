@@ -1,32 +1,10 @@
 import { type Command } from 'obsidian';
-import { Task } from 'Task/Task';
 import type { StatusRegistry } from 'Statuses/StatusRegistry';
 import { allStatusInstructions } from 'ui/EditInstructions/StatusInstructions';
-import {
-    type EditorInsertion,
-    createMultiLineEditorCallback,
-    transformTaskOnLine,
-} from 'Commands/CreateEditorCallback';
+import { applyInstructionToLine, createMultiLineEditorCallback } from 'Commands/CreateEditorCallback';
 import type { TaskEditingInstruction } from 'ui/EditInstructions/TaskEditingInstruction';
 
 const notATaskMessage = 'Cannot set status: line is not a task or does not match global filter';
-
-/**
- * Apply a TaskEditingInstruction to a task on a single line, returning the new text and cursor position.
- *
- * @param line - The line of text to transform
- * @param path - The file path containing the line
- * @param instruction - The instruction to edit the task
- * @returns An EditorInsertion with the new text and cursor position, or undefined if the line is not a task
- */
-export const applyInstructionToLine = (
-    line: string,
-    path: string,
-    instruction: TaskEditingInstruction,
-): EditorInsertion | undefined => {
-    const taskTransformer = (task: Task): string[] => instruction.apply(task).map((t) => t.toFileLineString());
-    return transformTaskOnLine(line, path, taskTransformer);
-};
 
 /**
  * Creates an editor callback that applies a TaskEditingInstruction to the task on the cursor's line,

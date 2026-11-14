@@ -10,6 +10,7 @@ import {
 import { Task } from 'Task/Task';
 import { TaskLocation } from 'Task/TaskLocation';
 import { TasksFile } from 'Scripting/TasksFile';
+import type { TaskEditingInstruction } from 'ui/EditInstructions/TaskEditingInstruction';
 
 /**
  * Represents text to be inserted into the editor
@@ -192,6 +193,23 @@ export function transformTaskOnLine(
 
     return undefined;
 }
+
+/**
+ * Apply a TaskEditingInstruction to a task on a single line, returning the new text and cursor position.
+ *
+ * @param line - The line of text to transform
+ * @param path - The file path containing the line
+ * @param instruction - The instruction to edit the task
+ * @returns An EditorInsertion with the new text and cursor position, or undefined if the line is not a task
+ */
+export const applyInstructionToLine = (
+    line: string,
+    path: string,
+    instruction: TaskEditingInstruction,
+): EditorInsertion | undefined => {
+    const taskTransformer = (task: Task): string[] => instruction.apply(task).map((t) => t.toFileLineString());
+    return transformTaskOnLine(line, path, taskTransformer);
+};
 
 /**
  * Creates an editor callback that applies a line transformation to every line covered by the selections.

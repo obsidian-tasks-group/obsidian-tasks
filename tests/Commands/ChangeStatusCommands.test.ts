@@ -7,17 +7,14 @@ import {
     MarkdownView,
     Notice,
 } from 'obsidian';
-import {
-    applyInstructionToLine,
-    createApplyInstructionEditorCallback,
-    createSetStatusCommands,
-} from 'Commands/ChangeStatusCommands';
+import { createApplyInstructionEditorCallback, createSetStatusCommands } from 'Commands/ChangeStatusCommands';
 import { Status } from 'Statuses/Status';
 import { StatusRegistry } from 'Statuses/StatusRegistry';
 import { StatusConfiguration, StatusType } from 'Statuses/StatusConfiguration';
 import { resetSettings, updateSettings } from 'Config/Settings';
 import { GlobalFilter } from 'Config/GlobalFilter';
 import { SetStatus } from 'ui/EditInstructions/StatusInstructions';
+import { applyInstructionToLine } from 'Commands/CreateEditorCallback';
 
 vi.mock('obsidian', () => ({
     MarkdownView: class MarkdownView {},
