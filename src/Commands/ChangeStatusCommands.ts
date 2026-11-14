@@ -16,11 +16,11 @@ const notATaskMessage = 'Cannot set status: line is not a task or does not match
  *
  * @param line - The line of text to transform
  * @param path - The file path containing the line
- * @param command - The comand to edit the task
+ * @param instruction - The instruction to edit the task
  * @returns An EditorInsertion with the new text and cursor position, or undefined if the line is not a task
  */
-export const setStatusOnLine = (line: string, path: string, command: SetStatus): EditorInsertion | undefined => {
-    const taskTransformer = (task: Task): string[] => command.apply(task).map((t) => t.toFileLineString());
+export const setStatusOnLine = (line: string, path: string, instruction: SetStatus): EditorInsertion | undefined => {
+    const taskTransformer = (task: Task): string[] => instruction.apply(task).map((t) => t.toFileLineString());
     return transformTaskOnLine(line, path, taskTransformer);
 };
 
