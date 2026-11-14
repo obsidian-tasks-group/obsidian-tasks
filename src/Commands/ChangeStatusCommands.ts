@@ -29,14 +29,14 @@ export const applyInstructionToLine = (
 };
 
 /**
- * Creates an editor callback that sets the status of the task on the cursor's line,
+ * Creates an editor callback that applies a TaskEditingInstruction to the task on the cursor's line,
  * or, when the selections cover several lines, of every task on those lines.
  *
  * Lines in a multi-line selection that are not tasks are left unchanged.
  *
  * @param instruction - The instruction to edit the task
  */
-export const createSetStatusEditorCallback = (instruction: TaskEditingInstruction) => {
+export const createApplyInstructionEditorCallback = (instruction: TaskEditingInstruction) => {
     return createMultiLineEditorCallback(
         (line: string, path: string) => applyInstructionToLine(line, path, instruction),
         notATaskMessage,
@@ -60,7 +60,7 @@ export function createSetStatusCommands(statusRegistry: StatusRegistry): Command
         const command = {
             id: `set-status-symbol-to-${symbolSlug}`,
             name: instruction.instructionDisplayName(),
-            editorCheckCallback: createSetStatusEditorCallback(instruction),
+            editorCheckCallback: createApplyInstructionEditorCallback(instruction),
         };
         setStatusCommands.push(command);
     }
