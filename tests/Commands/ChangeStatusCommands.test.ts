@@ -176,7 +176,7 @@ describe('createSetStatusEditorCallback', () => {
 
     function runCommand(lines: string[], fromLine: number, toLine: number, headCh?: number) {
         const { editor, getText } = makeEditor(lines, fromLine, toLine, headCh);
-        createSetStatusEditorCallback(Status.DONE)(false, editor as unknown as Editor, view);
+        createSetStatusEditorCallback(new SetStatus(Status.DONE))(false, editor as unknown as Editor, view);
         return { text: getText(), transaction: editor.transaction, setCursor: editor.setCursor };
     }
 
@@ -229,7 +229,7 @@ describe('createSetStatusEditorCallback', () => {
     describe('when checking whether the command is available', () => {
         function checkCommand(checkedView: MarkdownView | MarkdownFileInfo) {
             const { editor } = makeEditor(['- [ ] A simple task'], 0, 0);
-            const available = createSetStatusEditorCallback(Status.DONE)(
+            const available = createSetStatusEditorCallback(new SetStatus(Status.DONE))(
                 true,
                 editor as unknown as Editor,
                 checkedView,

@@ -1,8 +1,7 @@
 import { type Command } from 'obsidian';
-import type { Status } from 'Statuses/Status';
 import { Task } from 'Task/Task';
 import type { StatusRegistry } from 'Statuses/StatusRegistry';
-import { SetStatus, allStatusInstructions } from 'ui/EditInstructions/StatusInstructions';
+import { allStatusInstructions } from 'ui/EditInstructions/StatusInstructions';
 import {
     type EditorInsertion,
     createMultiLineEditorCallback,
@@ -35,11 +34,11 @@ export const setStatusOnLine = (
  *
  * Lines in a multi-line selection that are not tasks are left unchanged.
  *
- * @param newStatus - The status to set the tasks to
+ * @param instruction - The instruction to edit the task
  */
-export const createSetStatusEditorCallback = (newStatus: Status) => {
+export const createSetStatusEditorCallback = (instruction: TaskEditingInstruction) => {
     return createMultiLineEditorCallback(
-        (line: string, path: string) => setStatusOnLine(line, path, new SetStatus(newStatus)),
+        (line: string, path: string) => setStatusOnLine(line, path, instruction),
         notATaskMessage,
     );
 };
@@ -61,7 +60,7 @@ export function createSetStatusCommands(statusRegistry: StatusRegistry): Command
         const command = {
             id: `set-status-symbol-to-${symbolSlug}`,
             name: instruction.instructionDisplayName(),
-            editorCheckCallback: createSetStatusEditorCallback(status),
+            editorCheckCallback: createSetStatusEditorCallback(instruction),
         };
         setStatusCommands.push(command);
     }
