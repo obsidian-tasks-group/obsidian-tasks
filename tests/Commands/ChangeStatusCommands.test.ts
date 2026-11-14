@@ -13,6 +13,7 @@ import { StatusRegistry } from 'Statuses/StatusRegistry';
 import { StatusConfiguration, StatusType } from 'Statuses/StatusConfiguration';
 import { resetSettings, updateSettings } from 'Config/Settings';
 import { GlobalFilter } from 'Config/GlobalFilter';
+import { SetStatus } from 'ui/EditInstructions/StatusInstructions';
 
 vi.mock('obsidian', () => ({
     MarkdownView: class MarkdownView {},
@@ -34,30 +35,34 @@ afterEach(() => {
 
 describe('setStatusOnLine', () => {
     it('should refuse to act on a non-task line', () => {
-        const result = setStatusOnLine('This is not a task', 'file.md', Status.DONE);
+        const result = setStatusOnLine('This is not a task', 'file.md', new SetStatus(Status.DONE));
         expect(result).toBeUndefined();
     });
 
     it('should refuse to act on an empty line', () => {
-        const result = setStatusOnLine('', 'file.md', Status.DONE);
+        const result = setStatusOnLine('', 'file.md', new SetStatus(Status.DONE));
         expect(result).toBeUndefined();
     });
 
     it('should return an EditorInsertion for a valid task line', () => {
-        const result = setStatusOnLine('- [ ] A simple task', 'file.md', Status.DONE);
+        const result = setStatusOnLine('- [ ] A simple task', 'file.md', new SetStatus(Status.DONE));
         expect(result).toBeDefined();
         expect(result).toHaveProperty('text');
         expect(result).toHaveProperty('moveTo');
     });
 
     it('should set moveTo.line to 0 for a single-line result', () => {
-        const result = setStatusOnLine('- [ ] A simple task', 'file.md', Status.DONE);
+        const result = setStatusOnLine('- [ ] A simple task', 'file.md', new SetStatus(Status.DONE));
         expect(result).toBeDefined();
         expect(result!.moveTo).toEqual({ line: 0 });
     });
 
     it('should return multiple lines with moveTo.line as last line index for a recurring task', () => {
-        const result = setStatusOnLine('- [ ] A recurring task 🔁 every day 📅 2022-09-04', 'file.md', Status.DONE);
+        const result = setStatusOnLine(
+            '- [ ] A recurring task 🔁 every day 📅 2022-09-04',
+            'file.md',
+            new SetStatus(Status.DONE),
+        );
         expect(result).toBeDefined();
         const lines = result!.text.split('\n');
         expect(lines.length).toBeGreaterThan(1);
@@ -65,7 +70,11 @@ describe('setStatusOnLine', () => {
     });
 
     it('should put the next recurrence before the completed task by default', () => {
-        const result = setStatusOnLine('- [ ] A recurring task 🔁 every day 📅 2022-09-04', 'file.md', Status.DONE);
+        const result = setStatusOnLine(
+            '- [ ] A recurring task 🔁 every day 📅 2022-09-04',
+            'file.md',
+            new SetStatus(Status.DONE),
+        );
         expect(result?.text).toEqual(
             [
                 '- [ ] A recurring task 🔁 every day 📅 2022-09-05',
@@ -77,7 +86,11 @@ describe('setStatusOnLine', () => {
     it('should honour user settings for recurrence order', () => {
         updateSettings({ recurrenceOnNextLine: true });
 
-        const result = setStatusOnLine('- [ ] A recurring task 🔁 every day 📅 2022-09-04', 'file.md', Status.DONE);
+        const result = setStatusOnLine(
+            '- [ ] A recurring task 🔁 every day 📅 2022-09-04',
+            'file.md',
+            new SetStatus(Status.DONE),
+        );
         expect(result).toBeDefined();
         expect(result?.text).toEqual(
             [
@@ -90,30 +103,30 @@ describe('setStatusOnLine', () => {
     it('should refuse to act on a task line that does not match the global filter', () => {
         GlobalFilter.getInstance().set('#task');
 
-        expect(setStatusOnLine('- [ ] A simple task', 'file.md', Status.DONE)).toBeUndefined();
+        expect(setStatusOnLine('- [ ] A simple task', 'file.md', new SetStatus(Status.DONE))).toBeUndefined();
     });
 
     it('should act on a task line that matches the global filter', () => {
         GlobalFilter.getInstance().set('#task');
 
-        const result = setStatusOnLine('- [ ] A simple task #task', 'file.md', Status.DONE);
+        const result = setStatusOnLine('- [ ] A simple task #task', 'file.md', new SetStatus(Status.DONE));
         expect(result?.text).toEqual('- [x] A simple task #task ✅ 2026-02-27');
     });
 
     it('should not add a done date when setting a status that is not done', () => {
-        const result = setStatusOnLine('- [ ] A simple task', 'file.md', Status.IN_PROGRESS);
+        const result = setStatusOnLine('- [ ] A simple task', 'file.md', new SetStatus(Status.IN_PROGRESS));
 
         expect(result?.text).toEqual('- [/] A simple task');
     });
 
     it('should add a cancelled date when cancelling a task', () => {
-        const result = setStatusOnLine('- [ ] A simple task', 'file.md', Status.CANCELLED);
+        const result = setStatusOnLine('- [ ] A simple task', 'file.md', new SetStatus(Status.CANCELLED));
 
         expect(result?.text).toEqual('- [-] A simple task ❌ 2026-02-27');
     });
 
     it('should leave a done task unchanged when setting it to done again', () => {
-        const result = setStatusOnLine('- [x] A simple task ✅ 2026-01-01', 'file.md', Status.DONE);
+        const result = setStatusOnLine('- [x] A simple task ✅ 2026-01-01', 'file.md', new SetStatus(Status.DONE));
 
         expect(result?.text).toEqual('- [x] A simple task ✅ 2026-01-01');
     });
