@@ -8,6 +8,8 @@ import {
     Notice,
 } from 'obsidian';
 import { Task } from 'Task/Task';
+import { TaskLocation } from 'Task/TaskLocation';
+import { TasksFile } from 'Scripting/TasksFile';
 
 /**
  * Represents text to be inserted into the editor
@@ -161,6 +163,34 @@ export function selectedLineNumbers(selections: EditorSelection[]): number[] {
         }
     }
     return [...lineNumbers].sort((a, b) => a - b);
+}
+
+/**
+ * Transforms a task on a single line, returning the new text and cursor position.
+ *
+ * @param line - The line of text to transform
+ * @param path - The file path containing the line
+ * @param taskTransformer - A function that transforms the parsed task into replacement lines
+ * @returns An EditorInsertion with the new text and cursor position, or undefined if the line is not a task
+ */
+export function transformTaskOnLine(
+    line: string,
+    path: string,
+    taskTransformer: TaskTransformer,
+): EditorInsertion | undefined {
+    const task = Task.fromLine({
+        line,
+        taskLocation: TaskLocation.fromUnknownPosition(new TasksFile(path)),
+        fallbackDate: null,
+    });
+
+    if (task !== null) {
+        const lines = taskTransformer(task);
+        const newLineNumber = lines.length > 0 ? lines.length - 1 : 0;
+        return { text: lines.join('\n'), moveTo: { line: newLineNumber } };
+    }
+
+    return undefined;
 }
 
 /**
