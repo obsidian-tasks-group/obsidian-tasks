@@ -18,14 +18,14 @@ const notATaskMessage = 'Cannot set status: line is not a task or does not match
  * @returns An EditorInsertion with the new text and cursor position, or undefined if the line is not a task
  */
 export const setStatusOnLine = (line: string, path: string, newStatus: Status): EditorInsertion | undefined => {
+    const taskTransformer = (task: Task): string[] =>
+        task.handleNewStatusWithRecurrenceInUsersOrder(newStatus).map((t) => t.toFileLineString());
+
     const task = Task.fromLine({
         line,
         taskLocation: TaskLocation.fromUnknownPosition(new TasksFile(path)),
         fallbackDate: null,
     });
-
-    const taskTransformer = (task: Task): string[] =>
-        task.handleNewStatusWithRecurrenceInUsersOrder(newStatus).map((t) => t.toFileLineString());
 
     if (task !== null) {
         const lines = taskTransformer(task);
