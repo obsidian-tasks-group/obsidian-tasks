@@ -7,6 +7,7 @@ import {
     MarkdownView,
     Notice,
 } from 'obsidian';
+import { Task } from 'Task/Task';
 
 /**
  * Represents text to be inserted into the editor
@@ -33,6 +34,14 @@ export interface EditorInsertion {
  * Returns undefined to indicate no changes should be made.
  */
 export type LineTransformer = (line: string, path: string) => EditorInsertion | undefined;
+
+/**
+ * A function that transforms a Task, returning the edited task or tasks
+ * as Markdown lines.
+ * An extra line typically means that a new recurring task was created.
+ * An empty array typically means that the task was completed and was marked to be deleted.
+ */
+export type TaskTransformer = (task: Task) => string[];
 
 /**
  * Computes the new absolute position of the cursor so that it is positioned within the inserted text as specified

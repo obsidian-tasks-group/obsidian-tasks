@@ -5,7 +5,11 @@ import { Task } from 'Task/Task';
 import { TaskLocation } from 'Task/TaskLocation';
 import type { StatusRegistry } from 'Statuses/StatusRegistry';
 import { allStatusInstructions } from 'ui/EditInstructions/StatusInstructions';
-import { type EditorInsertion, createMultiLineEditorCallback } from 'Commands/CreateEditorCallback';
+import {
+    type EditorInsertion,
+    type TaskTransformer,
+    createMultiLineEditorCallback,
+} from 'Commands/CreateEditorCallback';
 
 const notATaskMessage = 'Cannot set status: line is not a task or does not match global filter';
 
@@ -22,8 +26,6 @@ export const setStatusOnLine = (line: string, path: string, newStatus: Status): 
         task.handleNewStatusWithRecurrenceInUsersOrder(newStatus).map((t) => t.toFileLineString());
     return transformTaskOnLine(line, path, taskTransformer);
 };
-
-type TaskTransformer = (task: Task) => string[];
 
 /**
  * Transforms a task on a single line, returning the new text and cursor position.
