@@ -2,7 +2,7 @@ import { type Command } from 'obsidian';
 import type { Status } from 'Statuses/Status';
 import { Task } from 'Task/Task';
 import type { StatusRegistry } from 'Statuses/StatusRegistry';
-import { allStatusInstructions } from 'ui/EditInstructions/StatusInstructions';
+import { SetStatus, allStatusInstructions } from 'ui/EditInstructions/StatusInstructions';
 import {
     type EditorInsertion,
     createMultiLineEditorCallback,
@@ -20,8 +20,8 @@ const notATaskMessage = 'Cannot set status: line is not a task or does not match
  * @returns An EditorInsertion with the new text and cursor position, or undefined if the line is not a task
  */
 export const setStatusOnLine = (line: string, path: string, newStatus: Status): EditorInsertion | undefined => {
-    const taskTransformer = (task: Task): string[] =>
-        task.handleNewStatusWithRecurrenceInUsersOrder(newStatus).map((t) => t.toFileLineString());
+    const command = new SetStatus(newStatus);
+    const taskTransformer = (task: Task): string[] => command.apply(task).map((t) => t.toFileLineString());
     return transformTaskOnLine(line, path, taskTransformer);
 };
 
