@@ -1,28 +1,7 @@
-import moment from 'moment';
 import { createSetStatusCommands } from 'Commands/ChangeStatusCommands';
 import { Status } from 'Statuses/Status';
 import { StatusRegistry } from 'Statuses/StatusRegistry';
 import { StatusConfiguration, StatusType } from 'Statuses/StatusConfiguration';
-import { resetSettings } from 'Config/Settings';
-import { GlobalFilter } from 'Config/GlobalFilter';
-
-vi.mock('obsidian', () => ({
-    MarkdownView: class MarkdownView {},
-    Notice: vi.fn(),
-}));
-
-window.moment = moment;
-
-beforeEach(() => {
-    vi.useFakeTimers();
-    vi.setSystemTime(new Date('2026-02-27'));
-});
-
-afterEach(() => {
-    vi.useRealTimers();
-    resetSettings();
-    GlobalFilter.getInstance().reset();
-});
 
 describe('Change status commands', () => {
     let registry: StatusRegistry;
