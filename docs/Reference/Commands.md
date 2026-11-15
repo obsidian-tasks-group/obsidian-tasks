@@ -43,7 +43,7 @@ The ID for these commands is always:
 - `obsidian-tasks-plugin:set-status-symbol-to-<symbol>`
 - with `space` for the space character.
 
-It stays the same if the status is renamed or edited.
+The ID stays the same if the Status Name, Next Symbol or Status Type is edited, but changes if the Status Symbol is edited.
 
 ## Other commands
 
