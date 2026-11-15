@@ -1,14 +1,10 @@
-import { type Editor, Notice } from 'obsidian';
+import { type Editor } from 'obsidian';
 import { createSetStatusCommands } from 'Commands/ChangeStatusCommands';
 import { Status } from 'Statuses/Status';
 import { StatusRegistry } from 'Statuses/StatusRegistry';
 import { StatusConfiguration, StatusType } from 'Statuses/StatusConfiguration';
+import { noticeMessages } from '../__mocks__/obsidian';
 import { makeFakeEditor, makeFakeMarkdownView } from './CreateEditorCallbackHelpers';
-
-vi.mock('obsidian', () => ({
-    MarkdownView: class MarkdownView {},
-    Notice: vi.fn(),
-}));
 
 describe('Change status commands', () => {
     let registry: StatusRegistry;
@@ -59,8 +55,6 @@ describe('Change status commands', () => {
 
         command.editorCheckCallback!(false, editor as unknown as Editor, view);
 
-        expect(vi.mocked(Notice)).toHaveBeenCalledExactlyOnceWith(
-            'Cannot set status: line is not a task or does not match global filter',
-        );
+        expect(noticeMessages).toEqual(['Cannot set status: line is not a task or does not match global filter']);
     });
 });
