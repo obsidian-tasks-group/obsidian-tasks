@@ -22,10 +22,10 @@ One command is created for each status in your [[Status Settings]], including bo
 
 | Name | ID |
 | ----- | ----- |
-| `Change status to: [ ] Todo` | `set-status-symbol-to-space` |
-| `Change status to: [x] Done` | `set-status-symbol-to-x` |
-| `Change status to: [/] In Progress` | `set-status-symbol-to-/` |
-| `Change status to: [-] Cancelled` | `set-status-symbol-to--` |
+| `Tasks: Change status to: [ ] Todo` | `obsidian-tasks-plugin:set-status-symbol-to-space` |
+| `Tasks: Change status to: [x] Done` | `obsidian-tasks-plugin:set-status-symbol-to-x` |
+| `Tasks: Change status to: [/] In Progress` | `obsidian-tasks-plugin:set-status-symbol-to-/` |
+| `Tasks: Change status to: [-] Cancelled` | `obsidian-tasks-plugin:set-status-symbol-to--` |
 
 <!-- placeholder to force blank line after included text --><!-- endInclude -->
 
