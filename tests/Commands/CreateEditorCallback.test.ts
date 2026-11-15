@@ -36,6 +36,10 @@ afterEach(() => {
     GlobalFilter.getInstance().reset();
 });
 
+// These tests mostly use the 'Change status to' commands, simply because:
+// 1. multi-line editing was first implemented for that command
+// 2. it's a non-trivial test case, as recurring tasks can change the number of lines.
+
 describe('selectedLineNumbers', () => {
     const at = (line: number, ch: number) => ({ line, ch });
 
