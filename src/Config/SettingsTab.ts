@@ -1179,6 +1179,15 @@ function updateAndSaveStatusSettings(statusTypes: StatusSettings, settings: Sett
     // This saves the user from having to restart Obsidian in order to apply the changed status(es).
     StatusSettings.applyToStatusRegistry(statusTypes, StatusRegistry.getInstance());
 
+    // Other things that likely need to be updated before we can remove the reload notice
+    // shown by refreshStatusesReloadNotice():
+    // - Open Tasks search results
+    // - Tasks rendered in Reading view
+    // - The 'Change status to' commands, which are created once when the plugin loads:
+    //   they keep the Status objects, names and list of statuses from that time.
+    //   Ideally, the 'Change status to' commands should be updated to use the current status
+    //   settings (including when statuses are renamed, added or removed).
+
     settings.saveSettingsAndRebuildSettingsTab();
     settings.refreshStatusesReloadNotice();
 }
