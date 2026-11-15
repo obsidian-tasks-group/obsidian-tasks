@@ -34,7 +34,7 @@ afterEach(() => {
     GlobalFilter.getInstance().reset();
 });
 
-describe('setStatusOnLine', () => {
+describe('applyInstructionToLine', () => {
     it('should refuse to act on a non-task line', () => {
         const result = applyInstructionToLine('This is not a task', 'file.md', new SetStatus(Status.DONE));
         expect(result).toBeUndefined();
