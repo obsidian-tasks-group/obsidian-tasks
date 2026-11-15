@@ -67,7 +67,13 @@ describe('Change status commands', () => {
             const markdownTable = new MarkdownTable(['Name', 'ID']);
 
             createSetStatusCommands(registry).forEach((command) => {
-                markdownTable.addRow([command.name, command.id].map((text) => addBackticks(text)));
+                markdownTable.addRow(
+                    [
+                        // split lines
+                        'Tasks: ' + command.name,
+                        'obsidian-tasks-plugin:' + command.id,
+                    ].map((text) => addBackticks(text)),
+                );
             });
 
             verifyMarkdownForDocs(markdownTable.markdown);
