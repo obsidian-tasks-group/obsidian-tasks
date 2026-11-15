@@ -170,6 +170,10 @@ describe('applyInstructionToLine', () => {
     });
 });
 
+function makeFakeMarkdownView(): MarkdownView & { file: { path: string } } {
+    return Object.assign(Object.create(MarkdownView.prototype) as MarkdownView, { file: { path: 'file.md' } });
+}
+
 describe('createApplyInstructionEditorCallback', () => {
     const MockedNotice = vi.mocked(Notice);
 
@@ -210,7 +214,7 @@ describe('createApplyInstructionEditorCallback', () => {
         return { editor, getText: () => text };
     }
 
-    const view = Object.assign(Object.create(MarkdownView.prototype) as MarkdownView, { file: { path: 'file.md' } });
+    const view = makeFakeMarkdownView();
 
     function runCommand(lines: string[], fromLine: number, toLine: number, headCh?: number) {
         const { editor, getText } = makeEditor(lines, fromLine, toLine, headCh);
