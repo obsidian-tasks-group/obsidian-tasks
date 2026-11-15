@@ -1,6 +1,7 @@
 import { EnableJsInTasksQueries } from 'Config/EnableJsInTasksQueries';
 import { InMemoryLocalStorageProvider } from 'Config/InMemoryLocalStorageProvider';
 import { initializeI18n } from 'i18n/i18n';
+import { resetNoticeMessages } from './__mocks__/obsidian';
 import type { CreateDivOptions, CreateElOptions, CreateSpanOptions } from './TestingTools/DOMExtensions';
 
 // ------------------------------------------------------------------
@@ -205,4 +206,9 @@ EnableJsInTasksQueries.getInstance().set(true);
 
 beforeAll(async () => {
     await initializeI18n();
+});
+
+// Forget the notices shown by earlier tests.
+beforeEach(() => {
+    resetNoticeMessages();
 });
