@@ -12,6 +12,15 @@ Commands can be run in Obsidian with:
 - [Slash commands](https://obsidian.md/help/plugins/slash-commands)
 - [Hotkeys](https://obsidian.md/help/hotkeys): customisable keyboard shortcuts
 
+## Command IDs
+
+Each command has a name, which you see in Obsidian, and an ID, which Obsidian uses when it saves your settings.
+
+You only need the IDs if you edit these files yourself, for example with a script while Obsidian is not running:
+
+- `.obsidian/hotkeys.json`: your hotkeys
+- `.obsidian/command-palette.json`: your pinned commands
+
 ## Change status commands
 
 See [[Toggling and Editing Statuses#'Tasks Change status to...' commands|'Tasks Change status to...' commands]].
