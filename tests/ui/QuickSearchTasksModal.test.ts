@@ -14,9 +14,6 @@ import { fromMarkdown } from '../TestingTools/TestHelpers';
 import { TaskBuilder } from '../TestingTools/TaskBuilder';
 import { noticeMessages } from '../__mocks__/obsidian';
 
-vi.mock('obsidian', async () => ({
-    ...(await vi.importActual('../__mocks__/obsidian')),
-}));
 vi.mock('../../src/Obsidian/File', () => ({ getTaskLineAndFile: vi.fn() }));
 
 window.moment = moment;
