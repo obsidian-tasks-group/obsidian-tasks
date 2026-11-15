@@ -212,6 +212,22 @@ export const applyInstructionToLine = (
 };
 
 /**
+ * Creates an editor callback that applies a TaskEditingInstruction to the task on the cursor's line,
+ * or, when the selections cover several lines, of every task on those lines.
+ *
+ * Lines in a multi-line selection that are not tasks are left unchanged.
+ *
+ * @param instruction - The instruction to edit the task
+ * @param notATaskMessage - The message to display when no task lines are found in the selection
+ */
+export const createApplyInstructionEditorCallback = (instruction: TaskEditingInstruction, notATaskMessage: string) => {
+    return createMultiLineEditorCallback(
+        (line: string, path: string) => applyInstructionToLine(line, path, instruction),
+        notATaskMessage,
+    );
+};
+
+/**
  * Creates an editor callback that applies a line transformation to every line covered by the selections.
  *
  * When the selections cover a single line, it behaves like {@link createEditorCallback}.

@@ -7,13 +7,16 @@ import {
     Notice,
 } from 'obsidian';
 
-import { applyInstructionToLine, selectedLineNumbers } from 'Commands/CreateEditorCallback';
+import {
+    applyInstructionToLine,
+    createApplyInstructionEditorCallback,
+    selectedLineNumbers,
+} from 'Commands/CreateEditorCallback';
 import { SetStatus } from 'ui/EditInstructions/StatusInstructions';
 import { Status } from 'Statuses/Status';
 import { resetSettings, updateSettings } from 'Config/Settings';
 import { GlobalFilter } from 'Config/GlobalFilter';
 import moment from 'moment/moment';
-import { createApplyInstructionEditorCallback } from 'Commands/ChangeStatusCommands';
 
 vi.mock('obsidian', () => ({
     MarkdownView: class MarkdownView {},

@@ -1,26 +1,9 @@
 import { type Command } from 'obsidian';
 import type { StatusRegistry } from 'Statuses/StatusRegistry';
 import { allStatusInstructions } from 'ui/EditInstructions/StatusInstructions';
-import { applyInstructionToLine, createMultiLineEditorCallback } from 'Commands/CreateEditorCallback';
-import type { TaskEditingInstruction } from 'ui/EditInstructions/TaskEditingInstruction';
+import { createApplyInstructionEditorCallback } from 'Commands/CreateEditorCallback';
 
 const notATaskMessage = 'Cannot set status: line is not a task or does not match global filter';
-
-/**
- * Creates an editor callback that applies a TaskEditingInstruction to the task on the cursor's line,
- * or, when the selections cover several lines, of every task on those lines.
- *
- * Lines in a multi-line selection that are not tasks are left unchanged.
- *
- * @param instruction - The instruction to edit the task
- * @param notATaskMessage - The message to display when no task lines are found in the selection
- */
-export const createApplyInstructionEditorCallback = (instruction: TaskEditingInstruction, notATaskMessage: string) => {
-    return createMultiLineEditorCallback(
-        (line: string, path: string) => applyInstructionToLine(line, path, instruction),
-        notATaskMessage,
-    );
-};
 
 /**
  * Create set-status commands for each registered status
