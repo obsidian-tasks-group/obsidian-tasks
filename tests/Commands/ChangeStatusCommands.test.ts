@@ -77,7 +77,11 @@ describe('createApplyInstructionEditorCallback', () => {
 
     function runCommand(lines: string[], fromLine: number, toLine: number, headCh?: number) {
         const { editor, getText } = makeEditor(lines, fromLine, toLine, headCh);
-        createApplyInstructionEditorCallback(new SetStatus(Status.DONE))(false, editor as unknown as Editor, view);
+        createApplyInstructionEditorCallback(new SetStatus(Status.DONE), 'placeholder Not A Task message')(
+            false,
+            editor as unknown as Editor,
+            view,
+        );
         return { text: getText(), transaction: editor.transaction, setCursor: editor.setCursor };
     }
 
@@ -102,9 +106,7 @@ describe('createApplyInstructionEditorCallback', () => {
     it('should notify the user when the line is not a task', () => {
         runCommand(['This is not a task'], 0, 0);
 
-        expect(MockedNotice).toHaveBeenCalledWith(
-            'Cannot set status: line is not a task or does not match global filter',
-        );
+        expect(MockedNotice).toHaveBeenCalledWith('placeholder Not A Task message');
     });
 
     it('should not notify the user when changing a valid task', () => {
@@ -130,11 +132,10 @@ describe('createApplyInstructionEditorCallback', () => {
     describe('when checking whether the command is available', () => {
         function checkCommand(checkedView: MarkdownView | MarkdownFileInfo) {
             const { editor } = makeEditor(['- [ ] A simple task'], 0, 0);
-            const available = createApplyInstructionEditorCallback(new SetStatus(Status.DONE))(
-                true,
-                editor as unknown as Editor,
-                checkedView,
-            );
+            const available = createApplyInstructionEditorCallback(
+                new SetStatus(Status.DONE),
+                'placeholder Not A Task message',
+            )(true, editor as unknown as Editor, checkedView);
             return available;
         }
 
@@ -175,9 +176,7 @@ describe('createApplyInstructionEditorCallback', () => {
 
         expect(text).toEqual(['Not a task', 'Also not a task'].join('\n'));
         expect(transaction).not.toHaveBeenCalled();
-        expect(MockedNotice).toHaveBeenCalledWith(
-            'Cannot set status: line is not a task or does not match global filter',
-        );
+        expect(MockedNotice).toHaveBeenCalledWith('placeholder Not A Task message');
     });
 
     it('should still change just the cursor line when the selection is on one line', () => {

@@ -13,8 +13,9 @@ const notATaskMessage = 'Cannot set status: line is not a task or does not match
  * Lines in a multi-line selection that are not tasks are left unchanged.
  *
  * @param instruction - The instruction to edit the task
+ * @param notATaskMessage - The message to display when no task lines are found in the selection
  */
-export const createApplyInstructionEditorCallback = (instruction: TaskEditingInstruction) => {
+export const createApplyInstructionEditorCallback = (instruction: TaskEditingInstruction, notATaskMessage: string) => {
     return createMultiLineEditorCallback(
         (line: string, path: string) => applyInstructionToLine(line, path, instruction),
         notATaskMessage,
@@ -38,7 +39,7 @@ export function createSetStatusCommands(statusRegistry: StatusRegistry): Command
         const command = {
             id: `set-status-symbol-to-${symbolSlug}`,
             name: instruction.instructionDisplayName(),
-            editorCheckCallback: createApplyInstructionEditorCallback(instruction),
+            editorCheckCallback: createApplyInstructionEditorCallback(instruction, notATaskMessage),
         };
         setStatusCommands.push(command);
     }
