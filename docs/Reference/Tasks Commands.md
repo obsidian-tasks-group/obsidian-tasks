@@ -31,7 +31,8 @@ One command is created for each status in your [[Status Settings]], including bo
 
 ## Other commands
 
-| Name                         | ID  | Details                                                                     |
-| ---------------------------- | --- | --------------------------------------------------------------------------- |
-| `Tasks: Create or edit task` |     | [[Create or edit Task#Opening the 'Create or edit Task' Modal\|details]]    |
-| `Tasks: Toggle task done`    |     | [[Toggling and Editing Statuses#'Tasks Toggle task done' command\|details]] |
+| Name                         | ID                                   | Details                                                                     |
+| ---------------------------- | ------------------------------------ | --------------------------------------------------------------------------- |
+| `Tasks: Create or edit task` | `obsidian-tasks-plugin:edit-task`    | [[Create or edit Task#Opening the 'Create or edit Task' Modal\|details]]    |
+| `Tasks: Toggle task done`    | `obsidian-tasks-plugin:toggle-done`  | [[Toggling and Editing Statuses#'Tasks Toggle task done' command\|details]] |
+| `Tasks: Quick search`        | `obsidian-tasks-plugin:quick-search` | [[Quick Search]]                                                            |
