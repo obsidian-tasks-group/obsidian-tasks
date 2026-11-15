@@ -1,4 +1,4 @@
-import { type Editor, type MarkdownFileInfo, MarkdownView, Notice } from 'obsidian';
+import { type Editor, type MarkdownFileInfo, MarkdownView } from 'obsidian';
 
 import {
     applyInstructionToLine,
@@ -10,12 +10,8 @@ import { Status } from 'Statuses/Status';
 import { resetSettings, updateSettings } from 'Config/Settings';
 import { GlobalFilter } from 'Config/GlobalFilter';
 import moment from 'moment/moment';
+import { noticeMessages } from '../__mocks__/obsidian';
 import { makeFakeEditor, makeFakeMarkdownView } from './CreateEditorCallbackHelpers';
-
-vi.mock('obsidian', () => ({
-    MarkdownView: class MarkdownView {},
-    Notice: vi.fn(),
-}));
 
 window.moment = moment;
 
@@ -165,12 +161,6 @@ describe('applyInstructionToLine', () => {
 });
 
 describe('createApplyInstructionEditorCallback', () => {
-    const MockedNotice = vi.mocked(Notice);
-
-    beforeEach(() => {
-        MockedNotice.mockClear();
-    });
-
     const view = makeFakeMarkdownView();
 
     function runCommand(lines: string[], fromLine: number, toLine: number, headCh?: number) {
@@ -204,13 +194,13 @@ describe('createApplyInstructionEditorCallback', () => {
     it('should notify the user when the line is not a task', () => {
         runCommand(['This is not a task'], 0, 0);
 
-        expect(MockedNotice).toHaveBeenCalledWith('placeholder Not A Task message');
+        expect(noticeMessages).toEqual(['placeholder Not A Task message']);
     });
 
     it('should not notify the user when changing a valid task', () => {
         runCommand(['- [ ] A simple task'], 0, 0);
 
-        expect(MockedNotice).not.toHaveBeenCalled();
+        expect(noticeMessages).toEqual([]);
     });
 
     it('should keep the cursor on the same line after changing a single-line task', () => {
@@ -266,7 +256,7 @@ describe('createApplyInstructionEditorCallback', () => {
             ].join('\n'),
         );
         expect(transaction).toHaveBeenCalledTimes(1);
-        expect(MockedNotice).not.toHaveBeenCalled();
+        expect(noticeMessages).toEqual([]);
     });
 
     it('should notify the user when no selected line is a task', () => {
@@ -274,7 +264,7 @@ describe('createApplyInstructionEditorCallback', () => {
 
         expect(text).toEqual(['Not a task', 'Also not a task'].join('\n'));
         expect(transaction).not.toHaveBeenCalled();
-        expect(MockedNotice).toHaveBeenCalledWith('placeholder Not A Task message');
+        expect(noticeMessages).toEqual(['placeholder Not A Task message']);
     });
 
     it('should still change just the cursor line when the selection is on one line', () => {
