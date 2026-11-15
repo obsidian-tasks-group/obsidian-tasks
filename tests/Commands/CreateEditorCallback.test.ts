@@ -17,6 +17,7 @@ import { Status } from 'Statuses/Status';
 import { resetSettings, updateSettings } from 'Config/Settings';
 import { GlobalFilter } from 'Config/GlobalFilter';
 import moment from 'moment/moment';
+import { makeFakeMarkdownView } from './CreateEditorCallbackHelpers';
 
 vi.mock('obsidian', () => ({
     MarkdownView: class MarkdownView {},
@@ -169,10 +170,6 @@ describe('applyInstructionToLine', () => {
         expect(result?.text).toEqual('- [x] A simple task ✅ 2026-01-01');
     });
 });
-
-function makeFakeMarkdownView(): MarkdownView & { file: { path: string } } {
-    return Object.assign(Object.create(MarkdownView.prototype) as MarkdownView, { file: { path: 'file.md' } });
-}
 
 describe('createApplyInstructionEditorCallback', () => {
     const MockedNotice = vi.mocked(Notice);
