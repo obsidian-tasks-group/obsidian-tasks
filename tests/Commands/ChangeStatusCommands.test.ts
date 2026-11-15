@@ -3,7 +3,10 @@ import { createSetStatusCommands } from 'Commands/ChangeStatusCommands';
 import { Status } from 'Statuses/Status';
 import { StatusRegistry } from 'Statuses/StatusRegistry';
 import { StatusConfiguration, StatusType } from 'Statuses/StatusConfiguration';
+import { MarkdownTable } from 'lib/MarkdownTable';
 import { noticeMessages } from '../__mocks__/obsidian';
+import { verifyMarkdownForDocs } from '../TestingTools/VerifyMarkdown';
+import { addBackticks } from '../Scripting/ScriptingTestHelpers';
 import { makeFakeEditor, makeFakeMarkdownView } from './CreateEditorCallbackHelpers';
 
 describe('Change status commands', () => {
@@ -56,5 +59,24 @@ describe('Change status commands', () => {
         command.editorCheckCallback!(false, editor as unknown as Editor, view);
 
         expect(noticeMessages).toEqual(['Cannot set status: line is not a task or does not match global filter']);
+    });
+
+    describe('reference', () => {
+        it('table', () => {
+            registry.resetToDefaultStatuses();
+            const markdownTable = new MarkdownTable(['Name', 'ID']);
+
+            createSetStatusCommands(registry).forEach((command) => {
+                markdownTable.addRow(
+                    [
+                        // split lines
+                        'Tasks: ' + command.name,
+                        'obsidian-tasks-plugin:' + command.id,
+                    ].map((text) => addBackticks(text)),
+                );
+            });
+
+            verifyMarkdownForDocs(markdownTable.markdown);
+        });
     });
 });
