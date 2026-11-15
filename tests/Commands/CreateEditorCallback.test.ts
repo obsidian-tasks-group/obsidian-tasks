@@ -183,7 +183,7 @@ describe('createApplyInstructionEditorCallback', () => {
      * with the selection running from the start of {@link fromLine} to the end of {@link toLine},
      * or to column {@link headCh} of {@link toLine}, if given.
      */
-    function makeEditor(lines: string[], fromLine: number, toLine: number, headCh?: number) {
+    function makeFakeEditor(lines: string[], fromLine: number, toLine: number, headCh?: number) {
         let text = lines.join('\n');
         const getLines = () => text.split('\n');
         const offset = ({ line, ch }: EditorPosition) =>
@@ -214,7 +214,7 @@ describe('createApplyInstructionEditorCallback', () => {
     const view = makeFakeMarkdownView();
 
     function runCommand(lines: string[], fromLine: number, toLine: number, headCh?: number) {
-        const { editor, getText } = makeEditor(lines, fromLine, toLine, headCh);
+        const { editor, getText } = makeFakeEditor(lines, fromLine, toLine, headCh);
         createApplyInstructionEditorCallback(new SetStatus(Status.DONE), 'placeholder Not A Task message')(
             false,
             editor as unknown as Editor,
@@ -269,7 +269,7 @@ describe('createApplyInstructionEditorCallback', () => {
 
     describe('when checking whether the command is available', () => {
         function checkCommand(checkedView: MarkdownView | MarkdownFileInfo) {
-            const { editor } = makeEditor(['- [ ] A simple task'], 0, 0);
+            const { editor } = makeFakeEditor(['- [ ] A simple task'], 0, 0);
             const available = createApplyInstructionEditorCallback(
                 new SetStatus(Status.DONE),
                 'placeholder Not A Task message',
