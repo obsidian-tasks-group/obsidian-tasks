@@ -4,9 +4,9 @@ publish: true
 
 # Commands
 
-The Tasks plugin provides a growing number of commands for editing task data.
+The Tasks plugin provides a growing number of commands.
 
-Commands can be run with in Obsidian with:
+Commands can be run in Obsidian with:
 
 - [Command palette](https://obsidian.md/help/plugins/command-palette)
 - [Slash commands](https://obsidian.md/help/plugins/slash-commands)
@@ -42,5 +42,5 @@ It stays the same if the status is renamed or edited.
 | ----------------------------------------------- | ---------------------------------------------------------- | ------------------------------------------------------------------------------- |
 | `Tasks: Create or edit task`                    | `obsidian-tasks-plugin:edit-task`                          | [[Create or edit Task#Opening the 'Create or edit Task' Modal\|details]]        |
 | `Tasks: Toggle task done`                       | `obsidian-tasks-plugin:toggle-done`                        | [[Toggling and Editing Statuses#'Tasks Toggle task done' command\|details]]     |
-| `Tasks: Quick search`                           | `obsidian-tasks-plugin:quick-search`                       | [[Quick Search]]                                                                |
+| `Tasks: Quick search`                           | `obsidian-tasks-plugin:quick-search`                       | [[Quick Search\|details]]                                                       |
 | `Tasks: Add all Query File Defaults properties` | `obsidian-tasks-plugin:add-query-file-defaults-properties` | [[Query File Defaults#Command Add all Query File Defaults properties\|details]] |
