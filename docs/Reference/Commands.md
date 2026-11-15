@@ -16,7 +16,7 @@ Commands can be run with in Obsidian with:
 
 See [[Toggling and Editing Statuses#'Tasks Change status to...' commands|'Tasks Change status to...' commands]].
 
-One command is created for each status in your [[Status Settings]], including both [[Core Statuses]] and any [[Custom Statuses]] you have configured: this table shows the commands privided by the default statuses.
+One command is created for each status in your [[Status Settings]], including both [[Core Statuses]] and any [[Custom Statuses]] you have configured: this table shows the commands provided by the default statuses.
 
 <!-- placeholder to force blank line before included text --><!-- include: ChangeStatusCommands.test.Change_status_commands_reference_table.approved.md -->
 
@@ -28,6 +28,13 @@ One command is created for each status in your [[Status Settings]], including bo
 | `Tasks: Change status to: [-] Cancelled` | `obsidian-tasks-plugin:set-status-symbol-to--` |
 
 <!-- placeholder to force blank line after included text --><!-- endInclude -->
+
+The ID for these commands is always:
+
+- `obsidian-tasks-plugin:set-status-symbol-to-<symbol>`
+- with `space` for the space character.
+
+It stays the same if the status is renamed or edited.
 
 ## Other commands
 
