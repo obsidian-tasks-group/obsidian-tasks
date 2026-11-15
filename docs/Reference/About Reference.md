@@ -13,5 +13,5 @@ This section provides reference material - content which is typically too detail
 ## Reference section contents
 
 - [[About Task Formats|Task Formats]]
-- [[Tasks Commands]]
+- [[Commands]]
 - [[About Status Collections]]

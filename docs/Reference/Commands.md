@@ -2,7 +2,7 @@
 publish: true
 ---
 
-# Tasks Commands
+# Commands
 
 The Tasks plugin provides a growing number of commands for editing task data.
 
