@@ -10,6 +10,8 @@ import { Status } from 'Statuses/Status';
 import { resetSettings, updateSettings } from 'Config/Settings';
 import { GlobalFilter } from 'Config/GlobalFilter';
 import moment from 'moment/moment';
+import type { TaskEditingInstruction } from 'ui/EditInstructions/TaskEditingInstruction';
+import { Task } from 'Task/Task';
 import { noticeMessages } from '../__mocks__/obsidian';
 import { makeFakeEditor, makeFakeMarkdownView } from './CreateEditorCallbackHelpers';
 
@@ -25,6 +27,25 @@ afterEach(() => {
     resetSettings();
     GlobalFilter.getInstance().reset();
 });
+
+class CapitaliseDescriptionEditingInstruction implements TaskEditingInstruction {
+    public apply(task: Task): Task[] {
+        return [
+            new Task({
+                ...task,
+                description: task.description.toUpperCase(),
+            }),
+        ];
+    }
+
+    public instructionDisplayName(): string {
+        return 'capitalise description';
+    }
+
+    public isCheckedForTask(_task: Task): boolean {
+        return false;
+    }
+}
 
 describe('selectedLineNumbers', () => {
     const at = (line: number, ch: number) => ({ line, ch });
@@ -50,6 +71,55 @@ describe('selectedLineNumbers', () => {
                 { anchor: at(1, 3), head: at(1, 4) },
             ]),
         ).toEqual([0, 1, 4]);
+    });
+});
+
+describe('with a TaskEditingInstruction that is not SetStatus', () => {
+    const instruction = new CapitaliseDescriptionEditingInstruction();
+
+    describe('applyInstructionToLine', () => {
+        it('should apply the instruction to a task line', () => {
+            const result = applyInstructionToLine('- [ ] A simple task 📅 2022-09-04', 'file.md', instruction);
+
+            expect(result).toEqual({ text: '- [ ] A SIMPLE TASK 📅 2022-09-04', moveTo: { line: 0 } });
+        });
+
+        it('should refuse to act on a non-task line', () => {
+            expect(applyInstructionToLine('This is not a task', 'file.md', instruction)).toBeUndefined();
+        });
+    });
+
+    describe('createApplyInstructionEditorCallback', () => {
+        function runCommand(lines: string[], fromLine: number, toLine: number) {
+            const { editor, getText } = makeFakeEditor(lines, fromLine, toLine);
+            createApplyInstructionEditorCallback(instruction, 'Cannot capitalise: not a task')(
+                false,
+                editor as unknown as Editor,
+                makeFakeMarkdownView(),
+            );
+            return getText();
+        }
+
+        it('should apply the instruction to the task on a single line', () => {
+            const text = runCommand(['- [ ] task 1', '- [ ] task 2'], 1, 1);
+
+            expect(text).toEqual(['- [ ] task 1', '- [ ] TASK 2'].join('\n'));
+            expect(noticeMessages).toEqual([]);
+        });
+
+        it('should apply the instruction to every task in a multi-line selection', () => {
+            const text = runCommand(['- [ ] task 1', 'Not a task', '- [x] task 2 ✅ 2026-01-01'], 0, 2);
+
+            expect(text).toEqual(['- [ ] TASK 1', 'Not a task', '- [x] TASK 2 ✅ 2026-01-01'].join('\n'));
+            expect(noticeMessages).toEqual([]);
+        });
+
+        it('should show the supplied message when the line is not a task', () => {
+            const text = runCommand(['Not a task'], 0, 0);
+
+            expect(text).toEqual('Not a task');
+            expect(noticeMessages).toEqual(['Cannot capitalise: not a task']);
+        });
     });
 });
 
