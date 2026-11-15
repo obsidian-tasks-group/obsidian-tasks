@@ -166,12 +166,9 @@ describe('Opening a selected task', () => {
         await openTaskAtSourceLocation(writeReleaseNotes, app);
 
         expect(app.workspace.getLeaf).not.toHaveBeenCalled();
-        expect(warning).toHaveBeenCalledWith(
-            'Tasks: Could not open the selected task.\nIt may have changed. Try searching again.',
-        );
-        expect(MockedNotice).toHaveBeenCalledWith(
-            'Tasks: Could not open the selected task.\nIt may have changed. Try searching again.',
-        );
+        const expectedMessage = 'Tasks: Could not open the selected task.\nIt may have changed. Try searching again.';
+        expect(warning).toHaveBeenCalledWith(expectedMessage);
+        expect(MockedNotice).toHaveBeenCalledWith(expectedMessage);
         warning.mockRestore();
     });
 
