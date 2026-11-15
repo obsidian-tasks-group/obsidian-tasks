@@ -12,6 +12,8 @@ _In recent [Tasks releases](https://github.com/obsidian-tasks-group/obsidian-tas
 
 ## 8.x releases
 
+- X.Y.Z:
+  - Add [[Commands]] reference page.
 - 8.6.0:
   - The minimum supported Obsidian version is now [1.13.1](https://obsidian.md/changelog/2026-06-09-desktop-v1.13.1/).
   - Add setting to control [[Postponing#Which date field is edited?|which field Postpone edits]].
