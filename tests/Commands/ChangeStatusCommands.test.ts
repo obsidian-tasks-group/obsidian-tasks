@@ -33,7 +33,7 @@ afterEach(() => {
     GlobalFilter.getInstance().reset();
 });
 
-describe('createSetStatusEditorCallback', () => {
+describe('createApplyInstructionEditorCallback', () => {
     const MockedNotice = vi.mocked(Notice);
 
     beforeEach(() => {
