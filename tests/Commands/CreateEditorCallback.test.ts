@@ -1,9 +1,24 @@
+import {
+    type Editor,
+    type EditorChange,
+    type EditorPosition,
+    type MarkdownFileInfo,
+    MarkdownView,
+    Notice,
+} from 'obsidian';
+
 import { applyInstructionToLine, selectedLineNumbers } from 'Commands/CreateEditorCallback';
 import { SetStatus } from 'ui/EditInstructions/StatusInstructions';
 import { Status } from 'Statuses/Status';
 import { resetSettings, updateSettings } from 'Config/Settings';
 import { GlobalFilter } from 'Config/GlobalFilter';
 import moment from 'moment/moment';
+import { createApplyInstructionEditorCallback } from 'Commands/ChangeStatusCommands';
+
+vi.mock('obsidian', () => ({
+    MarkdownView: class MarkdownView {},
+    Notice: vi.fn(),
+}));
 
 window.moment = moment;
 
@@ -145,5 +160,166 @@ describe('applyInstructionToLine', () => {
         );
 
         expect(result?.text).toEqual('- [x] A simple task ✅ 2026-01-01');
+    });
+});
+
+describe('createApplyInstructionEditorCallback', () => {
+    const MockedNotice = vi.mocked(Notice);
+
+    beforeEach(() => {
+        MockedNotice.mockClear();
+    });
+
+    /**
+     * A minimal fake of Obsidian's Editor, holding the given lines,
+     * with the selection running from the start of {@link fromLine} to the end of {@link toLine},
+     * or to column {@link headCh} of {@link toLine}, if given.
+     */
+    function makeEditor(lines: string[], fromLine: number, toLine: number, headCh?: number) {
+        let text = lines.join('\n');
+        const getLines = () => text.split('\n');
+        const offset = ({ line, ch }: EditorPosition) =>
+            getLines()
+                .slice(0, line)
+                .reduce((sum, l) => sum + l.length + 1, 0) + ch;
+        const editor = {
+            getLine: (n: number) => getLines()[n],
+            lineCount: () => getLines().length,
+            getCursor: () => ({ line: toLine, ch: 0 }),
+            setCursor: vi.fn(),
+            listSelections: () => [
+                { anchor: { line: fromLine, ch: 0 }, head: { line: toLine, ch: headCh ?? lines[toLine].length } },
+            ],
+            replaceRange: (replacement: string, from: EditorPosition, to: EditorPosition) => {
+                text = text.slice(0, offset(from)) + replacement + text.slice(offset(to));
+            },
+            transaction: vi.fn(({ changes }: { changes: EditorChange[] }) => {
+                // Apply from the end of the file backwards, so earlier positions stay valid.
+                for (const change of [...changes].reverse()) {
+                    editor.replaceRange(change.text, change.from, change.to!);
+                }
+            }),
+        };
+        return { editor, getText: () => text };
+    }
+
+    const view = Object.assign(Object.create(MarkdownView.prototype) as MarkdownView, { file: { path: 'file.md' } });
+
+    function runCommand(lines: string[], fromLine: number, toLine: number, headCh?: number) {
+        const { editor, getText } = makeEditor(lines, fromLine, toLine, headCh);
+        createApplyInstructionEditorCallback(new SetStatus(Status.DONE), 'placeholder Not A Task message')(
+            false,
+            editor as unknown as Editor,
+            view,
+        );
+        return { text: getText(), transaction: editor.transaction, setCursor: editor.setCursor };
+    }
+
+    it('should change the status of a task line', () => {
+        const { text } = runCommand(['- [ ] A simple task'], 0, 0);
+
+        expect(text).toEqual('- [x] A simple task ✅ 2026-02-27');
+    });
+
+    it('should mark a task as done', () => {
+        const { text } = runCommand(['- [ ] A simple task'], 0, 0);
+
+        expect(text).toContain('- [x] A simple task');
+    });
+
+    it('should do nothing when the line is not a task', () => {
+        const { text } = runCommand(['This is not a task'], 0, 0);
+
+        expect(text).toEqual('This is not a task');
+    });
+
+    it('should notify the user when the line is not a task', () => {
+        runCommand(['This is not a task'], 0, 0);
+
+        expect(MockedNotice).toHaveBeenCalledWith('placeholder Not A Task message');
+    });
+
+    it('should not notify the user when changing a valid task', () => {
+        runCommand(['- [ ] A simple task'], 0, 0);
+
+        expect(MockedNotice).not.toHaveBeenCalled();
+    });
+
+    it('should keep the cursor on the same line after changing a single-line task', () => {
+        const { setCursor } = runCommand(['- [ ] task 1', '- [ ] task 2'], 1, 1);
+
+        expect(setCursor).toHaveBeenCalledTimes(1);
+        expect(setCursor).toHaveBeenCalledWith({ line: 1, ch: 0 });
+    });
+
+    it('should move the cursor to the last line when completing a recurring task adds a line', () => {
+        const { setCursor } = runCommand(['- [ ] A recurring task 🔁 every day 📅 2022-09-04'], 0, 0);
+
+        expect(setCursor).toHaveBeenCalledTimes(1);
+        expect(setCursor).toHaveBeenCalledWith({ line: 1, ch: 0 });
+    });
+
+    describe('when checking whether the command is available', () => {
+        function checkCommand(checkedView: MarkdownView | MarkdownFileInfo) {
+            const { editor } = makeEditor(['- [ ] A simple task'], 0, 0);
+            const available = createApplyInstructionEditorCallback(
+                new SetStatus(Status.DONE),
+                'placeholder Not A Task message',
+            )(true, editor as unknown as Editor, checkedView);
+            return available;
+        }
+
+        it('should be available in a Markdown view, without changing anything', () => {
+            const available = checkCommand(view);
+
+            expect(available).toEqual(true);
+        });
+
+        it('should not be available outside a Markdown view', () => {
+            const available = checkCommand({ file: { path: 'file.md' } } as MarkdownFileInfo);
+
+            expect(available).toEqual(false);
+        });
+    });
+
+    it('should change the status of every task in a multi-line selection, in one transaction', () => {
+        const { text, transaction } = runCommand(
+            ['- [ ] task 1', 'Not a task', '- [/] task 2', '- [ ] task 3 outside selection'],
+            0,
+            2,
+        );
+
+        expect(text).toEqual(
+            [
+                '- [x] task 1 ✅ 2026-02-27',
+                'Not a task',
+                '- [x] task 2 ✅ 2026-02-27',
+                '- [ ] task 3 outside selection',
+            ].join('\n'),
+        );
+        expect(transaction).toHaveBeenCalledTimes(1);
+        expect(MockedNotice).not.toHaveBeenCalled();
+    });
+
+    it('should notify the user when no selected line is a task', () => {
+        const { text, transaction } = runCommand(['Not a task', 'Also not a task'], 0, 1);
+
+        expect(text).toEqual(['Not a task', 'Also not a task'].join('\n'));
+        expect(transaction).not.toHaveBeenCalled();
+        expect(MockedNotice).toHaveBeenCalledWith('placeholder Not A Task message');
+    });
+
+    it('should still change just the cursor line when the selection is on one line', () => {
+        const { text, transaction } = runCommand(['- [ ] task 1', '- [ ] task 2'], 1, 1);
+
+        expect(text).toEqual(['- [ ] task 1', '- [x] task 2 ✅ 2026-02-27'].join('\n'));
+        expect(transaction).not.toHaveBeenCalled();
+    });
+
+    // https://github.com/obsidian-tasks-group/obsidian-tasks/issues/4141
+    it('should change the selected line, not the next one, when the selection ends at the start of the next line', () => {
+        const { text } = runCommand(['- [ ] line 1', '- [ ] line 2'], 0, 1, 0);
+
+        expect(text).toEqual(['- [x] line 1 ✅ 2026-02-27', '- [ ] line 2'].join('\n'));
     });
 });
