@@ -59,6 +59,15 @@ describe('SetStatus', () => {
         // Expect it is the same object
         expect(Object.is(newTasks[0], todoTask)).toBe(true);
     });
+
+    it('should end commandId() with status symbol', () => {
+        expect(new SetStatus(Status.DONE).commandId()).toBe('set-status-symbol-to-x');
+        expect(new SetStatus(Status.CANCELLED).commandId()).toBe('set-status-symbol-to--');
+    });
+
+    it('should end commandId() with "space" as special case for [ ]', () => {
+        expect(new SetStatus(Status.TODO).commandId()).toBe('set-status-symbol-to-space');
+    });
 });
 
 describe('All Status Instructions', () => {

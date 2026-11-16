@@ -1,6 +1,6 @@
 // @ts-ignore
 import { Status } from 'Statuses/Status';
-import type { Task } from 'Task/Task';
+import { type Task } from 'Task/Task';
 import type { StatusRegistry } from 'Statuses/StatusRegistry';
 import { StatusSettings } from 'Config/StatusSettings';
 import { BaseTaskEditingInstruction } from 'ui/EditInstructions/BaseTaskEditingInstruction';
@@ -32,6 +32,14 @@ export class SetStatus extends BaseTaskEditingInstruction {
 
     public isCheckedForTask(task: Task): boolean {
         return this.newStatus.symbol === task.status.symbol;
+    }
+
+    public commandId(): string {
+        // We want the command id to not change if a user renames the status.
+        // And we also don't want to have to figure out how to handle duplicate status names.
+        // So we use the single-character status symbol in the command id, avoiding using a space character.
+        const symbolSlug = this.newStatus.symbol === ' ' ? 'space' : this.newStatus.symbol;
+        return `set-status-symbol-to-${symbolSlug}`;
     }
 }
 
