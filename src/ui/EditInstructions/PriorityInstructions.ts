@@ -57,7 +57,9 @@ export class ShiftPriority extends BaseTaskEditingInstruction {
     }
 
     public apply(task: Task): Task[] {
-        return [task];
+        const offset = -1;
+        const newIndex = allPrioritiesHighestFirst.indexOf(task.priority) + offset;
+        return new SetPriority(allPrioritiesHighestFirst[newIndex]).apply(task);
     }
 
     public instructionDisplayName(): string {
