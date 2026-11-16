@@ -79,9 +79,7 @@ describe('Change status commands', () => {
     describe('reference', () => {
         it('table', () => {
             registry.resetToDefaultStatuses();
-            const commands = createSetStatusCommands(registry);
-
-            verifyCommandsAsMarkdownForDocs(commands);
+            verifyCommandsAsMarkdownForDocs(createSetStatusCommands(registry));
         });
     });
 });
