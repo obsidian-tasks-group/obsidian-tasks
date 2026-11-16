@@ -10,8 +10,8 @@ import { Status } from 'Statuses/Status';
 import { resetSettings, updateSettings } from 'Config/Settings';
 import { GlobalFilter } from 'Config/GlobalFilter';
 import moment from 'moment/moment';
-import type { TaskEditingInstruction } from 'ui/EditInstructions/TaskEditingInstruction';
 import { Task } from 'Task/Task';
+import { BaseTaskEditingInstruction } from 'ui/EditInstructions/BaseTaskEditingInstruction';
 import { noticeMessages } from '../__mocks__/obsidian';
 import { makeFakeEditor, makeFakeMarkdownView } from './CreateEditorCallbackHelpers';
 
@@ -28,7 +28,7 @@ afterEach(() => {
     GlobalFilter.getInstance().reset();
 });
 
-class CapitaliseDescriptionEditingInstruction implements TaskEditingInstruction {
+class CapitaliseDescriptionEditingInstruction extends BaseTaskEditingInstruction {
     public apply(task: Task): Task[] {
         return [
             new Task({

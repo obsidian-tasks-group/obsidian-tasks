@@ -1,6 +1,9 @@
 import { type ConfigModifier, Options } from '@approval-tests/approvals/lib/Core/Options';
 import { VitestReporter } from '@approval-tests/approvals/lib/Providers/Vitest/VitestReporter';
 import { verify } from '@approval-tests/approvals/lib/Providers/Vitest/VitestApprovals';
+import type { Command } from 'obsidian';
+import { MarkdownTable } from 'lib/MarkdownTable';
+import { addBackticks } from '../Scripting/ScriptingTestHelpers';
 
 export function verifyMarkdown(output: string) {
     let options = new Options();
@@ -44,4 +47,19 @@ export function verifyMarkdownForDocs(markdown: string) {
     output += '\n\n<!-- placeholder to force blank line after included text -->\n';
 
     verifyMarkdown(output);
+}
+
+export function verifyCommandsAsMarkdownForDocs(commands: Command[]): void {
+    const markdownTable = new MarkdownTable(['Name', 'ID']);
+    commands.forEach((command) => {
+        markdownTable.addRow(
+            [
+                // split lines
+                'Tasks: ' + command.name,
+                'obsidian-tasks-plugin:' + command.id,
+            ].map((text) => addBackticks(text)),
+        );
+    });
+
+    verifyMarkdownForDocs(markdownTable.markdown);
 }

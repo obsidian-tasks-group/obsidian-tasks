@@ -28,4 +28,9 @@ export interface TaskEditingInstruction {
      * @param task
      */
     isCheckedForTask(task: Task): boolean;
+
+    /**
+     * Return the command ID to use for this instruction, in Obsidian commands.
+     */
+    commandId(): string;
 }

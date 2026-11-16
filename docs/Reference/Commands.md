@@ -45,6 +45,37 @@ The ID for these commands is always:
 
 The ID stays the same if the Status Name, Next Symbol or Status Type is edited, but changes if the Status Symbol is edited.
 
+## Change priority commands
+
+Easily change the priority of one or more tasks.
+
+<!-- placeholder to force blank line before included text --><!-- include: ChangePriorityCommands.test.Change_priority_commands_reference_table.approved.md -->
+
+| Name | ID |
+| ----- | ----- |
+| `Tasks: Change Priority to: Highest` | `obsidian-tasks-plugin:set-priority-to-highest` |
+| `Tasks: Change Priority to: High` | `obsidian-tasks-plugin:set-priority-to-high` |
+| `Tasks: Change Priority to: Medium` | `obsidian-tasks-plugin:set-priority-to-medium` |
+| `Tasks: Change Priority to: Normal` | `obsidian-tasks-plugin:set-priority-to-normal` |
+| `Tasks: Change Priority to: Low` | `obsidian-tasks-plugin:set-priority-to-low` |
+| `Tasks: Change Priority to: Lowest` | `obsidian-tasks-plugin:set-priority-to-lowest` |
+| `Tasks: Increase Priority` | `obsidian-tasks-plugin:increase-priority` |
+| `Tasks: Decrease Priority` | `obsidian-tasks-plugin:decrease-priority` |
+
+<!-- placeholder to force blank line after included text --><!-- endInclude -->
+
+Notes:
+
+- `Change Priority to: Normal` removes any priority signifier from the task.
+- `Increase Priority` and `Decrease Priority` move the priority by one level, in the order shown in the table above.
+  For example, `Increase Priority` changes Low to Normal, and Normal to Medium.
+- `Increase Priority` does not change tasks that are already Highest, and `Decrease Priority` does not change tasks that are already Lowest.
+- If several lines are selected, the command is applied to every task on those lines, and a single Undo reverts them all.
+  Each task moves one level from its own current priority. Lines that are not tasks are left unchanged.
+
+> [!released]
+> The Priority commands were introduced in Tasks X.Y.Z.
+
 ## Other commands
 
 | Name                                            | ID                                                         | Details                                                                         |

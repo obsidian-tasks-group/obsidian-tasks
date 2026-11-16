@@ -33,6 +33,7 @@ Instead of adding the emoji manually, you can:
 
 - Use the `Tasks: Create or edit` command when creating or editing a task.
   You will be able to select the priority from the options in the [[Create or edit Task|‘Create or edit Task’ Modal]].
+- Use the [[Commands#Change priority commands|Change priority commands]]. These work on multiple tasks.
 - Using [[Auto-Suggest|Intelligent Auto-Suggest]],
   start typing the first few characters of `high`, `medium` or `low`, and press `<return>` to accept the suggested signifier.
 

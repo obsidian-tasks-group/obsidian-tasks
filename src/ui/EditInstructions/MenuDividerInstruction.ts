@@ -1,12 +1,12 @@
 import type { Task } from 'Task/Task';
-import type { TaskEditingInstruction } from 'ui/EditInstructions/TaskEditingInstruction';
+import { BaseTaskEditingInstruction } from 'ui/EditInstructions/BaseTaskEditingInstruction';
 
 /**
  * A placeholder to indicate that an instruction is meant to be a menu separator.
  */
 export const SEPARATOR_INSTRUCTION_DISPLAY_NAME = '---';
 
-export class MenuDividerInstruction implements TaskEditingInstruction {
+export class MenuDividerInstruction extends BaseTaskEditingInstruction {
     apply(_task: Task): Task[] {
         throw new Error('MenuDividerInstruction.apply(): Method not implemented.');
     }
