@@ -8,6 +8,8 @@
 | `Tasks: Change Priority to: Normal` | `obsidian-tasks-plugin:set-priority-to-normal` |
 | `Tasks: Change Priority to: Low` | `obsidian-tasks-plugin:set-priority-to-low` |
 | `Tasks: Change Priority to: Lowest` | `obsidian-tasks-plugin:set-priority-to-lowest` |
+| `Tasks: Increase Priority` | `obsidian-tasks-plugin:increase-priority` |
+| `Tasks: Decrease Priority` | `obsidian-tasks-plugin:decrease-priority` |
 
 
 <!-- placeholder to force blank line after included text -->

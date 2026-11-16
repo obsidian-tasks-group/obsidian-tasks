@@ -130,9 +130,11 @@ describe('All Priority Instructions', () => {
         const allInstructions = allPriorityInstructions();
 
         // Assert
-        expect(allInstructions.length).toBe(6);
-        expect(allInstructions[0].newPriority).toBe(Priority.Highest);
-        expect(allInstructions[5].newPriority).toBe(Priority.Lowest);
+        expect(allInstructions.length).toBe(8);
+        expect(allInstructions[0].instructionDisplayName()).toBe('Change Priority to: Highest');
+        expect(allInstructions[5].instructionDisplayName()).toBe('Change Priority to: Lowest');
+        expect(allInstructions[6].instructionDisplayName()).toBe('Increase Priority');
+        expect(allInstructions[7].instructionDisplayName()).toBe('Decrease Priority');
     });
 });
 

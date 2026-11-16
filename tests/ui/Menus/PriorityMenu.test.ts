@@ -20,13 +20,15 @@ describe('PriorityMenu', () => {
         // Assert
         const itemsAsText = menuToString(menu);
         expect(itemsAsText).toMatchInlineSnapshot(`
-            "
-              Change Priority to: Highest
-              Change Priority to: High
-              Change Priority to: Medium
-            x Change Priority to: Normal
-              Change Priority to: Low
-              Change Priority to: Lowest"
+          "
+            Change Priority to: Highest
+            Change Priority to: High
+            Change Priority to: Medium
+          x Change Priority to: Normal
+            Change Priority to: Low
+            Change Priority to: Lowest
+            Increase Priority
+            Decrease Priority"
         `);
     });
 

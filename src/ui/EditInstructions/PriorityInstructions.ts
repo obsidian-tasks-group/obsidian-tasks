@@ -89,14 +89,15 @@ export class ShiftPriority extends BaseTaskEditingInstruction {
 
 /**
  * Return all the available instructions for editing task priorities.
- * @todo Add instructions for increasing and decreasing the priority.
  */
 export function allPriorityInstructions() {
     const allPriorities = allPrioritiesHighestFirst;
-    const instructions = [];
+    const instructions: TaskEditingInstruction[] = [];
     for (const priority of allPriorities) {
         instructions.push(new SetPriority(priority));
     }
+    instructions.push(new ShiftPriority('increase'));
+    instructions.push(new ShiftPriority('decrease'));
     return instructions;
 }
 
