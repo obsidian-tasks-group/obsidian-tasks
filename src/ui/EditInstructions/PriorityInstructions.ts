@@ -2,14 +2,16 @@ import { Task } from 'Task/Task';
 import { PriorityTools } from 'lib/PriorityTools';
 import { Priority } from 'Task/Priority';
 import type { TaskEditingInstruction } from 'ui/EditInstructions/TaskEditingInstruction';
+import { BaseTaskEditingInstruction } from 'ui/EditInstructions/BaseTaskEditingInstruction';
 
 /**
  * An instruction class, for editing a {@link Task} object's {@link Priority}.
  */
-export class SetPriority implements TaskEditingInstruction {
+export class SetPriority extends BaseTaskEditingInstruction {
     readonly newPriority: Priority;
 
     constructor(priority: Priority) {
+        super();
         this.newPriority = priority;
     }
 

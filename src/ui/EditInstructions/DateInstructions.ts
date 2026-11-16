@@ -4,18 +4,20 @@ import { postponeMenuItemTitleFromDate, removeDateMenuItemTitleForField } from '
 import { TasksDate } from 'DateTime/TasksDate';
 import type { TaskEditingInstruction } from 'ui/EditInstructions/TaskEditingInstruction';
 import { MenuDividerInstruction } from 'ui/EditInstructions/MenuDividerInstruction';
+import { BaseTaskEditingInstruction } from 'ui/EditInstructions/BaseTaskEditingInstruction';
 
 /**
  * An instruction to set a date field to an absolute date.
  *
  * See also {@link SetRelativeTaskDate} and {@link RemoveTaskDate}.
  */
-export class SetTaskDate implements TaskEditingInstruction {
+export class SetTaskDate extends BaseTaskEditingInstruction {
     private readonly newDate: Date;
     private readonly dateFieldToEdit;
     private readonly displayName: string;
 
     constructor(dateFieldToEdit: AllTaskDateFields, date: Date, displayName?: string) {
+        super();
         this.newDate = date;
         this.dateFieldToEdit = dateFieldToEdit;
         this.displayName = displayName ?? `Set Date: ${this.newDate.toDateString()}`;
@@ -69,11 +71,12 @@ export class SetRelativeTaskDate extends SetTaskDate {
  *
  * See also {@link SetTaskDate} and {@link SetRelativeTaskDate}.
  */
-export class RemoveTaskDate implements TaskEditingInstruction {
+export class RemoveTaskDate extends BaseTaskEditingInstruction {
     private readonly dateFieldToEdit: AllTaskDateFields;
     private readonly displayName: string;
 
     constructor(dateFieldToEdit: AllTaskDateFields, task: Task) {
+        super();
         this.dateFieldToEdit = dateFieldToEdit;
         this.displayName = removeDateMenuItemTitleForField(dateFieldToEdit, task);
     }

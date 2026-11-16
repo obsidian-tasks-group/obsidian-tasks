@@ -3,15 +3,16 @@ import { Status } from 'Statuses/Status';
 import type { Task } from 'Task/Task';
 import type { StatusRegistry } from 'Statuses/StatusRegistry';
 import { StatusSettings } from 'Config/StatusSettings';
-import type { TaskEditingInstruction } from 'ui/EditInstructions/TaskEditingInstruction';
+import { BaseTaskEditingInstruction } from 'ui/EditInstructions/BaseTaskEditingInstruction';
 
 /**
  * An instruction class, for editing a {@link Task} object's {@link Status}.
  */
-export class SetStatus implements TaskEditingInstruction {
+export class SetStatus extends BaseTaskEditingInstruction {
     public readonly newStatus: Status;
 
     constructor(status: Status) {
+        super();
         this.newStatus = status;
     }
 
