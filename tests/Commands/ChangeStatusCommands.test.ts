@@ -1,4 +1,4 @@
-import { type Editor } from 'obsidian';
+import { type Command, type Editor } from 'obsidian';
 import { createSetStatusCommands } from 'Commands/ChangeStatusCommands';
 import { Status } from 'Statuses/Status';
 import { StatusRegistry } from 'Statuses/StatusRegistry';
@@ -8,6 +8,21 @@ import { noticeMessages } from '../__mocks__/obsidian';
 import { verifyMarkdownForDocs } from '../TestingTools/VerifyMarkdown';
 import { addBackticks } from '../Scripting/ScriptingTestHelpers';
 import { makeFakeEditor, makeFakeMarkdownView } from './CreateEditorCallbackHelpers';
+
+function verifyCommandsAsMarkdownForDocs(commands: Command[]): void {
+    const markdownTable = new MarkdownTable(['Name', 'ID']);
+    commands.forEach((command) => {
+        markdownTable.addRow(
+            [
+                // split lines
+                'Tasks: ' + command.name,
+                'obsidian-tasks-plugin:' + command.id,
+            ].map((text) => addBackticks(text)),
+        );
+    });
+
+    verifyMarkdownForDocs(markdownTable.markdown);
+}
 
 describe('Change status commands', () => {
     let registry: StatusRegistry;
@@ -66,18 +81,7 @@ describe('Change status commands', () => {
             registry.resetToDefaultStatuses();
             const commands = createSetStatusCommands(registry);
 
-            const markdownTable = new MarkdownTable(['Name', 'ID']);
-            commands.forEach((command) => {
-                markdownTable.addRow(
-                    [
-                        // split lines
-                        'Tasks: ' + command.name,
-                        'obsidian-tasks-plugin:' + command.id,
-                    ].map((text) => addBackticks(text)),
-                );
-            });
-
-            verifyMarkdownForDocs(markdownTable.markdown);
+            verifyCommandsAsMarkdownForDocs(commands);
         });
     });
 });
