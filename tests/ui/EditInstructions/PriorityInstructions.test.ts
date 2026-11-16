@@ -17,7 +17,7 @@ describe('SetPriority', () => {
         const instruction = new SetPriority(Priority.None);
 
         // Assert
-        expect(instruction.instructionDisplayName()).toEqual('Priority: Normal');
+        expect(instruction.instructionDisplayName()).toEqual('Change Priority to: Normal');
         expect(instruction.isCheckedForTask(highPriorityTask)).toEqual(false);
         expect(instruction.isCheckedForTask(normalPriorityTask)).toEqual(true);
     });

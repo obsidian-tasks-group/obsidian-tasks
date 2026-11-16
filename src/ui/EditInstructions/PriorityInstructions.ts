@@ -30,7 +30,7 @@ export class SetPriority extends BaseTaskEditingInstruction {
     }
 
     public instructionDisplayName(): string {
-        return `Priority: ${PriorityTools.priorityNameUsingNormal(this.newPriority)}`;
+        return `Change Priority to: ${PriorityTools.priorityNameUsingNormal(this.newPriority)}`;
     }
 
     public isCheckedForTask(task: Task) {

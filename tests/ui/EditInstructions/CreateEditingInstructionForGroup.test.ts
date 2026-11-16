@@ -16,7 +16,7 @@ describe('CreateEditingInstructionForGroup', () => {
         const instruction = createEditingInstructionForGroup('priority', task);
 
         expect(instruction).not.toBeNull();
-        expect(instruction?.instructionDisplayName()).toBe('Priority: Medium');
+        expect(instruction?.instructionDisplayName()).toBe('Change Priority to: Medium');
     });
 
     it('should create an instruction for due date', () => {

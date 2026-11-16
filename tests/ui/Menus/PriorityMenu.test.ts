@@ -21,12 +21,12 @@ describe('PriorityMenu', () => {
         const itemsAsText = menuToString(menu);
         expect(itemsAsText).toMatchInlineSnapshot(`
             "
-              Priority: Highest
-              Priority: High
-              Priority: Medium
-            x Priority: Normal
-              Priority: Low
-              Priority: Lowest"
+              Change Priority to: Highest
+              Change Priority to: High
+              Change Priority to: Medium
+            x Change Priority to: Normal
+              Change Priority to: Low
+              Change Priority to: Lowest"
         `);
     });
 
@@ -38,7 +38,7 @@ describe('PriorityMenu', () => {
         // Act
         // @ts-expect-error TS2339: Property 'items' does not exist on type 'PriorityMenu'.
         const todoItem = menu.items[0];
-        expect(todoItem.title).toEqual('Priority: Highest');
+        expect(todoItem.title).toEqual('Change Priority to: Highest');
         todoItem.callback();
 
         // Assert
@@ -59,7 +59,7 @@ describe('PriorityMenu', () => {
         // Act
         // @ts-expect-error TS2339: Property 'items' does not exist on type 'PriorityMenu'.
         const todoItem = menu.items[0];
-        expect(todoItem.title).toEqual('Priority: Highest');
+        expect(todoItem.title).toEqual('Change Priority to: Highest');
         todoItem.callback();
 
         // Assert
