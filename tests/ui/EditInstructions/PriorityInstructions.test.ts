@@ -67,10 +67,13 @@ describe('ShiftPriority', () => {
     });
 
     it('should increase Lowest command to Lowest', () => {
-        const task = new TaskBuilder().priority(Priority.Lowest).build();
+        const originalPriority = Priority.Lowest;
+        const expectedPriority = Priority.Low;
+
+        const task = new TaskBuilder().priority(originalPriority).build();
         const instruction = new ShiftPriority();
         const edited = instruction.apply(task);
-        expect(edited[0].priority).toEqual(Priority.Low);
+        expect(edited[0].priority).toEqual(expectedPriority);
     });
 });
 
