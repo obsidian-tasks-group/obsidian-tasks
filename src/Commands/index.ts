@@ -7,6 +7,7 @@ import { createOrEdit } from 'Commands/CreateOrEdit';
 import { toggleDone } from 'Commands/ToggleDone';
 import { ensureQueryFileDefaultsInFrontmatter } from 'Commands/AddQueryFileDefaultsProperties';
 import { createSetStatusCommands } from 'Commands/ChangeStatusCommands';
+import { createSetPriorityCommands } from 'Commands/ChangePriorityCommands';
 
 export const ToggleTaskDoneCommandName = 'Toggle task done';
 
@@ -79,6 +80,8 @@ export class Commands {
         // Register set-status commands for each registered status
         const setStatusCommands = createSetStatusCommands(StatusRegistry.getInstance());
         setStatusCommands.forEach((command) => plugin.addCommand(command));
+
+        createSetPriorityCommands().forEach((command) => plugin.addCommand(command));
     }
 
     async ensureQueryFileDefaultsFrontmatter(file: TFile): Promise<void> {
