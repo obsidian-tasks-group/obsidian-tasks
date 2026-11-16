@@ -116,6 +116,7 @@ There is a lot of flexibility here. For example:
 - You can enter relative dates, such as `today`, `tomorrow`, `Saturday`, `10 days`, `2 weeks`.
 
 When a numeric date is ambiguous, Tasks uses the day and month order from Obsidian's short date format.
+This format follows the language selected in Obsidian's **Settings → General → Language**.
 For example, `05/11/2026` means 5 November in English (GB) and May 11 in English.
 Use `YYYY-MM-DD` to enter the same date in any locale. Tasks saves dates in this format in your notes.
 

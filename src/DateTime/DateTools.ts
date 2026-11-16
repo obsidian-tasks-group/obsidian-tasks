@@ -3,7 +3,12 @@ import * as chrono from 'chrono-node';
 // The day-first casual configuration also supports relative inputs such as "tomorrow".
 const dayFirstDateParser = new chrono.Chrono(chrono.en.createCasualConfiguration(true));
 
-function parseTypedDate(input: string, referenceDate: Date | undefined, forwardDate: boolean): Date | null {
+function parseTypedDateWithLocaleDateOrder(
+    input: string,
+    referenceDate: Date | undefined,
+    forwardDate: boolean,
+): Date | null {
+    // Obsidian sets the Moment locale from its Language setting.
     const shortDateFormat = window.moment.localeData().longDateFormat('L');
     const dayBeforeMonth = shortDateFormat.match(/[DM]/)?.[0] === 'D';
     const parser = dayBeforeMonth ? dayFirstDateParser : chrono.casual;
@@ -66,7 +71,7 @@ function parseTypedDateForDisplay(
     if (!typedDate) {
         return `<i>no ${fieldName} date</i>`;
     }
-    const parsed = parseTypedDate(typedDate, forwardDate, forwardDate !== undefined);
+    const parsed = parseTypedDateWithLocaleDateOrder(typedDate, forwardDate, forwardDate !== undefined);
     if (parsed !== null) {
         return window.moment(parsed).format('YYYY-MM-DD');
     }
@@ -95,7 +100,7 @@ export function parseTypedDateForDisplayUsingFutureDate(
  */
 export function parseTypedDateForSaving(typedDate: string, forwardDate: boolean): moment.Moment | null {
     let date: moment.Moment | null = null;
-    const parsedDate = parseTypedDate(typedDate, new Date(), forwardDate);
+    const parsedDate = parseTypedDateWithLocaleDateOrder(typedDate, new Date(), forwardDate);
     if (parsedDate !== null) {
         date = window.moment(parsedDate);
     }
