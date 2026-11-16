@@ -113,11 +113,11 @@ describe('ShiftPriority - Decrease', () => {
         shouldDecreasePriorityTo(Priority.Low, Priority.Lowest);
     });
 
-    it.fails('should not decrease beyond Lowest', () => {
+    it('should not decrease beyond Lowest', () => {
         shouldDecreasePriorityTo(Priority.Lowest, Priority.Lowest);
     });
 
-    it.fails('should return the same task of priority was already lowest', () => {
+    it('should return the same task of priority was already lowest', () => {
         const task = new TaskBuilder().priority(Priority.Lowest).build();
         const edited = instruction.apply(task);
         expect(edited[0]).toBe(task);
