@@ -78,9 +78,7 @@ export class Commands {
 
         // Register set-status commands for each registered status
         const setStatusCommands = createSetStatusCommands(StatusRegistry.getInstance());
-        for (const command of setStatusCommands) {
-            plugin.addCommand(command);
-        }
+        setStatusCommands.forEach((command) => plugin.addCommand(command));
     }
 
     async ensureQueryFileDefaultsFrontmatter(file: TFile): Promise<void> {
