@@ -51,6 +51,11 @@ const allPrioritiesHighestFirst = [
     Priority.Lowest,
 ];
 
+/**
+ * An instruction class, for moving a {@link Task} object's {@link Priority} up or down by one level.
+ *
+ * Tasks already at the highest or lowest priority are left unchanged.
+ */
 export class ShiftPriority extends BaseTaskEditingInstruction {
     private readonly direction: 'increase' | 'decrease';
 
