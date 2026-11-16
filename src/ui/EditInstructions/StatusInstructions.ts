@@ -1,6 +1,6 @@
 // @ts-ignore
 import { Status } from 'Statuses/Status';
-import { type Task } from 'Task/Task';
+import type { Task } from 'Task/Task';
 import type { StatusRegistry } from 'Statuses/StatusRegistry';
 import { StatusSettings } from 'Config/StatusSettings';
 import { BaseTaskEditingInstruction } from 'ui/EditInstructions/BaseTaskEditingInstruction';
