@@ -64,9 +64,10 @@ describe('Change status commands', () => {
     describe('reference', () => {
         it('table', () => {
             registry.resetToDefaultStatuses();
-            const markdownTable = new MarkdownTable(['Name', 'ID']);
+            const commands = createSetStatusCommands(registry);
 
-            createSetStatusCommands(registry).forEach((command) => {
+            const markdownTable = new MarkdownTable(['Name', 'ID']);
+            commands.forEach((command) => {
                 markdownTable.addRow(
                     [
                         // split lines
