@@ -69,7 +69,7 @@ export class ShiftPriority extends BaseTaskEditingInstruction {
     }
 
     public instructionDisplayName(): string {
-        return 'Increase Priority';
+        return this.direction === 'increase' ? 'Increase Priority' : 'Decrease Priority';
     }
 
     public isCheckedForTask(_task: Task): boolean {

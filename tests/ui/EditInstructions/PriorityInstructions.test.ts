@@ -94,7 +94,7 @@ describe('ShiftPriority - Increase', () => {
 describe('ShiftPriority - Decrease', () => {
     const instruction = new ShiftPriority('decrease');
 
-    it.fails('should have correct name and id', () => {
+    it('should have correct name and id', () => {
         expect(instruction.instructionDisplayName()).toEqual('Decrease Priority');
         expect(instruction.commandId()).toEqual('decrease-priority');
     });
