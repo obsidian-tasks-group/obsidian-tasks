@@ -52,8 +52,11 @@ const allPrioritiesHighestFirst = [
 ];
 
 export class ShiftPriority extends BaseTaskEditingInstruction {
-    constructor() {
+    private readonly direction: 'increase' | 'decrease';
+
+    constructor(direction: 'increase' | 'decrease') {
         super();
+        this.direction = direction;
     }
 
     public apply(task: Task): Task[] {
@@ -74,7 +77,7 @@ export class ShiftPriority extends BaseTaskEditingInstruction {
     }
 
     public commandId(): string {
-        return 'increase-priority';
+        return `${this.direction}-priority`;
     }
 }
 

@@ -59,7 +59,7 @@ describe('SetPriority', () => {
 });
 
 describe('ShiftPriority - Increase', () => {
-    const instruction = new ShiftPriority();
+    const instruction = new ShiftPriority('increase');
 
     it('should have correct name and id', () => {
         expect(instruction.instructionDisplayName()).toEqual('Increase Priority');
@@ -92,7 +92,7 @@ describe('ShiftPriority - Increase', () => {
 });
 
 describe('ShiftPriority - Decrease', () => {
-    const instruction = new ShiftPriority();
+    const instruction = new ShiftPriority('decrease');
 
     it.fails('should have correct name and id', () => {
         expect(instruction.instructionDisplayName()).toEqual('Decrease Priority');
