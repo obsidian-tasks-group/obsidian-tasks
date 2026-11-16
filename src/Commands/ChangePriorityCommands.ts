@@ -5,7 +5,7 @@ import { createApplyInstructionEditorCallback } from 'Commands/CreateEditorCallb
 const notATaskMessage = 'Cannot set priority: line is not a task or does not match global filter';
 
 /**
- * Create set-priority commands for each registered status
+ * Create set-priority commands
  */
 export function createSetPriorityCommands(): Command[] {
     return allPriorityInstructions().map((instruction) => ({
