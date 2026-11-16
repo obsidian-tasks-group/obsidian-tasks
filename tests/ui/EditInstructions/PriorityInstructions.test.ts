@@ -59,15 +59,15 @@ describe('SetPriority', () => {
 });
 
 describe('ShiftPriority - Increase', () => {
+    const instruction = new ShiftPriority();
+
     it('should have correct name and id', () => {
-        const instruction = new ShiftPriority();
         expect(instruction.instructionDisplayName()).toEqual('Increase Priority');
         expect(instruction.commandId()).toEqual('increase-priority');
     });
 
     function shouldIncreasePriorityTo(originalPriority: Priority, expectedPriority: Priority): void {
         const task = new TaskBuilder().priority(originalPriority).build();
-        const instruction = new ShiftPriority();
         const edited = instruction.apply(task);
         expect(edited[0].priority).toEqual(expectedPriority);
     }
@@ -86,22 +86,21 @@ describe('ShiftPriority - Increase', () => {
 
     it('should return the same task of priority was already highest', () => {
         const task = new TaskBuilder().priority(Priority.Highest).build();
-        const instruction = new ShiftPriority();
         const edited = instruction.apply(task);
         expect(edited[0]).toBe(task);
     });
 });
 
 describe('ShiftPriority - Decrease', () => {
+    const instruction = new ShiftPriority();
+
     it.fails('should have correct name and id', () => {
-        const instruction = new ShiftPriority();
         expect(instruction.instructionDisplayName()).toEqual('Decrease Priority');
         expect(instruction.commandId()).toEqual('decrease-priority');
     });
 
     function shouldDecreasePriorityTo(originalPriority: Priority, expectedPriority: Priority): void {
         const task = new TaskBuilder().priority(originalPriority).build();
-        const instruction = new ShiftPriority();
         const edited = instruction.apply(task);
         expect(edited[0].priority).toEqual(expectedPriority);
     }
@@ -120,7 +119,6 @@ describe('ShiftPriority - Decrease', () => {
 
     it.fails('should return the same task of priority was already lowest', () => {
         const task = new TaskBuilder().priority(Priority.Lowest).build();
-        const instruction = new ShiftPriority();
         const edited = instruction.apply(task);
         expect(edited[0]).toBe(task);
     });
