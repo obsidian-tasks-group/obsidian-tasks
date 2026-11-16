@@ -42,19 +42,21 @@ export class SetPriority extends BaseTaskEditingInstruction {
     }
 }
 
+const allPrioritiesHighestFirst = [
+    Priority.Highest,
+    Priority.High,
+    Priority.Medium,
+    Priority.None,
+    Priority.Low,
+    Priority.Lowest,
+];
+
 /**
  * Return all the available instructions for editing task priorities.
  * @todo Add instructions for increasing and decreasing the priority.
  */
 export function allPriorityInstructions() {
-    const allPriorities = [
-        Priority.Highest,
-        Priority.High,
-        Priority.Medium,
-        Priority.None,
-        Priority.Low,
-        Priority.Lowest,
-    ];
+    const allPriorities = allPrioritiesHighestFirst;
     const instructions = [];
     for (const priority of allPriorities) {
         instructions.push(new SetPriority(priority));
