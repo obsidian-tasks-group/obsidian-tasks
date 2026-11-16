@@ -72,11 +72,11 @@ describe('ShiftPriority - Increase', () => {
         expect(edited[0].priority).toEqual(expectedPriority);
     }
 
-    it('should increase Lowest command to Low', () => {
+    it('should increase Lowest priority to Low', () => {
         shouldIncreasePriorityTo(Priority.Lowest, Priority.Low);
     });
 
-    it('should increase High command to Highest', () => {
+    it('should increase High priority to Highest', () => {
         shouldIncreasePriorityTo(Priority.High, Priority.Highest);
     });
 
@@ -105,11 +105,11 @@ describe('ShiftPriority - Decrease', () => {
         expect(edited[0].priority).toEqual(expectedPriority);
     }
 
-    it('should decrease Highest command to High', () => {
+    it('should decrease Highest priority to High', () => {
         shouldDecreasePriorityTo(Priority.Highest, Priority.High);
     });
 
-    it('should decrease Low command to Lowest', () => {
+    it('should decrease Low priority to Lowest', () => {
         shouldDecreasePriorityTo(Priority.Low, Priority.Lowest);
     });
 
