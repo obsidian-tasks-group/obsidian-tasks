@@ -56,8 +56,8 @@ export class ShiftPriority extends BaseTaskEditingInstruction {
         super();
     }
 
-    public apply(_task: Task): Task[] {
-        return [];
+    public apply(task: Task): Task[] {
+        return [task];
     }
 
     public instructionDisplayName(): string {
