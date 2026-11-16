@@ -36,6 +36,10 @@ export class SetPriority extends BaseTaskEditingInstruction {
     public isCheckedForTask(task: Task) {
         return task.priority === this.newPriority;
     }
+
+    public commandId(): string {
+        return `set-priority-to-${PriorityTools.priorityNameUsingNormal(this.newPriority).toLowerCase()}`;
+    }
 }
 
 /**

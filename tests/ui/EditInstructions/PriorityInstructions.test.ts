@@ -46,6 +46,15 @@ describe('SetPriority', () => {
         // Expect it is the same object
         expect(Object.is(newTasks[0], highPriorityTask)).toBe(true);
     });
+
+    it('should use lower-case priority name for commandId()', () => {
+        expect(new SetPriority(Priority.High).commandId()).toBe('set-priority-to-high');
+        expect(new SetPriority(Priority.Highest).commandId()).toBe('set-priority-to-highest');
+    });
+
+    it('should use "normal" for commandId() of Priority.None command', () => {
+        expect(new SetPriority(Priority.None).commandId()).toBe('set-priority-to-normal');
+    });
 });
 
 describe('All Priority Instructions', () => {
