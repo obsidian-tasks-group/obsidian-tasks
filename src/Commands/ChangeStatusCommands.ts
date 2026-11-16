@@ -10,8 +10,7 @@ const notATaskMessage = 'Cannot set status: line is not a task or does not match
  * @param statusRegistry
  */
 export function createSetStatusCommands(statusRegistry: StatusRegistry): Command[] {
-    const statusInstructions = allStatusInstructions(statusRegistry);
-    return statusInstructions.map((instruction) => ({
+    return allStatusInstructions(statusRegistry).map((instruction) => ({
         id: instruction.commandId(),
         name: instruction.instructionDisplayName(),
         editorCheckCallback: createApplyInstructionEditorCallback(instruction, notATaskMessage),
