@@ -66,14 +66,17 @@ describe('ShiftPriority', () => {
         expect(instruction.commandId()).toEqual('increase-priority');
     });
 
-    it('should increase Lowest command to Lowest', () => {
-        const originalPriority = Priority.Lowest;
-        const expectedPriority = Priority.Low;
-
+    function shouldIncreasePriorityTo(originalPriority: Priority, expectedPriority: Priority): void {
         const task = new TaskBuilder().priority(originalPriority).build();
         const instruction = new ShiftPriority();
         const edited = instruction.apply(task);
         expect(edited[0].priority).toEqual(expectedPriority);
+    }
+
+    it('should increase Lowest command to Lowest', () => {
+        const originalPriority = Priority.Lowest;
+        const expectedPriority = Priority.Low;
+        shouldIncreasePriorityTo(originalPriority, expectedPriority);
     });
 });
 
