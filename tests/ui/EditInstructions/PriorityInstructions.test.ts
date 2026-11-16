@@ -1,5 +1,6 @@
 import {
     SetPriority,
+    ShiftPriority,
     allPriorityInstructions,
     createEditingInstructionForPriorityGroups,
 } from 'ui/EditInstructions/PriorityInstructions';
@@ -54,6 +55,15 @@ describe('SetPriority', () => {
 
     it('should use "normal" for commandId() of Priority.None command', () => {
         expect(new SetPriority(Priority.None).commandId()).toBe('set-priority-to-normal');
+    });
+});
+
+describe('ShiftPriority', () => {
+    // Start by only increasing priority
+    it('should have correct name and id', () => {
+        const instruction = new ShiftPriority();
+        expect(instruction.instructionDisplayName()).toEqual('Increase Priority');
+        expect(instruction.commandId()).toEqual('increase-priority');
     });
 });
 

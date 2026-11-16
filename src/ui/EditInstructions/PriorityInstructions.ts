@@ -51,6 +51,28 @@ const allPrioritiesHighestFirst = [
     Priority.Lowest,
 ];
 
+export class ShiftPriority extends BaseTaskEditingInstruction {
+    constructor() {
+        super();
+    }
+
+    public apply(_task: Task): Task[] {
+        return [];
+    }
+
+    public instructionDisplayName(): string {
+        return 'Increase Priority';
+    }
+
+    public isCheckedForTask(_task: Task): boolean {
+        return false;
+    }
+
+    public commandId(): string {
+        return 'increase-priority';
+    }
+}
+
 /**
  * Return all the available instructions for editing task priorities.
  * @todo Add instructions for increasing and decreasing the priority.
