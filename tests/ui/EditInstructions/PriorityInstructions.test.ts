@@ -74,9 +74,7 @@ describe('ShiftPriority', () => {
     }
 
     it('should increase Lowest command to Lowest', () => {
-        const originalPriority = Priority.Lowest;
-        const expectedPriority = Priority.Low;
-        shouldIncreasePriorityTo(originalPriority, expectedPriority);
+        shouldIncreasePriorityTo(Priority.Lowest, Priority.Low);
     });
 });
 
