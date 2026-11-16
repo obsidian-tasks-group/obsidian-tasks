@@ -76,6 +76,14 @@ describe('ShiftPriority', () => {
     it('should increase Lowest command to Low', () => {
         shouldIncreasePriorityTo(Priority.Lowest, Priority.Low);
     });
+
+    it('should increase High command to Highest', () => {
+        shouldIncreasePriorityTo(Priority.High, Priority.Highest);
+    });
+
+    it.fails('should not increase beyond Highest', () => {
+        shouldIncreasePriorityTo(Priority.Highest, Priority.Highest);
+    });
 });
 
 describe('All Priority Instructions', () => {
