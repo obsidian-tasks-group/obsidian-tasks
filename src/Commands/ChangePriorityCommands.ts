@@ -1,0 +1,16 @@
+import { type Command } from 'obsidian';
+import { allPriorityInstructions } from 'ui/EditInstructions/PriorityInstructions';
+import { createApplyInstructionEditorCallback } from 'Commands/CreateEditorCallback';
+
+const notATaskMessage = 'Cannot set prority: line is not a task or does not match global filter';
+
+/**
+ * Create set-priority commands for each registered status
+ */
+export function createSetPriorityCommands(): Command[] {
+    return allPriorityInstructions().map((instruction) => ({
+        id: instruction.commandId(),
+        name: instruction.instructionDisplayName(),
+        editorCheckCallback: createApplyInstructionEditorCallback(instruction, notATaskMessage),
+    }));
+}
