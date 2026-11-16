@@ -64,6 +64,15 @@ Easily change the priority of one or more tasks.
 
 <!-- placeholder to force blank line after included text --><!-- endInclude -->
 
+Notes:
+
+- `Change Priority to: Normal` removes any priority signifier from the task.
+- `Increase Priority` and `Decrease Priority` move the priority by one level, in the order shown in the table above.
+  For example, `Increase Priority` changes Low to Normal, and Normal to Medium.
+- `Increase Priority` does not change tasks that are already Highest, and `Decrease Priority` does not change tasks that are already Lowest.
+- If several lines are selected, the command is applied to every task on those lines, and a single Undo reverts them all.
+  Each task moves one level from its own current priority. Lines that are not tasks are left unchanged.
+
 > [!released]
 > The Priority commands were introduced in Tasks X.Y.Z.
 
