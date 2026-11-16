@@ -81,11 +81,11 @@ describe('ShiftPriority', () => {
         shouldIncreasePriorityTo(Priority.High, Priority.Highest);
     });
 
-    it.fails('should not increase beyond Highest', () => {
+    it('should not increase beyond Highest', () => {
         shouldIncreasePriorityTo(Priority.Highest, Priority.Highest);
     });
 
-    it.fails('should return the same task of priority was already highest', () => {
+    it('should return the same task of priority was already highest', () => {
         const task = new TaskBuilder().priority(Priority.Highest).build();
         const instruction = new ShiftPriority();
         const edited = instruction.apply(task);
