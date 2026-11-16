@@ -68,6 +68,7 @@ export class ShiftPriority extends BaseTaskEditingInstruction {
         const offset = this.direction === 'increase' ? -1 : 1;
         const newIndex = allPrioritiesHighestFirst.indexOf(task.priority) + offset;
         if (newIndex < 0 || newIndex >= allPrioritiesHighestFirst.length) {
+            // Unchanged: return the input task:
             return [task];
         }
         return new SetPriority(allPrioritiesHighestFirst[newIndex]).apply(task);
