@@ -96,8 +96,7 @@ export function allPriorityInstructions() {
     for (const priority of allPriorities) {
         instructions.push(new SetPriority(priority));
     }
-    instructions.push(new ShiftPriority('increase'));
-    instructions.push(new ShiftPriority('decrease'));
+    instructions.push(new ShiftPriority('increase'), new ShiftPriority('decrease'));
     return instructions;
 }
 
