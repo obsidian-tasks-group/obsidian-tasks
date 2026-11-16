@@ -1,28 +1,11 @@
-import { type Command, type Editor } from 'obsidian';
+import { type Editor } from 'obsidian';
 import { createSetStatusCommands } from 'Commands/ChangeStatusCommands';
 import { Status } from 'Statuses/Status';
 import { StatusRegistry } from 'Statuses/StatusRegistry';
 import { StatusConfiguration, StatusType } from 'Statuses/StatusConfiguration';
-import { MarkdownTable } from 'lib/MarkdownTable';
 import { noticeMessages } from '../__mocks__/obsidian';
-import { verifyMarkdownForDocs } from '../TestingTools/VerifyMarkdown';
-import { addBackticks } from '../Scripting/ScriptingTestHelpers';
+import { verifyCommandsAsMarkdownForDocs } from '../TestingTools/VerifyMarkdown';
 import { makeFakeEditor, makeFakeMarkdownView } from './CreateEditorCallbackHelpers';
-
-function verifyCommandsAsMarkdownForDocs(commands: Command[]): void {
-    const markdownTable = new MarkdownTable(['Name', 'ID']);
-    commands.forEach((command) => {
-        markdownTable.addRow(
-            [
-                // split lines
-                'Tasks: ' + command.name,
-                'obsidian-tasks-plugin:' + command.id,
-            ].map((text) => addBackticks(text)),
-        );
-    });
-
-    verifyMarkdownForDocs(markdownTable.markdown);
-}
 
 describe('Change status commands', () => {
     let registry: StatusRegistry;
