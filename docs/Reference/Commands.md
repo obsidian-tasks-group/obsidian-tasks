@@ -47,6 +47,8 @@ The ID stays the same if the Status Name, Next Symbol or Status Type is edited, 
 
 ## Change priority commands
 
+Easily change the priority of one or more tasks.
+
 <!-- placeholder to force blank line before included text --><!-- include: ChangePriorityCommands.test.Change_priority_commands_reference_table.approved.md -->
 
 | Name | ID |
@@ -61,6 +63,9 @@ The ID stays the same if the Status Name, Next Symbol or Status Type is edited, 
 | `Tasks: Decrease Priority` | `obsidian-tasks-plugin:decrease-priority` |
 
 <!-- placeholder to force blank line after included text --><!-- endInclude -->
+
+> [!released]
+> The Priority commands were introduced in Tasks X.Y.Z.
 
 ## Other commands
 
