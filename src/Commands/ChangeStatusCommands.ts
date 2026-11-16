@@ -11,14 +11,9 @@ const notATaskMessage = 'Cannot set status: line is not a task or does not match
  */
 export function createSetStatusCommands(statusRegistry: StatusRegistry): Command[] {
     const statusInstructions = allStatusInstructions(statusRegistry);
-    const setStatusCommands: Command[] = [];
-    for (const instruction of statusInstructions) {
-        const command = {
-            id: instruction.commandId(),
-            name: instruction.instructionDisplayName(),
-            editorCheckCallback: createApplyInstructionEditorCallback(instruction, notATaskMessage),
-        };
-        setStatusCommands.push(command);
-    }
-    return setStatusCommands;
+    return statusInstructions.map((instruction) => ({
+        id: instruction.commandId(),
+        name: instruction.instructionDisplayName(),
+        editorCheckCallback: createApplyInstructionEditorCallback(instruction, notATaskMessage),
+    }));
 }
