@@ -8,4 +8,8 @@ export abstract class BaseTaskEditingInstruction implements TaskEditingInstructi
     public abstract apply(task: Task): Task[];
     public abstract instructionDisplayName(): string;
     public abstract isCheckedForTask(task: Task): boolean;
+
+    public commandId(): string {
+        throw new Error(`${this.constructor.name}.commandId(): Method not implemented.`);
+    }
 }
