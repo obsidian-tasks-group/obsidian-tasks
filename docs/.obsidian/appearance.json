@@ -3,5 +3,6 @@
   "theme": "system",
   "enabledCssSnippets": [
     "publish-simulation"
-  ]
+  ],
+  "showRibbon": true
 }
