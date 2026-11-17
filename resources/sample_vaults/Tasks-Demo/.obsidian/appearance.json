@@ -9,5 +9,6 @@
     "widen-property-labels",
     "image-border"
   ],
-  "accentColor": ""
+  "accentColor": "",
+  "showRibbon": true
 }
