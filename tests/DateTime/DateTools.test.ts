@@ -44,7 +44,7 @@ describe('compareBy', () => {
         expectDateComparesAfter(laterDate, invalidDate); // invalid dates sort before valid ones
     });
 
-    it('should order a date-only value before a timed value on the same day', () => {
+    it('should order a date-only value before a later timed value, and equal to a timed value at 00:00', () => {
         const dateOnly = getDateOnly('2026-10-23');
         const morning = getDateAndTime('2026-10-23 09:00');
         const midnightTimed = getDateAndTime('2026-10-23 00:00');
@@ -188,29 +188,29 @@ describe('momentWithFormat', () => {
 });
 
 describe('preserveTime', () => {
-    it('should return a clone of the target unchanged when the source is null, invalid or date-only', () => {
+    describe('should return a clone of the target unchanged when the source is null, invalid or date-only', () => {
         const target = getDateOnly('2026-10-30');
         const invalidSource = window.moment('2026-02-30 14:30', dateTimeFormat, true);
         const dateOnlySource = getDateOnly('2026-10-23');
 
-        for (const source of [null, invalidSource, dateOnlySource]) {
+        it.each([null, invalidSource, dateOnlySource])('when source is %s', (source) => {
             const result = preserveTime(target, source);
             expect(datesAreIdentical(result, target)).toBe(true);
             expect(result).not.toBe(target);
-        }
+        });
     });
 
-    it("should keep a timed target's time when the source is null, invalid or date-only", () => {
+    describe("should keep a timed target's time when the source is null, invalid or date-only", () => {
         const timedTarget = getDateAndTime('2026-10-30 09:00');
         const invalidSource = window.moment('2026-02-30 14:30', dateTimeFormat, true);
         const dateOnlySource = getDateOnly('2026-10-23');
 
-        for (const source of [null, invalidSource, dateOnlySource]) {
+        it.each([null, invalidSource, dateOnlySource])('when source is %s', (source) => {
             const result = preserveTime(timedTarget, source);
             expect(datesAreIdentical(result, timedTarget)).toBe(true);
             expect(result.format(dateTimeFormat)).toBe('2026-10-30 09:00');
             expect(result).not.toBe(timedTarget);
-        }
+        });
     });
 
     it('should copy hour, minute and format from a timed source', () => {
