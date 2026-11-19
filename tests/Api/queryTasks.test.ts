@@ -433,9 +433,13 @@ describe('queryTasks', () => {
             }).toThrowError(/do not understand/i);
         });
 
-        it('should throw Error when querySource is not a string', () => {
+        it('should throw TypeError when querySource is not a string', () => {
             const task = new TaskBuilder().description('Some task').build();
             const globalQuery = new GlobalQuery();
+
+            expect(() => {
+                queryTasks(123 as unknown as string, [task], globalQuery);
+            }).toThrow(TypeError);
 
             expect(() => {
                 queryTasks(123 as unknown as string, [task], globalQuery);

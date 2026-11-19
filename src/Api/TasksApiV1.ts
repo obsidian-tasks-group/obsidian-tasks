@@ -45,7 +45,7 @@ export interface TasksApiV1 {
      * @param querySource The Tasks query string (e.g. "not done\ndue before tomorrow").
      * @param queryPath Optional vault path of the file containing the query, used to resolve Placeholders (e.g. {{query.file.folder}}) and file properties.
      * @returns Array of unique matching tasks as frozen ReadOnlyTask objects.
-     * @throws Error if `querySource` is not a string, if `queryPath` is not a string (when provided), if the query syntax is invalid, or if placeholders cannot be resolved.
+     * @throws TypeError if `querySource` is not a string, or if `queryPath` is not a string (when provided); Error if the query syntax is invalid, or if placeholders cannot be resolved.
      */
     queryTasks: (querySource: string, queryPath?: string) => ReadOnlyTask[];
 }

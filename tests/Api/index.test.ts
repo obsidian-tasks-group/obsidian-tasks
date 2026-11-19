@@ -245,6 +245,10 @@ describe('definition of public Api', () => {
 
             expect(() => {
                 api.queryTasks(123 as unknown as string);
+            }).toThrowError(TypeError);
+
+            expect(() => {
+                api.queryTasks(123 as unknown as string);
             }).toThrowError('queryTasks: querySource must be a string');
 
             expect(() => {
@@ -265,6 +269,7 @@ describe('definition of public Api', () => {
 
             const api = tasksApiV1(mockPlugin);
 
+            expect(() => api.queryTasks('not done', 42 as any)).toThrow(TypeError);
             expect(() => api.queryTasks('not done', 42 as any)).toThrow('queryTasks: queryPath must be a string');
             expect(() => api.queryTasks('not done', true as any)).toThrow('queryTasks: queryPath must be a string');
             expect(() => api.queryTasks('not done', {} as any)).toThrow('queryTasks: queryPath must be a string');

@@ -27,7 +27,7 @@ export const tasksApiV1 = (plugin: TasksPlugin): TasksApiV1 => {
         executeToggleTaskDoneCommand: (line: string, path: string) => toggleLine(line, path).text,
         queryTasks: (querySource: string, queryPath?: string): ReadOnlyTask[] => {
             if (queryPath !== undefined && typeof queryPath !== 'string') {
-                throw new Error('queryTasks: queryPath must be a string');
+                throw new TypeError('queryTasks: queryPath must be a string');
             }
 
             const tasksFile = queryPath === undefined ? undefined : QueryRenderer.getTasksFile(app, queryPath);

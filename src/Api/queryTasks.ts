@@ -15,7 +15,7 @@ import { type ReadOnlyTask, taskToReadOnlyTask } from '../Task/ReadOnlyTask';
  * @param globalQuery Global query instance to use.
  * @param tasksFile Optional file containing the query, used to resolve Placeholders (e.g. {{query.file.folder}}) and properties.
  * @returns Array of unique matching tasks as frozen ReadOnlyTask objects in the order their groups appear when rendered, deduplicated at first occurrence.
- * @throws Error if `querySource` is not a string, if the query syntax is invalid, or if placeholders cannot be resolved.
+ * @throws TypeError if `querySource` is not a string; Error if the query syntax is invalid, or if placeholders cannot be resolved.
  */
 export function queryTasks(
     querySource: string,
@@ -24,7 +24,7 @@ export function queryTasks(
     tasksFile?: TasksFile,
 ): ReadOnlyTask[] {
     if (typeof querySource !== 'string') {
-        throw new Error('queryTasks: querySource must be a string');
+        throw new TypeError('queryTasks: querySource must be a string');
     }
 
     const query = getQueryForQueryRenderer(querySource, globalQuery, tasksFile);
