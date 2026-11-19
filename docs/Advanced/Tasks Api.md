@@ -266,7 +266,7 @@ if (!tasksApi) {
 
 #### Templater Example
 
-Use `queryTasks` in a Templater template to dynamically insert unfinished high-priority tasks when generating a daily note:
+Use `queryTasks` in a Templater template to insert a list of unfinished high-priority tasks when generating a daily note:
 
 <!-- snippet: daily-notes-insert-high-priority-tasks.md -->
 ```md
@@ -283,14 +283,23 @@ if (tasksApi) {
     if (urgentTasks.length === 0) {
         tR += "_No high priority tasks for today._\n";
     } else {
+        // Write plain list items, not task lines, so that the note gets a snapshot of the tasks,
+        // rather than duplicate tasks that would each need to be marked done twice.
         for (const task of urgentTasks) {
-            tR += `${task.originalMarkdown}\n`;
+            tR += `- ${task.description} (due: ${task.due.formatAsDate()})\n`;
         }
     }
 }
 %>
 ```
 <!-- endSnippet -->
+
+> [!note]
+> This is just an example. It writes plain list items, not task lines, so you get a snapshot of the matching tasks without creating duplicate tasks that would need to be marked done in two places.
+>
+> The list is a snapshot from the moment the template runs, and is not updated afterwards. If you create daily notes in advance, the list may be incomplete or out of date by the time that day arrives. For a list that stays up to date, use a `tasks` query block instead.
+>
+> You might use this approach to paste a summary into a daily report, or into files that your [[Global Query]] excludes from your searches.
 
 ### Important Caveats & Behavior
 
