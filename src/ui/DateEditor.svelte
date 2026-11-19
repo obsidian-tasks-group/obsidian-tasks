@@ -2,7 +2,6 @@
     import { doAutocomplete } from '../DateTime/DateAbbreviations';
     import { parseTypedDateForDisplayUsingFutureDate } from '../DateTime/DateTools';
     import { labelContentWithAccessKey } from './EditTaskHelpers';
-    import { datePicker } from './Menus/DatePicker';
 
     export let id: 'start' | 'scheduled' | 'due' | 'done' | 'created' | 'cancelled';
     export let dateSymbol: string;
@@ -55,7 +54,7 @@
     <div class="tasks-modal-parsed-date">
         {dateSymbol}<input
             class="tasks-modal-date-editor-picker"
-            use:datePicker
+            type="date"
             bind:value={pickedDate}
             id="date-editor-picker"
             on:input={onDatePicked}
