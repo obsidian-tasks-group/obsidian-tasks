@@ -26,6 +26,8 @@ if (!tasksApi) {
 
 <!-- Current output:
 
-TODO paste the rendered output here after running this in Obsidian
+### Tasks in folder (1)
+
+- #task Sample task for queryTasks examples (due: none)
 
 -->
