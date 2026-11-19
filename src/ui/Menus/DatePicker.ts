@@ -1,22 +1,10 @@
 import type { Task } from 'Task/Task';
+import { TaskRegularExpressions } from 'Task/TaskRegularExpressions';
 import { RemoveTaskDate, SetTaskDate } from 'ui/EditInstructions/DateInstructions';
 import type { AllTaskDateFields } from 'DateTime/DateFieldTypes';
 import { splitDateText } from 'DateTime/Postponer';
 import type { TaskSaver } from 'ui/Menus/TaskEditingMenu';
-
-/** A Svelte action which also lets rendered tasks use the same native date picker. */
-export function datePicker(input: HTMLInputElement) {
-    input.type = 'date';
-    const open = () => {
-        try {
-            input.showPicker();
-        } catch {
-            // On platforms without showPicker(), the input remains clickable and editable.
-        }
-    };
-    input.addEventListener('click', open);
-    return { destroy: () => input.removeEventListener('click', open) };
-}
+import { logging } from 'lib/logging';
 
 let closeDatePicker: (() => void) | undefined;
 
@@ -33,32 +21,53 @@ export function promptForDate(
     dateFieldToEdit: AllTaskDateFields,
     taskSaver: TaskSaver,
 ) {
+    showNativeDatePicker(
+        parentElement,
+        task[dateFieldToEdit]?.format(TaskRegularExpressions.dateFormat) ?? '',
+        splitDateText(dateFieldToEdit),
+        async (value) => {
+            const newTask = value
+                ? new SetTaskDate(
+                      dateFieldToEdit,
+                      window.moment(value, TaskRegularExpressions.dateFormat).toDate(),
+                  ).apply(task)
+                : new RemoveTaskDate(dateFieldToEdit, task).apply(task);
+            await taskSaver(task, newTask);
+        },
+    );
+}
+
+function showNativeDatePicker(
+    parentElement: HTMLElement,
+    initialDate: string,
+    label: string,
+    onChange: (value: string) => Promise<void>,
+) {
     closeDatePicker?.();
     const doc = parentElement.ownerDocument;
     // Keep the input outside rendered Markdown and Live Preview editor content.
-    const popover = doc.body.createDiv({ cls: 'tasks-date-picker-popover' });
-    const input = popover.createEl('input', { attr: { 'aria-label': splitDateText(dateFieldToEdit) } });
-    const picker = datePicker(input);
-    input.value = task[dateFieldToEdit]?.format('YYYY-MM-DD') ?? '';
+    const input = doc.body.createEl('input', {
+        type: 'date',
+        cls: 'tasks-date-picker-popover',
+        attr: { 'aria-label': label, tabindex: '-1' },
+    });
+    input.value = initialDate;
 
     const rect = parentElement.getBoundingClientRect();
     const view = doc.defaultView ?? window;
-    popover.style.left = `${Math.max(0, Math.min(rect.left, view.innerWidth - popover.offsetWidth))}px`;
-    popover.style.top = `${
-        rect.bottom + popover.offsetHeight > view.innerHeight
-            ? Math.max(0, rect.top - popover.offsetHeight)
-            : rect.bottom
-    }px`;
+    const gap = 4;
+    input.style.height = `${rect.height + 2 * gap}px`;
+    input.style.left = `${Math.max(0, Math.min(rect.left, view.innerWidth - input.offsetWidth))}px`;
+    input.style.top = `${rect.top - gap}px`;
 
     const close = () => {
-        picker.destroy();
-        popover.remove();
+        input.remove();
         doc.removeEventListener('pointerdown', onPointerDown, true);
         doc.removeEventListener('keydown', onKeyDown, true);
         closeDatePicker = undefined;
     };
     const onPointerDown = (event: PointerEvent) => {
-        if (!popover.contains(event.target as Node)) {
+        if (!input.contains(event.target as Node)) {
             close();
         }
     };
@@ -72,13 +81,28 @@ export function promptForDate(
     doc.addEventListener('keydown', onKeyDown, true);
 
     input.addEventListener('change', async () => {
-        const newTask = input.value
-            ? new SetTaskDate(dateFieldToEdit, window.moment(input.value, 'YYYY-MM-DD').toDate()).apply(task)
-            : new RemoveTaskDate(dateFieldToEdit, task).apply(task);
+        const value = input.value;
         close();
-        await taskSaver(task, newTask);
+        await onChange(value);
     });
 
+    if (typeof input.showPicker === 'function') {
+        try {
+            // Chromium snapshots the anchor position without updating layout.
+            input.getBoundingClientRect();
+            input.showPicker();
+            return;
+        } catch (error) {
+            logging.getLogger('tasks.DatePicker').warn('Could not open the native date picker.', error);
+        }
+    }
+    // Keep date editing available on platforms without showPicker() support.
+    input.classList.add('tasks-date-picker-fallback');
+    input.style.removeProperty('height');
+    input.style.top = `${
+        rect.bottom + input.offsetHeight > view.innerHeight ? Math.max(0, rect.top - input.offsetHeight) : rect.bottom
+    }px`;
+    input.tabIndex = 0;
     input.focus();
     input.click();
 }

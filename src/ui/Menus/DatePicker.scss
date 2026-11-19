@@ -1,9 +1,9 @@
-.tasks-date-picker-popover {
+input.tasks-date-picker-popover {
     position: fixed;
     z-index: var(--layer-menu);
-    padding: var(--size-2-2);
-    background-color: var(--background-primary);
-    border: 1px solid var(--background-modifier-border);
-    border-radius: var(--radius-m);
-    box-shadow: var(--shadow-s);
+
+    &:not(.tasks-date-picker-fallback) {
+        opacity: 0;
+        pointer-events: none;
+    }
 }
