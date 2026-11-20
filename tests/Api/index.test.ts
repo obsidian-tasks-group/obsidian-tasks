@@ -276,7 +276,7 @@ describe('definition of public Api', () => {
             expect(() => api.queryTasks('not done', [] as any)).toThrow('queryTasks: queryPath must be a string');
         });
 
-        it('should pass empty string queryPath as-is to QueryRenderer.getTasksFile', () => {
+        it('should pass empty string queryPath as-is to getTasksFile', () => {
             const mockApp = createMockApp({
                 vault: {
                     getFileByPath: vi.fn(() => null),

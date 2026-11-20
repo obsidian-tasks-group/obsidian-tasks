@@ -1,6 +1,6 @@
 import type TasksPlugin from 'main';
 import { toggleLine } from 'Commands/ToggleDone';
-import { QueryRenderer } from 'Renderer/QueryRenderer';
+import { getTasksFile } from 'Obsidian/getTasksFile';
 import type { ReadOnlyTask } from 'Task/ReadOnlyTask';
 import { GlobalQuery } from 'Config/GlobalQuery';
 import { createTaskLineModal } from 'Api/createTaskLineModal';
@@ -30,7 +30,7 @@ export const tasksApiV1 = (plugin: TasksPlugin): TasksApiV1 => {
                 throw new TypeError('queryTasks: queryPath must be a string');
             }
 
-            const tasksFile = queryPath === undefined ? undefined : QueryRenderer.getTasksFile(app, queryPath);
+            const tasksFile = queryPath === undefined ? undefined : getTasksFile(app, queryPath);
 
             return queryTasks(querySource, plugin.getTasks(), GlobalQuery.getInstance(), tasksFile);
         },
