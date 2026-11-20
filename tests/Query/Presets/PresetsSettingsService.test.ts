@@ -61,6 +61,72 @@ describe('PresetsSettingsService', () => {
         });
     });
 
+    describe('PresetsSettingsService - duplicatePreset', () => {
+        it('should duplicate a preset with _copy appended to the name immediately below the original', () => {
+            const presets: PresetsMap = {
+                first: 'value1',
+                middle: 'value2',
+                last: 'value3',
+            };
+
+            const result = service.duplicatePreset(presets, 'middle');
+
+            expect(Object.keys(result)).toEqual(['first', 'middle', 'middle_copy', 'last']);
+            expect(result).toEqual({
+                first: 'value1',
+                middle: 'value2',
+                middle_copy: 'value2',
+                last: 'value3',
+            });
+        });
+
+        it('should duplicate the first preset immediately below the original', () => {
+            const presets: PresetsMap = {
+                first: 'value1',
+                second: 'value2',
+                third: 'value3',
+            };
+
+            const result = service.duplicatePreset(presets, 'first');
+
+            expect(Object.keys(result)).toEqual(['first', 'first_copy', 'second', 'third']);
+            expect(result).toEqual({
+                first: 'value1',
+                first_copy: 'value1',
+                second: 'value2',
+                third: 'value3',
+            });
+        });
+
+        it('should duplicate the last preset immediately below the original', () => {
+            const presets: PresetsMap = {
+                first: 'value1',
+                second: 'value2',
+                third: 'value3',
+            };
+
+            const result = service.duplicatePreset(presets, 'third');
+
+            expect(Object.keys(result)).toEqual(['first', 'second', 'third', 'third_copy']);
+            expect(result).toEqual({
+                first: 'value1',
+                second: 'value2',
+                third: 'value3',
+                third_copy: 'value3',
+            });
+        });
+
+        it('should not modify the original presets map', () => {
+            service.duplicatePreset(testPresets, 'key1');
+
+            expect(Object.keys(testPresets)).toEqual(['key1', 'key2']);
+            expect(testPresets).toEqual({
+                key1: 'value1',
+                key2: 'value2',
+            });
+        });
+    });
+
     describe('PresetsSettingsService - updateIncludeValue', () => {
         it('should update the value of an include', () => {
             const result = service.updatePresetValue(testPresets, 'key1', 'new value');

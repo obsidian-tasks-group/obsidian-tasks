@@ -42,6 +42,27 @@ export class PresetsSettingsService {
     }
 
     /**
+     * Duplicates a preset, appending "_copy" to the new preset name.
+     * @param presets The current presets map (will not be modified)
+     * @param key The key to duplicate
+     * @returns The updated presets map
+     */
+    public duplicatePreset(presets: PresetsMap, key: string): PresetsMap {
+        const newPresets: PresetsMap = {};
+        const duplicatedKey = `${key}_copy`;
+
+        for (const [existingKey, value] of Object.entries(presets)) {
+            newPresets[existingKey] = value;
+
+            if (existingKey === key) {
+                newPresets[duplicatedKey] = value;
+            }
+        }
+
+        return newPresets;
+    }
+
+    /**
      * Updates the value of a preset
      * @param presets The current presets map (will not be modified)
      * @param key The key to update
