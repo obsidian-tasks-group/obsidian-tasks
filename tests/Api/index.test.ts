@@ -3,7 +3,7 @@ import type TasksPlugin from 'main';
 import { GlobalQuery } from 'Config/GlobalQuery';
 import { createTaskLineModal } from 'Api/createTaskLineModal';
 import { editTaskLineModal } from 'Api/editTaskLineModal';
-import { tasksApiV1 } from 'Api/index';
+import { tasksApiV1 } from 'Api';
 import { createTFile } from '../__mocks__/obsidian';
 import { TaskBuilder } from '../TestingTools/TaskBuilder';
 
