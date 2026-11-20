@@ -47,7 +47,7 @@ export class PresetsSettingsService {
      * @param key The key to duplicate
      * @returns The updated presets map
      */
-    public duplicatePreset(presets: PresetsMap, key: string): PresetsMap {
+    public duplicatePreset(presets: Readonly<PresetsMap>, key: string): PresetsMap {
         const newPresets: PresetsMap = {};
         let duplicatedKey = `${key}_copy`;
 
