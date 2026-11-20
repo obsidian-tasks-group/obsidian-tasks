@@ -278,7 +278,6 @@ if (tasksApi) {
         priority is high
         due before tomorrow
     `);
-
     tR += "### Today's Top Tasks\n\n";
     if (urgentTasks.length === 0) {
         tR += "_No high priority tasks for today._\n";
