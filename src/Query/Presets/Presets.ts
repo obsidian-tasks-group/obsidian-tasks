@@ -38,6 +38,14 @@ function summariseInstruction(instructions: string) {
     return result;
 }
 
+function formatPresetList(presets: PresetsMap): string {
+    const maxKeyLength = Math.max(...Object.keys(presets).map((key) => key.length));
+    return Object.entries(presets)
+        .sort(([keyA], [keyB]) => keyA.localeCompare(keyB))
+        .map(([key, value]) => `${key.padEnd(maxKeyLength)}: ${summariseInstruction(value)}`)
+        .join('\n  ');
+}
+
 export function unknownPresetErrorMessage(presentName: string, presets: PresetsMap) {
     let message = `Cannot find preset "${presentName}" in the Tasks settings`;
 
@@ -46,12 +54,7 @@ export function unknownPresetErrorMessage(presentName: string, presets: PresetsM
         message += `\nYou can define the instruction(s) for "${presentName}" in the Tasks settings.`;
         return message;
     }
-
-    const maxKeyLength = Math.max(...Object.keys(presets).map((key) => key.length));
-    const availableNames = Object.entries(presets)
-        .sort(([keyA], [keyB]) => keyA.localeCompare(keyB))
-        .map(([key, value]) => `${key.padEnd(maxKeyLength)}: ${summariseInstruction(value)}`)
-        .join('\n  ');
+    const availableNames = formatPresetList(presets);
     message += `\nThe following presets are defined in the Tasks settings:\n  ${availableNames}`;
 
     return message;
