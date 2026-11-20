@@ -49,7 +49,11 @@ export class PresetsSettingsService {
      */
     public duplicatePreset(presets: PresetsMap, key: string): PresetsMap {
         const newPresets: PresetsMap = {};
-        const duplicatedKey = `${key}_copy`;
+        let duplicatedKey = `${key}_copy`;
+
+        while (Object.prototype.hasOwnProperty.call(presets, duplicatedKey)) {
+            duplicatedKey = `${duplicatedKey}_copy`;
+        }
 
         for (const [existingKey, value] of Object.entries(presets)) {
             newPresets[existingKey] = value;

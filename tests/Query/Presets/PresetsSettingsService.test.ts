@@ -134,6 +134,53 @@ describe('PresetsSettingsService', () => {
             });
         });
 
+        it('should append _copy until the duplicated preset name is unique', () => {
+            const presets: PresetsMap = {
+                key1: 'value1',
+                key1_copy: 'existing copy',
+                final: 'value3',
+            };
+
+            const result = service.duplicatePreset(presets, 'key1');
+
+            expect(Object.keys(result)).toEqual(['key1', 'key1_copy_copy', 'key1_copy', 'final']);
+            expect(result).toEqual({
+                key1: 'value1',
+                key1_copy_copy: 'value1',
+                key1_copy: 'existing copy',
+                final: 'value3',
+            });
+        });
+
+        it('should keep appending _copy until it finds an unused preset name', () => {
+            const presets: PresetsMap = {
+                key1: 'value1',
+                key1_copy: 'existing copy',
+                key1_copy_copy: 'existing copy copy',
+                key1_copy_copy_copy: 'existing copy copy copy',
+                final: 'value3',
+            };
+
+            const result = service.duplicatePreset(presets, 'key1');
+
+            expect(Object.keys(result)).toEqual([
+                'key1',
+                'key1_copy_copy_copy_copy',
+                'key1_copy',
+                'key1_copy_copy',
+                'key1_copy_copy_copy',
+                'final',
+            ]);
+            expect(result).toEqual({
+                key1: 'value1',
+                key1_copy_copy_copy_copy: 'value1',
+                key1_copy: 'existing copy',
+                key1_copy_copy: 'existing copy copy',
+                key1_copy_copy_copy: 'existing copy copy copy',
+                final: 'value3',
+            });
+        });
+
         it('should not modify the original presets map', () => {
             service.duplicatePreset(testPresets, 'key1');
 
