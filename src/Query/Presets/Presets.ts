@@ -53,6 +53,6 @@ export function unknownPresetErrorMessage(presentName: string, presets: PresetsM
     if (isPresetsEmpty) {
         return message + `\nYou can define the instruction(s) for "${presentName}" in the Tasks settings.`;
     }
-    const availableNames = formatPresetList(presets);
-    return message + `\nThe following presets are defined in the Tasks settings:\n  ${availableNames}`;
+
+    return message + `\nThe following presets are defined in the Tasks settings:\n  ${formatPresetList(presets)}`;
 }
