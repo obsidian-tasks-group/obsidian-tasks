@@ -128,7 +128,7 @@ A **priority data attributes** named `data-task-priority` represents the specifi
 The `normal` value is special: it is added as a default to a task's upper `task-list-item` even if there is no priority field set for that task.
 
 <!-- NEW_TASK_FIELD_EDIT_REQUIRED -->
-A **date attribute** represents a due, created, start, scheduled or done date in a format relative to the current date.
+A **date attribute** represents a due, created, start, scheduled, cancelled or done date in a format relative to the current date.
 The date attributes are `data-task-due`, `data-task-created`, `data-task-start`, `data-task-scheduled`, `data-task-cancelled` and `data-task-done` and are populated with a relative expression that denotes the number of days this field represents compared to today:
 
 - `data-task-due="today"` (or `data-task-start="today"`, `data-task-start="today"` etc) represents today.

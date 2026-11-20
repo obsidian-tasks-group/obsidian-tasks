@@ -39,3 +39,20 @@ export const defaultEditModalShowSettings: Readonly<EditModalShowSettings> = {
     done: true,
     cancelled: true,
 };
+
+export type EditModalField = keyof EditModalShowSettings;
+
+/**
+ * The groups of fields in {@link TaskModal}, in their default order.
+ *
+ * Stored within {@link Settings}.editModalFieldOrder.
+ * Groups can be reordered, and fields can be reordered within their group, but
+ * fields cannot move between groups.
+ */
+export const editModalFieldGroups: readonly (readonly EditModalField[])[] = [
+    // NEW_TASK_FIELD_EDIT_REQUIRED
+    ['priority'],
+    ['recurrence', 'due', 'scheduled', 'start'],
+    ['before_this', 'after_this'],
+    ['status', 'created', 'done', 'cancelled'],
+];

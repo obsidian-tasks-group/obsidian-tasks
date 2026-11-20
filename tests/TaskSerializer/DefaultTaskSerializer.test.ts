@@ -91,6 +91,7 @@ describe.each(symbolMap)("DefaultTaskSerializer with '$taskFormat' symbols", ({ 
         scheduledDateSymbol,
         dueDateSymbol,
         doneDateSymbol,
+        cancelledDateSymbol,
         idSymbol,
         dependsOnSymbol,
     } = symbols;
@@ -102,12 +103,14 @@ describe.each(symbolMap)("DefaultTaskSerializer with '$taskFormat' symbols", ({ 
         });
 
         describe('should parse dates', () => {
+            // NEW_TASK_FIELD_EDIT_REQUIRED - if it's a date field
             it.each([
                 { what: 'startDate', symbol: startDateSymbol },
                 { what: 'createdDate', symbol: createdDateSymbol },
                 { what: 'scheduledDate', symbol: scheduledDateSymbol },
                 { what: 'dueDate', symbol: dueDateSymbol },
                 { what: 'doneDate', symbol: doneDateSymbol },
+                { what: 'cancelledDate', symbol: cancelledDateSymbol },
             ] as const)('should parse a $what', ({ what, symbol }) => {
                 const taskDetails = deserialize(`${symbol} 2021-06-20`);
                 expect(taskDetails).toMatchTaskDetails({ [what]: moment('2021-06-20', 'YYYY-MM-DD') });
@@ -278,6 +281,7 @@ describe.each(symbolMap)("DefaultTaskSerializer with '$taskFormat' symbols", ({ 
             { what: 'scheduledDate', symbol: scheduledDateSymbol },
             { what: 'dueDate', symbol: dueDateSymbol },
             { what: 'doneDate', symbol: doneDateSymbol },
+            { what: 'cancelledDate', symbol: cancelledDateSymbol },
         ] as const)('should serialize a $what', ({ what, symbol }) => {
             const serialized = serialize(new TaskBuilder()[what]('2021-06-20').description('').build());
             expect(serialized).toEqual(` ${symbol} 2021-06-20`);

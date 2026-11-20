@@ -20,7 +20,7 @@
     "deploy:local:pwsh": "pwsh -ExecutionPolicy Unrestricted -NoProfile -File ./scripts/Test-TasksInLocalObsidian.ps1",
     "extract-i18n": "npx i18next-parser && node ./scripts/normalizeI18nLocales.mjs",
     "circular-deps-text": "node ./scripts/circular-deps-text.mjs > circular-deps.txt",
-    "circular-deps-image": "madge --circular --extensions ts ./src --image circular-deps.png",
+    "circular-deps-image": "madge --circular --extensions ts ./src --ts-config tsconfig.json --image circular-deps.png",
     "code-docs": "typedoc \"src/**/*\""
   },
   "keywords": [

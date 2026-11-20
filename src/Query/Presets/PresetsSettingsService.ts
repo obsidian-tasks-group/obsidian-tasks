@@ -42,6 +42,31 @@ export class PresetsSettingsService {
     }
 
     /**
+     * Duplicates a preset, appending "_copy" to the new preset name.
+     * @param presets The current presets map (will not be modified)
+     * @param key The key to duplicate
+     * @returns The updated presets map
+     */
+    public duplicatePreset(presets: Readonly<PresetsMap>, key: string): PresetsMap {
+        const newPresets: PresetsMap = {};
+        let duplicatedKey = `${key}_copy`;
+
+        while (Object.prototype.hasOwnProperty.call(presets, duplicatedKey)) {
+            duplicatedKey = `${duplicatedKey}_copy`;
+        }
+
+        for (const [existingKey, value] of Object.entries(presets)) {
+            newPresets[existingKey] = value;
+
+            if (existingKey === key) {
+                newPresets[duplicatedKey] = value;
+            }
+        }
+
+        return newPresets;
+    }
+
+    /**
      * Updates the value of a preset
      * @param presets The current presets map (will not be modified)
      * @param key The key to update
@@ -126,5 +151,20 @@ export class PresetsSettingsService {
         }
 
         return newPresets;
+    }
+
+    /**
+     * Sorts presets by name, preserving each preset's value.
+     * @param presets The current presets map (will not be modified)
+     * @returns The updated presets map sorted by key
+     */
+    public sortPresetsByName(presets: Readonly<PresetsMap>): PresetsMap {
+        const sortedPresets: PresetsMap = {};
+
+        for (const key of Object.keys(presets).sort((a, b) => a.localeCompare(b, undefined, { numeric: true }))) {
+            sortedPresets[key] = presets[key];
+        }
+
+        return sortedPresets;
     }
 }

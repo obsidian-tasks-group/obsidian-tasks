@@ -32,7 +32,7 @@ const madgeCliPath = resolve(dirname(madgePackagePath), require(madgePackagePath
 
 const result = spawnSync(
     process.execPath,
-    [madgeCliPath, '--circular', '--extensions', 'ts', './src'],
+    [madgeCliPath, '--circular', '--extensions', 'ts', './src', '--ts-config', 'tsconfig.json'],
     {
         encoding: 'utf8',
         stdio: ['inherit', 'pipe', 'inherit'],

@@ -5,6 +5,7 @@ import type { TaskDetails } from 'TaskSerializer';
 import { Recurrence } from 'Task/Recurrence';
 import { Priority } from 'Task/Priority';
 import { TaskRegularExpressions } from 'Task/TaskRegularExpressions';
+import { ALL_DATE_FIELDS } from 'DateTime/DateFieldTypes';
 
 declare module 'vitest' {
     interface Matchers<R> {
@@ -33,15 +34,7 @@ function isTaskDetails(val: any): val is TaskDetails {
         return false;
     }
 
-    const dates: ReadonlyArray<keyof TaskDetails> = [
-        // NEW_TASK_FIELD_EDIT_REQUIRED
-        'startDate',
-        'createdDate',
-        'scheduledDate',
-        'dueDate',
-        'doneDate',
-        'cancelledDate',
-    ] as const;
+    const dates: ReadonlyArray<keyof TaskDetails> = ALL_DATE_FIELDS;
 
     for (const d of dates) {
         if (!(moment.isMoment(val[d]) || val[d] === null)) {

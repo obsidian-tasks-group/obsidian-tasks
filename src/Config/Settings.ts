@@ -13,7 +13,12 @@ import type { LogOptions } from 'lib/logging';
 import { i18n } from 'i18n/i18n';
 import { type PresetsMap, defaultPresets } from 'Query/Presets/Presets';
 import { DebugSettings } from 'Config/DebugSettings';
-import { type EditModalShowSettings, defaultEditModalShowSettings } from 'Config/EditModalShowSettings';
+import {
+    type EditModalField,
+    type EditModalShowSettings,
+    defaultEditModalShowSettings,
+    editModalFieldGroups,
+} from 'Config/EditModalShowSettings';
 import { StatusSettings } from 'Config/StatusSettings';
 import type { DismissedNotices } from 'Config/DismissibleNotices';
 
@@ -109,6 +114,7 @@ export interface Settings {
 
     // Edit modal field render settings.
     isShownInEditModal: EditModalShowSettings;
+    editModalFieldOrder: EditModalField[][];
 
     // Notices that the user has chosen not to see again.
     // Keys are stable notice IDs.
@@ -148,6 +154,7 @@ const defaultSettings: Readonly<Settings> = {
     },
     statusSettings: new StatusSettings(),
     isShownInEditModal: defaultEditModalShowSettings,
+    editModalFieldOrder: editModalFieldGroups.map((group) => [...group]),
     dismissedNotices: {
         // Note: if any new options are added here, there will need to be a mechanism
         // to add the new values to pre-existing user settings.

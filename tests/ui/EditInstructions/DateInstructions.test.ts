@@ -175,6 +175,7 @@ describe('RemoveTaskDate', () => {
 
 describe('DateInstruction lists', () => {
     function applyAllInstructions(
+        // NEW_TASK_FIELD_EDIT_REQUIRED - if it's a date field
         field:
             | TaskLayoutComponent.DueDate
             | TaskLayoutComponent.ScheduledDate

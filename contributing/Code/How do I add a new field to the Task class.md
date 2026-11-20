@@ -92,9 +92,8 @@ Can be added in later releases
 
 - Code
   - [ ] Add to [recurrence](https://publish.obsidian.md/tasks/Getting+Started/Recurring+Tasks), if appropriate
-  - [ ] Update `AllTaskDateFields` in `DateFieldTypes.ts`
-  - [ ] Potentially update `HappensDate` and `isAHappensDate()` in `DateFieldTypes.ts`
-  - [ ] Update `Task.allDateFields()`
+  - [ ] Update `ALL_DATE_FIELDS` in `DateFieldTypes.ts`
+  - [ ] Potentially update `HAPPENS_DATE_FIELDS` in `DateFieldTypes.ts`
 - Documentation
   - [ ] Update [docs/Getting Started/Dates.md](https://github.com/obsidian-tasks-group/obsidian-tasks/blob/main/docs/Getting%20Started/Dates.md).
 - Handling invalid dates

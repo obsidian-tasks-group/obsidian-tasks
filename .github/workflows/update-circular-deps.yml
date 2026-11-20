@@ -1,0 +1,47 @@
+name: update-circular-deps
+on:
+  push:
+    branches:
+      - main
+  workflow_dispatch:
+
+jobs:
+  circular-deps:
+    if: github.repository == 'obsidian-tasks-group/obsidian-tasks'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+
+      - uses: actions/setup-node@v7
+        with:
+          node-version: 22
+
+      - name: Install modules
+        run: yarn install --frozen-lockfile --ignore-scripts
+
+      # madge exits with status 1 when it finds circular dependencies,
+      # so that status must not fail this step.
+      - name: Update circular-deps.txt
+        run: yarn run circular-deps-text || true
+
+      # ----------------------------------------------------------------------------------
+      # Finalisation
+      # ----------------------------------------------------------------------------------
+      # Reference: https://github.com/marketplace/actions/create-pull-request
+      # No pull request is created if circular-deps.txt is unchanged.
+      - name: Create Pull Request
+        id: cpr
+        uses: peter-evans/create-pull-request@5f6978faf089d4d20b00c7766989d076bb2fc7f1 # v8.1.1
+        with:
+          add-paths: circular-deps.txt
+          commit-message: "chore: Update circular-deps.txt"
+          title: "chore: Update circular-deps.txt"
+          branch: create-pull-request/${{ github.workflow }}
+          labels: |
+            type: internal
+            type: automated update
+
+      - name: Show Pull Request
+        run: |
+          echo "Pull Request Number - ${{ steps.cpr.outputs.pull-request-number }}"
+          echo "Pull Request URL - ${{ steps.cpr.outputs.pull-request-url }}"

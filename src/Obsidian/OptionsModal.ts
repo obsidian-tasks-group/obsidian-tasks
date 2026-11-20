@@ -26,7 +26,7 @@ export class OptionsModal extends Modal {
     }
 
     public onOpen(): void {
-        this.titleEl.setText('Hide unused fields');
+        this.titleEl.setText('Hide and reorder fields');
 
         this.modalEl.addClass('tasks-options-modal-container');
 

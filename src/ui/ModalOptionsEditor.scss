@@ -18,11 +18,48 @@
 .tasks-options-modal {
     padding: 0;
 
-    .tasks-options-modal-checkboxes {
+    .tasks-options-modal-groups {
         display: flex;
         flex-direction: column;
 
+        hr {
+            margin: 2px 0;
+        }
+    }
+
+    .tasks-options-modal-group {
+        display: flex;
+        gap: 4px;
+    }
+
+    .tasks-options-modal-group,
+    .tasks-options-modal-field {
+        border-radius: 4px;
+
+        &.is-dragging {
+            background-color: var(--background-modifier-hover);
+        }
+    }
+
+    .tasks-options-modal-handle {
+        cursor: grab;
+        // Stop touch screens from scrolling the modal while a handle is dragged.
+        touch-action: none;
+    }
+
+    .tasks-options-modal-checkboxes {
+        flex-grow: 1;
+        display: flex;
+        flex-direction: column;
+
+        .tasks-options-modal-field {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
         label {
+            flex-grow: 1;
             padding: 4px;
             border-radius: 4px;
 
@@ -32,10 +69,6 @@
             input[type="checkbox"] {
                 margin: 0;
             }
-        }
-
-        hr {
-            margin: 2px 0;
         }
     }
 
@@ -47,5 +80,9 @@
         justify-content: flex-end;
         gap: 0.5em;
         padding: 16px 0;
+
+        .tasks-options-modal-reset {
+            margin-right: auto;
+        }
     }
 }
