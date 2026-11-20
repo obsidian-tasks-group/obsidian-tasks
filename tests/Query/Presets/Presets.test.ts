@@ -455,6 +455,16 @@ describe('include - error messages', () => {
                 Problem line: "preset not_existent""
             `);
         });
+
+        it('should list candidate preset names if there is a case-insensitive partial match', () => {
+            const query = createQuery('preset name', includes);
+            expect(query.error).toMatchInlineSnapshot(`
+                "Cannot find preset "name" in the Tasks settings
+                Did you mean:
+                  include4_longer_name: (filename includes File 1) AND \\...
+                Problem line: "preset name""
+            `);
+        });
     });
 
     describe('expanded text is invalid instruction', () => {

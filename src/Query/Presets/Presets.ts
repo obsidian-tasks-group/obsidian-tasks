@@ -54,5 +54,13 @@ export function unknownPresetErrorMessage(presetName: string, presets: PresetsMa
         return message + `\nYou can define the instruction(s) for "${presetName}" in the Tasks settings.`;
     }
 
+    // Filter down to presets that contain the presetName
+    const candidates: PresetsMap = Object.fromEntries(
+        Object.entries(presets).filter(([key]) => key.toLowerCase().includes(presetName.toLowerCase())),
+    );
+    if (Object.keys(candidates).length > 0) {
+        return message + `\nDid you mean:\n  ${formatPresetList(candidates)}`;
+    }
+
     return message + `\nThe following presets are defined in the Tasks settings:\n  ${formatPresetList(presets)}`;
 }
