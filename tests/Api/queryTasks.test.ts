@@ -1,10 +1,10 @@
 import type { CachedMetadata } from 'obsidian';
 import moment from 'moment';
-import { GlobalQuery } from '../../src/Config/GlobalQuery';
-import { resetSettings, updateSettings } from '../../src/Config/Settings';
-import { Status } from '../../src/Statuses/Status';
-import { TasksFile } from '../../src/Scripting/TasksFile';
-import { queryTasks } from '../../src/Api/queryTasks';
+import { GlobalQuery } from 'Config/GlobalQuery';
+import { resetSettings, updateSettings } from 'Config/Settings';
+import { Status } from 'Statuses/Status';
+import { TasksFile } from 'Scripting/TasksFile';
+import { queryTasks } from 'Api/queryTasks';
 import { TaskBuilder } from '../TestingTools/TaskBuilder';
 import { MockDataLoader } from '../TestingTools/MockDataLoader';
 import type { SimulatedFile } from '../Obsidian/SimulatedFile';
