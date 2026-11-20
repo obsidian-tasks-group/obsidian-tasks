@@ -45,14 +45,14 @@ export function unknownPresetErrorMessage(presentName: string, presets: PresetsM
     if (isPresetsEmpty) {
         message += `\nYou can define the instruction(s) for "${presentName}" in the Tasks settings.`;
         return message;
-    } else {
-        const maxKeyLength = Math.max(...Object.keys(presets).map((key) => key.length));
-        const availableNames = Object.entries(presets)
-            .sort(([keyA], [keyB]) => keyA.localeCompare(keyB))
-            .map(([key, value]) => `${key.padEnd(maxKeyLength)}: ${summariseInstruction(value)}`)
-            .join('\n  ');
-        message += `\nThe following presets are defined in the Tasks settings:\n  ${availableNames}`;
     }
+
+    const maxKeyLength = Math.max(...Object.keys(presets).map((key) => key.length));
+    const availableNames = Object.entries(presets)
+        .sort(([keyA], [keyB]) => keyA.localeCompare(keyB))
+        .map(([key, value]) => `${key.padEnd(maxKeyLength)}: ${summariseInstruction(value)}`)
+        .join('\n  ');
+    message += `\nThe following presets are defined in the Tasks settings:\n  ${availableNames}`;
 
     return message;
 }
