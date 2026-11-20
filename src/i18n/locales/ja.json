@@ -1,0 +1,374 @@
+{
+  "common": {
+    "cancel": "キャンセル",
+    "edit": "編集",
+    "moreInfo": "詳細",
+    "okay": "OK",
+    "reload": "再読み込み",
+    "save": "保存"
+  },
+  "main": {
+    "loadingPlugin": "プラグインを読み込んでいます: {{name}} v{{version}}",
+    "unloadingPlugin": "プラグインを停止しています: {{name}} v{{version}}"
+  },
+  "modals": {
+    "customStatusModal": {
+      "editAvailableAsCommand": {
+        "description": "有効にすると、このステータスをコマンドとして使えるようになり、ホットキーを割り当ててステータスを切り替えられます。",
+        "name": "コマンドとして使う"
+      },
+      "editNextStatusSymbol": {
+        "description": "クリックしたときに次に使う記号です。",
+        "name": "次のステータスの記号"
+      },
+      "editStatusName": {
+        "description": "タスクのステータスの表示名です。",
+        "name": "名前"
+      },
+      "editStatusSymbol": {
+        "description": "角かっこの中に入る文字です。（編集できるのはカスタムステータスだけで、コアステータスは編集できません。）",
+        "name": "記号"
+      },
+      "editStatusType": {
+        "description": "検索や切り替えのときに、このステータスをどう扱うかを決めます。",
+        "name": "種類"
+      },
+      "fixErrorsBeforeSaving": "保存する前にエラーを直してください。",
+      "title": {
+        "editCoreStatus": "コアステータスを編集",
+        "editCustomStatus": "カスタムステータスを編集"
+      }
+    },
+    "editPresetModal": {
+      "name": {
+        "duplicate": "この名前のプリセットはすでにあります",
+        "name": "名前",
+        "placeholder": "例: open tasks",
+        "required": "必須"
+      },
+      "query": {
+        "description": "省略できます。あとから入力してもかまいません。",
+        "name": "クエリ",
+        "placeholder": "not done\npath includes Work"
+      },
+      "title": "プリセットを編集"
+    }
+  },
+  "notices": {
+    "do-not-show-message-again": "このメッセージを今後表示しない",
+    "live-preview-callout-warning": {
+      "line1": "現在の Obsidian では、ライブプレビューでコールアウトの中のチェックボックスをクリックしても、プラグインに正しいタスクの行が渡されません。",
+      "line2": "代わりに、コールアウトのタイトルを編集していると Obsidian から通知されます。",
+      "line3": "そのため Tasks プラグインは、完了日の追加・削除や、繰り返しタスクの次の分の作成を安全に行えません。",
+      "line4": "タスクを正しく完了させるには:",
+      "line5": "1. チェックボックスの変更を元に戻します。",
+      "line6": "2. そのあと、タスクの行をクリックして「{{commandName}}」コマンドを実行するか、閲覧モードに切り替えてそこでチェックボックスをクリックします。"
+    }
+  },
+  "reports": {
+    "statusRegistry": {
+      "about": {
+        "createdBy": "このファイルは、この保管庫のタスクのステータスを図で確認できるように、Obsidian Tasks プラグイン（バージョン {{version}}）が作成しました。",
+        "deleteFileAnyTime": "このファイルはいつ削除してもかまいません。",
+        "title": "このファイルについて",
+        "updateReport": {
+          "line1": "Tasks のステータス設定を変更した場合、次の手順で最新のレポートを作れます:",
+          "line2": "`設定` → `Tasks` を開きます。",
+          "line3": "`ステータスを確認する` をクリックします。"
+        }
+      },
+      "columnHeadings": {
+        "nextStatusSymbol": "次のステータスの記号",
+        "problems": "問題（あれば）",
+        "statusName": "ステータス名",
+        "statusSymbol": "ステータスの記号",
+        "statusType": "ステータスの種類"
+      },
+      "loadedSettings": {
+        "settingsActuallyUsed": "Tasks が実際に使っている設定です。",
+        "switchToLivePreview": "図を見るには、ライブプレビューか閲覧モードに切り替えてください。",
+        "title": "読み込まれた設定"
+      },
+      "messages": {
+        "cannotFindNextStatus": "次のステータスが見つかりませんでした（想定外のエラーです）。",
+        "duplicateSymbol": "記号 '{{symbol}}' が重複しています: このステータスは無視されます。",
+        "emptySymbol": "記号が空です: このステータスは無視されます。",
+        "nextSymbolUnknown": "次の記号 {{symbol}} が見つかりません: 記号 {{symbol}} のステータスを作成してください。",
+        "notConventionalType": "参考: ステータスの記号 {{symbol}} の一般的な種類は {{type}} です。種類を見直すことをおすすめします。",
+        "wrongTypeAfterDone": {
+          "line1": "この `DONE` ステータスの次は {{nextType}} になっていて、`TODO` や `IN_PROGRESS` ではありません。",
+          "line2": "繰り返しタスクの完了に使った場合は、次のタスクが `not done` フィルターに当てはまるよう、代わりに `TODO` か `IN_PROGRESS` が次のステータスになります。",
+          "line3": "[繰り返しタスクとカスタムステータス]({{helpURL}}) を参照してください。"
+        }
+      },
+      "sampleTasks": {
+        "line1": "Tasks が実際に使っているステータスごとに、試せるタスクの例を 1 行ずつ載せています。",
+        "line2": "タスクの説明に書かれたステータスの記号と名前は、このファイルを作成した時点のものです。",
+        "line3": "作成後にサンプルのタスクを変更した場合、現在のステータスの種類と名前は、下の Tasks 検索のグループ見出しで確認できます。",
+        "tip": {
+          "line1": "ヒント: チェックボックスがどれも同じに見える場合…",
+          "line2": "閲覧モードやライブプレビューでチェックボックスがどれも同じに見える場合は、[カスタムステータスのスタイル]({{url}}) を参照して、ステータスに見た目をつけるテーマか CSS スニペットを選んでください。"
+        },
+        "title": "サンプルのタスク"
+      },
+      "searchSampleTasks": {
+        "line1": "この Tasks 検索は、このファイルのタスクをすべて、ステータスの種類と名前ごとにまとめて表示します。",
+        "title": "サンプルのタスクを検索"
+      },
+      "statusSettings": {
+        "comment": {
+          "line1": "表を見るには、ライブプレビューか閲覧モードに切り替えてください。",
+          "line2": "ステータス名に '*' や '_' などの Markdown の書式文字が含まれていると、",
+          "line3": "Obsidian は閲覧モードでしか表を正しく表示できないことがあります。"
+        },
+        "theseAreStatusValues": "コアステータスとカスタムステータスの欄に設定されているステータスの値です。",
+        "title": "ステータスの設定"
+      }
+    }
+  },
+  "settings": {
+    "autoSuggest": {
+      "maxSuggestions": {
+        "description": "入力候補のメニューを開いたときに表示する候補の数です（「⏎」の候補も含みます）。",
+        "name": "入力候補の最大数"
+      },
+      "minLength": {
+        "description": "0 より大きくすると、対応するキーワードの先頭が入力されたときだけ入力候補を出します。",
+        "name": "入力候補を出す最小の文字数"
+      },
+      "toggle": {
+        "description": "有効にすると、タスクの行を入力している間、内容に合わせた入力候補のメニューを開きます。",
+        "name": "タスクの内容を入力候補で補う"
+      }
+    },
+    "dates": {
+      "cancelledDate": {
+        "description": "有効にすると、タスクをキャンセルにしたときに、末尾に ❌ YYYY-MM-DD の日付を追加します。",
+        "name": "キャンセルしたタスクにキャンセル日をつける"
+      },
+      "createdDate": {
+        "description": "有効にすると、「Create or edit task」でタスクを作ったときや、繰り返しタスクを完了したときに、ほかの日付の前に ➕ YYYY-MM-DD の日付を追加します。",
+        "name": "追加したタスクに作成日をつける"
+      },
+      "doneDate": {
+        "description": "有効にすると、タスクを完了にしたときに、末尾に ✅ YYYY-MM-DD の日付を追加します。",
+        "name": "完了したタスクに完了日をつける"
+      },
+      "heading": "日付"
+    },
+    "datesFromFileNames": {
+      "heading": "ファイル名からの日付",
+      "scheduledDate": {
+        "extraFormat": {
+          "description": {
+            "line1": "日付のないタスクの予定日としてファイル名を使うときに、Tasks プラグインが追加で認識する日付の形式です。"
+          },
+          "name": "日付のないタスクの予定日に使う、ファイル名の追加の日付形式",
+          "placeholder": "例: MMM DD YYYY"
+        },
+        "folders": {
+          "description": "どこでも既定の予定日を使う場合は空のままにします。フォルダーを指定する場合は、カンマ区切りで入力します。",
+          "name": "既定の予定日を使うフォルダー"
+        },
+        "toggle": {
+          "description": {
+            "line1": "予定日（⏳）の入力の手間を省きます。",
+            "line2": "有効にすると、日付のないタスクに、ファイル名から取り出した日付を既定の予定日としてつけます。",
+            "line3": "既定では、Tasks プラグインは <code>YYYY-MM-DD</code> と <code>YYYYMMDD</code> の両方の日付形式を認識します。",
+            "line4": "日付のないタスクとは、期限日（📅 ）、予定日（⏳）、開始日（🛫）のどれもないタスクです。"
+          },
+          "name": "日付のないタスクの予定日にファイル名を使う"
+        }
+      }
+    },
+    "dialogs": {
+      "accessKeys": {
+        "description": "ダイアログの各操作のアクセスキー（キーボードショートカット）が、システムのショートカットや大切な支援技術の機能とぶつかる場合は、ここで無効にできます。",
+        "name": "ダイアログでアクセスキーを使う"
+      }
+    },
+    "format": {
+      "description": {
+        "line1": "Tasks がタスクを読み書きするときの形式です。",
+        "line2": "<b>重要:</b> 現在の Tasks は一度に 1 つの形式しか扱えません。Dataview を選ぶと、<b>Tasks 独自の絵文字の記号を読み取らなくなります</b>。"
+      },
+      "displayName": {
+        "dataview": "Dataview",
+        "tasksEmojiFormat": "Tasks の絵文字形式"
+      },
+      "name": "タスクの形式"
+    },
+    "globalFilter": {
+      "filter": {
+        "description": {
+          "line1": "おすすめ: 保管庫のチェックリストの項目をすべてこのプラグインのタスクとして扱う場合は、空のままにします。",
+          "line2": "\"<code>- [ ]</code>\" のチェックリストの項目のうち一部だけを Tasks で扱いたい場合は、グローバルフィルターを使います。説明に指定した文字列を含む項目だけがタスクとして扱われます。",
+          "line3": "たとえばグローバルフィルターを <code>#task</code> にすると、Tasks プラグインは <code>#task</code> タグのついたチェックリストの項目だけを扱います。",
+          "line4": "ほかのチェックリストの項目は普通のチェックリストのままで、クエリには出ず、完了日もつきません。"
+        },
+        "name": "グローバルフィルター",
+        "placeholder": "例: #task や TODO"
+      },
+      "removeFilter": {
+        "description": "有効にすると、タスクを表示するときに、グローバルフィルターに設定した文字列をタスクの説明から取り除きます。",
+        "name": "説明からグローバルフィルターを取り除く"
+      }
+    },
+    "globalQuery": {
+      "heading": "グローバルクエリ",
+      "query": {
+        "description": "保管庫のすべての Tasks ブロックの先頭に自動で入るクエリです。既定のフィルターやレイアウトの指定を加えるのに便利です。",
+        "placeholder": "例:\npath does not include _templates/\nlimit 300\nshow urgency",
+        "shortDescription": "すべての Tasks ブロックの先頭に自動で入る指示です。"
+      }
+    },
+    "postponeButton": {
+      "heading": "延期ボタン",
+      "postponeDateField": {
+        "description": "延期ボタン（⏩）で更新する日付の欄です。複数の日付を並べた選択肢では、タスクにある日付のうち、並びの最初のものを更新します。",
+        "name": "延期ボタンで更新する日付",
+        "options": {
+          "due": "常に$t(taskFields.due)",
+          "due-scheduled-start": "$t(taskFields.due) → $t(taskFields.scheduled) → $t(taskFields.start)",
+          "scheduled": "常に$t(taskFields.scheduled)",
+          "scheduled-due-start": "$t(taskFields.scheduled) → $t(taskFields.due) → $t(taskFields.start)",
+          "start": "常に$t(taskFields.start)",
+          "start-scheduled-due": "$t(taskFields.start) → $t(taskFields.scheduled) → $t(taskFields.due)"
+        }
+      }
+    },
+    "presets": {
+      "buttons": {
+        "addNewPreset": "プリセットを追加"
+      },
+      "emptyState": "プリセットはまだありません。",
+      "filter": {
+        "placeholder": "プリセットを絞り込む…"
+      },
+      "line1": "複数のクエリで使い回せる、名前つきの指示をここで定義できます。'{{name}}' という名前のプリセットは、Tasks のクエリで '{{instruction1}}' か '{{instruction2}}' と書いて使えます。",
+      "line2": "プリセットを編集すると、開いている Tasks のクエリは自動で再読み込みされます。",
+      "name": "プリセット"
+    },
+    "recurringTasks": {
+      "heading": "繰り返しタスク",
+      "nextLine": {
+        "description": "有効にすると、繰り返しタスクの次の分が、完了したタスクの下の行に入ります。無効の場合は、完了したタスクの上に入ります。",
+        "name": "次の分を下の行に入れる"
+      },
+      "removeScheduledDate": {
+        "description": {
+          "line1": "有効にすると、開始日（🛫）か期限日（📅）が少なくとも 1 つあるとき、繰り返しタスクの次の分には予定日（⏳）をつけません。",
+          "line2": "開始日と期限日は次の分に引き継ぎたいが、予定日は取りかかる時期が決まってからつけたい、という場合に使います。"
+        },
+        "name": "繰り返すときに予定日を外す"
+      }
+    },
+    "searchResults": {
+      "taskCountLocation": {
+        "description": "クエリの結果で、タスクの件数を上と下のどちらに表示するかを選びます。",
+        "name": "タスクの件数の位置",
+        "options": {
+          "bottom": "下",
+          "top": "上"
+        }
+      }
+    },
+    "searches": {
+      "enableCustomSearches": {
+        "confirm": {
+          "acknowledge": "リスクを理解しました",
+          "enable": "有効にする"
+        },
+        "description": {
+          "line1": "Tasks のクエリで JavaScript を実行する '{{filterByFunction}}'、'{{sortByFunction}}'、'{{groupByFunction}}' を使えるようにします。",
+          "line2": "Tasks のクエリや Markdown ファイルに悪意のある JavaScript があると、Obsidian の中で実行され、保管庫の内容やローカルのファイル、その他のシステムの資源を読み書きされるおそれがあります。",
+          "line3": "この保管庫の今とこれからの内容（あとでほかの人からダウンロード・コピー・同期するファイルも含む）を信頼できる場合だけ、有効にしてください。",
+          "line4": "この設定はこの端末にだけ保存されます。この保管庫を使う端末ごとに、それぞれ有効にしてください。"
+        },
+        "name": "カスタム検索を有効にする"
+      },
+      "heading": "検索"
+    },
+    "seeTheDocumentation": "ドキュメントを見る",
+    "statuses": {
+      "buttons": {
+        "addStatus": "ステータスを追加",
+        "importFromTheme": {
+          "description": "テーマや CSS スニペットが対応しているステータスを追加します。",
+          "name": "テーマから読み込む"
+        }
+      },
+      "collections": {
+        "anuppuccinTheme": "AnuPpuccin",
+        "auraTheme": "Aura",
+        "borderTheme": "Border",
+        "buttons": {
+          "importCollection": {
+            "name": "{{themeName}}（{{numberOfStatuses}} 個のステータス）"
+          }
+        },
+        "ebullientworksTheme": "Ebullientworks",
+        "itsThemeAndSlrvbCheckboxes": "ITS & SlRvb Checkboxes",
+        "lytModeTheme": "LYT Mode（ダークモードのみ）",
+        "minimalTheme": "Minimal",
+        "thingsTheme": "Things"
+      },
+      "coreStatuses": {
+        "buttons": {
+          "checkStatuses": {
+            "name": "ステータスを確認する",
+            "tooltip": "保管庫の一番上に新しいファイルを作り、今のステータス設定を Mermaid の図で表します。"
+          }
+        },
+        "description": {
+          "line1": "Tasks が標準で対応しているコアステータスです。独自の CSS やテーマは要りません。",
+          "line2": "独自のステータスは、カスタムステータスの欄で追加・編集できます。"
+        },
+        "heading": "コアステータス"
+      },
+      "customStatuses": {
+        "buttons": {
+          "addAllUnknown": {
+            "description": "保管庫で見つかったもののまだここに設定されていないステータスの記号を、すべて追加します。",
+            "name": "未知のステータスをすべて追加"
+          },
+          "resetCustomStatuses": {
+            "description": "カスタムステータスをすべて破棄して、既定に戻します。",
+            "name": "カスタムステータスを既定に戻す"
+          }
+        },
+        "description": {
+          "line1": "まず、カスタムのチェックボックスに見た目をつける <b>CSS スニペットかテーマを選んで入れて</b>ください。",
+          "line2": "次に、選んだ CSS のチェックボックスに合わせてカスタムステータスを設定します。",
+          "line3": "<b>注意</b> 前にあるステータスと同じ記号のステータスは無視されます。実際に読み込まれたステータスは、「Create or edit task」コマンドを実行して、ステータスのドロップダウンで確認できます。",
+          "line4": "まずはドキュメントを見てください。"
+        },
+        "emptyState": "カスタムステータスはまだありません。",
+        "heading": "カスタムステータス"
+      },
+      "filter": {
+        "placeholder": "ステータスを絞り込む…"
+      },
+      "heading": "タスクのステータス",
+      "reloadRequired": "変更は再読み込みのあとに反映されます。",
+      "types": {
+        "cancelled": "キャンセル",
+        "done": "完了",
+        "empty": "空",
+        "inProgress": "進行中",
+        "nonTask": "タスク以外",
+        "onHold": "保留",
+        "todo": "未着手"
+      },
+      "unnamed": "（名前なし）"
+    },
+    "taskEntry": {
+      "heading": "タスクの入力"
+    }
+  },
+  "taskFields": {
+    "due": "期限日",
+    "scheduled": "予定日",
+    "start": "開始日"
+  }
+}
