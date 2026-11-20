@@ -44,7 +44,7 @@ it('presets help message', () => {
 
 it('presets filter help message', () => {
     const { presets } = getSettings();
-    const help = unknownPresetErrorMessage('folder', presets);
+    const help = unknownPresetErrorMessage('Folder', presets);
     const markdown = ['```text', help, '```'].join('\n');
     verifyMarkdownForDocs(markdown);
 });
