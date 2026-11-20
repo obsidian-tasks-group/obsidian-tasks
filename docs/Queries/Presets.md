@@ -75,7 +75,7 @@ Use the **[[Placeholders|placeholder]] syntax** (`{{preset.name}}`) when you nee
 
 ### See the Available Presets
 
-- When the requested preset does not exist, Tasks writes out the list of available Presets, with their first line.
+- When the requested preset does not exist, and no preset name contains the text you typed, Tasks writes out the list of available Presets, with their first line.
 - So for a quick reminder, type `preset xxxx` or any other non-existent Preset name, then switch to Reading or Live Preview modes.
 
 For example, with the [[#Default Presets|default settings]], using `preset xxxx` would show this in the Tasks search results:
@@ -96,6 +96,28 @@ The following presets are defined in the Tasks settings:
 ```
 
 <!-- placeholder to force blank line after included text --><!-- endInclude -->
+
+### Search the Available Presets
+
+- If you only remember part of a preset's name, type that part instead, for example `preset folder`.
+- Tasks then lists only the presets whose names contain that text, ignoring capitalisation.
+- This is handy if you have many presets.
+
+For example, with the [[#Default Presets|default settings]], using `preset Folder` would show:
+
+<!-- placeholder to force blank line before included text --><!-- include: DocsForPresets.test.presets_filter_help_message.approved.md -->
+
+```text
+Cannot find preset "Folder" in the Tasks settings
+Did you mean:
+  this_folder     : folder includes {{query.file.folder}}
+  this_folder_only: filter by function task.file.folder === query.file...
+```
+
+<!-- placeholder to force blank line after included text --><!-- endInclude -->
+
+> [!released]
+> Searching for presets by partial name was introduced in Tasks X.Y.Z.
 
 ### Remembering what your Presets do
 
