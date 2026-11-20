@@ -46,12 +46,12 @@ function formatPresetList(presets: PresetsMap): string {
         .join('\n  ');
 }
 
-export function unknownPresetErrorMessage(presentName: string, presets: PresetsMap) {
-    const message = `Cannot find preset "${presentName}" in the Tasks settings`;
+export function unknownPresetErrorMessage(presetName: string, presets: PresetsMap) {
+    const message = `Cannot find preset "${presetName}" in the Tasks settings`;
 
     const isPresetsEmpty = Object.keys(presets).length === 0;
     if (isPresetsEmpty) {
-        return message + `\nYou can define the instruction(s) for "${presentName}" in the Tasks settings.`;
+        return message + `\nYou can define the instruction(s) for "${presetName}" in the Tasks settings.`;
     }
 
     return message + `\nThe following presets are defined in the Tasks settings:\n  ${formatPresetList(presets)}`;
