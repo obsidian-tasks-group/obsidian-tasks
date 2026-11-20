@@ -152,4 +152,19 @@ export class PresetsSettingsService {
 
         return newPresets;
     }
+
+    /**
+     * Sorts presets by name, preserving each preset's value.
+     * @param presets The current presets map (will not be modified)
+     * @returns The updated presets map sorted by key
+     */
+    public sortPresetsByName(presets: Readonly<PresetsMap>): PresetsMap {
+        const sortedPresets: PresetsMap = {};
+
+        for (const key of Object.keys(presets).sort((a, b) => a.localeCompare(b, undefined, { numeric: true }))) {
+            sortedPresets[key] = presets[key];
+        }
+
+        return sortedPresets;
+    }
 }

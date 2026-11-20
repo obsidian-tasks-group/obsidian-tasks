@@ -408,4 +408,36 @@ describe('PresetsSettingsService', () => {
             expect(keys).toEqual(['first', 'third', 'fourth', 'second', 'fifth']);
         });
     });
+
+    describe('PresetsSettingsService - sortPresetsByName', () => {
+        it('should sort presets by name and preserve values', () => {
+            const presets: PresetsMap = {
+                zebra: 'value1',
+                alpha: 'value2',
+                item10: 'value3',
+                item2: 'value4',
+            };
+
+            const result = service.sortPresetsByName(presets);
+
+            expect(Object.keys(result)).toEqual(['alpha', 'item2', 'item10', 'zebra']);
+            expect(result).toEqual({
+                alpha: 'value2',
+                item2: 'value4',
+                item10: 'value3',
+                zebra: 'value1',
+            });
+        });
+
+        it('should not modify the original presets map', () => {
+            const presets: PresetsMap = {
+                zebra: 'value1',
+                alpha: 'value2',
+            };
+
+            service.sortPresetsByName(presets);
+
+            expect(Object.keys(presets)).toEqual(['zebra', 'alpha']);
+        });
+    });
 });
