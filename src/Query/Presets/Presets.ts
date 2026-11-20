@@ -44,6 +44,7 @@ export function unknownPresetErrorMessage(presentName: string, presets: PresetsM
     const isPresetsEmpty = Object.keys(presets).length === 0;
     if (isPresetsEmpty) {
         message += `\nYou can define the instruction(s) for "${presentName}" in the Tasks settings.`;
+        return message;
     } else {
         const maxKeyLength = Math.max(...Object.keys(presets).map((key) => key.length));
         const availableNames = Object.entries(presets)
