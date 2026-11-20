@@ -116,6 +116,24 @@ describe('PresetsSettingsService', () => {
             });
         });
 
+        it('should allow repeated _copy suffixes immediately below the original', () => {
+            const presets: PresetsMap = {
+                key1: 'value1',
+                key1_copy: 'value2',
+                final: 'value3',
+            };
+
+            const result = service.duplicatePreset(presets, 'key1_copy');
+
+            expect(Object.keys(result)).toEqual(['key1', 'key1_copy', 'key1_copy_copy', 'final']);
+            expect(result).toEqual({
+                key1: 'value1',
+                key1_copy: 'value2',
+                key1_copy_copy: 'value2',
+                final: 'value3',
+            });
+        });
+
         it('should not modify the original presets map', () => {
             service.duplicatePreset(testPresets, 'key1');
 
