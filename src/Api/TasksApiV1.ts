@@ -1,4 +1,4 @@
-import type { ReadOnlyTask } from '../Task/ReadOnlyTask';
+import type { ReadOnlyTask } from 'Task/ReadOnlyTask';
 // begin-snippet: tasks-api-v1-interface
 
 /**

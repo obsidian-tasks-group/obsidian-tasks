@@ -1,8 +1,8 @@
-import type { GlobalQuery } from '../Config/GlobalQuery';
-import { getQueryForQueryRenderer } from '../Query/QueryRendererHelper';
-import type { TasksFile } from '../Scripting/TasksFile';
-import type { Task } from '../Task/Task';
-import { type ReadOnlyTask, taskToReadOnlyTask } from '../Task/ReadOnlyTask';
+import type { GlobalQuery } from 'Config/GlobalQuery';
+import { getQueryForQueryRenderer } from 'Query/QueryRendererHelper';
+import type { TasksFile } from 'Scripting/TasksFile';
+import type { Task } from 'Task/Task';
+import { type ReadOnlyTask, taskToReadOnlyTask } from 'Task/ReadOnlyTask';
 
 /**
  * Pure function to execute a Tasks query against an array of tasks.
