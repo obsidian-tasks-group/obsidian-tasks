@@ -41,3 +41,10 @@ it('presets help message', () => {
     const markdown = ['```text', help, '```'].join('\n');
     verifyMarkdownForDocs(markdown);
 });
+
+it('presets filter help message', () => {
+    const { presets } = getSettings();
+    const help = unknownPresetErrorMessage('folder', presets);
+    const markdown = ['```text', help, '```'].join('\n');
+    verifyMarkdownForDocs(markdown);
+});
