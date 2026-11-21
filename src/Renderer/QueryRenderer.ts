@@ -15,6 +15,7 @@ import { getQueryForQueryRenderer } from 'Query/QueryRendererHelper';
 import type TasksPlugin from 'main';
 import type { State } from 'Obsidian/Cache';
 import { getTaskLineAndFile, replaceTaskWithTasks } from 'Obsidian/File';
+import { getTasksFile } from 'Obsidian/getTasksFile';
 import { TaskModal } from 'Obsidian/TaskModal';
 import type { TasksEvents } from 'Obsidian/TasksEvents';
 import { TasksFile } from 'Scripting/TasksFile';
@@ -77,12 +78,7 @@ export class QueryRenderer {
     }
 
     public static getTasksFile(app: App, filePath: string): TasksFile {
-        const tFile = app.vault.getFileByPath(filePath);
-        let fileCache: CachedMetadata | null = null;
-        if (tFile) {
-            fileCache = app.metadataCache.getFileCache(tFile);
-        }
-        return new TasksFile(filePath, fileCache ?? {});
+        return getTasksFile(app, filePath);
     }
 }
 
