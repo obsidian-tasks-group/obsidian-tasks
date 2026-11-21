@@ -134,6 +134,10 @@ describe('date editor wrapper tests', () => {
         const container = renderDateEditorWrapper({ forwardOnly: false });
         const datePicker = getAndCheckRenderedElement<HTMLInputElement>(container, 'date-editor-picker');
 
+        datePicker.showPicker = vi.fn();
+        await fireEvent.click(datePicker);
+        expect(datePicker.showPicker).not.toHaveBeenCalled();
+
         await fireEvent.input(datePicker, { target: { value: '2024-11-03' } });
 
         expect(datePicker.value).toEqual('2024-11-03');

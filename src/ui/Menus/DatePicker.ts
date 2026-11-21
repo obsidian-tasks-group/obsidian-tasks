@@ -1,12 +1,12 @@
-import flatpickr from 'flatpickr';
 import type { Task } from 'Task/Task';
+import { TaskRegularExpressions } from 'Task/TaskRegularExpressions';
 import { RemoveTaskDate, SetTaskDate } from 'ui/EditInstructions/DateInstructions';
 import type { AllTaskDateFields } from 'DateTime/DateFieldTypes';
+import { splitDateText } from 'DateTime/Postponer';
 import type { TaskSaver } from 'ui/Menus/TaskEditingMenu';
+import { logging } from 'lib/logging';
 
-interface LocaleWithWeekInfo extends Intl.Locale {
-    weekInfo?: { firstDay: number };
-}
+let closeDatePicker: (() => void) | undefined;
 
 /**
  * A calendar date picker which edits a date value in a {@link Task} object.
@@ -21,61 +21,88 @@ export function promptForDate(
     dateFieldToEdit: AllTaskDateFields,
     taskSaver: TaskSaver,
 ) {
-    const currentValue = task[dateFieldToEdit];
-    // TODO figure out how Today's date is determined: if Obsidian is left
-    //      running overnight, the flatpickr modal shows the previous day as Today.
-    const fp = flatpickr(parentElement, {
-        defaultDate: currentValue ? currentValue.format('YYYY-MM-DD') : new Date(),
-        disableMobile: true,
-        enableTime: false, // Optional: Enable time picker
-        dateFormat: 'Y-m-d', // Adjust the date and time format as needed
-        locale: {
-            // Try to determine the first day of the week based on the locale, or use Monday
-            // if unavailable
-            firstDayOfWeek: (new Intl.Locale(navigator.language) as LocaleWithWeekInfo).weekInfo?.firstDay ?? 1,
+    showNativeDatePicker(
+        parentElement,
+        task[dateFieldToEdit]?.format(TaskRegularExpressions.dateFormat) ?? '',
+        splitDateText(dateFieldToEdit),
+        async (value) => {
+            const newTask = value
+                ? new SetTaskDate(
+                      dateFieldToEdit,
+                      window.moment(value, TaskRegularExpressions.dateFormat).toDate(),
+                  ).apply(task)
+                : new RemoveTaskDate(dateFieldToEdit, task).apply(task);
+            await taskSaver(task, newTask);
         },
-        onClose: async (selectedDates, _dateStr, instance) => {
-            if (selectedDates.length > 0) {
-                const date = selectedDates[0];
-                const newTask = new SetTaskDate(dateFieldToEdit, date).apply(task);
-                await taskSaver(task, newTask);
-            }
-            instance.destroy();
-        },
-        onReady: (_selectedDates, _dateStr, instance) => {
-            // Add custom buttons dynamically
-            const buttonContainer = instance.calendarContainer.createDiv({ cls: 'tasks-date-picker-buttons' });
-
-            // Create "Clear" button
-            addButton(buttonContainer, instance, task, taskSaver, 'Clear', () => {
-                return new RemoveTaskDate(dateFieldToEdit, task).apply(task);
-            });
-
-            // Create "Today" button
-            addButton(buttonContainer, instance, task, taskSaver, 'Today', () => {
-                const today = new Date();
-                return new SetTaskDate(dateFieldToEdit, today).apply(task);
-            });
-        },
-    });
-
-    // Open the calendar programmatically
-    fp.open();
+    );
 }
 
-function addButton(
-    buttonContainer: HTMLDivElement,
-    instance: flatpickr.Instance,
-    task: Task,
-    taskSaver: TaskSaver,
-    buttonName: string,
-    applyDate: () => Task[],
+function showNativeDatePicker(
+    parentElement: HTMLElement,
+    initialDate: string,
+    label: string,
+    onChange: (value: string) => Promise<void>,
 ) {
-    const button = buttonContainer.createEl('button', { cls: 'flatpickr-button', text: buttonName });
-
-    button.addEventListener('click', async () => {
-        const newTask = applyDate();
-        await taskSaver(task, newTask);
-        instance.destroy();
+    closeDatePicker?.();
+    const doc = parentElement.ownerDocument;
+    // Keep the input outside rendered Markdown and Live Preview editor content.
+    const input = doc.body.createEl('input', {
+        type: 'date',
+        cls: 'tasks-date-picker-popover',
+        attr: { 'aria-label': label, tabindex: '-1' },
     });
+    input.value = initialDate;
+
+    const rect = parentElement.getBoundingClientRect();
+    const view = doc.defaultView ?? window;
+    const gap = 4;
+    input.style.height = `${rect.height + 2 * gap}px`;
+    input.style.left = `${Math.max(0, Math.min(rect.left, view.innerWidth - input.offsetWidth))}px`;
+    input.style.top = `${rect.top - gap}px`;
+
+    const close = () => {
+        input.remove();
+        doc.removeEventListener('pointerdown', onPointerDown, true);
+        doc.removeEventListener('keydown', onKeyDown, true);
+        closeDatePicker = undefined;
+    };
+    const onPointerDown = (event: PointerEvent) => {
+        if (!input.contains(event.target as Node)) {
+            close();
+        }
+    };
+    const onKeyDown = (event: KeyboardEvent) => {
+        if (event.key === 'Escape') {
+            close();
+        }
+    };
+    closeDatePicker = close;
+    doc.addEventListener('pointerdown', onPointerDown, true);
+    doc.addEventListener('keydown', onKeyDown, true);
+
+    input.addEventListener('change', async () => {
+        const value = input.value;
+        close();
+        await onChange(value);
+    });
+
+    if (typeof input.showPicker === 'function') {
+        try {
+            // Chromium snapshots the anchor position without updating layout.
+            input.getBoundingClientRect();
+            input.showPicker();
+            return;
+        } catch (error) {
+            logging.getLogger('tasks.DatePicker').warn('Could not open the native date picker.', error);
+        }
+    }
+    // Keep date editing available on platforms without showPicker() support.
+    input.classList.add('tasks-date-picker-fallback');
+    input.style.removeProperty('height');
+    input.style.top = `${
+        rect.bottom + input.offsetHeight > view.innerHeight ? Math.max(0, rect.top - input.offsetHeight) : rect.bottom
+    }px`;
+    input.tabIndex = 0;
+    input.focus();
+    input.click();
 }

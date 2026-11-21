@@ -1,5 +1,9 @@
-.tasks-date-picker-buttons {
-    display: flex;
-    justify-content: space-between;
-    margin-top: 10px;
+input.tasks-date-picker-popover {
+    position: fixed;
+    z-index: var(--layer-menu);
+
+    &:not(.tasks-date-picker-fallback) {
+        opacity: 0;
+        pointer-events: none;
+    }
 }

@@ -35,7 +35,7 @@ There is a [[#Date-picker on task dates]] and a [[#Context menu on task dates]],
 | In Tasks query search results | Live Preview | ✅     |
 | In Tasks query search results | Reading mode | ✅     |
 
-On iPhone, and probably iPad too, this date-picker hard-codes the start of the week to Monday, instead of respecting the user's settings. We are tracking this in [issue #3239](https://github.com/obsidian-tasks-group/obsidian-tasks/issues/3239).
+It uses the same native date-picker as the [[Create or edit Task|Create or edit Task modal]], so the exact appearance and behaviour will vary by platform.
 
 ## Context menu on task dates
 
