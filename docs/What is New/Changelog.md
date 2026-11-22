@@ -13,9 +13,13 @@ _In recent [Tasks releases](https://github.com/obsidian-tasks-group/obsidian-tas
 ## 8.x releases
 
 - X.Y.Z:
-  - Add [[Commands]] reference page.
-  - Add [[Commands#Change priority commands|Change priority]] commands.
+  - Commands
+    - Add [[Commands]] reference page.
+    - Add [[Commands#Change priority commands|Change priority]] commands, to edit multiple tasks.
+    - Teach [[Commands#Change status commands|Change status]] commands to edit multiple tasks.
   - Type part of a preset name, such as `preset folder`, to [[Presets#Search the Available Presets|list matching presets]].
+  - Teach the API to run [[Tasks Api#`queryTasks (querySource string, queryPath? string) => Array<ReadOnlyTask>;`|Tasks searches]].
+  - [[Settings]] improvements: no need to restart after changing Task Format, Auto-Suggest and Remove global filter options.
 - 8.6.0:
   - The minimum supported Obsidian version is now [1.13.1](https://obsidian.md/changelog/2026-06-09-desktop-v1.13.1/).
   - Add setting to control [[Postponing#Which date field is edited?|which field Postpone edits]].
