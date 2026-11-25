@@ -1,61 +1,39 @@
-// Runs madge on src/ and normalises its circular-dependency output for stable comparisons.
-// Removes volatile header and numbering, then writes the cleaned result to stdout.
-
-// Output like this:
+// Uses madge to find the circular dependencies in src/, and writes them to stdout
+// in a stable form, with no timings or numbering, so that changes show up clearly
+// in git history and can be compared by circular-deps-compare.mjs.
+//
+// Output looks like this:
 //
 // ---
-// Processed 212 files (673ms) (2 warnings)
+// Current circular dependencies:
 //
-// 1) Config/Settings.ts > Config/DismissibleNotices.ts
-// 2) Config/Settings.ts > Suggestor/Suggestor.ts
-// 3) Config/Settings.ts > Suggestor/Suggestor.ts > Suggestor/index.ts
-// 4) Config/Settings.ts > Suggestor/Suggestor.ts > Task/Occurrence.ts
-// ---
-//
-// Becomes this, which is more friendly to git histories and would eventually
-// allow GitHub actions to report unexpected changes in circular dependencies.
-//
-// ---
 // Config/Settings.ts > Config/DismissibleNotices.ts
 // Config/Settings.ts > Suggestor/Suggestor.ts
 // Config/Settings.ts > Suggestor/Suggestor.ts > Suggestor/index.ts
 // Config/Settings.ts > Suggestor/Suggestor.ts > Task/Occurrence.ts
 // ---
+//
+// Exits with status 1 if any circular dependencies are found.
 
-import { spawnSync } from 'node:child_process';
 import { createRequire } from 'node:module';
-import { dirname, resolve } from 'node:path';
 
+// madge's API is used, rather than its command-line program, because the program
+// calls process.exit() straight after many small writes to stdout. When stdout is
+// a socket, such as the one spawnSync() creates, some of those writes can still
+// be pending, so the output was sometimes truncated.
 const require = createRequire(import.meta.url);
-const madgePackagePath = require.resolve('madge-ts6/package.json');
-const madgeCliPath = resolve(dirname(madgePackagePath), require(madgePackagePath).bin.madge);
+const madge = require('madge-ts6');
 
-const result = spawnSync(
-    process.execPath,
-    [madgeCliPath, '--circular', '--extensions', 'ts', './src', '--ts-config', 'tsconfig.json'],
-    {
-        encoding: 'utf8',
-        stdio: ['inherit', 'pipe', 'inherit'],
-    },
-);
+void madge('./src', { fileExtensions: ['ts'], tsConfig: 'tsconfig.json' }).then((result) => {
+    const circularDependencies = result.circular();
 
-const stdout = result.stdout ?? '';
+    const stableOutput =
+        'Current circular dependencies:\n\n' +
+        circularDependencies.map((dependencyPath) => dependencyPath.join(' > ')).join('\n') +
+        '\n';
 
-const stableOutput =
-    'Current circular dependencies:\n\n' +
-    stdout
-        .split(/\r?\n/)
-        .slice(1)
-        .map((line) => line.replace(/^\d+\)\s+/, ''))
-        .join('\n')
-        .replace(/^\s*\n/, '')
-        .trimEnd() +
-    '\n';
+    process.stdout.write(stableOutput);
 
-process.stdout.write(stableOutput);
-
-if (result.error) {
-    throw result.error;
-}
-
-process.exit(result.status ?? 1);
+    // Like madge's command-line program, exit with status 1 when circular dependencies are found.
+    process.exitCode = circularDependencies.length > 0 ? 1 : 0;
+});
