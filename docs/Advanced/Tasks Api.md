@@ -406,7 +406,7 @@ This can be used, for example, to display the Auto-Suggest on non-task lines. [S
         1. the user clicked Cancel
         2. the user completed a task like this, which uses  [[On Completion]]'s `delete` facility:
             - `- [ ] Delete me when done 🏁 delete`
-  - Fixing this would require introducing `TasksApiV1` .
+  - Fixing this would require introducing `TasksApiV2` .
 
 ## Support
 
