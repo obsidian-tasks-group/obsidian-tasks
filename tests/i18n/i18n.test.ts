@@ -47,11 +47,15 @@ describe('i18n docs', () => {
         return languageNames.of(tagsWithScriptSubtag[code] ?? code) ?? code;
     }
 
+    function capitaliseFirstLetter(text: string, locale: string): string {
+        return text.charAt(0).toLocaleUpperCase(locale) + text.slice(1);
+    }
+
     it('supported languages', () => {
         const table = new MarkdownTable(['Obsidian Language Code', 'Language', 'Native Name']);
         const englishFirst = ['en', ...i18nResourceNames.filter((code) => code !== 'en')];
         englishFirst.forEach((code) => {
-            const nativeName = languageNameForDocs(code, code);
+            const nativeName = capitaliseFirstLetter(languageNameForDocs(code, code), code);
             table.addRow(['`' + code + '`', languageNameForDocs(code, 'en'), nativeName]);
         });
 
