@@ -24,21 +24,25 @@ If Obsidian's language is not one of those listed below, or if a particular piec
 
 ## Available languages
 
-| Obsidian Language Code | Language             |
-| ---------------------- | -------------------- |
-| `en`                   | English              |
-| `be`                   | Belarusian           |
-| `de`                   | German               |
-| `es`                   | Spanish              |
-| `fr`                   | French               |
-| `ja`                   | Japanese             |
-| `ko`                   | Korean               |
-| `pt-BR`                | Portuguese (Brazil)  |
-| `ru`                   | Russian              |
-| `tr`                   | Turkish              |
-| `uk`                   | Ukrainian            |
-| `vi`                   | Vietnamese           |
-| `zh`                   | Chinese (Simplified) |
+<!-- placeholder to force blank line before included text --><!-- include: i18n.test.i18n_docs_supported_languages.approved.md -->
+
+| Obsidian Language Code | Language |
+| ----- | ----- |
+| `en` | English |
+| `be` | Belarusian |
+| `de` | German |
+| `es` | Spanish |
+| `fr` | French |
+| `ja` | Japanese |
+| `ko` | Korean |
+| `pt-BR` | Portuguese (Brazil) |
+| `ru` | Russian |
+| `tr` | Turkish |
+| `uk` | Ukrainian |
+| `vi` | Vietnamese |
+| `zh` | Chinese (Simplified) |
+
+<!-- placeholder to force blank line after included text --><!-- endInclude -->
 
 ## Contributing translations
 
