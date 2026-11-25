@@ -27,5 +27,4 @@ Obsidian/TasksEvents.ts > Obsidian/Cache.ts
 main.ts > Config/SettingsTab.ts > Config/PresetsSettingsUI.ts
 main.ts > Config/SettingsTab.ts
 Renderer/QueryResultsRenderer.ts > Renderer/HtmlColumnQueryResultsRenderer.ts > Renderer/HtmlQueryResultsRenderer.ts
-main.ts > Renderer/QueryRenderer.ts
-main.ts > Suggestor/EditorSuggestorPopup.ts
+main.ts >
