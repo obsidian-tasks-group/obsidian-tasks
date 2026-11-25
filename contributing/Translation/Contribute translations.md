@@ -19,6 +19,10 @@ Use this discussion on GitHub [Contribute to translating the Tasks plugin in to 
 
 ## Adding a new language
 
+To see which languages Tasks already supports, including any added since the last release, see the [table of supported languages](https://github.com/obsidian-tasks-group/obsidian-tasks/blob/main/tests/i18n/i18n.test.i18n_docs_supported_languages.approved.md) on the `main` branch.
+
+To check whether someone is already working on your language, search the [open pull requests](https://github.com/obsidian-tasks-group/obsidian-tasks/pulls?q=is%3Apr+is%3Aopen+i18n).
+
 If there is not already a file for your language, follow [[Support a new language]].
 
 ## Updating an existing translation
