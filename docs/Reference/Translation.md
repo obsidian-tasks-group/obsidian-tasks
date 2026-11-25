@@ -26,21 +26,21 @@ If Obsidian's language is not one of those listed below, or if a particular piec
 
 <!-- placeholder to force blank line before included text --><!-- include: i18n.test.i18n_docs_supported_languages.approved.md -->
 
-| Obsidian Language Code | Language |
-| ----- | ----- |
-| `en` | English |
-| `be` | Belarusian |
-| `de` | German |
-| `es` | Spanish |
-| `fr` | French |
-| `ja` | Japanese |
-| `ko` | Korean |
-| `pt-BR` | Portuguese (Brazil) |
-| `ru` | Russian |
-| `tr` | Turkish |
-| `uk` | Ukrainian |
-| `vi` | Vietnamese |
-| `zh` | Chinese (Simplified) |
+| Obsidian Language Code | Language | Native Name |
+| ----- | ----- | ----- |
+| `en` | English | English |
+| `be` | Belarusian | беларуская |
+| `de` | German | Deutsch |
+| `es` | Spanish | español |
+| `fr` | French | français |
+| `ja` | Japanese | 日本語 |
+| `ko` | Korean | 한국어 |
+| `pt-BR` | Portuguese (Brazil) | português (Brasil) |
+| `ru` | Russian | русский |
+| `tr` | Turkish | Türkçe |
+| `uk` | Ukrainian | українська |
+| `vi` | Vietnamese | Tiếng Việt |
+| `zh` | Chinese (Simplified) | 中文（简体） |
 
 <!-- placeholder to force blank line after included text --><!-- endInclude -->
 
