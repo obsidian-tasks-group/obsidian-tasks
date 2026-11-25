@@ -23,7 +23,7 @@ _In recent [Tasks releases](https://github.com/obsidian-tasks-group/obsidian-tas
   - [[Settings]] improvements: no need to restart after changing Task Format, Auto-Suggest and 'Remove global filter' options.
   - **Translations** of [[Settings]], [[Editing a Status]] and [[Check your Statuses]]:
     - Add **Japanese** translation.
-    - Add [[Translation]] reference page.
+    - Add [[Translations]] reference page.
 - 8.6.0:
   - The minimum supported Obsidian version is now [1.13.1](https://obsidian.md/changelog/2026-06-09-desktop-v1.13.1/).
   - Add setting to control [[Postponing#Which date field is edited?|which field Postpone edits]].

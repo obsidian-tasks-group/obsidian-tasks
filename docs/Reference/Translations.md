@@ -2,7 +2,7 @@
 publish: true
 ---
 
-# Translation
+# Translations
 
 ## Overview
 
