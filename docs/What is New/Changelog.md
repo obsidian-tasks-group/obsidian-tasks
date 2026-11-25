@@ -12,7 +12,7 @@ _In recent [Tasks releases](https://github.com/obsidian-tasks-group/obsidian-tas
 
 ## 8.x releases
 
-- X.Y.Z:
+- 8.7.0:
   - Commands
     - Add [[Commands]] reference page.
     - Add [[Commands#Change priority commands|Change priority]] commands, to edit multiple tasks.

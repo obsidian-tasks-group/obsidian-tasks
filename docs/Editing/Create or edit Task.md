@@ -45,7 +45,7 @@ You can also change the order of the fields in the modal. The fields are in grou
 The `Tab` key moves through the fields in the modal in the same order.
 
 > [!released]
-> Reordering fields was introduced in Tasks X.Y.Z.
+> Reordering fields was introduced in Tasks 8.7.0.
 
 ## Keyboard shortcuts
 

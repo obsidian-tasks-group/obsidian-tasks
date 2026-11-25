@@ -155,7 +155,7 @@ console.log(result); // "- [x] This is a task 📅 2024-04-24 ✅ 2024-04-23"
 ## `queryTasks: (querySource: string, queryPath?: string) => Array<ReadOnlyTask>;`
 
 > [!released]
-> This method was introduced in Tasks X.Y.Z.
+> This method was introduced in Tasks 8.7.0.
 
 Executes a Tasks query against the vault's in-memory tasks cache synchronously and returns an array of frozen, immutable `ReadOnlyTask` objects.
 

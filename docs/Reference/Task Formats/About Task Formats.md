@@ -22,7 +22,7 @@ You can now choose the task format that Tasks will use to read and write data on
 ![Screenshot of the settings option to select Task Format](settings-task-format.png)
 
 > [!released]
-> Changes to the task format take effect immediately since Tasks X.Y.Z.
+> Changes to the task format take effect immediately since Tasks 8.7.0.
 > Previously, Obsidian needed to be restarted after changing it.
 
 ## Supported task formats

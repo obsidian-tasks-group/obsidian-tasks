@@ -115,7 +115,7 @@ To change several tasks at once, select the lines containing them and then run t
 
 > [!released]
 > The 'Change status to...' commands were introduced in Tasks 7.24.0.
-> Changing all the tasks in a multi-line selection was introduced in Tasks X.Y.Z.
+> Changing all the tasks in a multi-line selection was introduced in Tasks 8.7.0.
 
 ## Edit task modal
 

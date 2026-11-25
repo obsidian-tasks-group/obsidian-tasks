@@ -117,7 +117,7 @@ Did you mean:
 <!-- placeholder to force blank line after included text --><!-- endInclude -->
 
 > [!released]
-> Searching for presets by partial name was introduced in Tasks X.Y.Z.
+> Searching for presets by partial name was introduced in Tasks 8.7.0.
 
 ### Remembering what your Presets do
 

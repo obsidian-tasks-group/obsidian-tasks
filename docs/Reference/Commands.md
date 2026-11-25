@@ -74,7 +74,7 @@ Notes:
   Each task moves one level from its own current priority. Lines that are not tasks are left unchanged.
 
 > [!released]
-> The Priority commands were introduced in Tasks X.Y.Z.
+> The Priority commands were introduced in Tasks 8.7.0.
 
 ## Other commands
 
