@@ -36,11 +36,12 @@ describe('i18n docs', () => {
     it('supported languages', () => {
         // 'standard' gives 'Language (Qualifier)': https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Intl/DisplayNames/DisplayNames#languagedisplay
         const languageNames = new Intl.DisplayNames(['en'], { type: 'language', languageDisplay: 'standard' });
-        const table = new MarkdownTable(['Obsidian Language Code', 'Language']);
 
         // Obsidian's 'zh' is Simplified Chinese. Adding the script subtag 'Hans' gives 'Chinese (Simplified)', as in Obsidian's docs.
         // 'Hans' is the Simplified Han script: https://www.unicode.org/iso15924/iso15924-codes.html
         const tagsWithScriptSubtag: Record<string, string> = { zh: 'zh-Hans' };
+
+        const table = new MarkdownTable(['Obsidian Language Code', 'Language']);
         const englishFirst = ['en', ...i18nResourceNames.filter((code) => code !== 'en')];
         englishFirst.forEach((code) => {
             table.addRow(['`' + code + '`', languageNames.of(tagsWithScriptSubtag[code] ?? code) ?? code]);
