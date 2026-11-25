@@ -33,6 +33,14 @@ beforeAll(async () => {
 });
 
 describe('i18n docs', () => {
+    function languageNameForDocs(
+        languageNames: Intl.DisplayNames,
+        tagsWithScriptSubtag: Record<string, string>,
+        code: string,
+    ): string {
+        return languageNames.of(tagsWithScriptSubtag[code] ?? code) ?? code;
+    }
+
     it('supported languages', () => {
         // 'standard' gives 'Language (Qualifier)': https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Intl/DisplayNames/DisplayNames#languagedisplay
         const languageNames = new Intl.DisplayNames(['en'], { type: 'language', languageDisplay: 'standard' });
@@ -44,7 +52,7 @@ describe('i18n docs', () => {
         const table = new MarkdownTable(['Obsidian Language Code', 'Language']);
         const englishFirst = ['en', ...i18nResourceNames.filter((code) => code !== 'en')];
         englishFirst.forEach((code) => {
-            table.addRow(['`' + code + '`', languageNames.of(tagsWithScriptSubtag[code] ?? code) ?? code]);
+            table.addRow(['`' + code + '`', languageNameForDocs(languageNames, tagsWithScriptSubtag, code)]);
         });
 
         verifyMarkdownForDocs(table.markdown);
