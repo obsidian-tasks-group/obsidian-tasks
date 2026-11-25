@@ -48,10 +48,10 @@ describe('i18n docs', () => {
     }
 
     it('supported languages', () => {
-        const table = new MarkdownTable(['Obsidian Language Code', 'Language']);
+        const table = new MarkdownTable(['Obsidian Language Code', 'Language', 'Native Name']);
         const englishFirst = ['en', ...i18nResourceNames.filter((code) => code !== 'en')];
         englishFirst.forEach((code) => {
-            table.addRow(['`' + code + '`', languageNameForDocs(code, 'en')]);
+            table.addRow(['`' + code + '`', languageNameForDocs(code, 'en'), languageNameForDocs(code, code)]);
         });
 
         verifyMarkdownForDocs(table.markdown);
