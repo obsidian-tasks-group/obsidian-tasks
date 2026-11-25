@@ -28,6 +28,10 @@ For convenience, here is a list of all those documentation pages (in the order t
 - [[Create or edit Task#Turning off keyboard shortcuts|Create or edit Task modal]]
 - [[Layout#Task count location|Search results]]
 
+## Language of the Settings pane
+
+The Tasks settings are available in several languages, following Obsidian's own language setting. See [[Translations]].
+
 ## Support
 
 Before creating a new bug report or feature request about Settings, please check existing items to avoid duplicates.
