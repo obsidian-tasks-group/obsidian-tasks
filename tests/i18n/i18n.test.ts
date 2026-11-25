@@ -1,6 +1,8 @@
 import * as fs from 'node:fs';
 import * as path from 'node:path';
 import i18next from 'i18next';
+import { MarkdownTable } from 'lib/MarkdownTable';
+import { verifyMarkdownForDocs } from '../TestingTools/VerifyMarkdown';
 
 function getAllLocaleJsonFileBaseNames(): string[] {
     const localesDir = path.resolve(__dirname, '../../src/i18n/locales');
@@ -28,6 +30,19 @@ let i18nResourceNames: ReadonlyArray<string>;
 beforeAll(async () => {
     // initializeI18n is called in vitest.setup.ts
     i18nResourceNames = Object.freeze(Object.keys(i18next.store.data));
+});
+
+describe('i18n docs', () => {
+    it('supported languages', () => {
+        const languageNames = new Intl.DisplayNames(['en'], { type: 'language', languageDisplay: 'standard' });
+        const table = new MarkdownTable(['Obsidian Language Code', 'Language']);
+
+        i18nResourceNames.forEach((code) => {
+            table.addRow(['`' + code + '`', languageNames.of(code) ?? code]);
+        });
+
+        verifyMarkdownForDocs(table.markdown);
+    });
 });
 
 describe('i18n locale consistency', () => {
