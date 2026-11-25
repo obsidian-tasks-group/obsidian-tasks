@@ -15,3 +15,4 @@ This section provides reference material - content which is typically too detail
 - [[About Task Formats|Task Formats]]
 - [[Commands]]
 - [[About Status Collections]]
+- [[Translations]]
