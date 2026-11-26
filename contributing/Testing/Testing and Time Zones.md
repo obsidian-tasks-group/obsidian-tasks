@@ -6,6 +6,8 @@ publish: true
 
 <span class="related-pages">#testing/automated-testing #testing/manual-testing</span>
 
+See also [[Testing and Locales]].
+
 ## Fixing the time zone to UTC in Vitest
 
 Currently, our Vitest tests fix the time zone at run-time to `UTC` in [tests/global-setup.js](https://github.com/obsidian-tasks-group/obsidian-tasks/blob/main/tests/global-setup.js).
