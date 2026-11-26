@@ -306,51 +306,76 @@ describe('parsing typed dates', () => {
         vi.useRealTimers();
     });
 
-    // Inputs whose meaning does not depend on the moment locale.
-    const typedDates: Array<[string, boolean, string | null]> = [
-        ['today', false, '2026-11-26'],
-        ['today', true, '2026-11-26'],
-        ['tomorrow', false, '2026-11-27'],
-        ['tomorrow', true, '2026-11-27'],
-        ['yesterday', false, '2026-11-25'],
-        ['yesterday', true, '2026-11-25'],
-        ['Saturday', false, '2026-11-28'],
-        ['Saturday', true, '2026-11-28'],
-        ['next friday', false, '2026-12-04'],
-        ['next friday', true, '2026-12-04'],
-        ['in 2 weeks', false, '2026-12-10'],
-        ['in 2 weeks', true, '2026-12-10'],
-        ['10 days', false, null],
-        ['10 days', true, '2026-12-06'],
-        ['6 oct', false, '2026-10-06'],
-        ['6 oct', true, '2027-10-06'],
-        ['5 Nov 2026', false, '2026-11-05'],
-        ['5 Nov 2026', true, '2026-11-05'],
-        ['2026-11-05', false, '2026-11-05'],
-        ['2026-11-05', true, '2026-11-05'],
-        ['27/11/2026', false, '2026-11-27'], // 27 cannot be a month, so this is unambiguous
-        ['27/11/2026', true, '2026-11-27'],
-        ['garbage', false, null],
-        ['garbage', true, null],
+    // Inputs whose meaning depends neither on the moment locale, nor on the 'Only future dates' setting.
+    const typedDates: Array<[string, string | null]> = [
+        ['today', '2026-11-26'],
+        ['tomorrow', '2026-11-27'],
+        ['yesterday', '2026-11-25'],
+        ['Thursday', '2026-11-26'],
+        ['Saturday', '2026-11-28'],
+        ['next friday', '2026-12-04'],
+        ['in 2 weeks', '2026-12-10'],
+        ['5 Nov 2026', '2026-11-05'],
+        ['2026-11-05', '2026-11-05'],
+        ['27/11/2026', '2026-11-27'], // 27 cannot be a month, so this is unambiguous
+        ['garbage', null],
     ];
 
+    // Inputs whose meaning depends on the 'Only future dates' setting, which is the forwardDate parameter.
+    const typedDatesAffectedByForwardDate: Array<[string, string | null, string | null]> = [
+        // input, expected without forwardDate, expected with forwardDate
+        ['Wednesday', '2026-11-25', '2026-12-02'],
+        ['Monday', '2026-11-23', '2026-11-30'],
+        // chrono only accepts a bare '10 days' or '2 weeks' with forwardDate; without it, 'in 10 days' is needed.
+        ['10 days', null, '2026-12-06'],
+        ['2 weeks', null, '2026-12-10'],
+        ['6 oct', '2026-10-06', '2027-10-06'],
+        ['25 Nov', '2026-11-25', '2027-11-25'],
+    ];
+
+    function savedAs(input: string, forwardDate: boolean) {
+        return parseTypedDateForSaving(input, forwardDate)?.format('YYYY-MM-DD') ?? null;
+    }
+
+    function displayedAs(input: string, forwardOnly: boolean) {
+        return parseTypedDateForDisplayUsingFutureDate('due', input, forwardOnly);
+    }
+
+    function invalidIfNull(expected: string | null) {
+        return expected ?? '<i>invalid due date</i>';
+    }
+
     describe.each(['en', 'en-gb', 'de', 'ja'])('in moment locale %s', (locale) => {
-        it.each(typedDates)(
-            "parseTypedDateForSaving('%s', forwardDate=%s) should give %s",
-            (input, forwardDate, expected) => {
+        describe.each([false, true])('with forwardDate=%s', (forwardDate) => {
+            it.each(typedDates)("'%s' should be saved as %s", (input, expected) => {
                 withLocale(locale, () => {
-                    const parsed = parseTypedDateForSaving(input, forwardDate);
-                    expect(parsed?.format('YYYY-MM-DD') ?? null).toBe(expected);
+                    expect(savedAs(input, forwardDate)).toBe(expected);
+                });
+            });
+
+            it.each(typedDates)("'%s' should be displayed as %s", (input, expected) => {
+                withLocale(locale, () => {
+                    expect(displayedAs(input, forwardDate)).toBe(invalidIfNull(expected));
+                });
+            });
+        });
+
+        it.each(typedDatesAffectedByForwardDate)(
+            "'%s' should be saved as %s, or %s with forwardDate",
+            (input, expectedWithout, expectedWith) => {
+                withLocale(locale, () => {
+                    expect(savedAs(input, false)).toBe(expectedWithout);
+                    expect(savedAs(input, true)).toBe(expectedWith);
                 });
             },
         );
 
-        it.each(typedDates)(
-            "parseTypedDateForDisplayUsingFutureDate('%s', forwardOnly=%s) should give %s",
-            (input, forwardOnly, expected) => {
+        it.each(typedDatesAffectedByForwardDate)(
+            "'%s' should be displayed as %s, or %s with forwardOnly",
+            (input, expectedWithout, expectedWith) => {
                 withLocale(locale, () => {
-                    const displayed = parseTypedDateForDisplayUsingFutureDate('due', input, forwardOnly);
-                    expect(displayed).toBe(expected ?? '<i>invalid due date</i>');
+                    expect(displayedAs(input, false)).toBe(invalidIfNull(expectedWithout));
+                    expect(displayedAs(input, true)).toBe(invalidIfNull(expectedWith));
                 });
             },
         );
