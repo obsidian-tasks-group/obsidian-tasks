@@ -154,4 +154,13 @@ describe('withLocale', () => {
             await Promise.resolve();
         });
     });
+
+    // begin-snippet: withLocale-example
+    it('should use day-before-month order in English (GB)', () => {
+        withLocale('en-gb', () => {
+            // 'L' is Moment's numeric short date format. For English (GB) it is day-month-year:
+            expect(window.moment.localeData().longDateFormat('L')).toBe('DD/MM/YYYY');
+        });
+    });
+    // end-snippet
 });
