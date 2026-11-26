@@ -1,5 +1,5 @@
 import moment from 'moment';
-import { withTimezone } from './DateTestHelpers';
+import { withLocale, withTimezone } from './DateTestHelpers';
 
 window.moment = moment;
 
@@ -91,6 +91,75 @@ describe('withTimezone', () => {
         withTimezone('America/New_York', () => {
             // 12:00 UTC is 07:00 in New York in winter:
             expect(window.moment('2026-01-15T12:00:00Z').format('HH:mm')).toBe('07:00');
+        });
+    });
+    // end-snippet
+});
+
+describe('withLocale', () => {
+    it('should run a test under a requested locale', () => {
+        withLocale('en-gb', () => {
+            expect(window.moment.locale()).toBe('en-gb');
+            expect(window.moment('2026-11-05').format('L')).toBe('05/11/2026');
+        });
+
+        withLocale('en', () => {
+            expect(window.moment.locale()).toBe('en');
+            expect(window.moment('2026-11-05').format('L')).toBe('11/05/2026');
+        });
+    });
+
+    it('should restore the default locale after the test', () => {
+        const defaultLocale = window.moment.locale();
+        const targetLocale = defaultLocale === 'en-gb' ? 'en' : 'en-gb';
+
+        withLocale(targetLocale, () => {
+            expect(window.moment.locale()).toBe(targetLocale);
+        });
+
+        expect(window.moment.locale()).toBe(defaultLocale);
+    });
+
+    it('should restore the default locale even if the callback throws', () => {
+        const defaultLocale = window.moment.locale();
+        const targetLocale = defaultLocale === 'en-gb' ? 'en' : 'en-gb';
+
+        expect(() =>
+            withLocale(targetLocale, () => {
+                expect(window.moment.locale()).toBe(targetLocale);
+                throw new Error('boom');
+            }),
+        ).toThrow('boom');
+
+        expect(window.moment.locale()).toBe(defaultLocale);
+    });
+
+    it('should throw, and leave the locale unchanged, for an unknown locale', () => {
+        const defaultLocale = window.moment.locale();
+
+        expect(() =>
+            withLocale('not-a-locale', () => {
+                throw new Error('callback should not run');
+            }),
+        ).toThrow("Unknown moment locale: 'not-a-locale'");
+
+        expect(window.moment.locale()).toBe(defaultLocale);
+    });
+
+    it('should not accept an asynchronous callback', () => {
+        // The locale is restored as soon as the callback returns, so an async callback would
+        // run mostly outside the requested locale. TypeScript rejects it at compile time:
+        // @ts-expect-error async callbacks are not supported
+        withLocale('en-gb', async () => {
+            await Promise.resolve();
+        });
+    });
+
+    // begin-snippet: withLocale-example
+    it('should use day-before-month order in English (GB)', () => {
+        withLocale('en-gb', () => {
+            // 'L' is Moment's numeric short date format. For English (GB) it is day-month-year:
+            expect(window.moment.localeData().longDateFormat('L')).toBe('DD/MM/YYYY');
         });
     });
     // end-snippet
