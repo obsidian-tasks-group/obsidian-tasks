@@ -188,3 +188,26 @@ describe('DateParser - ambiguous numeric dates', () => {
         });
     });
 });
+
+describe('DateParser - relative words in a day-first locale', () => {
+    beforeAll(() => {
+        vi.useFakeTimers();
+        vi.setSystemTime(new Date('2021-10-06'));
+    });
+
+    afterAll(() => {
+        vi.useRealTimers();
+    });
+
+    it('should parse "tomorrow" as a single date in English (GB)', () => {
+        withLocale('en-gb', () => {
+            testParsingeSingleDate('tomorrow', '2021-10-07');
+        });
+    });
+
+    it('should parse "tomorrow" as a date range in English (GB)', () => {
+        withLocale('en-gb', () => {
+            testParsingDateRange('tomorrow', '2021-10-07', '2021-10-07');
+        });
+    });
+});
