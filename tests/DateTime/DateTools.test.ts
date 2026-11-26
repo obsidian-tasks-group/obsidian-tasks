@@ -410,4 +410,23 @@ describe('parsing typed dates', () => {
             expectSavedAndDisplayedAs('de', '2026-11-05');
         });
     });
+
+    // Locales whose short date format starts with the year, such as 'YYYY-MM-DD' in Swedish.
+    describe.each(['sv', 'hu', 'ja', 'ko', 'zh-cn'])('in year-first moment locale %s', (locale) => {
+        it("a date typed in the locale's own short format should be saved and displayed correctly", () => {
+            withLocale(locale, () => {
+                const input = window.moment('2026-11-05').format('L');
+                expect(savedAs(input, false)).toBe('2026-11-05');
+                expect(displayedAs(input, false)).toBe('2026-11-05');
+            });
+        });
+
+        // Records that year-first locales are read month-first, as in English (US).
+        it("an ambiguous numeric date such as '05/11/2026' should be read as month-first", () => {
+            withLocale(locale, () => {
+                expect(savedAs('05/11/2026', false)).toBe('2026-05-11');
+                expect(displayedAs('05/11/2026', false)).toBe('2026-05-11');
+            });
+        });
+    });
 });
