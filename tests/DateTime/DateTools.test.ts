@@ -401,12 +401,11 @@ describe('parsing typed dates', () => {
             expectSavedAndDisplayedAs('en', '2026-05-11');
         });
 
-        // These two tests reproduce a known bug: the locale's day-month order is ignored.
-        it.fails('should be read as day-first in English (GB)', () => {
+        it('should be read as day-first in English (GB)', () => {
             expectSavedAndDisplayedAs('en-gb', '2026-11-05');
         });
 
-        it.fails('should be read as day-first in German', () => {
+        it('should be read as day-first in German', () => {
             expectSavedAndDisplayedAs('de', '2026-11-05');
         });
     });
