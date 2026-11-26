@@ -362,4 +362,27 @@ describe('parsing typed dates', () => {
             });
         });
     });
+
+    // '05/11/2026' is ambiguous: it could be 5 November or 11 May.
+    describe("an ambiguous numeric date such as '05/11/2026'", () => {
+        function expectSavedAndDisplayedAs(locale: string, expected: string) {
+            withLocale(locale, () => {
+                expect(parseTypedDateForSaving('05/11/2026', false)?.format('YYYY-MM-DD')).toBe(expected);
+                expect(parseTypedDateForDisplayUsingFutureDate('due', '05/11/2026', false)).toBe(expected);
+            });
+        }
+
+        it('should be read as month-first in English (US)', () => {
+            expectSavedAndDisplayedAs('en', '2026-05-11');
+        });
+
+        // These two tests reproduce a known bug: the locale's day-month order is ignored.
+        it.fails('should be read as day-first in English (GB)', () => {
+            expectSavedAndDisplayedAs('en-gb', '2026-11-05');
+        });
+
+        it.fails('should be read as day-first in German', () => {
+            expectSavedAndDisplayedAs('de', '2026-11-05');
+        });
+    });
 });
