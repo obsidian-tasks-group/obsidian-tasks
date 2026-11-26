@@ -4,14 +4,22 @@ import moment from 'moment';
 window.moment = moment;
 // end-snippet
 
-import { datesAreIdentical, getDateFormat, hasTime, momentWithFormat, preserveTime } from 'DateTime/DateTools';
+import {
+    datesAreIdentical,
+    getDateFormat,
+    hasTime,
+    momentWithFormat,
+    parseTypedDateForDisplayUsingFutureDate,
+    parseTypedDateForSaving,
+    preserveTime,
+} from 'DateTime/DateTools';
 import { TaskRegularExpressions } from 'Task/TaskRegularExpressions';
 import {
     expectDateComparesAfter,
     expectDateComparesBefore,
     expectDateComparesEqual,
 } from '../CustomMatchers/CustomMatchersForSorting';
-import { withTimezone } from '../TestingTools/DateTestHelpers';
+import { withLocale, withTimezone } from '../TestingTools/DateTestHelpers';
 
 const dateFormat = TaskRegularExpressions.dateFormat;
 const dateTimeFormat = TaskRegularExpressions.dateTimeFormat;
@@ -284,6 +292,74 @@ describe('preserveTime', () => {
             expect(hasTime(result)).toBe(true);
             expect(result.format(dateTimeFormat)).toBe('2026-11-01 01:30');
             expect(result.utcOffset()).toBe(-240);
+        });
+    });
+});
+
+describe('parsing typed dates', () => {
+    beforeEach(() => {
+        vi.useFakeTimers();
+        vi.setSystemTime(new Date('2026-11-26')); // a Thursday
+    });
+
+    afterEach(() => {
+        vi.useRealTimers();
+    });
+
+    // Inputs whose meaning does not depend on the moment locale.
+    const typedDates: Array<[string, boolean, string | null]> = [
+        ['today', false, '2026-11-26'],
+        ['today', true, '2026-11-26'],
+        ['tomorrow', false, '2026-11-27'],
+        ['tomorrow', true, '2026-11-27'],
+        ['yesterday', false, '2026-11-25'],
+        ['yesterday', true, '2026-11-25'],
+        ['Saturday', false, '2026-11-28'],
+        ['Saturday', true, '2026-11-28'],
+        ['next friday', false, '2026-12-04'],
+        ['next friday', true, '2026-12-04'],
+        ['in 2 weeks', false, '2026-12-10'],
+        ['in 2 weeks', true, '2026-12-10'],
+        ['10 days', false, null],
+        ['10 days', true, '2026-12-06'],
+        ['6 oct', false, '2026-10-06'],
+        ['6 oct', true, '2027-10-06'],
+        ['5 Nov 2026', false, '2026-11-05'],
+        ['5 Nov 2026', true, '2026-11-05'],
+        ['2026-11-05', false, '2026-11-05'],
+        ['2026-11-05', true, '2026-11-05'],
+        ['27/11/2026', false, '2026-11-27'], // 27 cannot be a month, so this is unambiguous
+        ['27/11/2026', true, '2026-11-27'],
+        ['garbage', false, null],
+        ['garbage', true, null],
+    ];
+
+    describe.each(['en', 'en-gb', 'de', 'ja'])('in moment locale %s', (locale) => {
+        it.each(typedDates)(
+            "parseTypedDateForSaving('%s', forwardDate=%s) should give %s",
+            (input, forwardDate, expected) => {
+                withLocale(locale, () => {
+                    const parsed = parseTypedDateForSaving(input, forwardDate);
+                    expect(parsed?.format('YYYY-MM-DD') ?? null).toBe(expected);
+                });
+            },
+        );
+
+        it.each(typedDates)(
+            "parseTypedDateForDisplayUsingFutureDate('%s', forwardOnly=%s) should give %s",
+            (input, forwardOnly, expected) => {
+                withLocale(locale, () => {
+                    const displayed = parseTypedDateForDisplayUsingFutureDate('due', input, forwardOnly);
+                    expect(displayed).toBe(expected ?? '<i>invalid due date</i>');
+                });
+            },
+        );
+
+        it('should treat empty input as no date', () => {
+            withLocale(locale, () => {
+                expect(parseTypedDateForSaving('', false)).toBeNull();
+                expect(parseTypedDateForDisplayUsingFutureDate('due', '', false)).toBe('<i>no due date</i>');
+            });
         });
     });
 });
