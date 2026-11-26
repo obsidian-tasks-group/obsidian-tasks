@@ -7,6 +7,7 @@ import de from 'i18n/locales/de.json';
 import en from 'i18n/locales/en.json';
 import es from 'i18n/locales/es.json';
 import fr from 'i18n/locales/fr.json';
+import ja from 'i18n/locales/ja.json';
 import ko from 'i18n/locales/ko.json';
 import pt_br from 'i18n/locales/pt_br.json';
 import ru from 'i18n/locales/ru.json';
@@ -45,6 +46,7 @@ export const initializeI18n = async () => {
                 en: { translation: en }, // English
                 es: { translation: es }, // Spanish
                 fr: { translation: fr }, // French
+                ja: { translation: ja }, // Japanese
                 ko: { translation: ko }, // Korean
                 'pt-BR': { translation: pt_br }, // Portuguese (Brazil)
                 ru: { translation: ru }, // Russian

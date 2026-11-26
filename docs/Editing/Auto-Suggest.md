@@ -440,7 +440,7 @@ then increase the [[#Minimum match length for auto-suggest]] value in the Tasks 
 ## Settings
 
 > [!released]
-> Changes to these settings take effect immediately since Tasks X.Y.Z.
+> Changes to these settings take effect immediately since Tasks 8.7.0.
 
 These are the settings currently available for this feature:
 

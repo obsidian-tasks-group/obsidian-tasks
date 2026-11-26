@@ -7,6 +7,10 @@ import {
     MarkdownView,
     Notice,
 } from 'obsidian';
+import { Task } from 'Task/Task';
+import { TaskLocation } from 'Task/TaskLocation';
+import { TasksFile } from 'Scripting/TasksFile';
+import type { TaskEditingInstruction } from 'ui/EditInstructions/TaskEditingInstruction';
 
 /**
  * Represents text to be inserted into the editor
@@ -33,6 +37,14 @@ export interface EditorInsertion {
  * Returns undefined to indicate no changes should be made.
  */
 export type LineTransformer = (line: string, path: string) => EditorInsertion | undefined;
+
+/**
+ * A function that transforms a Task, returning the edited task or tasks
+ * as Markdown lines.
+ * An extra line typically means that a new recurring task was created.
+ * An empty array typically means that the task was completed and was marked to be deleted.
+ */
+export type TaskTransformer = (task: Task) => string[];
 
 /**
  * Computes the new absolute position of the cursor so that it is positioned within the inserted text as specified
@@ -82,9 +94,13 @@ export const replaceLineChange = (editor: Editor, lineNumber: number, text: stri
  * Creates an editor callback function that applies a line transformation to the current line.
  *
  * @param lineTransformer - A function that takes the current line and file path, and returns the transformed text
+ * @param getLineNumber - Returns the number of the line to transform. Defaults to the cursor's line.
  * @returns An editor callback suitable for use with Obsidian's `editorCheckCallback`
  */
-export const createEditorCallback = (lineTransformer: LineTransformer) => {
+export const createEditorCallback = (
+    lineTransformer: LineTransformer,
+    getLineNumber: (editor: Editor) => number = (editor) => editor.getCursor().line,
+) => {
     function editorCallback(checking: boolean, editor: Editor, view: MarkdownView | MarkdownFileInfo) {
         if (checking) {
             if (!(view instanceof MarkdownView)) {
@@ -108,7 +124,7 @@ export const createEditorCallback = (lineTransformer: LineTransformer) => {
         }
 
         const origCursorPos = editor.getCursor();
-        const lineNumber = origCursorPos.line;
+        const lineNumber = getLineNumber(editor);
         const line = editor.getLine(lineNumber);
 
         const insertion = lineTransformer(line, path);
@@ -151,6 +167,67 @@ export function selectedLineNumbers(selections: EditorSelection[]): number[] {
 }
 
 /**
+ * Transforms a task on a single line, returning the new text and cursor position.
+ *
+ * @param line - The line of text to transform
+ * @param path - The file path containing the line
+ * @param taskTransformer - A function that transforms the parsed task into replacement lines
+ * @returns An EditorInsertion with the new text and cursor position, or undefined if the line is not a task
+ */
+export function transformTaskOnLine(
+    line: string,
+    path: string,
+    taskTransformer: TaskTransformer,
+): EditorInsertion | undefined {
+    const task = Task.fromLine({
+        line,
+        taskLocation: TaskLocation.fromUnknownPosition(new TasksFile(path)),
+        fallbackDate: null,
+    });
+
+    if (task !== null) {
+        const lines = taskTransformer(task);
+        const newLineNumber = lines.length > 0 ? lines.length - 1 : 0;
+        return { text: lines.join('\n'), moveTo: { line: newLineNumber } };
+    }
+
+    return undefined;
+}
+
+/**
+ * Apply a TaskEditingInstruction to a task on a single line, returning the new text and cursor position.
+ *
+ * @param line - The line of text to transform
+ * @param path - The file path containing the line
+ * @param instruction - The instruction to edit the task
+ * @returns An EditorInsertion with the new text and cursor position, or undefined if the line is not a task
+ */
+export const applyInstructionToLine = (
+    line: string,
+    path: string,
+    instruction: TaskEditingInstruction,
+): EditorInsertion | undefined => {
+    const taskTransformer = (task: Task): string[] => instruction.apply(task).map((t) => t.toFileLineString());
+    return transformTaskOnLine(line, path, taskTransformer);
+};
+
+/**
+ * Creates an editor callback that applies a TaskEditingInstruction to the task on the cursor's line,
+ * or, when the selections cover several lines, of every task on those lines.
+ *
+ * Lines in a multi-line selection that are not tasks are left unchanged.
+ *
+ * @param instruction - The instruction to edit the task
+ * @param notATaskMessage - The message to display when no task lines are found in the selection
+ */
+export const createApplyInstructionEditorCallback = (instruction: TaskEditingInstruction, notATaskMessage: string) => {
+    return createMultiLineEditorCallback(
+        (line: string, path: string) => applyInstructionToLine(line, path, instruction),
+        notATaskMessage,
+    );
+};
+
+/**
  * Creates an editor callback that applies a line transformation to every line covered by the selections.
  *
  * When the selections cover a single line, it behaves like {@link createEditorCallback}.
@@ -161,13 +238,18 @@ export function selectedLineNumbers(selections: EditorSelection[]): number[] {
  * @returns An editor callback suitable for use with Obsidian's `editorCheckCallback`
  */
 export function createMultiLineEditorCallback(lineTransformer: LineTransformer, noChangeMessage: string) {
-    const singleLineCallback = createEditorCallback((line: string, path: string) => {
+    const lineTransformerWithNotice = (line: string, path: string) => {
         const insertion = lineTransformer(line, path);
         if (insertion === undefined) {
             new Notice(noChangeMessage);
         }
         return insertion;
-    });
+    };
+    const singleLineCallback = createEditorCallback(
+        lineTransformerWithNotice,
+        // Use the selected line, which differs from the cursor's line if the selection ends at the start of the next line.
+        (editor: Editor) => selectedLineNumbers(editor.listSelections())[0],
+    );
 
     return (checking: boolean, editor: Editor, view: MarkdownView | MarkdownFileInfo) => {
         if (checking) {

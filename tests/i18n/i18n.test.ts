@@ -1,6 +1,8 @@
 import * as fs from 'node:fs';
 import * as path from 'node:path';
 import i18next from 'i18next';
+import { MarkdownTable } from 'lib/MarkdownTable';
+import { verifyMarkdownForDocs } from '../TestingTools/VerifyMarkdown';
 
 function getAllLocaleJsonFileBaseNames(): string[] {
     const localesDir = path.resolve(__dirname, '../../src/i18n/locales');
@@ -28,6 +30,37 @@ let i18nResourceNames: ReadonlyArray<string>;
 beforeAll(async () => {
     // initializeI18n is called in vitest.setup.ts
     i18nResourceNames = Object.freeze(Object.keys(i18next.store.data));
+});
+
+describe('i18n docs', () => {
+    function languageNameForDocs(code: string, displayLanguage: string): string {
+        // 'standard' gives 'Language (Qualifier)': https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Intl/DisplayNames/DisplayNames#languagedisplay
+        const languageNames = new Intl.DisplayNames([displayLanguage], {
+            type: 'language',
+            languageDisplay: 'standard',
+        });
+
+        // Obsidian's 'zh' is Simplified Chinese. Adding the script subtag 'Hans' gives 'Chinese (Simplified)', as in Obsidian's docs.
+        // 'Hans' is the Simplified Han script: https://www.unicode.org/iso15924/iso15924-codes.html
+        const tagsWithScriptSubtag: Record<string, string> = { zh: 'zh-Hans' };
+
+        return languageNames.of(tagsWithScriptSubtag[code] ?? code) ?? code;
+    }
+
+    function capitaliseFirstLetter(text: string, locale: string): string {
+        return text.charAt(0).toLocaleUpperCase(locale) + text.slice(1);
+    }
+
+    it('supported languages', () => {
+        const table = new MarkdownTable(['Obsidian Language Code', 'Language', 'Native Name']);
+        const englishFirst = ['en', ...i18nResourceNames.filter((code) => code !== 'en')];
+        englishFirst.forEach((code) => {
+            const nativeName = capitaliseFirstLetter(languageNameForDocs(code, code), code);
+            table.addRow(['`' + code + '`', languageNameForDocs(code, 'en'), nativeName]);
+        });
+
+        verifyMarkdownForDocs(table.markdown);
+    });
 });
 
 describe('i18n locale consistency', () => {

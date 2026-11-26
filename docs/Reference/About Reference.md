@@ -13,4 +13,6 @@ This section provides reference material - content which is typically too detail
 ## Reference section contents
 
 - [[About Task Formats|Task Formats]]
-- [[About Status Collections]]
+- [[Commands]]
+- [[About Status Collections|Status Collections]]
+- [[Translations]]

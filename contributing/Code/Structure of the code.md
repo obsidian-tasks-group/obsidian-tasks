@@ -94,6 +94,7 @@ The remainder are:
 - [global-setup.js](https://github.com/obsidian-tasks-group/obsidian-tasks/blob/main/tests/global-setup.js)
   - Enforce all tests to run in UTC time, by default.
   - Individual tests can use `withTimezone()` to run in another time zone: see [[Testing and Time Zones]].
+  - Individual tests can use `withLocale()` to run in another Moment locale: see [[Testing and Locales]].
 - [CustomMatchers/](https://github.com/obsidian-tasks-group/obsidian-tasks/tree/main/tests/CustomMatchers)
   - Vitest custom matchers for Tasks classes.
 - [Obsidian/\_\_test_data\_\_/](https://github.com/obsidian-tasks-group/obsidian-tasks/tree/main/tests/Obsidian/__test_data__)

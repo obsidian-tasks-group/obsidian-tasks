@@ -12,6 +12,18 @@ _In recent [Tasks releases](https://github.com/obsidian-tasks-group/obsidian-tas
 
 ## 8.x releases
 
+- 8.7.0:
+  - Commands
+    - Add [[Commands]] reference page.
+    - Add [[Commands#Change priority commands|Change priority]] commands, to edit multiple tasks.
+    - Teach [[Commands#Change status commands|Change status]] commands to edit multiple tasks.
+  - Type part of a preset name, such as `preset folder`, to [[Presets#Search the Available Presets|list matching presets]].
+  - Teach the API to run [[Tasks Api#`queryTasks (querySource string, queryPath? string) => Array<ReadOnlyTask>;`|Tasks searches]].
+  - [[Create or edit Task]] field order is now customisable.
+  - [[Settings]] improvements: no need to restart after changing Task Format, Auto-Suggest and 'Remove global filter' options.
+  - **Translations** of [[Settings]], [[Editing a Status]] and [[Check your Statuses]]:
+    - Add **Japanese** translation.
+    - Add [[Translations]] reference page.
 - 8.6.0:
   - The minimum supported Obsidian version is now [1.13.1](https://obsidian.md/changelog/2026-06-09-desktop-v1.13.1/).
   - Add setting to control [[Postponing#Which date field is edited?|which field Postpone edits]].
@@ -96,7 +108,7 @@ _In recent [Tasks releases](https://github.com/obsidian-tasks-group/obsidian-tas
   - Tasks now requires [Obsidian 1.4.0](https://obsidian.md/changelog/2023-08-31-desktop-v1.4.5/) or newer.
   - **Translations**:
     - Add Chinese translation of [[Settings]], [[Editing a Status]] and [[Check your Statuses]].
-    - See [contribute translations](https://publish.obsidian.md/tasks-contributing/Translation/Contribute+translationsl) and [related pages](https://publish.obsidian.md/tasks-contributing/Translation/About+Translation) on the [Contributing](https://publish.obsidian.md/tasks-contributing/Welcome) guide.
+    - See [contribute translations](https://publish.obsidian.md/tasks-contributing/Translation/Contribute+translations) and [related pages](https://publish.obsidian.md/tasks-contributing/Translation/About+Translation) on the [Contributing](https://publish.obsidian.md/tasks-contributing/Welcome) guide.
     - We will gradually translate more parts of Tasks in forthcoming releases.
   - Use **standardised properties** in Query files to customise your searches:
     - New [[Query File Defaults]] facility allows easy customising of all the Tasks searches in a file, by editing properties, for example, to customise the [[layout]].

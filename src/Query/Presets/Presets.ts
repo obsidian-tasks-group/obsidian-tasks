@@ -38,20 +38,29 @@ function summariseInstruction(instructions: string) {
     return result;
 }
 
-export function unknownPresetErrorMessage(presentName: string, presets: PresetsMap) {
-    let message = `Cannot find preset "${presentName}" in the Tasks settings`;
+function formatPresetList(presets: PresetsMap): string {
+    const maxKeyLength = Math.max(...Object.keys(presets).map((key) => key.length));
+    return Object.entries(presets)
+        .sort(([keyA], [keyB]) => keyA.localeCompare(keyB))
+        .map(([key, value]) => `${key.padEnd(maxKeyLength)}: ${summariseInstruction(value)}`)
+        .join('\n  ');
+}
+
+export function unknownPresetErrorMessage(presetName: string, presets: PresetsMap) {
+    const message = `Cannot find preset "${presetName}" in the Tasks settings`;
 
     const isPresetsEmpty = Object.keys(presets).length === 0;
     if (isPresetsEmpty) {
-        message += `\nYou can define the instruction(s) for "${presentName}" in the Tasks settings.`;
-    } else {
-        const maxKeyLength = Math.max(...Object.keys(presets).map((key) => key.length));
-        const availableNames = Object.entries(presets)
-            .sort(([keyA], [keyB]) => keyA.localeCompare(keyB))
-            .map(([key, value]) => `${key.padEnd(maxKeyLength)}: ${summariseInstruction(value)}`)
-            .join('\n  ');
-        message += `\nThe following presets are defined in the Tasks settings:\n  ${availableNames}`;
+        return message + `\nYou can define the instruction(s) for "${presetName}" in the Tasks settings.`;
     }
 
-    return message;
+    // Filter down to presets that contain the presetName
+    const candidates: PresetsMap = Object.fromEntries(
+        Object.entries(presets).filter(([key]) => key.toLowerCase().includes(presetName.toLowerCase())),
+    );
+    if (Object.keys(candidates).length > 0) {
+        return message + `\nDid you mean:\n  ${formatPresetList(candidates)}`;
+    }
+
+    return message + `\nThe following presets are defined in the Tasks settings:\n  ${formatPresetList(presets)}`;
 }

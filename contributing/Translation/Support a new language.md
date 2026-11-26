@@ -19,8 +19,11 @@ These are the steps required to add support for a new language and submit it in 
 5. Translate the strings in the new file.
 6. Add the language code to [i18next-parser.config.js](https://github.com/obsidian-tasks-group/obsidian-tasks/blob/main/i18next-parser.config.js).
 7. Add the language to `import` and `resources` in [src/i18n/i18n.ts](https://github.com/obsidian-tasks-group/obsidian-tasks/blob/main/src/i18n/i18n.ts).
-8. When you have finished, commit the changes. Use the prefix `i18n:` on the commit message.
-9. Create a pull request.
+8. Add the new language to [tests/i18n/i18n.test.i18n_docs_supported_languages.approved.md](https://github.com/obsidian-tasks-group/obsidian-tasks/blob/main/tests/i18n/i18n.test.i18n_docs_supported_languages.approved.md)
+    - This file is used in (and can be updated by) one of the automated tests, so it is important not to change existing space characters in this file.
+    - (A later process will use this file to automatically update the languages table in the [Translations](https://publish.obsidian.md/tasks/Reference/Translations) documentation page.)
+9. When you have finished, commit the changes. Use the prefix `i18n:` on the commit message.
+10. Create a pull request.
 
 ## Getting help
 

@@ -13,6 +13,7 @@ import {
 } from '../../CustomMatchers/CustomMatchersForSorting';
 import { verifyMarkdown } from '../../TestingTools/VerifyMarkdown';
 import { SampleTasks } from '../../TestingTools/SampleTasks';
+import { withLocale } from '../../TestingTools/DateTestHelpers';
 
 window.moment = moment;
 
@@ -611,5 +612,23 @@ describe('grouping by due date', () => {
             '2023-06-02 Friday',
             'No due date',
         ]);
+    });
+});
+
+// '05/11/2026' is ambiguous: it could be 5 November or 11 May.
+describe('due date queries with an ambiguous numeric date', () => {
+    it('should be read as month-first in English (US)', () => {
+        withLocale('en', () => {
+            const filterOrMessage = new DueDateField().createFilterOrErrorMessage('due 05/11/2026');
+            expect(filterOrMessage).toHaveExplanation('due date is on 2026-05-11 (Monday 11th May 2026)');
+        });
+    });
+
+    // This test reproduces a known bug: the locale's day-month order is ignored.
+    it.fails('should be read as day-first in English (GB)', () => {
+        withLocale('en-gb', () => {
+            const filterOrMessage = new DueDateField().createFilterOrErrorMessage('due 05/11/2026');
+            expect(filterOrMessage).toHaveExplanation('due date is on 2026-11-05 (Thursday 5th November 2026)');
+        });
     });
 });

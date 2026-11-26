@@ -48,3 +48,35 @@ export function withTimezone(tz: string, fn: () => void | undefined): void {
         }
     }
 }
+
+/**
+ * Temporarily sets the global moment locale to {@link locale} while the callback {@link fn} runs,
+ * and restores the previous locale afterwards, even if {@link fn} throws.
+ *
+ * {@link fn} must be synchronous, because the locale is restored as soon as it returns.
+ * TypeScript reports an error if an `async` function is passed.
+ *
+ * Throws if moment does not recognise {@link locale}, because moment silently ignores unknown locales,
+ * which would leave the test running in the wrong locale.
+ *
+ * @example
+ *      it('should use day-month-year order in English (GB)', () => {
+ *          withLocale('en-gb', () => {
+ *              expect(window.moment('2026-11-05').format('L')).toBe('05/11/2026');
+ *          });
+ *      });
+ * @param locale - a moment locale name, such as 'en-gb' or 'de'.
+ * @param fn - the synchronous callback to run with the moment locale set to {@link locale}
+ */
+export function withLocale(locale: string, fn: () => void | undefined): void {
+    const previousLocale = window.moment.locale();
+    if (window.moment.locale(locale) !== locale) {
+        window.moment.locale(previousLocale);
+        throw new Error(`Unknown moment locale: '${locale}'`);
+    }
+    try {
+        fn();
+    } finally {
+        window.moment.locale(previousLocale);
+    }
+}

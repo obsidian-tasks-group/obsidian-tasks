@@ -81,11 +81,29 @@ export class Menu {
     }
 }
 
+// Records the messages of the notices shown by a test so that tests can check what the user was told.
+// This is emptied before every test, in `tests/vitest.setup.ts`.
+export const noticeMessages: (string | DocumentFragment)[] = [];
+
+export function resetNoticeMessages(): void {
+    noticeMessages.length = 0;
+}
+
+/**
+ * If you want to test uses of Notice:
+ * @example
+ *  import { noticeMessages } from '../__mocks__/obsidian';
+ *
+ *  expect(noticeMessages).toEqual(['placeholder Not A Task message']);
+ *  expect(noticeMessages).toEqual([]);
+ */
 export class Notice {
     /**
      * @public
      */
-    constructor(_message: string | DocumentFragment, _timeout?: number) {}
+    constructor(message: string | DocumentFragment, _timeout?: number) {
+        noticeMessages.push(message);
+    }
 
     /**
      * Change the message of this notice.
@@ -363,6 +381,15 @@ export class Modal {
 export class Component {
     public load(): void {}
     public unload(): void {}
+}
+
+export class MarkdownRenderChild extends Component {
+    public containerEl: HTMLElement;
+
+    constructor(containerEl?: HTMLElement) {
+        super();
+        this.containerEl = containerEl ?? ({} as HTMLElement);
+    }
 }
 
 export class MarkdownRenderer {

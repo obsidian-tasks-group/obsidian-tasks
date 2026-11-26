@@ -2,6 +2,7 @@ import moment from 'moment';
 import { DateParser } from 'DateTime/DateParser';
 
 import { TaskRegularExpressions } from 'Task/TaskRegularExpressions';
+import { withLocale } from '../TestingTools/DateTestHelpers';
 
 window.moment = moment;
 
@@ -162,5 +163,51 @@ describe('DateParser - numbered date ranges', () => {
 
         // Year
         testParsingDateRange('20167', 'Invalid date', 'Invalid date');
+    });
+});
+
+// '05/11/2026' is ambiguous: it could be 5 November or 11 May.
+describe('DateParser - ambiguous numeric dates', () => {
+    it('should be read as month-first in English (US)', () => {
+        withLocale('en', () => {
+            testParsingeSingleDate('05/11/2026', '2026-05-11');
+            testParsingDateRange('05/11/2026', '2026-05-11', '2026-05-11');
+        });
+    });
+
+    // These tests reproduce a known bug: the locale's day-month order is ignored.
+    it.fails('should be read as day-first in English (GB) - single date', () => {
+        withLocale('en-gb', () => {
+            testParsingeSingleDate('05/11/2026', '2026-11-05');
+        });
+    });
+
+    it.fails('should be read as day-first in English (GB) - date range', () => {
+        withLocale('en-gb', () => {
+            testParsingDateRange('05/11/2026', '2026-11-05', '2026-11-05');
+        });
+    });
+});
+
+describe('DateParser - relative words in a day-first locale', () => {
+    beforeAll(() => {
+        vi.useFakeTimers();
+        vi.setSystemTime(new Date('2021-10-06'));
+    });
+
+    afterAll(() => {
+        vi.useRealTimers();
+    });
+
+    it('should parse "tomorrow" as a single date in English (GB)', () => {
+        withLocale('en-gb', () => {
+            testParsingeSingleDate('tomorrow', '2021-10-07');
+        });
+    });
+
+    it('should parse "tomorrow" as a date range in English (GB)', () => {
+        withLocale('en-gb', () => {
+            testParsingDateRange('tomorrow', '2021-10-07', '2021-10-07');
+        });
     });
 });

@@ -11,6 +11,10 @@ publish: true
 
 Since Tasks X.Y.Z, we are gradually migration most user-visible text in to a translation framework - also know as internationalisation or i18n.
 
+## For users
+
+- [Translations](https://publish.obsidian.md/tasks/Reference/Translations), in the user docs, lists the languages that Tasks currently supports.
+
 ## For developers and translators
 
 - [[Overview of the translation setup]]
