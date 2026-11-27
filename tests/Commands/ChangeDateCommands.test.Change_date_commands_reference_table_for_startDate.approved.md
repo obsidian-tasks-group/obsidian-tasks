@@ -2,7 +2,7 @@
 
 | Name | ID |
 | ----- | ----- |
-| `Tasks: Remove startDate` | `obsidian-tasks-plugin:remove-startDate` |
+| `Tasks: Remove Start date` | `obsidian-tasks-plugin:remove-startDate` |
 
 
 <!-- placeholder to force blank line after included text -->

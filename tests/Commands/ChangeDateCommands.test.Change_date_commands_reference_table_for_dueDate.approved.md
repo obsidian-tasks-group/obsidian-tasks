@@ -2,7 +2,7 @@
 
 | Name | ID |
 | ----- | ----- |
-| `Tasks: Remove dueDate` | `obsidian-tasks-plugin:remove-dueDate` |
+| `Tasks: Remove Due date` | `obsidian-tasks-plugin:remove-dueDate` |
 
 
 <!-- placeholder to force blank line after included text -->

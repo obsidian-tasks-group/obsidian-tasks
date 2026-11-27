@@ -3,6 +3,7 @@ import { ALL_DATE_FIELDS, type AllTaskDateFields } from 'DateTime/DateFieldTypes
 import { createApplyInstructionEditorCallback } from 'Commands/CreateEditorCallback';
 import { RemoveTaskDate } from 'ui/EditInstructions/DateInstructions';
 import type { TaskEditingInstruction } from 'ui/EditInstructions/TaskEditingInstruction';
+import { dateFieldCommandNameText } from 'ui/EditInstructions/DateCommandNames';
 
 const notATaskMessage = 'Cannot change date: line is not a task or does not match global filter';
 
@@ -10,7 +11,7 @@ const notATaskMessage = 'Cannot change date: line is not a task or does not matc
  * Return the instructions for the date commands for one date field.
  */
 function dateCommandInstructions(field: AllTaskDateFields): TaskEditingInstruction[] {
-    return [new RemoveTaskDate(field, `Remove ${field}`)];
+    return [new RemoveTaskDate(field, `Remove ${dateFieldCommandNameText(field)}`)];
 }
 
 /**
