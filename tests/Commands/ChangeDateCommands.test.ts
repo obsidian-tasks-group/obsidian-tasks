@@ -31,6 +31,14 @@ function runCommand(commands: Command[], id: string, lines: string[]) {
 }
 
 describe('Change date commands', () => {
+    it('should use the date when the command is run, not when it is created', () => {
+        const commands = createChangeDateCommands();
+
+        vi.setSystemTime(new Date('2024-10-02'));
+
+        expect(runCommand(commands, 'set-due-date-to-today', ['- [ ] task'])).toEqual(['- [ ] task 📅 2024-10-02']);
+    });
+
     it('should move each selected task by the same amount, skipping tasks without the date', () => {
         const lines = ['- [ ] task 1 ⏳ 2023-05-05', '- [ ] task 2', '- [ ] task 3 ⏳ 2025-01-31'];
         expect(runCommand(createChangeDateCommands(), 'move-scheduled-date-by-plus-1-week', lines)).toEqual([
