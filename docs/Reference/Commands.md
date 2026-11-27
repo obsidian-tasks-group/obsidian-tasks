@@ -80,6 +80,8 @@ Notes:
 
 There are these commands for each of the six [[Dates|dates]]:
 
+- `Move … date by: …` moves each task's date by the same amount, relative to its current value.
+  Tasks without that date are left unchanged.
 - `Remove … date` removes the date.
 
 Notes:
@@ -98,6 +100,10 @@ See [[Dates#Due date|Due date]].
 
 | Name | ID |
 | ----- | ----- |
+| `Tasks: Move Due date by: +1 day` | `obsidian-tasks-plugin:move-due-date-by-plus-1-day` |
+| `Tasks: Move Due date by: -1 day` | `obsidian-tasks-plugin:move-due-date-by-minus-1-day` |
+| `Tasks: Move Due date by: +1 week` | `obsidian-tasks-plugin:move-due-date-by-plus-1-week` |
+| `Tasks: Move Due date by: -1 week` | `obsidian-tasks-plugin:move-due-date-by-minus-1-week` |
 | `Tasks: Remove Due date` | `obsidian-tasks-plugin:remove-due-date` |
 
 <!-- placeholder to force blank line after included text --><!-- endInclude -->
@@ -110,6 +116,10 @@ See [[Dates#Scheduled date|Scheduled date]].
 
 | Name | ID |
 | ----- | ----- |
+| `Tasks: Move Scheduled date by: +1 day` | `obsidian-tasks-plugin:move-scheduled-date-by-plus-1-day` |
+| `Tasks: Move Scheduled date by: -1 day` | `obsidian-tasks-plugin:move-scheduled-date-by-minus-1-day` |
+| `Tasks: Move Scheduled date by: +1 week` | `obsidian-tasks-plugin:move-scheduled-date-by-plus-1-week` |
+| `Tasks: Move Scheduled date by: -1 week` | `obsidian-tasks-plugin:move-scheduled-date-by-minus-1-week` |
 | `Tasks: Remove Scheduled date` | `obsidian-tasks-plugin:remove-scheduled-date` |
 
 <!-- placeholder to force blank line after included text --><!-- endInclude -->
@@ -122,6 +132,10 @@ See [[Dates#Start date|Start date]].
 
 | Name | ID |
 | ----- | ----- |
+| `Tasks: Move Start date by: +1 day` | `obsidian-tasks-plugin:move-start-date-by-plus-1-day` |
+| `Tasks: Move Start date by: -1 day` | `obsidian-tasks-plugin:move-start-date-by-minus-1-day` |
+| `Tasks: Move Start date by: +1 week` | `obsidian-tasks-plugin:move-start-date-by-plus-1-week` |
+| `Tasks: Move Start date by: -1 week` | `obsidian-tasks-plugin:move-start-date-by-minus-1-week` |
 | `Tasks: Remove Start date` | `obsidian-tasks-plugin:remove-start-date` |
 
 <!-- placeholder to force blank line after included text --><!-- endInclude -->
@@ -134,6 +148,10 @@ See [[Dates#Created date|Created date]].
 
 | Name | ID |
 | ----- | ----- |
+| `Tasks: Move Created date by: +1 day` | `obsidian-tasks-plugin:move-created-date-by-plus-1-day` |
+| `Tasks: Move Created date by: -1 day` | `obsidian-tasks-plugin:move-created-date-by-minus-1-day` |
+| `Tasks: Move Created date by: +1 week` | `obsidian-tasks-plugin:move-created-date-by-plus-1-week` |
+| `Tasks: Move Created date by: -1 week` | `obsidian-tasks-plugin:move-created-date-by-minus-1-week` |
 | `Tasks: Remove Created date` | `obsidian-tasks-plugin:remove-created-date` |
 
 <!-- placeholder to force blank line after included text --><!-- endInclude -->
@@ -146,6 +164,10 @@ See [[Dates#Done date|Done date]].
 
 | Name | ID |
 | ----- | ----- |
+| `Tasks: Move Done date by: +1 day` | `obsidian-tasks-plugin:move-done-date-by-plus-1-day` |
+| `Tasks: Move Done date by: -1 day` | `obsidian-tasks-plugin:move-done-date-by-minus-1-day` |
+| `Tasks: Move Done date by: +1 week` | `obsidian-tasks-plugin:move-done-date-by-plus-1-week` |
+| `Tasks: Move Done date by: -1 week` | `obsidian-tasks-plugin:move-done-date-by-minus-1-week` |
 | `Tasks: Remove Done date` | `obsidian-tasks-plugin:remove-done-date` |
 
 <!-- placeholder to force blank line after included text --><!-- endInclude -->
@@ -158,6 +180,10 @@ See [[Dates#Cancelled date|Cancelled date]].
 
 | Name | ID |
 | ----- | ----- |
+| `Tasks: Move Cancelled date by: +1 day` | `obsidian-tasks-plugin:move-cancelled-date-by-plus-1-day` |
+| `Tasks: Move Cancelled date by: -1 day` | `obsidian-tasks-plugin:move-cancelled-date-by-minus-1-day` |
+| `Tasks: Move Cancelled date by: +1 week` | `obsidian-tasks-plugin:move-cancelled-date-by-plus-1-week` |
+| `Tasks: Move Cancelled date by: -1 week` | `obsidian-tasks-plugin:move-cancelled-date-by-minus-1-week` |
 | `Tasks: Remove Cancelled date` | `obsidian-tasks-plugin:remove-cancelled-date` |
 
 <!-- placeholder to force blank line after included text --><!-- endInclude -->
