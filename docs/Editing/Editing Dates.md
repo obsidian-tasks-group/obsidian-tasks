@@ -27,13 +27,13 @@ There is a [[#Date-picker on task dates]] and a [[#Context menu on task dates]],
 ![In the date-picker, you can easily select a new date, or clear the current one](../images/date-picker-2.png)
 <span class="caption">In the date-picker, you can easily select a new date, or clear the current one</span>
 
-| Where                         | Viewing Mode | Works? |
-| ----------------------------- | ------------ | ------ |
-| Task lines in markdown files  | Source mode  | ❌     |
-| Task lines in markdown files  | Live Preview | ❌     |
-| Task lines in markdown files  | Reading mode | ✅     |
-| In Tasks query search results | Live Preview | ✅     |
-| In Tasks query search results | Reading mode | ✅     |
+| Where                         | Viewing Mode | Works? | Works on<br>multiple tasks? |
+| ----------------------------- | ------------ | ------ | --------------------------- |
+| Task lines in markdown files  | Source mode  | ❌     | ❌                          |
+| Task lines in markdown files  | Live Preview | ❌     | ❌                          |
+| Task lines in markdown files  | Reading mode | ✅     | ❌                          |
+| In Tasks query search results | Live Preview | ✅     | ❌                          |
+| In Tasks query search results | Reading mode | ✅     | ❌                          |
 
 On iPhone, and probably iPad too, this date-picker hard-codes the start of the week to Monday, instead of respecting the user's settings. We are tracking this in [issue #3239](https://github.com/obsidian-tasks-group/obsidian-tasks/issues/3239).
 
@@ -53,13 +53,13 @@ On iPhone, and probably iPad too, this date-picker hard-codes the start of the w
 ![Chose an option from the context menu](../images/date-context-menu-2.png)
 <span class="caption">Chose an option from the context menu</span>
 
-| Where                         | Viewing Mode | Works? |
-| ----------------------------- | ------------ | ------ |
-| Task lines in markdown files  | Source mode  | ❌     |
-| Task lines in markdown files  | Live Preview | ❌     |
-| Task lines in markdown files  | Reading mode | ✅     |
-| In Tasks query search results | Live Preview | ✅     |
-| In Tasks query search results | Reading mode | ✅     |
+| Where                         | Viewing Mode | Works? | Works on<br>multiple tasks? |
+| ----------------------------- | ------------ | ------ | --------------------------- |
+| Task lines in markdown files  | Source mode  | ❌     | ❌                          |
+| Task lines in markdown files  | Live Preview | ❌     | ❌                          |
+| Task lines in markdown files  | Reading mode | ✅     | ❌                          |
+| In Tasks query search results | Live Preview | ✅     | ❌                          |
+| In Tasks query search results | Reading mode | ✅     | ❌                          |
 
 ## Other date-editing options
 
