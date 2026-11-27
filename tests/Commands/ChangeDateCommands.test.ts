@@ -39,6 +39,15 @@ describe('Change date commands', () => {
         expect(runCommand(commands, 'set-due-date-to-today', ['- [ ] task'])).toEqual(['- [ ] task 📅 2024-10-02']);
     });
 
+    it('should set the same date on every selected task', () => {
+        const lines = ['- [ ] task 1', 'Not a task', '- [ ] task 2 📅 2023-05-05'];
+        expect(runCommand(createChangeDateCommands(), 'set-due-date-to-today-plus-1-day', lines)).toEqual([
+            '- [ ] task 1 📅 2024-10-02',
+            'Not a task',
+            '- [ ] task 2 📅 2024-10-02',
+        ]);
+    });
+
     it('should move each selected task by the same amount, skipping tasks without the date', () => {
         const lines = ['- [ ] task 1 ⏳ 2023-05-05', '- [ ] task 2', '- [ ] task 3 ⏳ 2025-01-31'];
         expect(runCommand(createChangeDateCommands(), 'move-scheduled-date-by-plus-1-week', lines)).toEqual([
