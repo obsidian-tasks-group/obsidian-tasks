@@ -20,6 +20,8 @@ function dateCommandInstructions(field: AllTaskDateFields): TaskEditingInstructi
     return [
         new SetTaskDateRelativeToToday(field, 0, 'always'),
         new SetTaskDateRelativeToToday(field, factor, 'always'),
+        new SetTaskDateRelativeToToday(field, 0, 'if_missing'),
+        new SetTaskDateRelativeToToday(field, factor, 'if_missing'),
         new MoveTaskDate(field, 1, 'day'),
         new MoveTaskDate(field, -1, 'day'),
         new MoveTaskDate(field, 1, 'week'),
