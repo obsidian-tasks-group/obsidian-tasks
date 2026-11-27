@@ -405,6 +405,11 @@ describe('Creating Editing Instruction', () => {
         expect(newTask.startDate).toBeNull();
     });
 
+    it('should allow caller to specify name of instruction to remove a date', () => {
+        const instruction = new RemoveTaskDate('dueDate', 'Remove Due date');
+        expect(instruction.instructionDisplayName()).toEqual('Remove Due date');
+    });
+
     it('should refuse to copy an invalid date', () => {
         const invalidDoneDateTask = fromMarkdown('- [ ] Something ✅ 2026-13-42')[0];
         const instruction = createEditingInstructionForDateGroups('doneDate', invalidDoneDateTask);

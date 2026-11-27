@@ -75,10 +75,18 @@ export class RemoveTaskDate extends BaseTaskEditingInstruction {
     private readonly dateFieldToEdit: AllTaskDateFields;
     private readonly displayName: string;
 
-    constructor(dateFieldToEdit: AllTaskDateFields, task: Task) {
+    /**
+     * @param dateFieldToEdit
+     * @param taskOrDisplayName - Either the task whose menu this instruction is for, which is used to build the menu title,
+     *                            or the display name to use, for when there is no task, such as in commands built at load.
+     */
+    constructor(dateFieldToEdit: AllTaskDateFields, taskOrDisplayName: Task | string) {
         super();
         this.dateFieldToEdit = dateFieldToEdit;
-        this.displayName = removeDateMenuItemTitleForField(dateFieldToEdit, task);
+        this.displayName =
+            typeof taskOrDisplayName === 'string'
+                ? taskOrDisplayName
+                : removeDateMenuItemTitleForField(dateFieldToEdit, taskOrDisplayName);
     }
 
     apply(task: Task): Task[] {
