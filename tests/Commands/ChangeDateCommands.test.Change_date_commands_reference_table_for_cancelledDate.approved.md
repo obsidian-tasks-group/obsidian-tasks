@@ -2,7 +2,7 @@
 
 | Name | ID |
 | ----- | ----- |
-| `Tasks: Remove Cancelled date` | `obsidian-tasks-plugin:remove-cancelledDate` |
+| `Tasks: Remove Cancelled date` | `obsidian-tasks-plugin:remove-cancelled-date` |
 
 
 <!-- placeholder to force blank line after included text -->

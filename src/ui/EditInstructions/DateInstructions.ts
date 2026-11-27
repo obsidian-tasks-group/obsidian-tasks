@@ -5,6 +5,7 @@ import { TasksDate } from 'DateTime/TasksDate';
 import type { TaskEditingInstruction } from 'ui/EditInstructions/TaskEditingInstruction';
 import { MenuDividerInstruction } from 'ui/EditInstructions/MenuDividerInstruction';
 import { BaseTaskEditingInstruction } from 'ui/EditInstructions/BaseTaskEditingInstruction';
+import { dateFieldCommandIdText } from 'ui/EditInstructions/DateCommandNames';
 
 /**
  * An instruction to set a date field to an absolute date.
@@ -115,7 +116,7 @@ export class RemoveTaskDate extends BaseTaskEditingInstruction {
     }
 
     public commandId(): string {
-        return `remove-${this.dateFieldToEdit}`;
+        return `remove-${dateFieldCommandIdText(this.dateFieldToEdit)}`;
     }
 }
 

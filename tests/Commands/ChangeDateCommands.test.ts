@@ -33,7 +33,7 @@ function runCommand(commands: Command[], id: string, lines: string[]) {
 describe('Change date commands', () => {
     it('should remove the date from every selected task', () => {
         const lines = ['- [ ] task 1 ➕ 2023-05-05', '- [ ] task 2'];
-        expect(runCommand(createChangeDateCommands(), 'remove-createdDate', lines)).toEqual([
+        expect(runCommand(createChangeDateCommands(), 'remove-created-date', lines)).toEqual([
             '- [ ] task 1',
             '- [ ] task 2',
         ]);

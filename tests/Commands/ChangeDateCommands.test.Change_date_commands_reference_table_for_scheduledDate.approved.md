@@ -2,7 +2,7 @@
 
 | Name | ID |
 | ----- | ----- |
-| `Tasks: Remove Scheduled date` | `obsidian-tasks-plugin:remove-scheduledDate` |
+| `Tasks: Remove Scheduled date` | `obsidian-tasks-plugin:remove-scheduled-date` |
 
 
 <!-- placeholder to force blank line after included text -->

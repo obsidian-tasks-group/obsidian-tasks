@@ -7,3 +7,12 @@ import { capitalizeFirstLetter } from 'lib/StringHelpers';
 export function dateFieldCommandNameText(field: AllTaskDateFields): string {
     return capitalizeFirstLetter(field.replace('Date', ' date'));
 }
+
+/**
+ * The text for a date field in command ids, such as 'due-date' for 'dueDate'.
+ *
+ * Command ids are permanent, as users assign hotkeys to them, so this must never change.
+ */
+export function dateFieldCommandIdText(field: AllTaskDateFields): string {
+    return field.replace('Date', '-date');
+}
