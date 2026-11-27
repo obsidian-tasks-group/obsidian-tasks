@@ -144,6 +144,10 @@ describe('OnlyIfStatusAllowsEditingDate', () => {
         'doneDate',
         new SetTaskDateRelativeToToday('doneDate', 0, 'always'),
     );
+    const setCancelled = new OnlyIfStatusAllowsEditingDate(
+        'cancelledDate',
+        new SetTaskDateRelativeToToday('cancelledDate', 0, 'always'),
+    );
 
     it('should delegate the name and id', () => {
         expect(setDone.instructionDisplayName()).toEqual('Change Done date to: Today');
@@ -154,6 +158,11 @@ describe('OnlyIfStatusAllowsEditingDate', () => {
         expect(applyToLine(setDone, '- [x] task')).toEqual('- [x] task ✅ 2024-10-01');
         expect(applyToLine(setDone, '- [ ] task')).toEqual('- [ ] task');
         expect(applyToLine(setDone, '- [-] task')).toEqual('- [-] task');
+    });
+
+    it('should only edit cancelled dates on cancelled tasks', () => {
+        expect(applyToLine(setCancelled, '- [-] task')).toEqual('- [-] task ❌ 2024-10-01');
+        expect(applyToLine(setCancelled, '- [x] task')).toEqual('- [x] task');
     });
 
     it('should not remove a done date from a task that is not done', () => {

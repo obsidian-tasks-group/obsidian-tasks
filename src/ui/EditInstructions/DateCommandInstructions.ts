@@ -143,13 +143,15 @@ export class MoveTaskDate extends BaseTaskEditingInstruction {
 /**
  * Whether a task's status allows the given date field to be edited by a command.
  *
- * Done dates may only be edited on done tasks.
+ * Done dates may only be edited on done tasks, and cancelled dates on cancelled tasks.
  * All other date fields may be edited on any task.
  */
 export function statusAllowsEditingDateField(field: AllTaskDateFields, task: Task): boolean {
     switch (field) {
         case 'doneDate':
             return task.status.type === StatusType.DONE;
+        case 'cancelledDate':
+            return task.status.type === StatusType.CANCELLED;
         default:
             return true;
     }
