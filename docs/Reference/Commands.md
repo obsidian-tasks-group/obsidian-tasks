@@ -92,6 +92,8 @@ Notes:
 
 - `Today`, `Tomorrow` and `Yesterday` mean the day when the command is run.
 - Start, Scheduled and Due dates have `Tomorrow` commands, and Created, Done and Cancelled dates have `Yesterday` commands.
+- The Done date commands only change tasks whose status type is `DONE`, and the Cancelled date commands only change tasks whose status type is `CANCELLED`.
+  This applies to all their commands, including `Remove`.
 - If several lines are selected, the command is applied to every task on those lines, and a single Undo reverts them all.
   Lines that are not tasks are left unchanged.
 
