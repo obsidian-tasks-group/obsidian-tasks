@@ -45,13 +45,14 @@ On iPhone, and probably iPad too, this date-picker hard-codes the start of the w
 **Right-click on any task date field** in **Reading mode** and **Tasks query search results** to:
 
 - postpone Start, Scheduled and Due dates
-- advance Created, Cancelled and Done dates
+- move Created, Cancelled and Done dates earlier
+- remove the date
 
 ![Hover over a date in Read mode or Tasks query search results](../images/date-context-menu-1.png)
 <span class="caption">Hover over a date in Read mode or Tasks query search results</span>
 
-![Chose an option from the context menu](../images/date-context-menu-2.png)
-<span class="caption">Chose an option from the context menu</span>
+![Choose an option from the context menu](../images/date-context-menu-2.png)
+<span class="caption">Choose an option from the context menu</span>
 
 | Where                         | Viewing Mode | Works? | Works on<br>multiple tasks? |
 | ----------------------------- | ------------ | ------ | --------------------------- |
@@ -67,9 +68,9 @@ In **Editing mode** (both Source mode and Live Preview) the options are:
 
 - Type the dates yourself.
 - Use [[Auto-Suggest]] to add emojis and a range of convenient dates.
-- Using the `Create or edit Task` command to access the [[Create or edit Task]] modal/dialog.
+- Use the `Create or edit Task` command to access the [[Create or edit Task]] modal/dialog.
 
 In **Reading mode** and **Tasks query search results** the options are:
 
 - Click or right-click ⏩ to use the [[Postponing|Postpone]] button.
-- Click the Pencil icon  (📝) to use the [[Create or edit Task]] modal/dialog.
+- Click the Pencil icon (📝) to use the [[Create or edit Task]] modal/dialog.
