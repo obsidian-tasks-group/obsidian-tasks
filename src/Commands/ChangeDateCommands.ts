@@ -4,6 +4,7 @@ import { createApplyInstructionEditorCallback } from 'Commands/CreateEditorCallb
 import { RemoveTaskDate } from 'ui/EditInstructions/DateInstructions';
 import type { TaskEditingInstruction } from 'ui/EditInstructions/TaskEditingInstruction';
 import { dateFieldCommandNameText } from 'ui/EditInstructions/DateCommandNames';
+import { MoveTaskDate } from 'ui/EditInstructions/DateCommandInstructions';
 
 const notATaskMessage = 'Cannot change date: line is not a task or does not match global filter';
 
@@ -11,7 +12,13 @@ const notATaskMessage = 'Cannot change date: line is not a task or does not matc
  * Return the instructions for the date commands for one date field.
  */
 function dateCommandInstructions(field: AllTaskDateFields): TaskEditingInstruction[] {
-    return [new RemoveTaskDate(field, `Remove ${dateFieldCommandNameText(field)}`)];
+    return [
+        new MoveTaskDate(field, 1, 'day'),
+        new MoveTaskDate(field, -1, 'day'),
+        new MoveTaskDate(field, 1, 'week'),
+        new MoveTaskDate(field, -1, 'week'),
+        new RemoveTaskDate(field, `Remove ${dateFieldCommandNameText(field)}`),
+    ];
 }
 
 /**

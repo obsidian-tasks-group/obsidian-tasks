@@ -31,6 +31,15 @@ function runCommand(commands: Command[], id: string, lines: string[]) {
 }
 
 describe('Change date commands', () => {
+    it('should move each selected task by the same amount, skipping tasks without the date', () => {
+        const lines = ['- [ ] task 1 ⏳ 2023-05-05', '- [ ] task 2', '- [ ] task 3 ⏳ 2025-01-31'];
+        expect(runCommand(createChangeDateCommands(), 'move-scheduled-date-by-plus-1-week', lines)).toEqual([
+            '- [ ] task 1 ⏳ 2023-05-12',
+            '- [ ] task 2',
+            '- [ ] task 3 ⏳ 2025-02-07',
+        ]);
+    });
+
     it('should remove the date from every selected task', () => {
         const lines = ['- [ ] task 1 ➕ 2023-05-05', '- [ ] task 2'];
         expect(runCommand(createChangeDateCommands(), 'remove-created-date', lines)).toEqual([
