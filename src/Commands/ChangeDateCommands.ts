@@ -4,7 +4,11 @@ import { createApplyInstructionEditorCallback } from 'Commands/CreateEditorCallb
 import { RemoveTaskDate } from 'ui/EditInstructions/DateInstructions';
 import type { TaskEditingInstruction } from 'ui/EditInstructions/TaskEditingInstruction';
 import { dateFieldCommandNameText } from 'ui/EditInstructions/DateCommandNames';
-import { MoveTaskDate, SetTaskDateRelativeToToday } from 'ui/EditInstructions/DateCommandInstructions';
+import {
+    MoveTaskDate,
+    OnlyIfStatusAllowsEditingDate,
+    SetTaskDateRelativeToToday,
+} from 'ui/EditInstructions/DateCommandInstructions';
 
 const notATaskMessage = 'Cannot change date: line is not a task or does not match global filter';
 
@@ -17,7 +21,7 @@ const notATaskMessage = 'Cannot change date: line is not a task or does not matc
  */
 function dateCommandInstructions(field: AllTaskDateFields): TaskEditingInstruction[] {
     const factor = isAHappensDate(field) ? 1 : -1;
-    return [
+    const instructions = [
         new SetTaskDateRelativeToToday(field, 0, 'always'),
         new SetTaskDateRelativeToToday(field, factor, 'always'),
         new SetTaskDateRelativeToToday(field, 0, 'if_missing'),
@@ -28,6 +32,7 @@ function dateCommandInstructions(field: AllTaskDateFields): TaskEditingInstructi
         new MoveTaskDate(field, -1, 'week'),
         new RemoveTaskDate(field, `Remove ${dateFieldCommandNameText(field)}`),
     ];
+    return instructions.map((instruction) => new OnlyIfStatusAllowsEditingDate(field, instruction));
 }
 
 /**

@@ -73,6 +73,15 @@ describe('Change date commands', () => {
         ]);
     });
 
+    it('should only change done dates of done tasks', () => {
+        const lines = ['- [x] task 1', '- [ ] task 2', '- [-] task 3'];
+        expect(runCommand(createChangeDateCommands(), 'set-done-date-to-today-minus-1-day', lines)).toEqual([
+            '- [x] task 1 ✅ 2024-09-30',
+            '- [ ] task 2',
+            '- [-] task 3',
+        ]);
+    });
+
     describe('reference', () => {
         it.each(ALL_DATE_FIELDS)('table for %s', (field) => {
             verifyCommandsAsMarkdownForDocs(createChangeDateCommandsForField(field));
