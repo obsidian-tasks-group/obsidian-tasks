@@ -113,6 +113,10 @@ export class RemoveTaskDate extends BaseTaskEditingInstruction {
     isCheckedForTask(_task: Task): boolean {
         return false;
     }
+
+    public commandId(): string {
+        return `remove-${this.dateFieldToEdit}`;
+    }
 }
 
 /**

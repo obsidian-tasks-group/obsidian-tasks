@@ -1,0 +1,39 @@
+import moment from 'moment';
+import type { Command, Editor } from 'obsidian';
+import { createChangeDateCommands } from 'Commands/ChangeDateCommands';
+import { makeFakeEditor, makeFakeMarkdownView } from './CreateEditorCallbackHelpers';
+
+window.moment = moment;
+
+beforeEach(() => {
+    vi.useFakeTimers();
+    vi.setSystemTime(new Date('2024-10-01'));
+});
+
+afterEach(() => {
+    vi.useRealTimers();
+});
+
+function findCommand(commands: Command[], id: string) {
+    const command = commands.find((c) => c.id === id);
+    if (!command) {
+        throw new Error(`Command not found: ${id}`);
+    }
+    return command;
+}
+
+function runCommand(commands: Command[], id: string, lines: string[]) {
+    const { editor, getText } = makeFakeEditor(lines, 0, lines.length - 1);
+    findCommand(commands, id).editorCheckCallback!(false, editor as unknown as Editor, makeFakeMarkdownView());
+    return getText().split('\n');
+}
+
+describe('Change date commands', () => {
+    it('should remove the date from every selected task', () => {
+        const lines = ['- [ ] task 1 ➕ 2023-05-05', '- [ ] task 2'];
+        expect(runCommand(createChangeDateCommands(), 'remove-createdDate', lines)).toEqual([
+            '- [ ] task 1',
+            '- [ ] task 2',
+        ]);
+    });
+});
