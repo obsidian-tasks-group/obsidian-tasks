@@ -1,6 +1,8 @@
 import type { AllTaskDateFields } from 'DateTime/DateFieldTypes';
+import { StatusType } from 'Statuses/StatusConfiguration';
 import { Task } from 'Task/Task';
 import { BaseTaskEditingInstruction } from 'ui/EditInstructions/BaseTaskEditingInstruction';
+import type { TaskEditingInstruction } from 'ui/EditInstructions/TaskEditingInstruction';
 import {
     dateFieldCommandIdText,
     dateFieldCommandNameText,
@@ -135,5 +137,55 @@ export class MoveTaskDate extends BaseTaskEditingInstruction {
     public commandId(): string {
         const unit = Math.abs(this.amount) === 1 ? this.timeUnit : `${this.timeUnit}s`;
         return `move-${dateFieldCommandIdText(this.dateFieldToEdit)}-by-${signedAmountCommandIdText(this.amount)}-${unit}`;
+    }
+}
+
+/**
+ * Whether a task's status allows the given date field to be edited by a command.
+ *
+ * Done dates may only be edited on done tasks.
+ * All other date fields may be edited on any task.
+ */
+export function statusAllowsEditingDateField(field: AllTaskDateFields, task: Task): boolean {
+    switch (field) {
+        case 'doneDate':
+            return task.status.type === StatusType.DONE;
+        default:
+            return true;
+    }
+}
+
+/**
+ * Wraps a date editing instruction, so that it leaves unchanged any tasks
+ * whose status does not allow the date field to be edited.
+ *
+ * See {@link statusAllowsEditingDateField}.
+ */
+export class OnlyIfStatusAllowsEditingDate implements TaskEditingInstruction {
+    private readonly dateFieldToEdit: AllTaskDateFields;
+    private readonly instruction: TaskEditingInstruction;
+
+    constructor(dateFieldToEdit: AllTaskDateFields, instruction: TaskEditingInstruction) {
+        this.dateFieldToEdit = dateFieldToEdit;
+        this.instruction = instruction;
+    }
+
+    public apply(task: Task): Task[] {
+        if (!statusAllowsEditingDateField(this.dateFieldToEdit, task)) {
+            return [task];
+        }
+        return this.instruction.apply(task);
+    }
+
+    public instructionDisplayName(): string {
+        return this.instruction.instructionDisplayName();
+    }
+
+    public isCheckedForTask(task: Task): boolean {
+        return this.instruction.isCheckedForTask(task);
+    }
+
+    public commandId(): string {
+        return this.instruction.commandId();
     }
 }

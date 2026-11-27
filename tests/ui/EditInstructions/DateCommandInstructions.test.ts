@@ -1,5 +1,11 @@
 import moment from 'moment';
-import { MoveTaskDate, SetTaskDateRelativeToToday } from 'ui/EditInstructions/DateCommandInstructions';
+import {
+    MoveTaskDate,
+    OnlyIfStatusAllowsEditingDate,
+    SetTaskDateRelativeToToday,
+} from 'ui/EditInstructions/DateCommandInstructions';
+import { RemoveTaskDate } from 'ui/EditInstructions/DateInstructions';
+import { Status } from 'Statuses/Status';
 import { TaskBuilder } from '../../TestingTools/TaskBuilder';
 import { fromLine } from '../../TestingTools/TestHelpers';
 
@@ -130,5 +136,37 @@ describe('MoveTaskDate', () => {
     it('should leave tasks with an invalid date unchanged', () => {
         const task = fromLine({ line: '- [ ] task 📅 2024-02-30' });
         expect(new MoveTaskDate('dueDate', 1, 'day').apply(task)).toEqual([task]);
+    });
+});
+
+describe('OnlyIfStatusAllowsEditingDate', () => {
+    const setDone = new OnlyIfStatusAllowsEditingDate(
+        'doneDate',
+        new SetTaskDateRelativeToToday('doneDate', 0, 'always'),
+    );
+
+    it('should delegate the name and id', () => {
+        expect(setDone.instructionDisplayName()).toEqual('Change Done date to: Today');
+        expect(setDone.commandId()).toEqual('set-done-date-to-today');
+    });
+
+    it('should only edit done dates on done tasks', () => {
+        expect(applyToLine(setDone, '- [x] task')).toEqual('- [x] task ✅ 2024-10-01');
+        expect(applyToLine(setDone, '- [ ] task')).toEqual('- [ ] task');
+        expect(applyToLine(setDone, '- [-] task')).toEqual('- [-] task');
+    });
+
+    it('should not remove a done date from a task that is not done', () => {
+        const remove = new OnlyIfStatusAllowsEditingDate('doneDate', new RemoveTaskDate('doneDate', 'Remove'));
+        const task = new TaskBuilder().status(Status.TODO).doneDate(today).build();
+        expect(remove.apply(task)).toEqual([task]);
+    });
+
+    it('should edit other date fields regardless of status', () => {
+        const setDue = new OnlyIfStatusAllowsEditingDate(
+            'dueDate',
+            new SetTaskDateRelativeToToday('dueDate', 0, 'always'),
+        );
+        expect(applyToLine(setDue, '- [x] task')).toEqual('- [x] task 📅 2024-10-01');
     });
 });
