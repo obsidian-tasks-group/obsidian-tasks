@@ -48,6 +48,14 @@ describe('Change date commands', () => {
         ]);
     });
 
+    it('should add the date only to selected tasks that lack it', () => {
+        const lines = ['- [ ] task 1', '- [ ] task 2 ➕ 2023-05-05'];
+        expect(runCommand(createChangeDateCommands(), 'add-created-date-today', lines)).toEqual([
+            '- [ ] task 1 ➕ 2024-10-01',
+            '- [ ] task 2 ➕ 2023-05-05',
+        ]);
+    });
+
     it('should move each selected task by the same amount, skipping tasks without the date', () => {
         const lines = ['- [ ] task 1 ⏳ 2023-05-05', '- [ ] task 2', '- [ ] task 3 ⏳ 2025-01-31'];
         expect(runCommand(createChangeDateCommands(), 'move-scheduled-date-by-plus-1-week', lines)).toEqual([
