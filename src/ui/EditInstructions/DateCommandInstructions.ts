@@ -8,6 +8,12 @@ import {
 } from 'ui/EditInstructions/DateCommandNames';
 
 /**
+ * Whether {@link SetTaskDateRelativeToToday} sets the date on every task,
+ * or only on tasks that have no value in the field.
+ */
+export type SetDateWhen = 'always' | 'if_missing';
+
+/**
  * An instruction to set a date field to a date relative to today,
  * where today is computed each time the instruction is applied, not when it is constructed.
  *
@@ -21,15 +27,20 @@ import {
 export class SetTaskDateRelativeToToday extends BaseTaskEditingInstruction {
     private readonly dateFieldToEdit: AllTaskDateFields;
     private readonly daysFromToday: number;
+    private readonly when: SetDateWhen;
 
-    constructor(dateFieldToEdit: AllTaskDateFields, daysFromToday: number) {
+    constructor(dateFieldToEdit: AllTaskDateFields, daysFromToday: number, when: SetDateWhen) {
         super();
         this.dateFieldToEdit = dateFieldToEdit;
         this.daysFromToday = daysFromToday;
+        this.when = when;
     }
 
     public apply(task: Task): Task[] {
         if (this.isCheckedForTask(task)) {
+            return [task];
+        }
+        if (this.when === 'if_missing' && task[this.dateFieldToEdit] !== null) {
             return [task];
         }
         return [
@@ -42,6 +53,9 @@ export class SetTaskDateRelativeToToday extends BaseTaskEditingInstruction {
 
     public instructionDisplayName(): string {
         const fieldName = dateFieldCommandNameText(this.dateFieldToEdit);
+        if (this.when === 'if_missing') {
+            return `Add ${fieldName}: ${this.relativeDayName()}`;
+        }
         return `Change ${fieldName} to: ${this.relativeDayName()}`;
     }
 
@@ -52,6 +66,9 @@ export class SetTaskDateRelativeToToday extends BaseTaskEditingInstruction {
     public commandId(): string {
         const suffix = this.daysFromToday === 0 ? '' : `-${signedAmountCommandIdText(this.daysFromToday)}-day`;
         const fieldId = dateFieldCommandIdText(this.dateFieldToEdit);
+        if (this.when === 'if_missing') {
+            return `add-${fieldId}-today${suffix}`;
+        }
         return `set-${fieldId}-to-today${suffix}`;
     }
 

@@ -18,8 +18,8 @@ const notATaskMessage = 'Cannot change date: line is not a task or does not matc
 function dateCommandInstructions(field: AllTaskDateFields): TaskEditingInstruction[] {
     const factor = isAHappensDate(field) ? 1 : -1;
     return [
-        new SetTaskDateRelativeToToday(field, 0),
-        new SetTaskDateRelativeToToday(field, factor),
+        new SetTaskDateRelativeToToday(field, 0, 'always'),
+        new SetTaskDateRelativeToToday(field, factor, 'always'),
         new MoveTaskDate(field, 1, 'day'),
         new MoveTaskDate(field, -1, 'day'),
         new MoveTaskDate(field, 1, 'week'),

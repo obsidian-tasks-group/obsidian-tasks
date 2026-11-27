@@ -25,48 +25,83 @@ function applyToLine(instruction: { apply: (task: any) => any[] }, line: string)
 
 describe('SetTaskDateRelativeToToday', () => {
     it('should name the command', () => {
-        const instruction = new SetTaskDateRelativeToToday('dueDate', 0);
+        const instruction = new SetTaskDateRelativeToToday('dueDate', 0, 'always');
         expect(instruction.instructionDisplayName()).toEqual('Change Due date to: Today');
         expect(instruction.commandId()).toEqual('set-due-date-to-today');
     });
 
     it('should name tomorrow and yesterday commands', () => {
-        expect(new SetTaskDateRelativeToToday('dueDate', 1).instructionDisplayName()).toEqual(
+        expect(new SetTaskDateRelativeToToday('dueDate', 1, 'always').instructionDisplayName()).toEqual(
             'Change Due date to: Tomorrow',
         );
-        expect(new SetTaskDateRelativeToToday('dueDate', 1).commandId()).toEqual('set-due-date-to-today-plus-1-day');
-        expect(new SetTaskDateRelativeToToday('createdDate', -1).instructionDisplayName()).toEqual(
+        expect(new SetTaskDateRelativeToToday('dueDate', 1, 'always').commandId()).toEqual(
+            'set-due-date-to-today-plus-1-day',
+        );
+        expect(new SetTaskDateRelativeToToday('createdDate', -1, 'always').instructionDisplayName()).toEqual(
             'Change Created date to: Yesterday',
         );
-        expect(new SetTaskDateRelativeToToday('createdDate', -1).commandId()).toEqual(
+        expect(new SetTaskDateRelativeToToday('createdDate', -1, 'always').commandId()).toEqual(
             'set-created-date-to-today-minus-1-day',
         );
     });
 
     it('should set the date relative to today', () => {
-        expect(applyToLine(new SetTaskDateRelativeToToday('dueDate', 1), '- [ ] task')).toEqual(
+        expect(applyToLine(new SetTaskDateRelativeToToday('dueDate', 1, 'always'), '- [ ] task')).toEqual(
             '- [ ] task 📅 2024-10-02',
         );
-        expect(applyToLine(new SetTaskDateRelativeToToday('dueDate', 0), '- [ ] task 📅 2023-01-01')).toEqual(
+        expect(applyToLine(new SetTaskDateRelativeToToday('dueDate', 0, 'always'), '- [ ] task 📅 2023-01-01')).toEqual(
             '- [ ] task 📅 2024-10-01',
         );
     });
 
     it('should return the same task if the date is already set', () => {
         const task = new TaskBuilder().dueDate(today).build();
-        expect(new SetTaskDateRelativeToToday('dueDate', 0).apply(task)).toEqual([task]);
+        expect(new SetTaskDateRelativeToToday('dueDate', 0, 'always').apply(task)).toEqual([task]);
     });
 
     it('should use the date when applied, not when constructed', () => {
-        const instruction = new SetTaskDateRelativeToToday('dueDate', 0);
+        const instruction = new SetTaskDateRelativeToToday('dueDate', 0, 'always');
         vi.setSystemTime(new Date('2024-10-05'));
         expect(applyToLine(instruction, '- [ ] task')).toEqual('- [ ] task 📅 2024-10-05');
     });
 
     it('should replace an invalid date', () => {
-        expect(applyToLine(new SetTaskDateRelativeToToday('dueDate', 0), '- [ ] task 📅 2024-02-30')).toEqual(
+        expect(applyToLine(new SetTaskDateRelativeToToday('dueDate', 0, 'always'), '- [ ] task 📅 2024-02-30')).toEqual(
             '- [ ] task 📅 2024-10-01',
         );
+    });
+});
+
+describe('SetTaskDateRelativeToToday, only if missing', () => {
+    it('should name the commands', () => {
+        expect(new SetTaskDateRelativeToToday('createdDate', 0, 'if_missing').instructionDisplayName()).toEqual(
+            'Add Created date: Today',
+        );
+        expect(new SetTaskDateRelativeToToday('createdDate', 0, 'if_missing').commandId()).toEqual(
+            'add-created-date-today',
+        );
+        expect(new SetTaskDateRelativeToToday('dueDate', 1, 'if_missing').instructionDisplayName()).toEqual(
+            'Add Due date: Tomorrow',
+        );
+        expect(new SetTaskDateRelativeToToday('dueDate', 1, 'if_missing').commandId()).toEqual(
+            'add-due-date-today-plus-1-day',
+        );
+    });
+
+    it('should add the date to a task without one', () => {
+        expect(applyToLine(new SetTaskDateRelativeToToday('createdDate', -1, 'if_missing'), '- [ ] task')).toEqual(
+            '- [ ] task ➕ 2024-09-30',
+        );
+    });
+
+    it('should leave a task with an existing date unchanged', () => {
+        const task = fromLine({ line: '- [ ] task ➕ 2023-01-01' });
+        expect(new SetTaskDateRelativeToToday('createdDate', 0, 'if_missing').apply(task)).toEqual([task]);
+    });
+
+    it('should leave a task with an invalid date unchanged', () => {
+        const task = fromLine({ line: '- [ ] task ➕ 2024-02-30' });
+        expect(new SetTaskDateRelativeToToday('createdDate', 0, 'if_missing').apply(task)).toEqual([task]);
     });
 });
 
