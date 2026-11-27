@@ -3,6 +3,7 @@ import type { Command, Editor } from 'obsidian';
 import { createChangeDateCommands, createChangeDateCommandsForField } from 'Commands/ChangeDateCommands';
 import { ALL_DATE_FIELDS } from 'DateTime/DateFieldTypes';
 import { verifyCommandsAsMarkdownForDocs } from '../TestingTools/VerifyMarkdown';
+import { noticeMessages } from '../__mocks__/obsidian';
 import { makeFakeEditor, makeFakeMarkdownView } from './CreateEditorCallbackHelpers';
 
 window.moment = moment;
@@ -80,6 +81,16 @@ describe('Change date commands', () => {
             '- [ ] task 2',
             '- [-] task 3',
         ]);
+    });
+
+    it('should notify the user with a date-specific message when the line is not a task', () => {
+        runCommand(createChangeDateCommands(), 'set-due-date-to-today', ['This is not a task']);
+        expect(noticeMessages).toEqual(['Cannot change date: line is not a task or does not match global filter']);
+    });
+
+    it('should have unique ids', () => {
+        const ids = createChangeDateCommands().map((command) => command.id);
+        expect(new Set(ids).size).toEqual(ids.length);
     });
 
     describe('reference', () => {
