@@ -1,5 +1,5 @@
 import moment from 'moment';
-import { MoveTaskDate } from 'ui/EditInstructions/DateCommandInstructions';
+import { MoveTaskDate, SetTaskDateRelativeToToday } from 'ui/EditInstructions/DateCommandInstructions';
 import { TaskBuilder } from '../../TestingTools/TaskBuilder';
 import { fromLine } from '../../TestingTools/TestHelpers';
 
@@ -22,6 +22,53 @@ function applyToLine(instruction: { apply: (task: any) => any[] }, line: string)
         .map((t: any) => t.toFileLineString())
         .join('\n');
 }
+
+describe('SetTaskDateRelativeToToday', () => {
+    it('should name the command', () => {
+        const instruction = new SetTaskDateRelativeToToday('dueDate', 0);
+        expect(instruction.instructionDisplayName()).toEqual('Change Due date to: Today');
+        expect(instruction.commandId()).toEqual('set-due-date-to-today');
+    });
+
+    it('should name tomorrow and yesterday commands', () => {
+        expect(new SetTaskDateRelativeToToday('dueDate', 1).instructionDisplayName()).toEqual(
+            'Change Due date to: Tomorrow',
+        );
+        expect(new SetTaskDateRelativeToToday('dueDate', 1).commandId()).toEqual('set-due-date-to-today-plus-1-day');
+        expect(new SetTaskDateRelativeToToday('createdDate', -1).instructionDisplayName()).toEqual(
+            'Change Created date to: Yesterday',
+        );
+        expect(new SetTaskDateRelativeToToday('createdDate', -1).commandId()).toEqual(
+            'set-created-date-to-today-minus-1-day',
+        );
+    });
+
+    it('should set the date relative to today', () => {
+        expect(applyToLine(new SetTaskDateRelativeToToday('dueDate', 1), '- [ ] task')).toEqual(
+            '- [ ] task 📅 2024-10-02',
+        );
+        expect(applyToLine(new SetTaskDateRelativeToToday('dueDate', 0), '- [ ] task 📅 2023-01-01')).toEqual(
+            '- [ ] task 📅 2024-10-01',
+        );
+    });
+
+    it('should return the same task if the date is already set', () => {
+        const task = new TaskBuilder().dueDate(today).build();
+        expect(new SetTaskDateRelativeToToday('dueDate', 0).apply(task)).toEqual([task]);
+    });
+
+    it('should use the date when applied, not when constructed', () => {
+        const instruction = new SetTaskDateRelativeToToday('dueDate', 0);
+        vi.setSystemTime(new Date('2024-10-05'));
+        expect(applyToLine(instruction, '- [ ] task')).toEqual('- [ ] task 📅 2024-10-05');
+    });
+
+    it('should replace an invalid date', () => {
+        expect(applyToLine(new SetTaskDateRelativeToToday('dueDate', 0), '- [ ] task 📅 2024-02-30')).toEqual(
+            '- [ ] task 📅 2024-10-01',
+        );
+    });
+});
 
 describe('MoveTaskDate', () => {
     it('should name the commands', () => {

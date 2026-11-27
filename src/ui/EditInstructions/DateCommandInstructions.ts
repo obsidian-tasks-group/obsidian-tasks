@@ -8,6 +8,72 @@ import {
 } from 'ui/EditInstructions/DateCommandNames';
 
 /**
+ * An instruction to set a date field to a date relative to today,
+ * where today is computed each time the instruction is applied, not when it is constructed.
+ *
+ * This allows it to be used in commands that are created when the plugin loads,
+ * and may be run days later.
+ *
+ * With {@link SetDateWhen} `'if_missing'`, tasks that already have a value in the field are left unchanged.
+ *
+ * See also {@link SetTaskDate}, which uses a fixed date.
+ */
+export class SetTaskDateRelativeToToday extends BaseTaskEditingInstruction {
+    private readonly dateFieldToEdit: AllTaskDateFields;
+    private readonly daysFromToday: number;
+
+    constructor(dateFieldToEdit: AllTaskDateFields, daysFromToday: number) {
+        super();
+        this.dateFieldToEdit = dateFieldToEdit;
+        this.daysFromToday = daysFromToday;
+    }
+
+    public apply(task: Task): Task[] {
+        if (this.isCheckedForTask(task)) {
+            return [task];
+        }
+        return [
+            new Task({
+                ...task,
+                [this.dateFieldToEdit]: this.newDate(),
+            }),
+        ];
+    }
+
+    public instructionDisplayName(): string {
+        const fieldName = dateFieldCommandNameText(this.dateFieldToEdit);
+        return `Change ${fieldName} to: ${this.relativeDayName()}`;
+    }
+
+    public isCheckedForTask(task: Task): boolean {
+        return task[this.dateFieldToEdit]?.isSame(this.newDate(), 'day') || false;
+    }
+
+    public commandId(): string {
+        const suffix = this.daysFromToday === 0 ? '' : `-${signedAmountCommandIdText(this.daysFromToday)}-day`;
+        const fieldId = dateFieldCommandIdText(this.dateFieldToEdit);
+        return `set-${fieldId}-to-today${suffix}`;
+    }
+
+    private newDate() {
+        return window.moment().startOf('day').add(this.daysFromToday, 'days');
+    }
+
+    private relativeDayName() {
+        switch (this.daysFromToday) {
+            case 0:
+                return 'Today';
+            case 1:
+                return 'Tomorrow';
+            case -1:
+                return 'Yesterday';
+            default:
+                return `Today ${this.daysFromToday > 0 ? '+' : ''}${this.daysFromToday} days`;
+        }
+    }
+}
+
+/**
  * An instruction to move a date field by an amount, relative to its current value.
  *
  * Tasks without a valid value in the field are left unchanged.
