@@ -36,7 +36,7 @@ function dateCommandInstructions(field: AllTaskDateFields): TaskEditingInstructi
 }
 
 /**
- * Create commands to edit one date field, on every selected task.
+ * Create commands to change, add, move or remove one date field, on every selected task.
  */
 export function createChangeDateCommandsForField(field: AllTaskDateFields): Command[] {
     return dateCommandInstructions(field).map((instruction) => ({
