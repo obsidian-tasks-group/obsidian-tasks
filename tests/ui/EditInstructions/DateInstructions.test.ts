@@ -417,3 +417,26 @@ describe('Creating Editing Instruction', () => {
         expect(instruction).toBeNull();
     });
 });
+
+describe('RemoveTaskDate for commands', () => {
+    it('should accept a display name instead of a task', () => {
+        const instruction = new RemoveTaskDate('dueDate', 'Remove Due date');
+
+        expect(instruction.instructionDisplayName()).toEqual('Remove Due date');
+        expect(instruction.commandId()).toEqual('remove-due-date');
+    });
+
+    it('should provide a command id for every date field', () => {
+        const ids = Task.allDateFields().map((field) =>
+            new RemoveTaskDate(field as AllTaskDateFields, 'name').commandId(),
+        );
+        expect(ids).toEqual([
+            'remove-created-date',
+            'remove-start-date',
+            'remove-scheduled-date',
+            'remove-due-date',
+            'remove-done-date',
+            'remove-cancelled-date',
+        ]);
+    });
+});
