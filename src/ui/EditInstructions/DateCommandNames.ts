@@ -16,3 +16,10 @@ export function dateFieldCommandNameText(field: AllTaskDateFields): string {
 export function dateFieldCommandIdText(field: AllTaskDateFields): string {
     return field.replace('Date', '-date');
 }
+
+/**
+ * The text for a signed amount in command ids, such as 'plus-1' or 'minus-1'.
+ */
+export function signedAmountCommandIdText(amount: number): string {
+    return `${amount >= 0 ? 'plus' : 'minus'}-${Math.abs(amount)}`;
+}
