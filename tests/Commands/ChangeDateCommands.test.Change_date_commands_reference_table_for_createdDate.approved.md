@@ -2,6 +2,8 @@
 
 | Name | ID |
 | ----- | ----- |
+| `Tasks: Change Created date to: Today` | `obsidian-tasks-plugin:set-created-date-to-today` |
+| `Tasks: Change Created date to: Yesterday` | `obsidian-tasks-plugin:set-created-date-to-today-minus-1-day` |
 | `Tasks: Move Created date by: +1 day` | `obsidian-tasks-plugin:move-created-date-by-plus-1-day` |
 | `Tasks: Move Created date by: -1 day` | `obsidian-tasks-plugin:move-created-date-by-minus-1-day` |
 | `Tasks: Move Created date by: +1 week` | `obsidian-tasks-plugin:move-created-date-by-plus-1-week` |

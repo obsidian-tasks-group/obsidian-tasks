@@ -1,18 +1,25 @@
 import { type Command } from 'obsidian';
-import { ALL_DATE_FIELDS, type AllTaskDateFields } from 'DateTime/DateFieldTypes';
+import { ALL_DATE_FIELDS, type AllTaskDateFields, isAHappensDate } from 'DateTime/DateFieldTypes';
 import { createApplyInstructionEditorCallback } from 'Commands/CreateEditorCallback';
 import { RemoveTaskDate } from 'ui/EditInstructions/DateInstructions';
 import type { TaskEditingInstruction } from 'ui/EditInstructions/TaskEditingInstruction';
 import { dateFieldCommandNameText } from 'ui/EditInstructions/DateCommandNames';
-import { MoveTaskDate } from 'ui/EditInstructions/DateCommandInstructions';
+import { MoveTaskDate, SetTaskDateRelativeToToday } from 'ui/EditInstructions/DateCommandInstructions';
 
 const notATaskMessage = 'Cannot change date: line is not a task or does not match global filter';
 
 /**
  * Return the instructions for the date commands for one date field.
+ *
+ * Start, Scheduled and Due dates get 'Tomorrow' commands,
+ * and Created, Done and Cancelled dates get 'Yesterday' commands,
+ * following the direction of the date context menus.
  */
 function dateCommandInstructions(field: AllTaskDateFields): TaskEditingInstruction[] {
+    const factor = isAHappensDate(field) ? 1 : -1;
     return [
+        new SetTaskDateRelativeToToday(field, 0),
+        new SetTaskDateRelativeToToday(field, factor),
         new MoveTaskDate(field, 1, 'day'),
         new MoveTaskDate(field, -1, 'day'),
         new MoveTaskDate(field, 1, 'week'),
