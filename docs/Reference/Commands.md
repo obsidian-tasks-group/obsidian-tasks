@@ -80,12 +80,15 @@ Notes:
 
 There are these commands for each of the six [[Dates|dates]]:
 
+- `Change … date to: …` sets the date on every task, replacing any date already there.
 - `Move … date by: …` moves each task's date by the same amount, relative to its current value.
   Tasks without that date are left unchanged.
 - `Remove … date` removes the date.
 
 Notes:
 
+- `Today`, `Tomorrow` and `Yesterday` mean the day when the command is run.
+- Start, Scheduled and Due dates have `Tomorrow` commands, and Created, Done and Cancelled dates have `Yesterday` commands.
 - If several lines are selected, the command is applied to every task on those lines, and a single Undo reverts them all.
   Lines that are not tasks are left unchanged.
 
@@ -100,6 +103,8 @@ See [[Dates#Due date|Due date]].
 
 | Name | ID |
 | ----- | ----- |
+| `Tasks: Change Due date to: Today` | `obsidian-tasks-plugin:set-due-date-to-today` |
+| `Tasks: Change Due date to: Tomorrow` | `obsidian-tasks-plugin:set-due-date-to-today-plus-1-day` |
 | `Tasks: Move Due date by: +1 day` | `obsidian-tasks-plugin:move-due-date-by-plus-1-day` |
 | `Tasks: Move Due date by: -1 day` | `obsidian-tasks-plugin:move-due-date-by-minus-1-day` |
 | `Tasks: Move Due date by: +1 week` | `obsidian-tasks-plugin:move-due-date-by-plus-1-week` |
@@ -116,6 +121,8 @@ See [[Dates#Scheduled date|Scheduled date]].
 
 | Name | ID |
 | ----- | ----- |
+| `Tasks: Change Scheduled date to: Today` | `obsidian-tasks-plugin:set-scheduled-date-to-today` |
+| `Tasks: Change Scheduled date to: Tomorrow` | `obsidian-tasks-plugin:set-scheduled-date-to-today-plus-1-day` |
 | `Tasks: Move Scheduled date by: +1 day` | `obsidian-tasks-plugin:move-scheduled-date-by-plus-1-day` |
 | `Tasks: Move Scheduled date by: -1 day` | `obsidian-tasks-plugin:move-scheduled-date-by-minus-1-day` |
 | `Tasks: Move Scheduled date by: +1 week` | `obsidian-tasks-plugin:move-scheduled-date-by-plus-1-week` |
@@ -132,6 +139,8 @@ See [[Dates#Start date|Start date]].
 
 | Name | ID |
 | ----- | ----- |
+| `Tasks: Change Start date to: Today` | `obsidian-tasks-plugin:set-start-date-to-today` |
+| `Tasks: Change Start date to: Tomorrow` | `obsidian-tasks-plugin:set-start-date-to-today-plus-1-day` |
 | `Tasks: Move Start date by: +1 day` | `obsidian-tasks-plugin:move-start-date-by-plus-1-day` |
 | `Tasks: Move Start date by: -1 day` | `obsidian-tasks-plugin:move-start-date-by-minus-1-day` |
 | `Tasks: Move Start date by: +1 week` | `obsidian-tasks-plugin:move-start-date-by-plus-1-week` |
@@ -148,6 +157,8 @@ See [[Dates#Created date|Created date]].
 
 | Name | ID |
 | ----- | ----- |
+| `Tasks: Change Created date to: Today` | `obsidian-tasks-plugin:set-created-date-to-today` |
+| `Tasks: Change Created date to: Yesterday` | `obsidian-tasks-plugin:set-created-date-to-today-minus-1-day` |
 | `Tasks: Move Created date by: +1 day` | `obsidian-tasks-plugin:move-created-date-by-plus-1-day` |
 | `Tasks: Move Created date by: -1 day` | `obsidian-tasks-plugin:move-created-date-by-minus-1-day` |
 | `Tasks: Move Created date by: +1 week` | `obsidian-tasks-plugin:move-created-date-by-plus-1-week` |
@@ -164,6 +175,8 @@ See [[Dates#Done date|Done date]].
 
 | Name | ID |
 | ----- | ----- |
+| `Tasks: Change Done date to: Today` | `obsidian-tasks-plugin:set-done-date-to-today` |
+| `Tasks: Change Done date to: Yesterday` | `obsidian-tasks-plugin:set-done-date-to-today-minus-1-day` |
 | `Tasks: Move Done date by: +1 day` | `obsidian-tasks-plugin:move-done-date-by-plus-1-day` |
 | `Tasks: Move Done date by: -1 day` | `obsidian-tasks-plugin:move-done-date-by-minus-1-day` |
 | `Tasks: Move Done date by: +1 week` | `obsidian-tasks-plugin:move-done-date-by-plus-1-week` |
@@ -180,6 +193,8 @@ See [[Dates#Cancelled date|Cancelled date]].
 
 | Name | ID |
 | ----- | ----- |
+| `Tasks: Change Cancelled date to: Today` | `obsidian-tasks-plugin:set-cancelled-date-to-today` |
+| `Tasks: Change Cancelled date to: Yesterday` | `obsidian-tasks-plugin:set-cancelled-date-to-today-minus-1-day` |
 | `Tasks: Move Cancelled date by: +1 day` | `obsidian-tasks-plugin:move-cancelled-date-by-plus-1-day` |
 | `Tasks: Move Cancelled date by: -1 day` | `obsidian-tasks-plugin:move-cancelled-date-by-minus-1-day` |
 | `Tasks: Move Cancelled date by: +1 week` | `obsidian-tasks-plugin:move-cancelled-date-by-plus-1-week` |
