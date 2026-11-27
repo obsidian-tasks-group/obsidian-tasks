@@ -76,6 +76,92 @@ Notes:
 > [!released]
 > The Priority commands were introduced in Tasks 8.7.0.
 
+## Change date commands
+
+There are these commands for each of the six [[Dates|dates]]:
+
+- `Remove … date` removes the date.
+
+Notes:
+
+- If several lines are selected, the command is applied to every task on those lines, and a single Undo reverts them all.
+  Lines that are not tasks are left unchanged.
+
+> [!released]
+> The Date commands were introduced in Tasks X.Y.Z.
+
+### Due date commands
+
+See [[Dates#Due date|Due date]].
+
+<!-- placeholder to force blank line before included text --><!-- include: ChangeDateCommands.test.Change_date_commands_reference_table_for_dueDate.approved.md -->
+
+| Name | ID |
+| ----- | ----- |
+| `Tasks: Remove Due date` | `obsidian-tasks-plugin:remove-due-date` |
+
+<!-- placeholder to force blank line after included text --><!-- endInclude -->
+
+### Scheduled date commands
+
+See [[Dates#Scheduled date|Scheduled date]].
+
+<!-- placeholder to force blank line before included text --><!-- include: ChangeDateCommands.test.Change_date_commands_reference_table_for_scheduledDate.approved.md -->
+
+| Name | ID |
+| ----- | ----- |
+| `Tasks: Remove Scheduled date` | `obsidian-tasks-plugin:remove-scheduled-date` |
+
+<!-- placeholder to force blank line after included text --><!-- endInclude -->
+
+### Start date commands
+
+See [[Dates#Start date|Start date]].
+
+<!-- placeholder to force blank line before included text --><!-- include: ChangeDateCommands.test.Change_date_commands_reference_table_for_startDate.approved.md -->
+
+| Name | ID |
+| ----- | ----- |
+| `Tasks: Remove Start date` | `obsidian-tasks-plugin:remove-start-date` |
+
+<!-- placeholder to force blank line after included text --><!-- endInclude -->
+
+### Created date commands
+
+See [[Dates#Created date|Created date]].
+
+<!-- placeholder to force blank line before included text --><!-- include: ChangeDateCommands.test.Change_date_commands_reference_table_for_createdDate.approved.md -->
+
+| Name | ID |
+| ----- | ----- |
+| `Tasks: Remove Created date` | `obsidian-tasks-plugin:remove-created-date` |
+
+<!-- placeholder to force blank line after included text --><!-- endInclude -->
+
+### Done date commands
+
+See [[Dates#Done date|Done date]].
+
+<!-- placeholder to force blank line before included text --><!-- include: ChangeDateCommands.test.Change_date_commands_reference_table_for_doneDate.approved.md -->
+
+| Name | ID |
+| ----- | ----- |
+| `Tasks: Remove Done date` | `obsidian-tasks-plugin:remove-done-date` |
+
+<!-- placeholder to force blank line after included text --><!-- endInclude -->
+
+### Cancelled date commands
+
+See [[Dates#Cancelled date|Cancelled date]].
+
+<!-- placeholder to force blank line before included text --><!-- include: ChangeDateCommands.test.Change_date_commands_reference_table_for_cancelledDate.approved.md -->
+
+| Name | ID |
+| ----- | ----- |
+| `Tasks: Remove Cancelled date` | `obsidian-tasks-plugin:remove-cancelled-date` |
+
+<!-- placeholder to force blank line after included text --><!-- endInclude -->
+
 ## Other commands
 
 | Name                                            | ID                                                         | Details                                                                         |
