@@ -1,6 +1,8 @@
 import moment from 'moment';
 import type { Command, Editor } from 'obsidian';
-import { createChangeDateCommands } from 'Commands/ChangeDateCommands';
+import { createChangeDateCommands, createChangeDateCommandsForField } from 'Commands/ChangeDateCommands';
+import { ALL_DATE_FIELDS } from 'DateTime/DateFieldTypes';
+import { verifyCommandsAsMarkdownForDocs } from '../TestingTools/VerifyMarkdown';
 import { makeFakeEditor, makeFakeMarkdownView } from './CreateEditorCallbackHelpers';
 
 window.moment = moment;
@@ -35,5 +37,11 @@ describe('Change date commands', () => {
             '- [ ] task 1',
             '- [ ] task 2',
         ]);
+    });
+
+    describe('reference', () => {
+        it.each(ALL_DATE_FIELDS)('table for %s', (field) => {
+            verifyCommandsAsMarkdownForDocs(createChangeDateCommandsForField(field));
+        });
     });
 });
