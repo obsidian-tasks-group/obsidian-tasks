@@ -76,6 +76,150 @@ Notes:
 > [!released]
 > The Priority commands were introduced in Tasks 8.7.0.
 
+## Change date commands
+
+Change, add, move or remove one date on one or more tasks.
+
+There are nine commands for each of the six [[Dates|dates]]:
+
+- `Change … date to: …` sets the date on every task, replacing any date already there.
+- `Add … date: …` sets the date only on tasks that do not already have that date. Tasks that already have it are left unchanged.
+- `Move … date by: …` moves each task's date by the same amount, relative to its current value.
+  Tasks without that date are left unchanged.
+- `Remove … date` removes the date.
+
+Notes:
+
+- `Today`, `Tomorrow` and `Yesterday` mean the day when the command is run.
+- Start, Scheduled and Due dates have `Tomorrow` commands, and Created, Done and Cancelled dates have `Yesterday` commands.
+- The Done date commands only change tasks whose status type is `DONE`, and the Cancelled date commands only change tasks whose status type is `CANCELLED`.
+  This applies to all their commands, including `Remove`.
+- If several lines are selected, the command is applied to every task on those lines, and a single Undo reverts them all.
+  Lines that are not tasks are left unchanged.
+
+> [!released]
+> The Date commands were introduced in Tasks X.Y.Z.
+
+### Due date commands
+
+See [[Dates#Due date|Due date]].
+
+<!-- placeholder to force blank line before included text --><!-- include: ChangeDateCommands.test.Change_date_commands_reference_table_for_dueDate.approved.md -->
+
+| Name | ID |
+| ----- | ----- |
+| `Tasks: Change Due date to: Today` | `obsidian-tasks-plugin:set-due-date-to-today` |
+| `Tasks: Change Due date to: Tomorrow` | `obsidian-tasks-plugin:set-due-date-to-today-plus-1-day` |
+| `Tasks: Add Due date: Today` | `obsidian-tasks-plugin:add-due-date-today` |
+| `Tasks: Add Due date: Tomorrow` | `obsidian-tasks-plugin:add-due-date-today-plus-1-day` |
+| `Tasks: Move Due date by: +1 day` | `obsidian-tasks-plugin:move-due-date-by-plus-1-day` |
+| `Tasks: Move Due date by: -1 day` | `obsidian-tasks-plugin:move-due-date-by-minus-1-day` |
+| `Tasks: Move Due date by: +1 week` | `obsidian-tasks-plugin:move-due-date-by-plus-1-week` |
+| `Tasks: Move Due date by: -1 week` | `obsidian-tasks-plugin:move-due-date-by-minus-1-week` |
+| `Tasks: Remove Due date` | `obsidian-tasks-plugin:remove-due-date` |
+
+<!-- placeholder to force blank line after included text --><!-- endInclude -->
+
+### Scheduled date commands
+
+See [[Dates#Scheduled date|Scheduled date]].
+
+<!-- placeholder to force blank line before included text --><!-- include: ChangeDateCommands.test.Change_date_commands_reference_table_for_scheduledDate.approved.md -->
+
+| Name | ID |
+| ----- | ----- |
+| `Tasks: Change Scheduled date to: Today` | `obsidian-tasks-plugin:set-scheduled-date-to-today` |
+| `Tasks: Change Scheduled date to: Tomorrow` | `obsidian-tasks-plugin:set-scheduled-date-to-today-plus-1-day` |
+| `Tasks: Add Scheduled date: Today` | `obsidian-tasks-plugin:add-scheduled-date-today` |
+| `Tasks: Add Scheduled date: Tomorrow` | `obsidian-tasks-plugin:add-scheduled-date-today-plus-1-day` |
+| `Tasks: Move Scheduled date by: +1 day` | `obsidian-tasks-plugin:move-scheduled-date-by-plus-1-day` |
+| `Tasks: Move Scheduled date by: -1 day` | `obsidian-tasks-plugin:move-scheduled-date-by-minus-1-day` |
+| `Tasks: Move Scheduled date by: +1 week` | `obsidian-tasks-plugin:move-scheduled-date-by-plus-1-week` |
+| `Tasks: Move Scheduled date by: -1 week` | `obsidian-tasks-plugin:move-scheduled-date-by-minus-1-week` |
+| `Tasks: Remove Scheduled date` | `obsidian-tasks-plugin:remove-scheduled-date` |
+
+<!-- placeholder to force blank line after included text --><!-- endInclude -->
+
+### Start date commands
+
+See [[Dates#Start date|Start date]].
+
+<!-- placeholder to force blank line before included text --><!-- include: ChangeDateCommands.test.Change_date_commands_reference_table_for_startDate.approved.md -->
+
+| Name | ID |
+| ----- | ----- |
+| `Tasks: Change Start date to: Today` | `obsidian-tasks-plugin:set-start-date-to-today` |
+| `Tasks: Change Start date to: Tomorrow` | `obsidian-tasks-plugin:set-start-date-to-today-plus-1-day` |
+| `Tasks: Add Start date: Today` | `obsidian-tasks-plugin:add-start-date-today` |
+| `Tasks: Add Start date: Tomorrow` | `obsidian-tasks-plugin:add-start-date-today-plus-1-day` |
+| `Tasks: Move Start date by: +1 day` | `obsidian-tasks-plugin:move-start-date-by-plus-1-day` |
+| `Tasks: Move Start date by: -1 day` | `obsidian-tasks-plugin:move-start-date-by-minus-1-day` |
+| `Tasks: Move Start date by: +1 week` | `obsidian-tasks-plugin:move-start-date-by-plus-1-week` |
+| `Tasks: Move Start date by: -1 week` | `obsidian-tasks-plugin:move-start-date-by-minus-1-week` |
+| `Tasks: Remove Start date` | `obsidian-tasks-plugin:remove-start-date` |
+
+<!-- placeholder to force blank line after included text --><!-- endInclude -->
+
+### Created date commands
+
+See [[Dates#Created date|Created date]].
+
+<!-- placeholder to force blank line before included text --><!-- include: ChangeDateCommands.test.Change_date_commands_reference_table_for_createdDate.approved.md -->
+
+| Name | ID |
+| ----- | ----- |
+| `Tasks: Change Created date to: Today` | `obsidian-tasks-plugin:set-created-date-to-today` |
+| `Tasks: Change Created date to: Yesterday` | `obsidian-tasks-plugin:set-created-date-to-today-minus-1-day` |
+| `Tasks: Add Created date: Today` | `obsidian-tasks-plugin:add-created-date-today` |
+| `Tasks: Add Created date: Yesterday` | `obsidian-tasks-plugin:add-created-date-today-minus-1-day` |
+| `Tasks: Move Created date by: +1 day` | `obsidian-tasks-plugin:move-created-date-by-plus-1-day` |
+| `Tasks: Move Created date by: -1 day` | `obsidian-tasks-plugin:move-created-date-by-minus-1-day` |
+| `Tasks: Move Created date by: +1 week` | `obsidian-tasks-plugin:move-created-date-by-plus-1-week` |
+| `Tasks: Move Created date by: -1 week` | `obsidian-tasks-plugin:move-created-date-by-minus-1-week` |
+| `Tasks: Remove Created date` | `obsidian-tasks-plugin:remove-created-date` |
+
+<!-- placeholder to force blank line after included text --><!-- endInclude -->
+
+### Done date commands
+
+See [[Dates#Done date|Done date]].
+
+<!-- placeholder to force blank line before included text --><!-- include: ChangeDateCommands.test.Change_date_commands_reference_table_for_doneDate.approved.md -->
+
+| Name | ID |
+| ----- | ----- |
+| `Tasks: Change Done date to: Today` | `obsidian-tasks-plugin:set-done-date-to-today` |
+| `Tasks: Change Done date to: Yesterday` | `obsidian-tasks-plugin:set-done-date-to-today-minus-1-day` |
+| `Tasks: Add Done date: Today` | `obsidian-tasks-plugin:add-done-date-today` |
+| `Tasks: Add Done date: Yesterday` | `obsidian-tasks-plugin:add-done-date-today-minus-1-day` |
+| `Tasks: Move Done date by: +1 day` | `obsidian-tasks-plugin:move-done-date-by-plus-1-day` |
+| `Tasks: Move Done date by: -1 day` | `obsidian-tasks-plugin:move-done-date-by-minus-1-day` |
+| `Tasks: Move Done date by: +1 week` | `obsidian-tasks-plugin:move-done-date-by-plus-1-week` |
+| `Tasks: Move Done date by: -1 week` | `obsidian-tasks-plugin:move-done-date-by-minus-1-week` |
+| `Tasks: Remove Done date` | `obsidian-tasks-plugin:remove-done-date` |
+
+<!-- placeholder to force blank line after included text --><!-- endInclude -->
+
+### Cancelled date commands
+
+See [[Dates#Cancelled date|Cancelled date]].
+
+<!-- placeholder to force blank line before included text --><!-- include: ChangeDateCommands.test.Change_date_commands_reference_table_for_cancelledDate.approved.md -->
+
+| Name | ID |
+| ----- | ----- |
+| `Tasks: Change Cancelled date to: Today` | `obsidian-tasks-plugin:set-cancelled-date-to-today` |
+| `Tasks: Change Cancelled date to: Yesterday` | `obsidian-tasks-plugin:set-cancelled-date-to-today-minus-1-day` |
+| `Tasks: Add Cancelled date: Today` | `obsidian-tasks-plugin:add-cancelled-date-today` |
+| `Tasks: Add Cancelled date: Yesterday` | `obsidian-tasks-plugin:add-cancelled-date-today-minus-1-day` |
+| `Tasks: Move Cancelled date by: +1 day` | `obsidian-tasks-plugin:move-cancelled-date-by-plus-1-day` |
+| `Tasks: Move Cancelled date by: -1 day` | `obsidian-tasks-plugin:move-cancelled-date-by-minus-1-day` |
+| `Tasks: Move Cancelled date by: +1 week` | `obsidian-tasks-plugin:move-cancelled-date-by-plus-1-week` |
+| `Tasks: Move Cancelled date by: -1 week` | `obsidian-tasks-plugin:move-cancelled-date-by-minus-1-week` |
+| `Tasks: Remove Cancelled date` | `obsidian-tasks-plugin:remove-cancelled-date` |
+
+<!-- placeholder to force blank line after included text --><!-- endInclude -->
+
 ## Other commands
 
 | Name                                            | ID                                                         | Details                                                                         |

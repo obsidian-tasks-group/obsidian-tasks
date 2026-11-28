@@ -5,6 +5,7 @@ import { TasksDate } from 'DateTime/TasksDate';
 import type { TaskEditingInstruction } from 'ui/EditInstructions/TaskEditingInstruction';
 import { MenuDividerInstruction } from 'ui/EditInstructions/MenuDividerInstruction';
 import { BaseTaskEditingInstruction } from 'ui/EditInstructions/BaseTaskEditingInstruction';
+import { dateFieldCommandIdText } from 'ui/EditInstructions/DateCommandNames';
 
 /**
  * An instruction to set a date field to an absolute date.
@@ -75,10 +76,18 @@ export class RemoveTaskDate extends BaseTaskEditingInstruction {
     private readonly dateFieldToEdit: AllTaskDateFields;
     private readonly displayName: string;
 
-    constructor(dateFieldToEdit: AllTaskDateFields, task: Task) {
+    /**
+     * @param dateFieldToEdit
+     * @param taskOrDisplayName - Either the task whose menu this instruction is for, which is used to build the menu title,
+     *                            or the display name to use, for when there is no task, such as in commands built at load.
+     */
+    constructor(dateFieldToEdit: AllTaskDateFields, taskOrDisplayName: Task | string) {
         super();
         this.dateFieldToEdit = dateFieldToEdit;
-        this.displayName = removeDateMenuItemTitleForField(dateFieldToEdit, task);
+        this.displayName =
+            typeof taskOrDisplayName === 'string'
+                ? taskOrDisplayName
+                : removeDateMenuItemTitleForField(dateFieldToEdit, taskOrDisplayName);
     }
 
     apply(task: Task): Task[] {
@@ -104,6 +113,10 @@ export class RemoveTaskDate extends BaseTaskEditingInstruction {
 
     isCheckedForTask(_task: Task): boolean {
         return false;
+    }
+
+    public commandId(): string {
+        return `remove-${dateFieldCommandIdText(this.dateFieldToEdit)}`;
     }
 }
 

@@ -1,0 +1,101 @@
+import moment from 'moment';
+import type { Command, Editor } from 'obsidian';
+import { createChangeDateCommands, createChangeDateCommandsForField } from 'Commands/ChangeDateCommands';
+import { ALL_DATE_FIELDS } from 'DateTime/DateFieldTypes';
+import { verifyCommandsAsMarkdownForDocs } from '../TestingTools/VerifyMarkdown';
+import { noticeMessages } from '../__mocks__/obsidian';
+import { makeFakeEditor, makeFakeMarkdownView } from './CreateEditorCallbackHelpers';
+
+window.moment = moment;
+
+beforeEach(() => {
+    vi.useFakeTimers();
+    vi.setSystemTime(new Date('2024-10-01'));
+});
+
+afterEach(() => {
+    vi.useRealTimers();
+});
+
+function findCommand(commands: Command[], id: string) {
+    const command = commands.find((c) => c.id === id);
+    if (!command) {
+        throw new Error(`Command not found: ${id}`);
+    }
+    return command;
+}
+
+function runCommand(commands: Command[], id: string, lines: string[]) {
+    const { editor, getText } = makeFakeEditor(lines, 0, lines.length - 1);
+    findCommand(commands, id).editorCheckCallback!(false, editor as unknown as Editor, makeFakeMarkdownView());
+    return getText().split('\n');
+}
+
+describe('Change date commands', () => {
+    it('should use the date when the command is run, not when it is created', () => {
+        const commands = createChangeDateCommands();
+
+        vi.setSystemTime(new Date('2024-10-02'));
+
+        expect(runCommand(commands, 'set-due-date-to-today', ['- [ ] task'])).toEqual(['- [ ] task 📅 2024-10-02']);
+    });
+
+    it('should set the same date on every selected task', () => {
+        const lines = ['- [ ] task 1', 'Not a task', '- [ ] task 2 📅 2023-05-05'];
+        expect(runCommand(createChangeDateCommands(), 'set-due-date-to-today-plus-1-day', lines)).toEqual([
+            '- [ ] task 1 📅 2024-10-02',
+            'Not a task',
+            '- [ ] task 2 📅 2024-10-02',
+        ]);
+    });
+
+    it('should add the date only to selected tasks that lack it', () => {
+        const lines = ['- [ ] task 1', '- [ ] task 2 ➕ 2023-05-05'];
+        expect(runCommand(createChangeDateCommands(), 'add-created-date-today', lines)).toEqual([
+            '- [ ] task 1 ➕ 2024-10-01',
+            '- [ ] task 2 ➕ 2023-05-05',
+        ]);
+    });
+
+    it('should move each selected task by the same amount, skipping tasks without the date', () => {
+        const lines = ['- [ ] task 1 ⏳ 2023-05-05', '- [ ] task 2', '- [ ] task 3 ⏳ 2025-01-31'];
+        expect(runCommand(createChangeDateCommands(), 'move-scheduled-date-by-plus-1-week', lines)).toEqual([
+            '- [ ] task 1 ⏳ 2023-05-12',
+            '- [ ] task 2',
+            '- [ ] task 3 ⏳ 2025-02-07',
+        ]);
+    });
+
+    it('should remove the date from every selected task', () => {
+        const lines = ['- [ ] task 1 ➕ 2023-05-05', '- [ ] task 2'];
+        expect(runCommand(createChangeDateCommands(), 'remove-created-date', lines)).toEqual([
+            '- [ ] task 1',
+            '- [ ] task 2',
+        ]);
+    });
+
+    it('should only change done dates of done tasks', () => {
+        const lines = ['- [x] task 1', '- [ ] task 2', '- [-] task 3'];
+        expect(runCommand(createChangeDateCommands(), 'set-done-date-to-today-minus-1-day', lines)).toEqual([
+            '- [x] task 1 ✅ 2024-09-30',
+            '- [ ] task 2',
+            '- [-] task 3',
+        ]);
+    });
+
+    it('should notify the user with a date-specific message when the line is not a task', () => {
+        runCommand(createChangeDateCommands(), 'set-due-date-to-today', ['This is not a task']);
+        expect(noticeMessages).toEqual(['Cannot change date: line is not a task or does not match global filter']);
+    });
+
+    it('should have unique ids', () => {
+        const ids = createChangeDateCommands().map((command) => command.id);
+        expect(new Set(ids).size).toEqual(ids.length);
+    });
+
+    describe('reference', () => {
+        it.each(ALL_DATE_FIELDS)('table for %s', (field) => {
+            verifyCommandsAsMarkdownForDocs(createChangeDateCommandsForField(field));
+        });
+    });
+});

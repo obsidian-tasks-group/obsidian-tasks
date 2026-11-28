@@ -8,6 +8,7 @@ import { toggleDone } from 'Commands/ToggleDone';
 import { ensureQueryFileDefaultsInFrontmatter } from 'Commands/AddQueryFileDefaultsProperties';
 import { createSetStatusCommands } from 'Commands/ChangeStatusCommands';
 import { createSetPriorityCommands } from 'Commands/ChangePriorityCommands';
+import { createChangeDateCommands } from 'Commands/ChangeDateCommands';
 
 export const ToggleTaskDoneCommandName = 'Toggle task done';
 
@@ -82,6 +83,8 @@ export class Commands {
         setStatusCommands.forEach((command) => plugin.addCommand(command));
 
         createSetPriorityCommands().forEach((command) => plugin.addCommand(command));
+
+        createChangeDateCommands().forEach((command) => plugin.addCommand(command));
     }
 
     async ensureQueryFileDefaultsFrontmatter(file: TFile): Promise<void> {

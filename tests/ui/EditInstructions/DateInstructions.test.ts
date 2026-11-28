@@ -405,10 +405,38 @@ describe('Creating Editing Instruction', () => {
         expect(newTask.startDate).toBeNull();
     });
 
+    it('should allow caller to specify name of instruction to remove a date', () => {
+        const instruction = new RemoveTaskDate('dueDate', 'Remove Due date');
+        expect(instruction.instructionDisplayName()).toEqual('Remove Due date');
+    });
+
     it('should refuse to copy an invalid date', () => {
         const invalidDoneDateTask = fromMarkdown('- [ ] Something ✅ 2026-13-42')[0];
         const instruction = createEditingInstructionForDateGroups('doneDate', invalidDoneDateTask);
 
         expect(instruction).toBeNull();
+    });
+});
+
+describe('RemoveTaskDate for commands', () => {
+    it('should accept a display name instead of a task', () => {
+        const instruction = new RemoveTaskDate('dueDate', 'Remove Due date');
+
+        expect(instruction.instructionDisplayName()).toEqual('Remove Due date');
+        expect(instruction.commandId()).toEqual('remove-due-date');
+    });
+
+    it('should provide a command id for every date field', () => {
+        const ids = Task.allDateFields().map((field) =>
+            new RemoveTaskDate(field as AllTaskDateFields, 'name').commandId(),
+        );
+        expect(ids).toEqual([
+            'remove-created-date',
+            'remove-start-date',
+            'remove-scheduled-date',
+            'remove-due-date',
+            'remove-done-date',
+            'remove-cancelled-date',
+        ]);
     });
 });

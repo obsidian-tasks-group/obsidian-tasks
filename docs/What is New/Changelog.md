@@ -12,6 +12,8 @@ _In recent [Tasks releases](https://github.com/obsidian-tasks-group/obsidian-tas
 
 ## 8.x releases
 
+- X.Y.Z:
+  - Add [[Commands#Change date commands|Change date]] commands, to edit multiple tasks.
 - 8.7.0:
   - Commands
     - Add [[Commands]] reference page.
